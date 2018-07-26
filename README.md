@@ -6,19 +6,19 @@ Dashboard for Emergency Management Information System.
 
 We are using git flow workflow for our source code management. Please start by
 
-- clone this repo by
+- Clone this repo by
 
 ```sh
 git clone git@github.com:CodeTanzania/emis-dashboard.git
 ```
 
-- then check checkout to master branch by
+- Then check checkout to master branch by
 
 ```sh
 git checkout master
 ```
 
-- then initialize git flow in the repo by
+- Then initialize git flow in the repo by
 
 ```sh
 git flow init
@@ -30,10 +30,10 @@ git flow init
 npm install
 ```
 
-- then if working on a feature start by creating feature branch of what you are working on by
+- Then if working on a feature start by creating feature branch of what you are working on by
 
 ```sh
 git flow feature start [feature_name]
 ```
 
-- after you are done working on a feature branch submit a PR for Review.
+- After you are done working on a feature branch submit a PR for Review.
