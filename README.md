@@ -36,4 +36,4 @@ npm install
 git flow feature start [feature_name]
 ```
 
-- after you are done working on feature branch create a PR for Review.
+- after you are done working on a feature branch submit a PR for Review.
