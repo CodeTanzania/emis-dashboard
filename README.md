@@ -27,7 +27,7 @@ git flow init
 - Install all required dependencies
 
 ```sh
-npm install
+yarn install
 ```
 
 - Then if working on a feature start by creating feature branch of what you are working on by
