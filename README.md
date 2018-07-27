@@ -24,6 +24,12 @@ git checkout master
 git flow init
 ```
 
+- Then checkout develop branch
+
+```sh
+git checkout develop
+```
+
 - Install all required dependencies
 
 ```sh
