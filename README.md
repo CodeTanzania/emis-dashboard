@@ -1,5 +1,7 @@
 # EMIS Dashboard
 
+[![Build Status](https://travis-ci.org/CodeTanzania/emis-dashboard.svg?branch=develop)](https://travis-ci.org/CodeTanzania/emis-dashboard)
+
 Dashboard for Emergency Management Information System.
 
 ## Development
