@@ -1,42 +1,42 @@
 import { Icon, Layout, Menu } from 'antd';
+import classnames from 'classnames';
 import React from 'react';
 // Components
 import Contacts from './contacts';
+// import styles
+import styles from './dashboard.css';
 
 // local constants
 const { Sider, Content } = Layout;
+const cx = classnames.bind(styles);
 
 /**
  * Dashboard layout component
  * This renders layout for dashboard components
  * @name Dashboard
- *
  */
 export default function Dashboard() {
   return (
-    <Layout style={{ minHeight: '100vh' }}>
+    <Layout>
       <Sider
         trigger={null}
         collapsible
         collapsed
-        style={{ backgroundColor: '#fff', borderRight: '1px solid #E0E0E0' }}
+        className={cx('sider')}
       >
         <div className="logo" />
         <Menu mode="inline">
           <Menu.Item key="1">
             <Icon type="user" />
             <span>
-              nav 1
+              Contacts
             </span>
           </Menu.Item>
         </Menu>
 
       </Sider>
       <Layout>
-        <Content style={{
-          background: '#fff', minHeight: '100vh',
-        }}
-        >
+        <Content className={cx('content')}>
           <Contacts />
         </Content>
       </Layout>
