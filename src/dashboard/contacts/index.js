@@ -5,6 +5,7 @@ import classnames from 'classnames';
 import React from 'react';
 // Components
 import Header from './components/Header';
+import List from './components/List';
 // load styles
 import styles from './index.css';
 
@@ -19,7 +20,18 @@ export default function Contacts() {
       <Col span={4} className={cx('section')}>
         {/* start header */}
         <Header>
-          Filters
+          <Row type="flex" justify="space-around">
+            <Col span={10}>
+              <h3>
+                Contacts
+              </h3>
+            </Col>
+            <Col span={10}>
+              <Button icon="plus" type="primary">
+                New Contact
+              </Button>
+            </Col>
+          </Row>
         </Header>
         {/* end header */}
       </Col>
@@ -28,25 +40,19 @@ export default function Contacts() {
       <Col span={6} className={cx('section')}>
         {/* start header */}
         <Header>
-          <Row type="flex" justify="space-between">
-            {/* start search component */}
-            <Col span={20}>
-              <Search
-                placeholder="Search here"
-                onSearch={value => console.log(value)}
-                style={{ width: '100%' }}
-                enterButton={<Button icon="search" />}
-              />
-            </Col>
-            {/* end search component */}
-            {/* start add button */}
-            <Col span={2}>
-              <Button icon="plus" title="Add New Contact" className="b-0 f-20" />
-            </Col>
-            {/* end add button */}
-          </Row>
+          {/* start search component */}
+          <Search
+            placeholder="Search here"
+            onSearch={value => console.log(value)}
+            style={{ width: '100%' }}
+            enterButton={<Button icon="search" />}
+          />
+          {/* end search component */}
         </Header>
         {/* end header */}
+        {/* start contact list */}
+        <List />
+        {/* end contact list */}
       </Col>
       {/* end list section */}
       {/* start details section */}
