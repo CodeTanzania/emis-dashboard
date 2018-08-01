@@ -29,6 +29,7 @@ export default function Contacts() {
         {/* start header */}
         <Header>
           <Row type="flex" justify="space-between">
+            {/* start search component */}
             <Col span={20}>
               <Search
                 placeholder="Search here"
@@ -37,9 +38,12 @@ export default function Contacts() {
                 enterButton={<Button icon="search" />}
               />
             </Col>
+            {/* end search component */}
+            {/* start add button */}
             <Col span={2}>
               <Button icon="plus" title="Add New Contact" className="b-0 f-20" />
             </Col>
+            {/* end add button */}
           </Row>
         </Header>
         {/* end header */}
