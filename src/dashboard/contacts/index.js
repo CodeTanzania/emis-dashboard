@@ -28,12 +28,19 @@ export default function Contacts() {
       <Col span={6} className={cx('section')}>
         {/* start header */}
         <Header>
-          <Search
-            placeholder="Search here"
-            onSearch={value => console.log(value)}
-            style={{ width: '100%' }}
-            enterButton={<Button icon="search" />}
-          />
+          <Row type="flex" justify="space-between">
+            <Col span={20}>
+              <Search
+                placeholder="Search here"
+                onSearch={value => console.log(value)}
+                style={{ width: '100%' }}
+                enterButton={<Button icon="search" />}
+              />
+            </Col>
+            <Col span={2}>
+              <Button icon="plus" title="Add New Contact" className="b-0 f-20" />
+            </Col>
+          </Row>
         </Header>
         {/* end header */}
       </Col>
