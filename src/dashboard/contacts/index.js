@@ -1,11 +1,12 @@
 import {
- Button, Col, Input, Row 
+ Button, Checkbox, Col, Input, Row 
 } from 'antd';
 import classnames from 'classnames';
 import React from 'react';
+import ContactDetails from './components/Details';
 // Components
 import Header from './components/Header';
-import List from './components/List';
+import ContactList from './components/List';
 // load styles
 import styles from './index.css';
 
@@ -40,28 +41,40 @@ export default function Contacts() {
       <Col span={6} className={cx('section')}>
         {/* start header */}
         <Header>
-          {/* start search component */}
-          <Search
-            placeholder="Search here"
-            onSearch={value => console.log(value)}
-            style={{ width: '100%' }}
-            enterButton={<Button icon="search" />}
-          />
-          {/* end search component */}
+          <Row type="flex" justify="space-around">
+            <Col span={1}>
+              <Checkbox />
+            </Col>
+            <Col span={21}>
+              {/* start search component */}
+              <Search
+                placeholder="Search here"
+                onSearch={value => console.log(value)}
+                style={{ width: '100%' }}
+                enterButton={<Button icon="search" />}
+              />
+              {/* end search component */}
+            </Col>
+          </Row>
         </Header>
         {/* end header */}
         {/* start contact list */}
-        <List />
+        <ContactList />
         {/* end contact list */}
       </Col>
       {/* end list section */}
       {/* start details section */}
-      <Col span={14}>
+      <Col span={14} style={{ height: '100vh', overflowY: 'scroll' }}>
         {/* start header */}
         <Header>
-          Basic Information
+          <h3>
+            Basic Information
+          </h3>
         </Header>
         {/* end header */}
+        {/* start contact details */}
+        <ContactDetails />
+        {/* end contact details */}
       </Col>
       {/* end details section */}
     </Row>

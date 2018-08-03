@@ -33,7 +33,6 @@ export default function Dashboard() {
             </span>
           </Menu.Item>
         </Menu>
-
       </Sider>
       <Layout>
         <Content className={cx('content')}>
