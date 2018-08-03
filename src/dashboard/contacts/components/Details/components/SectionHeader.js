@@ -1,4 +1,4 @@
-import { Col, Row } from 'antd';
+import { Col, Divider, Row } from 'antd';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -19,6 +19,7 @@ export default function SectionHeader({ title, actions }) {
       <Col span={1}>
         {actions}
       </Col>
+      <Divider type="horizontal" />
     </Row>
   );
 }
