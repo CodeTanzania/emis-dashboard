@@ -1,4 +1,5 @@
 import { Col } from 'antd';
+import PropTypes from 'prop-types';
 import React from 'react';
 
 export default function SectionContent({ children }) {
@@ -8,3 +9,7 @@ export default function SectionContent({ children }) {
     </Col>
   );
 }
+
+SectionContent.propTypes = {
+  children: PropTypes.element.isRequired,
+};
