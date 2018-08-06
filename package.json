@@ -3,15 +3,19 @@
   "version": "0.1.0",
   "dependencies": {
     "antd": "^3.7.2",
+    "classnames": "^2.2.6",
+    "prop-types": "^15.6.2",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
+    "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.4"
   },
   "scripts": {
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "react-app-rewired test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint ."
   },
   "devDependencies": {
     "babel-plugin-import": "^1.8.0",
