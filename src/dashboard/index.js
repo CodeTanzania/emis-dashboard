@@ -29,7 +29,7 @@ export default function Dashboard() {
         <Menu mode="inline">
           <Menu.Item key="1">
             <NavLink to="/contacts">
-              <Icon type="user" />
+              <Icon type="idcard" className="f-25" />
               <span>
                 Contacts
               </span>

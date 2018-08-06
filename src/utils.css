@@ -7,7 +7,7 @@
 */
 
 .b-0 {
-  border: none;
+  border: none !important;
 }
 
 /*
@@ -15,14 +15,18 @@
 Fonts
 --------------------------------------------------------------------------------
 */
+.f-15 {
+  font-size: 15px;
+}
 
 .f-20 {
   font-size: 20px;
 }
 
-.f-15 {
-  font-size: 15px;
+.f-25{
+  font-size:25px;
 }
+
 
 /* font weight */
 
