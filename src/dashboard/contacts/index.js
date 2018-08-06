@@ -1,5 +1,5 @@
 import {
- Button, Checkbox, Col, Input, Row 
+ Button, Checkbox, Col, Input, Row
 } from 'antd';
 import classnames from 'classnames';
 import React from 'react';
