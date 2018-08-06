@@ -1,8 +1,11 @@
 import {
  Avatar, Button, Col, Popover, Row 
 } from 'antd';
+import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
+/* import styles */
+import styles from './personnel.css';
 
 /* local constants */
 const actions = (
@@ -24,15 +27,13 @@ const actions = (
     </div>
   </div>
 );
+const cx = classnames.bind(styles);
 
 export default function PersonnelCard({
   name, title, phone, address,
 }) {
   return (
-    <Row style={{
-      marginBottom: '20px', padding: '20px', borderRadius: '5px', border: '1px solid #e0e0e0',
-    }}
-    >
+    <Row className={cx('personnel-card')}>
       <Col span={4}>
         <Avatar size="large" icon="user" />
       </Col>

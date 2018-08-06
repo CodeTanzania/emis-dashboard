@@ -21,7 +21,7 @@ const actions = (
 
 export default function Responsibility({ description }) {
   return (
-    <List.Item style={{ paddingLeft: '20px' }}>
+    <List.Item className="p-l-20">
       <List.Item.Meta
         title={(
           <Row>

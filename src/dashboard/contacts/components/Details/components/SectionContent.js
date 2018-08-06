@@ -4,7 +4,7 @@ import React from 'react';
 
 export default function SectionContent({ children }) {
   return (
-    <Col span={24} style={{ padding: '0 30px' }}>
+    <Col span={24} className="p-r-l-30">
       {children}
     </Col>
   );

@@ -10,7 +10,7 @@ import React from 'react';
  */
 export default function SectionHeader({ title, actions }) {
   return (
-    <Row style={{ padding: '20px' }}>
+    <Row className="p-20">
       <Col span={23}>
         <h2>
           {title}

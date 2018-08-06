@@ -4,7 +4,7 @@ import React from 'react';
 
 export default function InformationItem({ label, value }) {
   return (
-    <Row type="flex" justify="space-around" style={{ marginBottom: '15px' }}>
+    <Row type="flex" justify="space-around" className="m-t-15">
       <Col span={6}>
         <h3>
           {label}
@@ -13,7 +13,7 @@ export default function InformationItem({ label, value }) {
         </h3>
       </Col>
       <Col span={18}>
-        <span style={{ fontSize: '15px', fontWeight: 600 }}>
+        <span className="f-15 f-600">
           {value}
         </span>
       </Col>

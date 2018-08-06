@@ -1,4 +1,6 @@
-import { Button, Checkbox, Col, Input, Row } from 'antd';
+import {
+ Button, Checkbox, Col, Input, Row 
+} from 'antd';
 import classnames from 'classnames';
 import React from 'react';
 import ContactDetails from './components/Details';

@@ -1,6 +1,4 @@
-import {
- Button, Checkbox, Col, List, Popover, Row 
-} from 'antd';
+import { Button, Checkbox, Col, List, Popover, Row } from 'antd';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -21,7 +19,7 @@ const actions = (
 
 export default function Contact({ name, phone, email }) {
   return (
-    <List.Item style={{ paddingLeft: '20px' }}>
+    <List.Item className="p-l-20">
       <List.Item.Meta
         avatar={<Checkbox />}
         title={(

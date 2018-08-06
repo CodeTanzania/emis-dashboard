@@ -9,7 +9,7 @@ export default function FiltersGroup({ header, data }) {
     <div>
       {/* header */}
       <Row>
-        <Col span={24} style={{ color: 'blue', padding: '20px' }}>
+        <Col span={24} className="p-20">
           <h3>
             {header}
           </h3>
@@ -20,7 +20,7 @@ export default function FiltersGroup({ header, data }) {
       <List
         dataSource={data}
         renderItem={item => (
-          <List.Item style={{ paddingLeft: '20px', border: 'none' }}>
+          <List.Item className="p-l-20 b-0">
             <List.Item.Meta
               avatar={<Checkbox />}
               title={(
@@ -36,7 +36,6 @@ export default function FiltersGroup({ header, data }) {
           </List.Item>
         )}
       />
-
       {/* end content */}
     </div>
   );
