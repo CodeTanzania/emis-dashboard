@@ -8,7 +8,7 @@ import SectionHeader from './components/SectionHeader';
 
 export default function Details() {
   return (
-    <div>
+    <div className="scrollable-content">
       {/* start contact detail section */}
       <Row>
         <SectionHeader title="Tanzania Red Cross Society" actions={<Button icon="edit" className="f-20 b-0" />} />

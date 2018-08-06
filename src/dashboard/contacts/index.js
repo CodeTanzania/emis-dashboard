@@ -1,9 +1,8 @@
-import {
- Button, Checkbox, Col, Input, Row
-} from 'antd';
+import { Button, Checkbox, Col, Input, Row } from 'antd';
 import classnames from 'classnames';
 import React from 'react';
 import ContactDetails from './components/Details';
+import Filters from './components/Filters';
 // Components
 import Header from './components/Header';
 import ContactList from './components/List';
@@ -35,6 +34,9 @@ export default function Contacts() {
           </Row>
         </Header>
         {/* end header */}
+        {/* start filters */}
+        <Filters />
+        {/* end filters */}
       </Col>
       {/* end filter section */}
       {/* start list section */}
@@ -64,7 +66,7 @@ export default function Contacts() {
       </Col>
       {/* end list section */}
       {/* start details section */}
-      <Col span={14} style={{ height: '100vh', overflowY: 'scroll' }}>
+      <Col span={14}>
         {/* start header */}
         <Header>
           <h3>
