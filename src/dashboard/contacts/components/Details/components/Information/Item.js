@@ -13,7 +13,7 @@ export default function InformationItem({ label, value }) {
         </h3>
       </Col>
       <Col span={18}>
-        <span className="f-15 f-600">
+        <span className="f-15">
           {value}
         </span>
       </Col>
