@@ -18,7 +18,7 @@ const cx = classnames.bind(styles);
  */
 export default function Dashboard() {
   return (
-    <Layout>
+    <Layout className={cx('full-view-height')}>
       <Sider
         trigger={null}
         collapsible

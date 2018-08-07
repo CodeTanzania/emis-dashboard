@@ -8,3 +8,7 @@
 .content {
   background-color: #fff;
 }
+
+.full-view-height {
+  height: 100vh;
+}
