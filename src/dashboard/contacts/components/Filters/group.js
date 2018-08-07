@@ -22,15 +22,12 @@ export default function FiltersGroup({ header, data }) {
         renderItem={item => (
           <List.Item className="p-l-20 b-0">
             <List.Item.Meta
-              avatar={<Checkbox />}
               title={(
-                <Row>
-                  <Col xs={24}>
-                    <span className="f-600 f-15">
-                      {item.name}
-                    </span>
-                  </Col>
-                </Row>
+                <Checkbox>
+                  <span className="f-600 f-15">
+                    {item.name}
+                  </span>
+                </Checkbox>
               )}
             />
           </List.Item>
