@@ -1,5 +1,13 @@
 /*Utils styles*/
 
+body {
+  font-family: Lato, sans-serif;
+}
+
+body {
+  height: 100vh;
+}
+
 /*-
 --------------------------------------------------------------------------------
  Borders
@@ -10,11 +18,20 @@
   border: none !important;
 }
 
+.b-b {
+  border-bottom: 1px solid #E0E0E0;
+}
+
+.b-r {
+  border-right: 1px solid #E0E0E0;
+}
+
 /*
 --------------------------------------------------------------------------------
 Fonts
 --------------------------------------------------------------------------------
 */
+
 .f-15 {
   font-size: 15px;
 }
@@ -23,10 +40,9 @@ Fonts
   font-size: 20px;
 }
 
-.f-25{
-  font-size:25px;
+.f-25 {
+  font-size: 25px;
 }
-
 
 /* font weight */
 
@@ -49,8 +65,13 @@ Margin
 Padding
 --------------------------------------------------------------------------------
 */
-.p-20{
-  padding:20px;
+
+.p-10 {
+  padding: 10px;
+}
+
+.p-20 {
+  padding: 20px;
 }
 
 .p-l-20 {
@@ -63,37 +84,62 @@ Padding
 
 /*
 --------------------------------------------------------------------------------
-Scrollable content
---------------------------------------------------------------------------------
-*/
-
-.scrollable-content {
-  height: 95vh;
-  overflow-y: auto
-}
-
-/*
---------------------------------------------------------------------------------
 Scroll Bar styles
 --------------------------------------------------------------------------------
 */
 
 /* width of the scrollbar */
 
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
   width: 5px;
-}
+} */
 
 /* Track */
 
-::-webkit-scrollbar-track {
+/* ::-webkit-scrollbar-track {
   box-shadow: inset 0 0 5px #cfcfcf;
   border-radius: 10px;
-}
+} */
 
 /* Handle */
 
-::-webkit-scrollbar-thumb {
+/* ::-webkit-scrollbar-thumb {
   background: #cdcdcd;
   border-radius: 10px;
+} */
+
+.section {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.section .header {
+  flex: 0 0 50px;
+}
+
+.section .content {
+  flex: 1 0;
+  padding-bottom: 20px;
+}
+
+.section .footer {
+  flex: 0 0;
+}
+
+/*
+--------------------------------------------------------------------------------
+Scrollable content
+--------------------------------------------------------------------------------
+*/
+
+.scrollable {
+  overflow: hidden;
+}
+
+/* show scroll bar on hover */
+
+.scrollable:hover {
+  overflow-x: hidden;
+  overflow-y: auto;
 }

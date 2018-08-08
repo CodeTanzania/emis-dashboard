@@ -4,8 +4,8 @@ import {
 import classnames from 'classnames';
 import React from 'react';
 import ContactDetails from './components/Details';
-import Filters from './components/Filters';
 // Components
+import Filters from './components/Filters';
 import Header from './components/Header';
 import ContactList from './components/List';
 // load styles
@@ -68,7 +68,7 @@ export default function Contacts() {
       </Col>
       {/* end list section */}
       {/* start details section */}
-      <Col span={14}>
+      <Col span={14} className={cx('section')}>
         {/* start header */}
         <Header>
           <h3>

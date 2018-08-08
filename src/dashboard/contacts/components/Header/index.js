@@ -16,7 +16,7 @@ const cx = classnames.bind(styles);
  */
 export default function Header({ children }) {
   return (
-    <div className={cx('header')}>
+    <div className={cx('header b-b')}>
       {React.isValidElement(children)
         ? (
           <div className={cx('component')}>
