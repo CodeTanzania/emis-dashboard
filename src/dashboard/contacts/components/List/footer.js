@@ -15,7 +15,6 @@ export default function ContactsListFooter() {
               300
             </span>
           </h3>
-
         </Col>
         <Col span={10}>
           <ButtonGroup>
