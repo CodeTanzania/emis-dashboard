@@ -1,5 +1,5 @@
 import {
- Avatar, Button, Col, Popover, Row 
+  Avatar, Button, Col, Popover, Row,
 } from 'antd';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
@@ -34,28 +34,32 @@ export default function PersonnelCard({
 }) {
   return (
     <Row className={cx('personnel-card')}>
-      <Col span={4}>
-        <Avatar size="large" icon="user" />
-      </Col>
-      <Col span={18}>
+      <Col xs={20} sm={20} md={20} lg={20} xl={22} xxl={22}>
         <Row>
-          <Col span={16}>
-            <h3>
-              {name}
-            </h3>
+          <Col xs={24} sm={24} md={24} lg={24} xl={6} xxl={4}>
+            <Avatar size="large" icon="user" />
           </Col>
-          <Col span={8}>
-            {phone}
-          </Col>
-          <Col span={24}>
-            {title}
-          </Col>
-          <Col span={24}>
-            {address}
+          <Col xs={24} sm={24} md={24} lg={24} xl={18} xxl={20}>
+            <Row>
+              <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={14}>
+                <h3>
+                  {name}
+                </h3>
+              </Col>
+              <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={10}>
+                {phone}
+              </Col>
+              <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                {title}
+              </Col>
+              <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
+                {address}
+              </Col>
+            </Row>
           </Col>
         </Row>
       </Col>
-      <Col span={2} className="p-0">
+      <Col xs={4} sm={4} md={4} lg={4} xl={2} xxl={2} className="p-0">
         <Popover placement="bottom" trigger="click" content={actions}>
           <Button icon="ellipsis" className="f-20 b-0" />
         </Popover>
