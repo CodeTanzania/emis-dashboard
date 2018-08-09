@@ -31,7 +31,7 @@ export default function Contacts() {
           </Row>
         </Header>
         {/* end header */}
-        {/* button for adding new contacts */}
+        {/* start new contacts button */}
         <Row type="flex" justify="space-around">
           <Col span={20}>
             <Button icon="plus" type="primary">
@@ -39,6 +39,7 @@ export default function Contacts() {
             </Button>
           </Col>
         </Row>
+        {/* end new contacts button */}
         {/* start filters */}
         <Filters />
         {/* end filters */}
