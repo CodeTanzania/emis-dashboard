@@ -28,14 +28,18 @@ export default function Contacts() {
                 Contacts
               </h3>
             </Col>
-            <Col span={10}>
-              <Button icon="plus" type="primary">
-                New Contact
-              </Button>
-            </Col>
           </Row>
         </Header>
         {/* end header */}
+        {/* start new contacts button */}
+        <Row type="flex" justify="space-around">
+          <Col span={20}>
+            <Button icon="plus" type="primary">
+                    New Contact
+            </Button>
+          </Col>
+        </Row>
+        {/* end new contacts button */}
         {/* start filters */}
         <Filters />
         {/* end filters */}
