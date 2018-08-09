@@ -12,3 +12,10 @@
 .full-view-height {
   height: 100vh;
 }
+
+.logo {
+  display: block;
+  margin: 5px auto;
+  height: 40px;
+  width: 40px;
+}

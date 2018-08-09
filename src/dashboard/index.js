@@ -2,10 +2,12 @@ import { Icon, Layout, Menu } from 'antd';
 import classnames from 'classnames';
 import React from 'react';
 import { NavLink, Route, Switch } from 'react-router-dom';
+import logo from '../logo.svg';
 // Components
 import Contacts from './contacts';
 // import styles
 import styles from './dashboard.css';
+
 
 // local constants
 const { Sider, Content } = Layout;
@@ -25,8 +27,9 @@ export default function Dashboard() {
         collapsed
         className={cx('sider')}
       >
-        <div className="logo" />
+        <img src={logo} alt="logo" className={cx('logo')} />
         <Menu mode="inline">
+          {/* contact menu */}
           <Menu.Item key="1">
             <NavLink to="/contacts">
               <Icon type="idcard" className="f-25" />
@@ -35,6 +38,17 @@ export default function Dashboard() {
               </span>
             </NavLink>
           </Menu.Item>
+          {/* end contact menu */}
+          {/* setting menu */}
+          <Menu.Item key="1">
+            <NavLink to="/contacts">
+              <Icon type="setting" className="f-25" />
+              <span>
+                Settings
+              </span>
+            </NavLink>
+          </Menu.Item>
+          {/* end setting menu */}
         </Menu>
       </Sider>
       <Layout>
