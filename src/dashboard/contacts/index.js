@@ -22,23 +22,15 @@ export default function Contacts() {
       <Col span={4} className={cx('section')}>
         {/* start header */}
         <Header>
-          <Row type="flex" justify="space-around">
-            <Col span={10}>
-              <h3>
-                Contacts
-              </h3>
-            </Col>
-          </Row>
+          <h3>
+            Contacts
+          </h3>
         </Header>
         {/* end header */}
         {/* start new contacts button */}
-        <Row type="flex" justify="space-around">
-          <Col span={20}>
-            <Button icon="plus" type="primary">
-                    New Contact
-            </Button>
-          </Col>
-        </Row>
+        <Button icon="plus" type="primary" className="m-10">
+          New Contact
+        </Button>
         {/* end new contacts button */}
         {/* start filters */}
         <Filters />
