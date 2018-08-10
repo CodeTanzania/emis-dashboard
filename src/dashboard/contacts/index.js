@@ -1,5 +1,5 @@
 import {
- Button, Checkbox, Col, Input, Row 
+ Button, Checkbox, Col, Input, Row
 } from 'antd';
 import classnames from 'classnames';
 import React from 'react';
@@ -28,7 +28,7 @@ export default function Contacts() {
         </Header>
         {/* end header */}
         {/* start new contacts button */}
-        <Button icon="plus" type="primary" className="m-10">
+        <Button icon="plus" type="primary" className={cx('button-center')}>
           New Contact
         </Button>
         {/* end new contacts button */}
