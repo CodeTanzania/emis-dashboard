@@ -21,6 +21,11 @@ const fakeData = [
   { name: 'Tanzania Red Cross Society', phone: '+233 54534545', email: 'trcs@mail.com' },
 ];
 
+/**
+ * This component renders a list of contacts
+ * @name ContactsList
+ * @param {Object} props - data which is an array of contacts
+ */
 export default function ContactsList() {
   return (
     <React.Fragment>
