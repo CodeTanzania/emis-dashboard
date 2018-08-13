@@ -2,5 +2,10 @@
 
 .section {
   border-right: 1px solid #E0E0E0;
-  min-height: 100vh;
+  /* min-height: 100vh; */
+}
+
+.button-center {
+  width: 60%;
+  margin: 20px auto;
 }

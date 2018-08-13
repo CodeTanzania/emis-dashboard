@@ -2,6 +2,7 @@ import { Button, Checkbox, Col, List, Popover, Row } from 'antd';
 import PropTypes from 'prop-types';
 import React from 'react';
 
+
 const actions = (
   <div>
     <div>
@@ -17,6 +18,21 @@ const actions = (
   </div>
 );
 
+
+/**
+ * Render a single contact item component for contacts list
+ *
+ * @function
+ * @name Contact
+ *
+ * @param {Object} props - Receive name, phone and email as props
+ * @param {string} props.name - Contact Name
+ * @param {string} props.phone - Contact phone number
+ * @param {string} props.email - Contact email address
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
 export default function Contact({ name, phone, email }) {
   return (
     <List.Item className="p-l-20">
@@ -56,6 +72,7 @@ export default function Contact({ name, phone, email }) {
 }
 
 
+/* Validating props types */
 Contact.propTypes = {
   name: PropTypes.string.isRequired,
   phone: PropTypes.string.isRequired,

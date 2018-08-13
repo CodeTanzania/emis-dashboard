@@ -6,9 +6,19 @@ import Responsibilities from './components/Responsibilities';
 import SectionContent from './components/SectionContent';
 import SectionHeader from './components/SectionHeader';
 
+
+/**
+ * Contact detail view component
+ *
+ * @function
+ * @name Detail
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
 export default function Details() {
   return (
-    <div className="scrollable-content">
+    <div className="content scrollable">
       {/* start contact detail section */}
       <Row>
         <SectionHeader title="Tanzania Red Cross Society" actions={<Button icon="edit" className="f-20 b-0" />} />

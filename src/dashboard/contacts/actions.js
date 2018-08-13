@@ -1,0 +1,3 @@
+/**
+ * Action creators for contacts
+ */

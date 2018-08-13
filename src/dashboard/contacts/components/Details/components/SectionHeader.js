@@ -5,8 +5,15 @@ import React from 'react';
 
 /**
  * Renders header for contact details sections
- * @param {title} title - title for the header
- * @param {actions} actions - React node for actions
+ *
+ * @function
+ * @name SectionHeader
+ *
+ * @param {string} title - title for the header
+ * @param {Object} actions - React node for actions
+ *
+ * @version 0.1.0
+ * @since 0.1.0
  */
 export default function SectionHeader({ title, actions }) {
   return (
@@ -25,6 +32,7 @@ export default function SectionHeader({ title, actions }) {
 }
 
 
+/* prop validations */
 SectionHeader.propTypes = {
   title: PropTypes.string.isRequired,
   actions: PropTypes.node.isRequired,

@@ -1,9 +1,9 @@
-import {
- Button, Col, List, Popover, Row 
-} from 'antd';
+import { Button, Col, List, Popover, Row } from 'antd';
 import PropTypes from 'prop-types';
 import React from 'react';
 
+
+// TODO refactor this to external component
 const actions = (
   <div>
     <div>
@@ -19,6 +19,19 @@ const actions = (
   </div>
 );
 
+
+/**
+ * Renders Responsibility item component for contact details view
+ *
+ * @function
+ * @name Responsibility
+ *
+ * @param {Object} props - Component props
+ * @param {string} props.description - Responsibility description
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
 export default function Responsibility({ description }) {
   return (
     <List.Item className="p-l-20">
@@ -43,6 +56,7 @@ export default function Responsibility({ description }) {
 }
 
 
+/* props validation */
 Responsibility.propTypes = {
   description: PropTypes.string.isRequired,
 };

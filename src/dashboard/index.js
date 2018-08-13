@@ -2,31 +2,40 @@ import { Icon, Layout, Menu } from 'antd';
 import classnames from 'classnames';
 import React from 'react';
 import { NavLink, Route, Switch } from 'react-router-dom';
-// Components
+import logo from '../logo.svg';
+/* Components */
 import Contacts from './contacts';
-// import styles
+/* import styles */
 import styles from './dashboard.css';
 
-// local constants
+
+/* local constants */
 const { Sider, Content } = Layout;
 const cx = classnames.bind(styles);
+
 
 /**
  * Dashboard layout component
  * This renders layout for dashboard components
+ *
+ * @function
  * @name Dashboard
+ *
+ * @version 0.1.0
+ * @since 0.1.0
  */
 export default function Dashboard() {
   return (
-    <Layout>
+    <Layout className={cx('full-view-height')}>
       <Sider
         trigger={null}
         collapsible
         collapsed
         className={cx('sider')}
       >
-        <div className="logo" />
+        <img src={logo} alt="logo" className={cx('logo')} />
         <Menu mode="inline">
+          {/* contact menu */}
           <Menu.Item key="1">
             <NavLink to="/contacts">
               <Icon type="idcard" className="f-25" />
@@ -35,6 +44,17 @@ export default function Dashboard() {
               </span>
             </NavLink>
           </Menu.Item>
+          {/* end contact menu */}
+          {/* setting menu */}
+          <Menu.Item key="1">
+            <NavLink to="/contacts">
+              <Icon type="setting" className="f-25" />
+              <span>
+                Settings
+              </span>
+            </NavLink>
+          </Menu.Item>
+          {/* end setting menu */}
         </Menu>
       </Sider>
       <Layout>

@@ -1,20 +1,42 @@
-import {
- Button, Checkbox, Col, Input, Row 
-} from 'antd';
+import { Button, Checkbox, Col, Input, Popover, Row } from 'antd';
 import classnames from 'classnames';
 import React from 'react';
 import ContactDetails from './components/Details';
+/* Components */
 import Filters from './components/Filters';
-// Components
 import Header from './components/Header';
 import ContactList from './components/List';
-// load styles
+/* load styles */
 import styles from './index.css';
 
-// local constants
+/* local constants */
 const { Search } = Input;
 const cx = classnames.bind(styles);
+const actions = (
+  <div>
+    <div>
+      <Button icon="share-alt" className="b-0">
+        Share
+      </Button>
+    </div>
+    <div>
+      <Button icon="hdd" className="b-0">
+        Archive
+      </Button>
+    </div>
+  </div>
+);
 
+/**
+ * Render contacts panel component which have all the the components in relation
+ * to contacts
+ *
+ * @function
+ * @name Contacts
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
 export default function Contacts() {
   return (
     <Row>
@@ -22,23 +44,15 @@ export default function Contacts() {
       <Col span={4} className={cx('section')}>
         {/* start header */}
         <Header>
-          <Row type="flex" justify="space-around">
-            <Col span={10}>
-              <h3>
-                Contacts
-              </h3>
-            </Col>
-          </Row>
+          <h3>
+            Contacts
+          </h3>
         </Header>
         {/* end header */}
         {/* start new contacts button */}
-        <Row type="flex" justify="space-around">
-          <Col span={20}>
-            <Button icon="plus" type="primary">
-                    New Contact
-            </Button>
-          </Col>
-        </Row>
+        <Button icon="plus" type="primary" className={cx('button-center')}>
+          New Contact
+        </Button>
         {/* end new contacts button */}
         {/* start filters */}
         <Filters />
@@ -53,7 +67,7 @@ export default function Contacts() {
             <Col span={1}>
               <Checkbox />
             </Col>
-            <Col span={21}>
+            <Col span={19}>
               {/* start search component */}
               <Search
                 placeholder="Search here"
@@ -62,6 +76,11 @@ export default function Contacts() {
                 enterButton={<Button icon="search" />}
               />
               {/* end search component */}
+            </Col>
+            <Col span={2}>
+              <Popover placement="bottom" trigger="click" content={actions}>
+                <Button icon="ellipsis" className="f-20 b-0" />
+              </Popover>
             </Col>
           </Row>
         </Header>
@@ -72,7 +91,7 @@ export default function Contacts() {
       </Col>
       {/* end list section */}
       {/* start details section */}
-      <Col span={14}>
+      <Col span={14} className={cx('section')}>
         {/* start header */}
         <Header>
           <h3>

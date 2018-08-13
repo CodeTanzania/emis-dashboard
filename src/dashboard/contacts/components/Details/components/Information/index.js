@@ -1,8 +1,19 @@
 import { Col, Row } from 'antd';
 import React from 'react';
-// import component
+/* import component */
 import InformationItem from './Item';
 
+
+/**
+ * Contact information component
+ * Render basic information about the contact
+ *
+ * @function
+ * @name Information
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
 export default function Information() {
   return (
     <div>
