@@ -1,4 +1,4 @@
-import { Button, Checkbox, Col, Input, Row } from 'antd';
+import { Button, Checkbox, Col, Input, Popover, Row } from 'antd';
 import classnames from 'classnames';
 import React from 'react';
 import ContactDetails from './components/Details';
@@ -12,7 +12,20 @@ import styles from './index.css';
 /* local constants */
 const { Search } = Input;
 const cx = classnames.bind(styles);
-
+const actions = (
+  <div>
+    <div>
+      <Button icon="share-alt" className="b-0">
+        Share
+      </Button>
+    </div>
+    <div>
+      <Button icon="hdd" className="b-0">
+        Archive
+      </Button>
+    </div>
+  </div>
+);
 
 /**
  * Render contacts panel component which have all the the components in relation
@@ -54,7 +67,7 @@ export default function Contacts() {
             <Col span={1}>
               <Checkbox />
             </Col>
-            <Col span={21}>
+            <Col span={19}>
               {/* start search component */}
               <Search
                 placeholder="Search here"
@@ -63,6 +76,11 @@ export default function Contacts() {
                 enterButton={<Button icon="search" />}
               />
               {/* end search component */}
+            </Col>
+            <Col span={2}>
+              <Popover placement="bottom" trigger="click" content={actions}>
+                <Button icon="ellipsis" className="f-20 b-0" />
+              </Popover>
             </Col>
           </Row>
         </Header>
