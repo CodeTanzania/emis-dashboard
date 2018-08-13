@@ -17,7 +17,12 @@ const cx = classnames.bind(styles);
 /**
  * Dashboard layout component
  * This renders layout for dashboard components
+ *
+ * @function
  * @name Dashboard
+ *
+ * @version 0.1.0
+ * @since 0.1.0
  */
 export default function Dashboard() {
   return (
