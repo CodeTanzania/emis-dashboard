@@ -3,15 +3,16 @@ import classnames from 'classnames';
 import React from 'react';
 import { NavLink, Route, Switch } from 'react-router-dom';
 import logo from '../logo.svg';
-// Components
+/* Components */
 import Contacts from './contacts';
-// import styles
+/* import styles */
 import styles from './dashboard.css';
 
 
-// local constants
+/* local constants */
 const { Sider, Content } = Layout;
 const cx = classnames.bind(styles);
+
 
 /**
  * Dashboard layout component

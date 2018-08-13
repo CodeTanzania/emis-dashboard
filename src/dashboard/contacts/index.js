@@ -1,20 +1,29 @@
-import {
- Button, Checkbox, Col, Input, Row
-} from 'antd';
+import { Button, Checkbox, Col, Input, Row } from 'antd';
 import classnames from 'classnames';
 import React from 'react';
 import ContactDetails from './components/Details';
-// Components
+/* Components */
 import Filters from './components/Filters';
 import Header from './components/Header';
 import ContactList from './components/List';
-// load styles
+/* load styles */
 import styles from './index.css';
 
-// local constants
+/* local constants */
 const { Search } = Input;
 const cx = classnames.bind(styles);
 
+
+/**
+ * Render contacts panel component which have all the the components in relation
+ * to contacts
+ *
+ * @function
+ * @name Contacts
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
 export default function Contacts() {
   return (
     <Row>

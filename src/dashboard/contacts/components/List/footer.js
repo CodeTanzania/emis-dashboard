@@ -2,8 +2,19 @@ import { Button, Col, Row } from 'antd';
 import React from 'react';
 
 
+/* local constants */
 const ButtonGroup = Button.Group;
 
+
+/**
+ * Contacts list footer component
+ *
+ * @function
+ * @name ContactListFooter
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
 export default function ContactsListFooter() {
   return (
     <div className="footer p-10">

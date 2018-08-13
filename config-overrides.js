@@ -1,7 +1,8 @@
-const { injectBabelPlugin } = require('react-app-rewired');
+const { injectBabelPlugin } = require('react-app-rewired'); // eslint-disable line import/no-extraneous-dependencies
 
 /**
  * Override webpack configurations for the application
+ *
  * @param {Object} config
  * @param {Object} env
  */

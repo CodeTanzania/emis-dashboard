@@ -3,7 +3,7 @@ import React from 'react';
 // import component
 import PersonnelCard from './PersonnelCard';
 
-
+// fake data
 const personnelList = [{
   name: 'John Done',
   phone: '255 790 323',
@@ -36,6 +36,16 @@ const personnelList = [{
   address: 'This, That, There',
 }];
 
+
+/**
+ * Renders a grid view list of key personnel
+ *
+ * @function
+ * @name PersonnelList
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
 export default function PersonnelList() {
   return (
     <Row type="flex" justify="space-around">

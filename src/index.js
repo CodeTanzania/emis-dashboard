@@ -1,15 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import components
+/* import components */
 import App from './App';
-// import styles
+/* import styles */
 import registerServiceWorker from './registerServiceWorker';
+
 
 registerServiceWorker();
 
+
 const render = (Component) => { ReactDOM.render(<Component />, document.getElementById('root')); };
 
+
 render(App);
+
 
 if (module.hot) {
   module.hot.accept('./App', () => {

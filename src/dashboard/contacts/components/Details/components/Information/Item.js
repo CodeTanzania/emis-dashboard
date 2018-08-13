@@ -2,6 +2,17 @@ import { Col, Row } from 'antd';
 import PropTypes from 'prop-types';
 import React from 'react';
 
+
+/**
+ * Renders basic detail item
+ *
+ * @param {Object} props - component props
+ * @param {string} label - label of basic detail item
+ * @param {string} value - value of basic detail item
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
 export default function InformationItem({ label, value }) {
   return (
     <Row type="flex" justify="space-around" className="m-t-15">

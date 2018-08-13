@@ -1,6 +1,4 @@
-import {
- Avatar, Button, Col, Popover, Row 
-} from 'antd';
+import { Avatar, Button, Col, Popover, Row } from 'antd';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -8,6 +6,7 @@ import React from 'react';
 import styles from './personnel.css';
 
 /* local constants */
+const cx = classnames.bind(styles);
 const actions = (
   <div>
     <div>
@@ -27,8 +26,20 @@ const actions = (
     </div>
   </div>
 );
-const cx = classnames.bind(styles);
 
+
+/**
+ * Renders Key personnel contact card
+ *
+ * @function
+ * @name PersonnelCard
+ *
+ * @param {Object} props - component props
+ * @param {string} props.name - contact name
+ * @param {string} props.title - contact title
+ * @param {string} props.phone - contact phone number
+ * @param {string} props.address  - contact physical address
+ */
 export default function PersonnelCard({
   name, title, phone, address,
 }) {
@@ -64,6 +75,8 @@ export default function PersonnelCard({
   );
 }
 
+
+/* props validation */
 PersonnelCard.propTypes = {
   name: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
