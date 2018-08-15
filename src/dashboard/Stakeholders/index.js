@@ -6,6 +6,7 @@ import Filters from './components/Filters';
 import Header from './components/Header';
 import ContactList from './components/List';
 import StakeholderForm from './components/StakeholderForm';
+import API from '../../services/API';
 /* load styles */
 import styles from './styles.css';
 const cx = classnames.bind(styles);
@@ -38,8 +39,16 @@ const actions = (
  * @since 0.1.0
  */
 class Stakeholders extends Component {
-  state = { visible: true };
+  constructor(props) {
+    super(props);
+    this.state = { stakeholders: [], visible: false, allStakeholders: [] };
+  }
 
+  componentDidMount() {
+    API.getAgencies()
+      .then(res => res.data)
+      .then(data => this.setState({ stakeholders: data, allStakeholders: data }));
+  }
   showDrawer = () => {
     this.setState({ visible: true });
   }
@@ -50,8 +59,16 @@ class Stakeholders extends Component {
     });
   };
 
+  onSearch = (searchText) => {
+    const {allStakeholders} = this.state;
+    const stakeholderResults = allStakeholders.filter(({name}) => 
+    name.toLocaleLowerCase().includes(searchText.toLocaleLowerCase()));
+    this.setState({stakeholders: stakeholderResults})
+  }
+
   render() {
     const { visible } = this.state;
+    const { stakeholders } = this.state;
     return (
       <Fragment>
         <Drawer
@@ -101,7 +118,7 @@ class Stakeholders extends Component {
                   {/* start search component */}
                   <Search
                     placeholder="Search here"
-                    onSearch={value => console.log(value)}
+                    onSearch={value => this.onSearch(value) }
                     style={{ width: '100%' }}
                     enterButton={<Button icon="search" />}
                   />
@@ -116,7 +133,7 @@ class Stakeholders extends Component {
             </Header>
             {/* end header */}
             {/* start contact list */}
-            <ContactList />
+            <ContactList stakeholders = {stakeholders} />
             {/* end contact list */}
           </Col>
           {/* end list section */}

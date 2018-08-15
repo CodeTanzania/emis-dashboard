@@ -5,23 +5,6 @@ import ListFooter from './footer';
 import Contact from './item';
 
 
-const fakeData = [
-  { name: 'Tanzania Red Cross Society', phone: '+233 54534545', email: 'trcs@mail.com' },
-  { name: 'Tanzania Red Cross Society', phone: '+233 54534545', email: 'trcs@mail.com' },
-  { name: 'Tanzania Red Cross Society', phone: '+233 54534545', email: 'trcs@mail.com' },
-  { name: 'Tanzania Red Cross Society', phone: '+233 54534545', email: 'trcs@mail.com' },
-  { name: 'Tanzania Red Cross Society', phone: '+233 54534545', email: 'trcs@mail.com' },
-  { name: 'Tanzania Red Cross Society', phone: '+233 54534545', email: 'trcs@mail.com' },
-  { name: 'Tanzania Red Cross Society', phone: '+233 54534545', email: 'trcs@mail.com' },
-  { name: 'Tanzania Red Cross Society', phone: '+233 54534545', email: 'trcs@mail.com' },
-  { name: 'Tanzania Red Cross Society', phone: '+233 54534545', email: 'trcs@mail.com' },
-  { name: 'Tanzania Red Cross Society', phone: '+233 54534545', email: 'trcs@mail.com' },
-  { name: 'Tanzania Red Cross Society', phone: '+233 54534545', email: 'trcs@mail.com' },
-  { name: 'Tanzania Red Cross Society', phone: '+233 54534545', email: 'trcs@mail.com' },
-  { name: 'Tanzania Red Cross Society', phone: '+233 54534545', email: 'trcs@mail.com' },
-];
-
-
 /**
  * Contacts list component
  *
@@ -33,13 +16,14 @@ const fakeData = [
  * @version 0.1.0
  * @since 0.1.0
  */
-export default function ContactsList() {
+export default function ContactsList(props) {
+  const { stakeholders } = props;
   return (
     <React.Fragment>
       <div className="content scrollable">
         <List
           itemLayout="horizontal"
-          dataSource={fakeData}
+          dataSource={stakeholders}
           renderItem={item => (<Contact {...item} />)}
         />
       </div>

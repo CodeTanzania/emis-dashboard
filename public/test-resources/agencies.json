@@ -1,0 +1,14 @@
+
+{
+  "data": [
+    { "name": "Tanzania Red Cross Society", "phone": "+233 54534545", "email": "trcs@mail.com" },
+    { "name": "Dar es Salaam Region Authority", "phone": "+233 54534545", "email": "trcs@mail.com" },
+    { "name": "Tanzania Police Force", "phone": "+233 54534545", "email": "trcs@mail.com" },
+    { "name": "Ambulance Services", "phone": "+233 54534545", "email": "trcs@mail.com" },
+    { "name": "Supportive Personnel", "phone": "+233 54534545", "email": "trcs@mail.com" },
+    { "name": "Prime Minister’s Office –Disaster Management Department", "phone": "+233 54534545", "email": "trcs@mail.com" },
+    { "name": "Hospitals", "phone": "+233 54534545", "email": "trcs@mail.com" },
+    { "name": "Tanzania Fire and Rescue Force", "phone": "+233 54534545", "email": "trcs@mail.com" }
+ 
+  ]
+}
