@@ -45,7 +45,7 @@ class Stakeholders extends Component {
   }
 
   componentDidMount() {
-    API.getAgencies()
+    API.getStakeholders()
       .then(res => res.data)
       .then(data => this.setState({ stakeholders: data, allStakeholders: data }));
   }
@@ -60,10 +60,16 @@ class Stakeholders extends Component {
   };
 
   onSearch = (searchText) => {
-    const {allStakeholders} = this.state;
-    const stakeholderResults = allStakeholders.filter(({name}) => 
-    name.toLocaleLowerCase().includes(searchText.toLocaleLowerCase()));
-    this.setState({stakeholders: stakeholderResults})
+    if(searchText != '') {
+      API.searchStakeholder(searchText)
+    .then(res => res.data)
+    .then(data => this.setState({ stakeholders: data }));
+    }
+    else {
+      const { allStakeholders } = this.state;
+      this.setState({stakeholders: allStakeholders})
+    }
+    
   }
 
   render() {
