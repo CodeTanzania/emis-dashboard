@@ -7,8 +7,7 @@ import Filters from './components/Filters';
 import Header from './components/Header';
 import ContactList from './components/List';
 import StakeholderForm from './components/StakeholderForm';
-import API from '../../services/API';
-import { getStakeholders } from './actions';
+import { getStakeholders, searchStakeholders } from './actions';
 /* load styles */
 import styles from './styles.css';
 const cx = classnames.bind(styles);
@@ -43,20 +42,9 @@ const actions = (
 class Stakeholders extends Component {
   constructor(props) {
     super(props);
-    this.state = { stakeholders: [], visible: false, allStakeholders: [] };
+    this.state = { visible: false };
   }
 
-  componentDidMount() {
-    const data = [
-      { name: 'Dar es Salaam Region Authority", "phone": "+233 54534545", "email": "trcs@mail.com' },
-      { name: 'Tanzania Fire and Rescue Force", "phone": "+233 54534545", "email": "trcs@mail.com' }
-   
-    ]
-    this.props.getStakeholders();
-    API.getStakeholders()
-      .then(res => res.data)
-      .then(data => this.setState({ stakeholders: data, allStakeholders: data }));
-  }
   showDrawer = () => {
     this.setState({ visible: true });
   }
@@ -68,16 +56,8 @@ class Stakeholders extends Component {
   };
 
   onSearch = (searchText) => {
-    if(searchText !== '') {
-      API.searchStakeholder(searchText)
-    .then(res => res.data)
-    .then(data => this.setState({ stakeholders: data }));
-    }
-    else {
-      const { allStakeholders } = this.state;
-      this.setState({stakeholders: allStakeholders})
-    }
-    
+    const {searchStakeholders} = this.props;
+    searchStakeholders(searchText);
   }
 
   render() {
@@ -147,7 +127,7 @@ class Stakeholders extends Component {
             </Header>
             {/* end header */}
             {/* start contact list */}
-            <ContactList stakeholders = {stakeholders} />
+            <ContactList />
             {/* end contact list */}
           </Col>
           {/* end list section */}
@@ -181,9 +161,13 @@ const mapDispatchToProps = dispatch => {
   return {
     getStakeholders: data => {
       dispatch(getStakeholders());
+    },
+    searchStakeholders: data => {
+      dispatch(searchStakeholders(data))
     }
   }
 }
+
 
 export default connect(
   mapStateToProps,
