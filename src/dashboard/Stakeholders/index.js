@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux'
 import { Drawer, Button, Checkbox, Col, Input, Popover, Row } from 'antd';
 import classnames from 'classnames';
 import ContactDetails from './components/Details';
@@ -7,6 +8,7 @@ import Header from './components/Header';
 import ContactList from './components/List';
 import StakeholderForm from './components/StakeholderForm';
 import API from '../../services/API';
+import { getStakeholders } from './actions';
 /* load styles */
 import styles from './styles.css';
 const cx = classnames.bind(styles);
@@ -45,6 +47,12 @@ class Stakeholders extends Component {
   }
 
   componentDidMount() {
+    const data = [
+      { name: 'Dar es Salaam Region Authority", "phone": "+233 54534545", "email": "trcs@mail.com' },
+      { name: 'Tanzania Fire and Rescue Force", "phone": "+233 54534545", "email": "trcs@mail.com' }
+   
+    ]
+    this.props.getStakeholders();
     API.getStakeholders()
       .then(res => res.data)
       .then(data => this.setState({ stakeholders: data, allStakeholders: data }));
@@ -60,7 +68,7 @@ class Stakeholders extends Component {
   };
 
   onSearch = (searchText) => {
-    if(searchText != '') {
+    if(searchText !== '') {
       API.searchStakeholder(searchText)
     .then(res => res.data)
     .then(data => this.setState({ stakeholders: data }));
@@ -74,7 +82,7 @@ class Stakeholders extends Component {
 
   render() {
     const { visible } = this.state;
-    const { stakeholders } = this.state;
+    const { stakeholders } = this.props;
     return (
       <Fragment>
         <Drawer
@@ -163,4 +171,21 @@ class Stakeholders extends Component {
   }
 }
 
-export default Stakeholders;
+const mapStateToProps = state => {
+  return {
+    stakeholders: state.contacts.data
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getStakeholders: data => {
+      dispatch(getStakeholders());
+    }
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Stakeholders)

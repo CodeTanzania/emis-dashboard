@@ -1,15 +1,21 @@
-import { combineReducers } from 'redux';
+
+import { STORE_STAKEHOLDERS } from './actions';
 /**
  * Contacts Reducers
  */
 
-function filters(state = [], action) {
+export function filters(state = [], action) {
   return state;
 }
 
-function contacts(state = { data: [], total: 0 }, action) {
-  return state;
+export function contacts(state = { data: [], total: 0 }, action) {
+  switch (action.type) {
+    case STORE_STAKEHOLDERS:
+      return Object.assign({}, state, {
+        data: action.stakeholders,
+        total: action.stakeholders.length,
+      });
+    default:
+      return state;
+  }
 }
-
-
-export default combineReducers({ filters, contacts });

@@ -3,6 +3,8 @@ import { composeWithDevTools } from 'redux-devtools-extension'; // eslint-disabl
 import { createEpicMiddleware } from 'redux-observable';
 /* local dependencies */
 import rootReducer from './rootReducer';
+import rootEpic from './rootEpic';
+
 
 /* local constants */
 const epicMiddleware = createEpicMiddleware();
@@ -57,7 +59,8 @@ const configureStore = () => {
     applyMiddleware(epicMiddleware),
   ));
 
-  // createEpicMiddleware.run(); add root epics here
+  // epicMiddleware.run(); add root epics here
+  epicMiddleware.run(rootEpic);
 
   return store;
 };
