@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import ListFooter from './footer';
 /* import component */
 import Contact from './item';
-import { getStakeholders } from '../../actions';
+import { getStakeholders, selectedStakeholder } from '../../actions';
 
 
 /**
@@ -25,14 +25,15 @@ class ContactsList extends React.Component {
   }
 
   render() {
-    const { stakeholders } = this.props;
+    const { stakeholders, clickedStakeholder } = this.props;
     return (
       <React.Fragment>
         <div className="content scrollable">
           <List
             itemLayout="horizontal"
             dataSource={stakeholders}
-            renderItem={item => (<Contact {...item} />)}
+            renderItem={item => (
+              <Contact stakeholder={item} clickedStakeholder={clickedStakeholder} />)}
           />
         </div>
         <ListFooter />
@@ -41,9 +42,12 @@ class ContactsList extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({ stakeholders: state.contacts.data });
-const mapDispatchToProps = dispatch => ({ triggerGetStakeholders: () => dispatch(getStakeholders()) });
-
+const mapStateToProps = state => (
+  { stakeholders: state.contacts.data });
+const mapDispatchToProps = dispatch => ({
+  triggerGetStakeholders: () => dispatch(getStakeholders()),
+  clickedStakeholder: stakeholder => dispatch(selectedStakeholder(stakeholder)),
+});
 
 export default connect(
   mapStateToProps,

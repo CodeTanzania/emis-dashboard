@@ -33,10 +33,18 @@ const actions = (
  * @version 0.1.0
  * @since 0.1.0
  */
-export default function Contact({ name, phone, email }) {
+
+export default function Contact(props) {
+  const {stakeholder, clickedStakeholder} = props;
+  const { name, phone, email } = stakeholder;
+  const onClick = () => {
+    console.log('a click just occured');
+    clickedStakeholder(stakeholder);
+  };
   return (
     <List.Item className="p-l-20">
       <List.Item.Meta
+        onClick={onClick}
         avatar={<Checkbox />}
         title={(
           <Row>

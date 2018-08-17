@@ -14,12 +14,14 @@ import InformationItem from './Item';
  * @version 0.1.0
  * @since 0.1.0
  */
-export default function Information() {
+export default function Information(props) {
+  const { stakeholder } = props;
+  const { phone, email } = stakeholder;
   return (
     <div>
       <Row>
         <Col span={12}>
-          <InformationItem label="Phone" value="+255 434 4343" />
+          <InformationItem label="Phone" value={phone} />
         </Col>
         <Col span={12}>
           <InformationItem label="Address" value="Samora Avenue, Block 79" />
@@ -27,7 +29,7 @@ export default function Information() {
       </Row>
       <Row>
         <Col span={12}>
-          <InformationItem label="Email" value="mail@mail.com" />
+          <InformationItem label="Email" value={email} />
         </Col>
       </Row>
       <Row>

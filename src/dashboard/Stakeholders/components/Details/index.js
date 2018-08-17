@@ -1,4 +1,5 @@
 import { Button, Row } from 'antd';
+import { connect } from 'react-redux';
 import React from 'react';
 import Information from './components/Information';
 import PersonnelList from './components/Personnel';
@@ -16,14 +17,15 @@ import SectionHeader from './components/SectionHeader';
  * @version 0.1.0
  * @since 0.1.0
  */
-export default function Details() {
+function Details(props) {
+  const { selected } = props;
   return (
     <div className="content scrollable">
       {/* start contact detail section */}
       <Row>
-        <SectionHeader title="Tanzania Red Cross Society" actions={<Button icon="edit" className="f-20 b-0" />} />
+        <SectionHeader title={selected.name} actions={<Button icon="edit" className="f-20 b-0" />} />
         <SectionContent>
-          <Information />
+          <Information stakeholder={selected} />
         </SectionContent>
       </Row>
       {/* end contact detail section */}
@@ -46,3 +48,13 @@ export default function Details() {
     </div>
   );
 }
+
+const mapStateToProps = state => (
+  {
+    selected: state.contacts.selected
+      ? state.contacts.selected : state.contacts.data[0],
+  });
+
+export default connect(
+  mapStateToProps,
+)(Details);
