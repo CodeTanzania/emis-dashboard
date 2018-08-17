@@ -35,7 +35,7 @@ const actions = (
  */
 
 export default function Contact(props) {
-  const {stakeholder, clickedStakeholder} = props;
+  const { stakeholder, clickedStakeholder } = props;
   const { name, phone, email } = stakeholder;
   const onClick = () => {
     console.log('a click just occured');
@@ -82,7 +82,11 @@ export default function Contact(props) {
 
 /* Validating props types */
 Contact.propTypes = {
-  name: PropTypes.string.isRequired,
-  phone: PropTypes.string.isRequired,
-  email: PropTypes.string.isRequired,
+  stakeholder: PropTypes.object,
+  clickedStakeholder: PropTypes.object,
+};
+
+Contact.defaultProps = {
+  stakeholder: {},
+  clickedStakeholder: {},
 };

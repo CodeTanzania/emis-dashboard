@@ -1,5 +1,6 @@
 import { Button, Row } from 'antd';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import React from 'react';
 import Information from './components/Information';
 import PersonnelList from './components/Personnel';
@@ -58,3 +59,11 @@ const mapStateToProps = state => (
 export default connect(
   mapStateToProps,
 )(Details);
+
+Details.propTypes = {
+  selected: PropTypes.object,
+};
+
+Details.defaultProps = {
+  selected: {},
+};

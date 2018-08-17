@@ -1,5 +1,6 @@
 import { Col, Row } from 'antd';
 import React from 'react';
+import PropTypes from 'prop-types';
 /* import component */
 import InformationItem from './Item';
 
@@ -16,7 +17,9 @@ import InformationItem from './Item';
  */
 export default function Information(props) {
   const { stakeholder } = props;
-  const { phone, email } = stakeholder;
+  const {
+    phone, email, physicalAddress, fax,
+  } = stakeholder;
   return (
     <div>
       <Row>
@@ -24,7 +27,7 @@ export default function Information(props) {
           <InformationItem label="Phone" value={phone} />
         </Col>
         <Col span={12}>
-          <InformationItem label="Address" value="Samora Avenue, Block 79" />
+          <InformationItem label="Address" value={physicalAddress} />
         </Col>
       </Row>
       <Row>
@@ -34,9 +37,17 @@ export default function Information(props) {
       </Row>
       <Row>
         <Col span={12}>
-          <InformationItem label="Fax" value="mail@mail.com" />
+          <InformationItem label="Fax" value={fax} />
         </Col>
       </Row>
     </div>
   );
 }
+
+Information.propTypes = {
+  stakeholder: PropTypes.object,
+};
+
+Information.defaultProps = {
+  stakeholder: {},
+};
