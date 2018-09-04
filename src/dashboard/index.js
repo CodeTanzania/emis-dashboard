@@ -5,6 +5,7 @@ import { NavLink, Route, Switch } from 'react-router-dom';
 import logo from '../logo.svg';
 /* Components */
 import Contacts from './contacts';
+import Alerts from './alerts';
 /* import styles */
 import styles from './dashboard.css';
 
@@ -45,6 +46,16 @@ export default function Dashboard() {
             </NavLink>
           </Menu.Item>
           {/* end contact menu */}
+          {/* start alerts menu */}
+          <Menu.Item key="1">
+            <NavLink to="/alerts">
+            <Icon type="warning" theme="outlined" className="f-25" />
+              <span>
+                Alerts
+              </span>
+            </NavLink>
+          </Menu.Item>
+          {/* end alerts menu */}
           {/* setting menu */}
           <Menu.Item key="1">
             <NavLink to="/contacts">
@@ -53,6 +64,7 @@ export default function Dashboard() {
                 Settings
               </span>
             </NavLink>
+            
           </Menu.Item>
           {/* end setting menu */}
         </Menu>
@@ -61,6 +73,7 @@ export default function Dashboard() {
         <Content className={cx('content')}>
           <Switch>
             <Route path="/contacts" exact component={Contacts} />
+            <Route path="/alerts" exact component={Alerts} />
           </Switch>
         </Content>
       </Layout>
