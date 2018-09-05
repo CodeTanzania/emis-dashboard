@@ -9,6 +9,39 @@
     margin: 0.2% 0% 0% 40% ;
 }
 
+.ant-card {
+    margin: 5%;
+    width: 90%;
+}
+.ant-card-custom-style .ant-card-body {
+    padding: 0px;
+}
+
+.ant-card-custom-style {
+    border-left: 15px solid #1871cf;
+}
+.ant-card-action-first-col {
+    border-right: 1px solid #e8e8e8;
+    height: 10%;
+}
+
+.ant-card-action-second-col {
+padding-right: 1px;
+}
+.ant-card-action-first-col p {
+    font-size: 24px;
+    margin: auto;
+    padding: 5% 0% 0% 30%;
+}
+
+.ant-card-action-second-col p {
+    font-size: 24px;
+    margin: auto;
+    padding: 5% 0% 0% 20%;
+}
+
+
+
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
     .alert-column {
