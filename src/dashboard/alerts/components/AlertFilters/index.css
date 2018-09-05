@@ -1,0 +1,10 @@
+.ant-calendar-picker, .ant-select {
+    width: 20%;
+    padding: 0% 2% 0% 0%;
+}
+
+.ant-calendar-picker-clear, .ant-calendar-picker-icon {
+    font-size: 25px;
+    width: 20%;
+    padding: 0% 2% 5% 0%;
+}

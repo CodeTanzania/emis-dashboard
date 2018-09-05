@@ -1,7 +1,12 @@
 
 import React from 'react';
-import { Select } from 'antd';
+import { Select, DatePicker } from 'antd';
+import moment from 'moment';
+import classnames from 'classnames';
+import styles from './index.css';
 
+const cx = classnames.bind(styles);
+const dateFormat = 'YYYY/MM/DD';
 function handleChange(value) {
     console.log(value);
   }
@@ -9,21 +14,16 @@ export default function AlertFilters() {
     const Option = Select.Option;
     return(
         <React.Fragment>
-            <Select labelInValue defaultValue={{ key: 'lucy' }} style={{ width: 120 }} onChange={handleChange}>
-                <Option value="jack">Jack (100)</Option>
-                <Option value="lucy">Lucy (101)</Option>
+            <Select placeholder="Region" size='large' onChange={handleChange}>
+            <Option value="daressalaam">Dar es salaam</Option>
             </Select>
-            <Select labelInValue defaultValue={{ key: 'lucy' }} style={{ width: 120 }} onChange={handleChange}>
-                <Option value="jack">Jack (100)</Option>
-                <Option value="lucy">Lucy (101)</Option>
+            <Select placeholder="Incident Type" size='large' onChange={handleChange}>
+                <Option value="flood">Flood</Option>
+                <Option value="fire">Fire</Option>
             </Select>
-            <Select labelInValue defaultValue={{ key: 'lucy' }} style={{ width: 120 }} onChange={handleChange}>
-                <Option value="jack">Jack (100)</Option>
-                <Option value="lucy">Lucy (101)</Option>
-            </Select>
-            <Select labelInValue defaultValue={{ key: 'lucy' }} style={{ width: 120 }} onChange={handleChange}>
-                <Option value="jack">Jack (100)</Option>
-                <Option value="lucy">Lucy (101)</Option>
+            <DatePicker size='large' defaultValue={moment('2015/01/01', dateFormat)} format={dateFormat} />
+            <Select placeholder="Issuerer" size='large' onChange={handleChange}>
+                <Option value="tma">TMA</Option>
             </Select>
         </React.Fragment>              
     );
