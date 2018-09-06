@@ -4,44 +4,11 @@ import { chunk, nth, take, last } from 'lodash';
 import { Row, Col, Card, Icon} from 'antd';
 import classnames from 'classnames';
 import styles from './index.css';
+import AlertCard from './alertCard';
+
 import API from '../../../../services/API';
 
 const cx = classnames.bind(styles);
-
-function AlertContents(props) {
-    const { card } = props;
-    const {title, issuedAt, source, direction, createdAt} = card;
-
-    return(
-        <div>
-            <h2>{title}</h2>
-            <p>Created at: {createdAt} by {source}</p>
-            <p>{direction}</p>
-            <p>Probable duration: {issuedAt}</p>
-        </div>
-    );
-}
-
-function AlertCard (props) {
-    const { card } = props;
-    return(
-        <Card
-            className={cx('ant-card-custom-style')}
-             title={<AlertContents card={card} />}
-             extra={<span>Flood</span>}
-            >
-                <Row>
-                    <Col span={12} className={cx('ant-card-action-first-col')}>
-                    <p>Read More</p>
-                    </Col>
-                    <Col span={12} className={cx('ant-card-action-second-col')}>
-                    <p>View Plan</p>
-                    </Col>
-                </Row>
-            </Card>
-    );
-}
-
 
 class AlertsList extends React.Component {
 
