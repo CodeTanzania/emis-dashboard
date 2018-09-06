@@ -3,6 +3,8 @@ import { composeWithDevTools } from 'redux-devtools-extension'; // eslint-disabl
 import { createEpicMiddleware } from 'redux-observable';
 /* local dependencies */
 import rootReducer from './rootReducer';
+import rootEpic from './rootEpic';
+
 
 /* local constants */
 const epicMiddleware = createEpicMiddleware();
@@ -21,22 +23,10 @@ const fakeStore = {
     },
   },
   contacts: {
-    data: [
-      { name: 'Tanzania Red Cross Society', phone: '+233 54534545', email: 'trcs@mail.com' },
-      { name: 'Tanzania Red Cross Society', phone: '+233 54534545', email: 'trcs@mail.com' },
-      { name: 'Tanzania Red Cross Society', phone: '+233 54534545', email: 'trcs@mail.com' },
-      { name: 'Tanzania Red Cross Society', phone: '+233 54534545', email: 'trcs@mail.com' },
-      { name: 'Tanzania Red Cross Society', phone: '+233 54534545', email: 'trcs@mail.com' },
-      { name: 'Tanzania Red Cross Society', phone: '+233 54534545', email: 'trcs@mail.com' },
-      { name: 'Tanzania Red Cross Society', phone: '+233 54534545', email: 'trcs@mail.com' },
-      { name: 'Tanzania Red Cross Society', phone: '+233 54534545', email: 'trcs@mail.com' },
-      { name: 'Tanzania Red Cross Society', phone: '+233 54534545', email: 'trcs@mail.com' },
-      { name: 'Tanzania Red Cross Society', phone: '+233 54534545', email: 'trcs@mail.com' },
-      { name: 'Tanzania Red Cross Society', phone: '+233 54534545', email: 'trcs@mail.com' },
-      { name: 'Tanzania Red Cross Society', phone: '+233 54534545', email: 'trcs@mail.com' },
-      { name: 'Tanzania Red Cross Society', phone: '+233 54534545', email: 'trcs@mail.com' },
-    ],
-    total: 100,
+    data: [],
+    total: 0,
+    selected: {},
+    isDrawerOpen: false,
   },
 };
 
@@ -57,7 +47,8 @@ const configureStore = () => {
     applyMiddleware(epicMiddleware),
   ));
 
-  // createEpicMiddleware.run(); add root epics here
+  // epicMiddleware.run(); add root epics here
+  epicMiddleware.run(rootEpic);
 
   return store;
 };

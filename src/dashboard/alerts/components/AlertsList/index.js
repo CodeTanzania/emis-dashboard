@@ -1,9 +1,13 @@
 
 import React from 'react';
+import { connect } from 'react-redux';
+import { createSelector } from 'reselect';
 import { chunk, nth, take, last } from 'lodash';
 import { Row, Col, Card, Icon} from 'antd';
 import classnames from 'classnames';
 import styles from './index.css';
+import { triggerFetchAlerts } from '../../actions';
+import { alertsSelector } from '../../selectors';
 import AlertCard from './alertCard';
 
 import API from '../../../../services/API';
@@ -18,12 +22,11 @@ class AlertsList extends React.Component {
     }
 
     componentDidMount () {
-        console.log('component did mount called');
-        API.getAlerts()
-        .then(res => this.setState({alerts: res}));
+        const {triggerFetchAlerts} = this.props;
+        triggerFetchAlerts();
     }
 
-    splitArray = (arr, chunksCount) => {
+    splitArray = (arr = [], chunksCount) => {
         const arrays = chunk(arr, arr.length/chunksCount)
         if(arrays.length > chunksCount)  arrays[1] = [...nth(arrays,1), ...last(arrays)];
         return take(arrays, chunksCount);
@@ -33,7 +36,8 @@ class AlertsList extends React.Component {
     showAlertCards = (cardsArray = []) => cardsArray.map(card => <AlertCard card={card}/>);
     
     render() {
-        const alertChunks = this.splitArray(this.state.alerts, 3);
+        const { alerts } = this.props;
+        const alertChunks = this.splitArray(alerts, 3);
         console.log(alertChunks);
         return(
             <Row align="center" >
@@ -64,7 +68,21 @@ class AlertsList extends React.Component {
     }
 }
 
-export default  AlertsList;
+const mapStateToprops = createSelector(
+    [
+      alertsSelector,
+    ],
+    alerts => ({ alerts }),
+  );
+
+const mapDispatchToProps = dispatch => ({
+    triggerFetchAlerts: () => dispatch(triggerFetchAlerts()),
+  });
+
+  export default connect(
+    mapStateToprops,
+    mapDispatchToProps,
+  )(AlertsList);
 
 
 
