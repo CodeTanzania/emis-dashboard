@@ -21,7 +21,7 @@ export default function AlertFilters() {
                 <Option value="flood">Flood</Option>
                 <Option value="fire">Fire</Option>
             </Select>
-            <DatePicker size='large' defaultValue={moment('2015/01/01', dateFormat)} format={dateFormat} />
+            <DatePicker size='large' defaultValue={moment('2018/01/01', dateFormat)} format={dateFormat} />
             <Select placeholder="Issuerer" size='large' onChange={handleChange}>
                 <Option value="tma">TMA</Option>
             </Select>

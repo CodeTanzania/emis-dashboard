@@ -4,7 +4,12 @@
     margin-bottom: 0px;
 }
 
-
+.truncate-text {
+    white-space: nowrap; 
+    width: 90%; 
+    overflow: hidden;
+    text-overflow: ellipsis; 
+}
 .plus-icon-text {
     margin: 0.2% 0% 0% 40% ;
 }

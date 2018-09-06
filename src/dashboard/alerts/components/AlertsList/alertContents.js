@@ -1,5 +1,10 @@
 
 import React from 'react';
+import Moment from 'react-moment';
+import classnames from 'classnames';
+import styles from './index.css';
+
+const cx = classnames.bind(styles);
 
 function AlertContents(props) {
     const { card } = props;
@@ -7,10 +12,16 @@ function AlertContents(props) {
 
     return(
         <div>
-            <h2>{title}</h2>
-            <p>Created at: {createdAt} by {source}</p>
+            <h2 className={cx('truncate-text')}>{title}</h2>
+            <p>
+                Created at: <Moment format="DD/MM/YYYY">{createdAt}</Moment> by {source}
+            </p>
+
             <p>{direction}</p>
-            <p>Probable duration: {issuedAt}</p>
+
+            <p>
+                Probable duration: <Moment format="DD/MM/YYYY">{issuedAt}</Moment>
+            </p>
         </div>
     );
 }
