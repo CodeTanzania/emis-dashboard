@@ -1,12 +1,12 @@
-import classnames from 'classnames';
+import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
 import React from 'react';
 /* import styles */
-import styles from './index.css';
+import styles from './index.module.css';
 
 
 /* local constants */
-const cx = classnames.bind(styles);
+const cx = classNames.bind(styles);
 
 
 /**
@@ -22,7 +22,7 @@ const cx = classnames.bind(styles);
  */
 export default function Header({ children }) {
   return (
-    <div className={cx('header b-b')}>
+    <div className={cx('container')}>
       {React.isValidElement(children)
         ? (
           <div className={cx('component')}>

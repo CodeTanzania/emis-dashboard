@@ -1,23 +1,28 @@
 
 import { ofType } from 'redux-observable';
-import { from, of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { from } from 'rxjs';
+import { switchMap, map, catchError } from 'rxjs/operators';
 
-import { GET_STAKEHOLDERS, SEARCH_STAKEHOLDERS, storeStakeHolders } from './actions';
-import API from '../../services/API';
+import {
+  FETCH_STAKEHOLDERS,
+  SEARCH_STAKEHOLDERS,
+  fetchStakeholdersSuccess,
+  fetchStakeholdersFailure,
+} from './actions';
+import API from 'API';
 
-export const getStakeholdersEpic = action$ => action$.pipe(
-  ofType(GET_STAKEHOLDERS),
-  switchMap(action => from(API.getStakeholders()
-    .then(res => res.data)
-    .then(data => data))),
-  switchMap(data => of(storeStakeHolders(data))),
+
+export const fetchStakeholdersEpic = action$ => action$.pipe(
+  ofType(FETCH_STAKEHOLDERS),
+  // use Rx from operator to convert promise into observable
+  switchMap(() => from(API.findStakeholders())),
+  map(results => fetchStakeholdersSuccess(results)), // map the resulting array to an action of type FETCH_STAKEHOLDERS_SUCCESS
+  catchError(error => fetchStakeholdersFailure(error.message))
 );
 
 export const searchStakeholdersEpic = action$ => action$.pipe(
-  ofType(SEARCH_STAKEHOLDERS),
-  switchMap(action => from(API.searchStakeholder(action.searchText)
-    .then(res => res.data)
-    .then(data => data))),
-  switchMap(data => of(storeStakeHolders(data))),
+  ofType(SEARCH_STAKEHOLDERS), // Init stakeholder search
+  switchMap(action => from(API.searchStakeholder(action.searchText))), // search stakeholder 
+  map(results => fetchStakeholdersSuccess(results)), // map the resulting array to an action of type FETCH_STAKEHOLDERS_SUCCESS
+  catchError(error => fetchStakeholdersFailure(error.message))
 );

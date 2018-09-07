@@ -1,33 +1,14 @@
-import React, { Component, Fragment } from 'react';
-import { connect } from 'react-redux'
-import { Drawer, Button, Checkbox, Col, Input, Popover, Row } from 'antd';
-import classnames from 'classnames';
-import ContactDetails from './components/Details';
-import Filters from './components/Filters';
-import Header from './components/Header';
-import ContactList from './components/List';
-import StakeholderForm from './components/StakeholderForm';
-import { getStakeholders, searchStakeholders } from './actions';
+import React, { Fragment } from 'react';
+import { Col, Row } from 'antd';
+import Header from 'Header';
+import classNames from 'classnames/bind';
+import StakeholderProfile from './components/StakeholderProfile';
+import StakeholderFilter from './components/StakeholderFilter';
+import StakeholderList from './components/StakeholderList';
 /* load styles */
 import styles from './styles.css';
-const cx = classnames.bind(styles);
+const cx = classNames.bind(styles);
 
-/* local constants */
-const { Search } = Input;
-const actions = (
-  <div>
-    <div>
-      <Button icon="share-alt" className="b-0">
-        Share
-      </Button>
-    </div>
-    <div>
-      <Button icon="hdd" className="b-0">
-        Archive
-      </Button>
-    </div>
-  </div>
-);
 
 /**
  * Render contacts panel component which have all the the components in relation
@@ -39,137 +20,22 @@ const actions = (
  * @version 0.1.0
  * @since 0.1.0
  */
-class Stakeholders extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { visible: false };
-  }
-
-  showDrawer = () => {
-    this.setState({ visible: true });
-  }
-
-  onClose = () => {
-    this.setState({
-      visible: false,
-    });
-  };
-
-  onSearch = (searchText) => {
-    const {searchStakeholders} = this.props;
-    searchStakeholders(searchText);
-  }
-
-  render() {
-    const { visible } = this.state;
-    const { stakeholders } = this.props;
-    return (
-      <Fragment>
-        <Drawer
-          title="Create Stakeholder"
-          width='50%'
-          placement="right"
-          visible={visible}
-          onClose={this.onClose}
-          maskClosable={false}
-        >
-          <StakeholderForm handleCancelClick={this.onClose} />
-        </Drawer>
-        <Row>
-          {/* start filter section */}
-          <Col span={4} className={cx('section')}>
-            {/* start header */}
-            <Header>
-              <h3>
-                Stakeholders
-            </h3>
-            </Header>
-            {/* end header */}
-            {/* start new contacts button */}
-            <Button
-              icon="plus"
-              type="primary"
-              className={cx('button-center')}
-              onClick={this.showDrawer}
-            >
-              New Contact
-          </Button>
-            {/* end new contacts button */}
-            {/* start filters */}
-            <Filters />
-            {/* end filters */}
-          </Col>
-          {/* end filter section */}
-          {/* start list section */}
-          <Col span={6} className={cx('section')}>
-            {/* start header */}
-            <Header>
-              <Row type="flex" justify="space-around">
-                <Col span={1}>
-                  <Checkbox />
-                </Col>
-                <Col span={19}>
-                  {/* start search component */}
-                  <Search
-                    placeholder="Search here"
-                    onSearch={value => this.onSearch(value) }
-                    style={{ width: '100%' }}
-                    enterButton={<Button icon="search" />}
-                  />
-                  {/* end search component */}
-                </Col>
-                <Col span={2}>
-                  <Popover placement="bottom" trigger="click" content={actions}>
-                    <Button icon="ellipsis" className="f-20 b-0" />
-                  </Popover>
-                </Col>
-              </Row>
-            </Header>
-            {/* end header */}
-            {/* start contact list */}
-            <ContactList />
-            {/* end contact list */}
-          </Col>
-          {/* end list section */}
-          {/* start details section */}
-          <Col span={14} className={cx('section')}>
-            {/* start header */}
-            <Header>
-              <h3>
-                Basic Information
-            </h3>
-            </Header>
-            {/* end header */}
-            {/* start contact details */}
-            <ContactDetails />
-            {/* end contact details */}
-          </Col>
-          {/* end details section */}
-        </Row>
-      </Fragment>
-    );
-  }
-}
-
-const mapStateToProps = state => {
-  return {
-    stakeholders: state.contacts.data
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    getStakeholders: data => {
-      dispatch(getStakeholders());
-    },
-    searchStakeholders: data => {
-      dispatch(searchStakeholders(data))
-    }
-  }
-}
+const Stakeholders = () => (
+  <Fragment>
+    <Header title='Stakeholders' />
+    <Row>
+      <Col span={4} className={cx('section')}>
+        <StakeholderFilter />
+      </Col>
+      <Col span={6} className={cx('section')}>
+        <StakeholderList />
+      </Col>
+      <Col span={14} className={cx('section')}>
+        <StakeholderProfile />
+      </Col>
+    </Row>
+  </Fragment>
+);
 
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Stakeholders)
+export default Stakeholders;
