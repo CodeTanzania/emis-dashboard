@@ -17,10 +17,10 @@ function AlertCard (props) {
             >
                 <Row>
                     <Col span={12} className={cx('ant-card-action-first-col')}>
-                    <p>Read More</p>
+                    <p className={cx('alert-card-fonts')} >Read More</p>
                     </Col>
                     <Col span={12} className={cx('ant-card-action-second-col')}>
-                    <p>View Plan</p>
+                    <p className={cx('alert-card-fonts')}>View Plan</p>
                     </Col>
                 </Row>
             </Card>

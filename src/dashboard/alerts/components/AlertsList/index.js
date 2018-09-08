@@ -3,28 +3,43 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { chunk, nth, take, last } from 'lodash';
-import { Row, Col, Card, Icon} from 'antd';
+import { Row, Col, Card, Icon, Drawer} from 'antd';
 import classnames from 'classnames';
 import styles from './index.css';
 import { triggerFetchAlerts } from '../../actions';
 import { alertsSelector } from '../../selectors';
 import AlertCard from './alertCard';
+import AlertForm from '../AlertForm';
 
 import API from '../../../../services/API';
 
 const cx = classnames.bind(styles);
 
+
 class AlertsList extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {alerts: []};
+        this.state = {alerts: [], visible: false };
     }
 
     componentDidMount () {
         const {triggerFetchAlerts} = this.props;
         triggerFetchAlerts();
     }
+
+    showDrawer = () => {
+        this.setState(
+            { visible: true }
+        )
+    }
+
+    onClose = () => {
+        this.setState(
+            { visible: false }
+        )
+    }
+
 
     splitArray = (arr = [], chunksCount) => {
         const arrays = chunk(arr, arr.length/chunksCount)
@@ -43,10 +58,19 @@ class AlertsList extends React.Component {
             <Row align="center" >
                 {/* Start First Column with card for new alert */}
                 <Col span={8} className={cx('alert-column')}>
-                    <Card>
+                    <Card onClick={this.showDrawer}>
                             <Icon type="plus-circle" theme="filled" style={{ fontSize: '80px',  marginLeft: '45%'}} />
                             <h1 className={cx('plus-icon-text')}>New Alert</h1>
                     </Card>
+                    <Drawer
+                    width={900}
+                    placement="right"
+                    closable={false}
+                    onClose={this.onClose}
+                    visible={this.state.visible}
+                    >
+                    <AlertForm />
+                    </Drawer>
                     {this.showAlertCards(alertChunks[0])}
                 </Col>
                 {/* End First Column with card for new alert  */}

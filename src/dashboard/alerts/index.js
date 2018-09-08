@@ -10,7 +10,7 @@ const cx = classnames.bind(styles);
 
 export default function Alerts() {
     return(
-        <div>
+        <div className={cx('alerts')}>
             <div className={cx('alerts-heading')}><h1>Alerts</h1></div>
             <Row className={cx('top-row')}>
                 <Col span={20}>

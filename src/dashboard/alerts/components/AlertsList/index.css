@@ -1,8 +1,6 @@
 
 
-.ant-divider-horizontal {
-    margin-bottom: 0px;
-}
+
 
 .truncate-text {
     white-space: nowrap; 
@@ -14,6 +12,8 @@
     margin: 0.2% 0% 0% 40% ;
 }
 
+
+
 .ant-card {
     margin: 5%;
     width: 90%;
@@ -24,6 +24,7 @@
 
 .ant-card-custom-style {
     border-left: 15px solid #1871cf;
+    font-family: Lato, sans-serif;
 }
 .ant-card-action-first-col {
     border-right: 1px solid #e8e8e8;
@@ -34,15 +35,18 @@
 padding-right: 1px;
 }
 .ant-card-action-first-col p {
-    font-size: 24px;
     margin: auto;
     padding: 5% 0% 0% 30%;
 }
 
 .ant-card-action-second-col p {
-    font-size: 24px;
     margin: auto;
     padding: 5% 0% 0% 20%;
+}
+
+.ant-card-action-second-col p, .ant-card-action-first-col p {
+    font-size: 18px;
+    font-weight: 500;
 }
 
 

@@ -1,0 +1,47 @@
+.ant-drawer-body {
+    padding: 15px 0px 24px 0px;
+}
+
+
+.alert-form-title {
+    font-size: 1.8em;
+    color: #9a92a5;
+    margin-bottom: 14px;
+}
+
+.alert-form > .ant-divider-horizontal {
+    margin-top: 0px;
+    margin-bottom: 40px;
+}
+
+.ant-form-item-label label {
+    color: #9a92a5;
+}
+
+.ant-form label {
+    font-size: 1.5em;
+    padding-right: 14px;
+}
+
+form .ant-select {
+    width: 52%;
+}
+
+#ExpectedMagnitude {
+    width: 50%;
+}
+
+#regions {
+    width: 60%;
+}
+
+#probable-duration {
+    width: 52%;
+}
+
+#probable-duration > .ant-calendar-picker-clear, .ant-calendar-picker-icon {
+    font-size: 20px;
+    margin-right: 210px;
+}
+
+

@@ -1,7 +1,13 @@
 .top-row {
     margin: 0% 0% 0% 2%;
+    
 }
 
 .alerts-heading {
     margin: 0% 0% 0% 2%;
+}
+
+
+.alerts > .ant-divider-horizontal {
+    margin-bottom: 0px;
 }
