@@ -55,7 +55,7 @@ class NewAlertForm extends React.Component {
           {getFieldDecorator('Source', {
             rules: [],
           })(
-            <Select size='large' placeholder="Please select a source">
+            <Select size='large'>
               <Option value="tma">TMA</Option>
               <Option value="tahmo">TAHMO</Option>
             </Select>
@@ -69,7 +69,7 @@ class NewAlertForm extends React.Component {
           {getFieldDecorator('AlertType', {
             rules: [],
           })(
-            <Select size='large' placeholder="Please select a Alert Type">
+            <Select size='large'>
               <Option value="flood">Flood</Option>
               <Option value="fire">Fire</Option>
             </Select>
@@ -90,7 +90,7 @@ class NewAlertForm extends React.Component {
           label="Probable Duration"
         >
           {getFieldDecorator('probable-duration', rangeConfig)(
-            <RangePicker size='large' />
+            <RangePicker placeholder={['from', 'to']} size='large' />
           )}
         </FormItem>
         <FormItem
@@ -126,12 +126,12 @@ class NewAlertForm extends React.Component {
         <FormItem
           {...formItemLayout}
         >
-          <Row>
-            <Col span={4} offset={8}>
-            <Button>Cancel</Button>
+          <Row className={cx('form-actions')}>
+            <Col span={6} offset={6}>
+            <Button id={cx('button-cancel')}>Cancel</Button>
             </Col>
-            <Col span={8}>
-            <Button type="primary" htmlType="submit">Save</Button>
+            <Col span={10} offset={1}>
+            <Button type="primary" id={cx('button-save')} htmlType="submit">Save</Button>
             </Col>
           </Row>
         </FormItem>

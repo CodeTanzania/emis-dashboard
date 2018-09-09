@@ -39,6 +39,22 @@ form .ant-select {
     width: 52%;
 }
 
+.form-actions {
+    margin: 100px 0px 0px 200px;
+}
+
+.form-actions button {
+    font-size: 1.5em;
+    color: #ffffff;
+    width: 100px;
+}
+
+#button-cancel {
+    background-color: #6f6f70;
+    width: 100px;
+}
+
+
 #probable-duration > .ant-calendar-picker-clear, .ant-calendar-picker-icon {
     font-size: 20px;
     margin-right: 210px;

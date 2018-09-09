@@ -1,0 +1,28 @@
+.ant-modal-body h2 {
+    color: #1e85d5;
+}
+
+.ant-modal {
+    font-family: Lato, sans-serif;
+}
+
+.ant-modal-body p {
+    font-size: 1.2em;
+}
+
+.ant-modal-body h3  {
+    font-size: 1em;
+    
+}
+
+#alert-description h3 {
+    font-size: 1.2em;
+}
+
+#alert-description p {
+    font-size: 1.1em;
+}
+
+.ant-modal-mask {
+    display: none;
+}
