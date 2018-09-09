@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Row, Col, Card, Modal, Button } from 'antd';
+import { Row, Col, Card, Modal, Divider } from 'antd';
 import classnames from 'classnames';
 import AlertContents from './alertContents';
 import AlertDetails from '../AlertDetails';
@@ -31,18 +31,21 @@ class AlertCard extends React.Component {
  
     render() {
         const { card } = this.props;
+        const cardStyles = {margin: '45px 35px 45px 35px', width: 520, height: 225, boxShadow: '0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19)'};
         return(
             <Card
                 className={cx('ant-card-custom-style')}
                  title={<AlertContents card={card} />}
-                 extra={<span>Flood</span>}
+                 extra={<span class='alert-card-fonts'>Floods</span>}
+                 style={cardStyles}
                 >
                     <Row onClick={this.showModal}>
-                        <Col span={12} className={cx('ant-card-action-first-col')}>
-                        <p className={cx('alert-card-fonts')} >Read More</p>
+                        <Col span={12} className={cx('alert-card-fonts-action-one')}>
+                        <div className={cx('alert-card-fonts-action')} >Read More</div>
                         </Col>
-                        <Col span={12} className={cx('ant-card-action-second-col')}>
-                        <p className={cx('alert-card-fonts')}>View Plan</p>
+                        
+                        <Col span={12}>
+                        <div className={cx('alert-card-fonts-action')}>View Plan</div>
                         </Col>
                     </Row>
                     

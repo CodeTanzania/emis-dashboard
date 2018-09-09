@@ -1,10 +1,16 @@
 .top-row {
-    margin: 0% 0% 0% 2%;
+    margin: 15px 0px 0px 0px;
     
 }
 
 .alerts-heading {
-    margin: 0% 0% 0% 2%;
+  background-color:  #fafafa;
+  padding: 30px 0px 15px 40px;
+}
+
+.alerts-heading div {
+    font-size: 1.35em;
+    color: #9a92a5;
 }
 
 

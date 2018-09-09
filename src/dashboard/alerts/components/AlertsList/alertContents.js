@@ -11,17 +11,17 @@ function AlertContents(props) {
     const {title, issuedAt, source, direction, createdAt} = card;
 
     return(
-        <div>
+        <div >
             <h2 className={cx('truncate-text')}>{title}</h2>
-            <p>
+            <div class='alert-card-fonts'>
                 Created at: <Moment format="DD/MM/YYYY">{createdAt}</Moment> by {source}
-            </p>
+            </div>
 
-            <p>{direction}</p>
+            <div class='alert-card-fonts' >{direction}</div>
 
-            <p>
+            <div class='alert-card-fonts'>
                 Probable duration: <Moment format="DD/MM/YYYY">{issuedAt}</Moment>
-            </p>
+            </div>
         </div>
     );
 }

@@ -6,7 +6,9 @@ import classnames from 'classnames';
 import styles from './index.css';
 
 const cx = classnames.bind(styles);
+const { RangePicker } = DatePicker;
 const dateFormat = 'YYYY/MM/DD';
+const filterSelectStyles = { width: 140, marginRight: '15px' };
 function handleChange(value) {
     console.log(value);
   }
@@ -14,15 +16,18 @@ export default function AlertFilters() {
     const Option = Select.Option;
     return(
         <React.Fragment>
-            <Select placeholder="Region" size='large' onChange={handleChange}>
+            <Select placeholder="Region" style={filterSelectStyles} size='large' onChange={handleChange}>
             <Option value="daressalaam">Dar es salaam</Option>
             </Select>
-            <Select placeholder="Incident Type" size='large' onChange={handleChange}>
+            <Select placeholder="Incident Type" style={filterSelectStyles} size='large' onChange={handleChange}>
                 <Option value="flood">Flood</Option>
                 <Option value="fire">Fire</Option>
             </Select>
-            <DatePicker size='large' defaultValue={moment('2018/01/01', dateFormat)} format={dateFormat} />
-            <Select placeholder="Issuerer" size='large' onChange={handleChange}>
+            <RangePicker
+            defaultValue={[moment('2015/01/01', dateFormat), moment('2015/01/01', dateFormat)]}
+            format={dateFormat} style={{ width: 280, marginRight: '15px' }} size='large'
+            />
+            <Select placeholder="Issuerer" style={filterSelectStyles}  size='large' onChange={handleChange}>
                 <Option value="tma">TMA</Option>
             </Select>
         </React.Fragment>              

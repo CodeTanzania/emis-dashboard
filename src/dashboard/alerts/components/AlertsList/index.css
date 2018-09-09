@@ -1,54 +1,54 @@
 
 
-
-
-.truncate-text {
-    white-space: nowrap; 
-    width: 90%; 
-    overflow: hidden;
-    text-overflow: ellipsis; 
-}
-.plus-icon-text {
-    margin: 0.2% 0% 0% 40% ;
+#new-alert {
+    margin: 20px 0px 0px 180px;
+    font-size: 1.8em;
+    font-weight: 520;
+    color: #9a92a5;
 }
 
+ #new-alert,.alert-card-fonts, .alert-card-fonts-action, .truncate-text {
+    color: #9a92a5;
+}
+
+.alert-card-fonts-action {
+    font-size: 1.3em;
+    margin-top: 20px;
+    margin-left: 100px;
+    height: 53px;
+}
+
+.alert-card-fonts-action-one {
+    border-right: 1px solid #e8e8e8 
+}
 
 
 
 .ant-card {
-    margin: 5%;
-    width: 90%;
+    font-family: Lato, sans-serif;
 }
+
+.ant-card-bordered {
+    border: 0;
+}
+
+.truncate-text {
+    white-space: nowrap; 
+    width: 350px; 
+    overflow: hidden;
+    text-overflow: ellipsis; 
+}
+
+
 .ant-card-custom-style .ant-card-body {
     padding: 0px;
 }
 
 .ant-card-custom-style {
     border-left: 15px solid #1871cf;
-    font-family: Lato, sans-serif;
-}
-.ant-card-action-first-col {
-    border-right: 1px solid #e8e8e8;
-    height: 10%;
 }
 
-.ant-card-action-second-col {
-padding-right: 1px;
-}
-.ant-card-action-first-col p {
-    margin: auto;
-    padding: 5% 0% 0% 30%;
-}
 
-.ant-card-action-second-col p {
-    margin: auto;
-    padding: 5% 0% 0% 20%;
-}
-
-.ant-card-action-second-col p, .ant-card-action-first-col p {
-    font-size: 18px;
-    font-weight: 500;
-}
 
 
 
