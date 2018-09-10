@@ -1,12 +1,12 @@
 import { Avatar, Button, Col, Popover, Row } from 'antd';
-import classnames from 'classnames';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 /* import styles */
-import styles from './personnel.css';
+import styles from './styles.css';
 
 /* local constants */
-const cx = classnames.bind(styles);
+const cx = classNames.bind(styles);
 const actions = (
   <div>
     <div>

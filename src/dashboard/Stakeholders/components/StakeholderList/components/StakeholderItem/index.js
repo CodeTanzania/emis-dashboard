@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames/bind';
 import { connect } from 'react-redux';
 import { Button, Checkbox, Col, List, Popover, Row } from 'antd';
 import { selectStakeholder } from '../../../../actions';
+import styles from './styles.module.css';
+
+
+const cx = classNames.bind(styles);
 
 
 const actions = (
@@ -42,23 +47,24 @@ class StakeholderItem extends Component {
   };
 
   render() {
-    const { stakeholder } = this.props;
-    const { name, phone, email } = stakeholder;
+    const { stakeholder, selectedStakeholder } = this.props;
+    const { name, phone, email, _id } = stakeholder;
+    const isSelected = selectedStakeholder ? selectedStakeholder._id === _id : false;
     return (
-      <List.Item className="p-l-20">
+      <List.Item className={cx("p-l-20", { 'isSelected': isSelected })}>
         <List.Item.Meta
-          onClick={this.onClick}
+
           avatar={<Checkbox />}
           title={(
             <Row>
-              <Col xs={21}>
-                <span className="f-600 f-15">
+              <Col xs={21} >
+                <span className={cx('f-600 f-15', 'name')} onClick={this.onClick} title='Click to view more'>
                   {name}
                 </span>
               </Col>
               <Col xs={3}>
                 <Popover placement="bottom" trigger="click" content={actions}>
-                  <Button icon="ellipsis" className="f-20 b-0" />
+                  <Button icon="ellipsis" className={cx("f-20 b-0", { 'isSelected': isSelected })} />
                 </Popover>
               </Col>
             </Row>
@@ -66,12 +72,12 @@ class StakeholderItem extends Component {
           description={(
             <Row>
               <Col span={8}>
-                <Button icon="mobile" className="b-0">
+                <Button icon="mobile" className={cx("b-0", { 'isSelected': isSelected })}>
                   {phone}
                 </Button>
               </Col>
               <Col span={8}>
-                <Button icon="mail" className="b-0">
+                <Button icon="mail" className={cx("b-0", { 'isSelected': isSelected })}>
                   {email}
                 </Button>
               </Col>
@@ -89,7 +95,11 @@ StakeholderItem.propTypes = {
   stakeholder: PropTypes.object,
 };
 
+const mapStateToProps = state => ({
+  selectedStakeholder: state.stakeholders.selected,
+});
 
-export default connect(null, { selectStakeholder })(StakeholderItem);
+
+export default connect(mapStateToProps, { selectStakeholder })(StakeholderItem);
 
 

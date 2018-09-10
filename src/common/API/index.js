@@ -17,6 +17,17 @@ const API = {
       }
     };
     return fetch(url, config).then(res => res.json());
+  },
+  updateStakeholder: (stakeholderId, updates) => {
+    const url = `${API_END_POINT}/parties/${stakeholderId}`;
+    const config = {
+      method: 'PATCH',
+      body: JSON.stringify(updates),
+      headers: {
+        'content-type': 'application/json'
+      }
+    };
+    return fetch(url, config).then(res => res.json());
   }
 };
 

@@ -4,7 +4,8 @@ import {
   FETCH_STAKEHOLDERS_SUCCESS,
   FETCH_STAKEHOLDERS_FAILURE,
   SELECT_STAKEHOLDER,
-  ADD_NEW_STAKEHOLDER_SUCCESS
+  ADD_NEW_STAKEHOLDER_SUCCESS,
+  UPDATE_STAKEHOLDER_SUCCESS
 } from './actions';
 /**
  * Stakeholders Reducers
@@ -50,6 +51,16 @@ export function stakeholders(state = initialState, action) {
       return {
         ...state,
         data: [action.stakeholder, ...state.data]
+      }
+    case UPDATE_STAKEHOLDER_SUCCESS:
+      const data = [...state.data]; // grab stakeholder array
+      const { stakeholder } = action; // grab stakeholder
+      const foundIndex = data.findIndex(item => item._id === stakeholder._id);
+      data[foundIndex] = stakeholder;
+      return {
+        ...state,
+        data,
+        selected: stakeholder
       }
     default:
       return state;

@@ -1,7 +1,7 @@
 import { Col, Row } from 'antd';
 import React from 'react';
 // import component
-import PersonnelCard from './PersonnelCard';
+import PersonnelCard from './components/PersonnelCard';
 
 // fake data
 const personnelList = [{
