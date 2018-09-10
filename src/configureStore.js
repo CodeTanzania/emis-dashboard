@@ -28,6 +28,9 @@ const fakeStore = {
     selected: {},
     isDrawerOpen: false,
   },
+  alerts: {
+    data: []
+  }  
 };
 
 
