@@ -13,7 +13,7 @@ const getAlertsEpic = action$ => action$.pipe(
   ofType(TRIGGER_FETCH_ALERTS),
   switchMap(action => from(API.getAlerts()
     .then(data => data))),
-  switchMap(data => of(storeAlerts(data))),
+  switchMap(data => of(storeAlerts(data, false))),
 );
 
 export {

@@ -9,7 +9,8 @@ export function alerts(state = [], action) {
   switch (action.type) {
     case STORE_ALERTS:
       return Object.assign({}, state, {
-        data: action.alerts
+        data: action.alerts,
+        loading: action.loading,
       });
     default:
       return state;

@@ -3,29 +3,25 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { chunk, nth, take, last } from 'lodash';
-import { Row, Col, Card, Icon, Drawer, Spin} from 'antd';
+import { Row, Col, Card, Icon, Drawer } from 'antd';
 import classnames from 'classnames';
 import styles from './index.css';
-import { triggerFetchAlerts } from '../../actions';
 import { alertsSelector } from '../../selectors';
 import AlertCard from './alertCard';
 import AlertForm from '../AlertForm';
 
-import API from '../../../../services/API';
 
 const cx = classnames.bind(styles);
+
+
+
 
 
 class AlertsList extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {alerts: [], visible: false, loading: false };
-    }
-
-    componentDidMount () {
-        const {triggerFetchAlerts} = this.props;
-        triggerFetchAlerts();
+        this.state = {alerts: [], visible: false };
     }
 
     showDrawer = () => {
@@ -39,10 +35,6 @@ class AlertsList extends React.Component {
             { visible: false }
         )
     }
-
-    toggle = (value) => {
-        this.setState({ loading: value });
-      }
 
 
     splitArray = (arr = [], chunksCount) => {
@@ -61,7 +53,6 @@ class AlertsList extends React.Component {
         const alertChunks = this.splitArray(alerts, 3);
         console.log(alertChunks);
         return(
-            <Spin spinning={this.state.loading}>
                 <Row align="center" >
                     {/* Start First Column with card for new alert */}
                     <Col span={8} className={cx('alert-column')}>
@@ -97,7 +88,6 @@ class AlertsList extends React.Component {
                     {/* End Third Column */}
 
                 </Row>
-            </Spin>
         );
     }
 }
@@ -109,13 +99,10 @@ const mapStateToprops = createSelector(
     alerts => ({ alerts }),
   );
 
-const mapDispatchToProps = dispatch => ({
-    triggerFetchAlerts: () => dispatch(triggerFetchAlerts()),
-  });
+
 
   export default connect(
     mapStateToprops,
-    mapDispatchToProps,
   )(AlertsList);
 
 
