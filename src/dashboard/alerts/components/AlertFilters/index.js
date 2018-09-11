@@ -8,7 +8,7 @@ import styles from './index.css';
 const cx = classnames.bind(styles);
 const { RangePicker } = DatePicker;
 const dateFormat = 'YYYY/MM/DD';
-const filterSelectStyles = { width: 140, marginRight: '15px' };
+const filterSelectStyles = { width: '8vw', marginRight: '0.8vw' };
 function handleChange(value) {
     console.log(value);
   }
@@ -25,7 +25,7 @@ export default function AlertFilters() {
             </Select>
             <RangePicker
             defaultValue={[moment('2015/01/01', dateFormat), moment('2015/01/01', dateFormat)]}
-            format={dateFormat} style={{ width: 280, marginRight: '15px' }} size='large'
+            format={dateFormat} style={{ width: '16vw', marginRight: '0.8vw' }} size='large'
             />
             <Select placeholder="Issuerer" style={filterSelectStyles}  size='large' onChange={handleChange}>
                 <Option value="tma">TMA</Option>

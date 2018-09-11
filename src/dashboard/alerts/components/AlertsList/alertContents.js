@@ -19,7 +19,7 @@ function AlertContents(props) {
 
             <div class='alert-card-fonts' >{direction}</div>
 
-            <div class='alert-card-fonts'>
+            <div class='probable-duration'>
                 Probable duration: <Moment format="DD/MM/YYYY">{issuedAt}</Moment>
             </div>
         </div>

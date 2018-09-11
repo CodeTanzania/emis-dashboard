@@ -47,7 +47,7 @@ class AlertsList extends React.Component {
     showAlertCards = (cardsArray = []) => cardsArray.map(card => <AlertCard card={card}/>);
     
     render() {
-        const cardStyles = {margin: '45px 35px 45px 35px', width: 520, height: 225, boxShadow: '0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19)'};
+        const cardStyles = {margin: '5vh 2.5px 5vh 1.5vw', width: '28vw', height: '23vh', boxShadow: '0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19)'};
         const { alerts } = this.props;
         if(alerts.length > 1) this.toggle;
         const alertChunks = this.splitArray(alerts, 3);
@@ -58,7 +58,7 @@ class AlertsList extends React.Component {
                     <Col span={8} className={cx('alert-column')}>
                         <Card onClick={this.showDrawer} style={cardStyles}>
                             <div>
-                                <Icon type="plus-circle" theme="filled" style={{fontSize:'78px', margin: '20px 0px 0px 200px'}}  /> <br/>
+                                <Icon type="plus-circle" theme="filled" style={{fontSize:'5vw', margin: '5vh 0 0 10.5vw'}}  /> <br/>
                                 <span id='new-alert'>New Alert</span>
                             </div>
                         </Card>

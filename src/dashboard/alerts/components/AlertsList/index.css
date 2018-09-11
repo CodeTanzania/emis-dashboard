@@ -1,26 +1,20 @@
 
 
-#new-alert {
-    margin: 20px 0px 0px 180px;
-    font-size: 1.8em;
-    font-weight: 520;
+
+
+.alert-card-fonts, .alert-card-fonts-action, .truncate-text {
     color: #9a92a5;
 }
 
- #new-alert,.alert-card-fonts, .alert-card-fonts-action, .truncate-text {
+.probable-duration {
     color: #9a92a5;
-}
-
-.alert-card-fonts-action {
-    font-size: 1.3em;
-    margin-top: 20px;
-    margin-left: 100px;
-    height: 53px;
+    margin: 0 0 3vh 0;
 }
 
 .alert-card-fonts-action-one {
-    border-right: 1px solid #e8e8e8 
+    border-right: 1px solid #e8e8e8;
 }
+
 
 
 
@@ -46,6 +40,13 @@
 
 .ant-card-custom-style {
     border-left: 15px solid #1871cf;
+}
+
+.alert-card-fonts-action {
+    margin: 2vh 0 0 4vw;
+    font-size: 1.1vw;
+    height: 5.6vh;
+    cursor: pointer;
 }
 
 
@@ -86,6 +87,7 @@
         min-height: 992px;
     
     }
+    
 }
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
@@ -95,4 +97,6 @@
         min-height: 1200px;
     
     }
+
+ 
 }

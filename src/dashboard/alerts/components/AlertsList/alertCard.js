@@ -31,7 +31,7 @@ class AlertCard extends React.Component {
  
     render() {
         const { card } = this.props;
-        const cardStyles = {margin: '45px 35px 45px 35px', width: 520, height: 225, boxShadow: '0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19)'};
+        const cardStyles = {margin: '5vh 2.5vw 5vh 1.5vw', width: '28vw', height: '23vh', boxShadow: '0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19)'};
         return(
             <Card
                 className={cx('ant-card-custom-style')}
@@ -39,8 +39,8 @@ class AlertCard extends React.Component {
                  extra={<span class='alert-card-fonts'>Floods</span>}
                  style={cardStyles}
                 >
-                    <Row onClick={this.showModal}>
-                        <Col span={12} className={cx('alert-card-fonts-action-one')}>
+                    <Row>
+                        <Col span={12} className={cx('alert-card-fonts-action-one')}  onClick={this.showModal}>
                         <div className={cx('alert-card-fonts-action')} >Read More</div>
                         </Col>
                         

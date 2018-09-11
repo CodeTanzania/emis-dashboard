@@ -2,16 +2,3 @@
 .filters-alerts .ant-select-selection, .filters-alerts .ant-input {
     border-color: #a0affe;
 }
-
-
-.map-export-text {
-    padding-left: 35px;
-}
-.map-export-text span {
-    font-size: 1.35em;
-    color: #9a92a5;
-}
-
-.map-export-text span:nth-child(1) {
-    margin-right: 40px;
-}

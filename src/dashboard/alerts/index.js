@@ -35,14 +35,14 @@ const cx = classnames.bind(styles);
                     <div>Alerts</div>
                     </Col>
                 </Row>
-                <Row style={{margin: '15px 0px 0px 40px'}}>
+                <Row style={{margin: '1vh 0 0 1.5vw'}}>
                     <Col span={16} className={cx('filters-alerts')}>
                     <AlertFilters />
                     </Col>
                     <Col span={4} offset={4}>
                         <div class='map-export-text'>
-                            <span  ><Icon type="global" theme="outlined" style={{fontSize: '32px'}} /> Map</span>
-                            <span><Icon type="export" theme="outlined" style={{fontSize: '32px'}} /> Export</span>
+                            <span  ><Icon type="global" theme="outlined" style={{fontSize: '2vw'}} /> Map</span>
+                            <span><Icon type="export" theme="outlined" style={{fontSize: '2vw'}} /> Export</span>
                         </div>
                     </Col>
                 </Row>
