@@ -1,63 +1,99 @@
 import React, { Component, Fragment } from 'react';
 import { Button, Row, Col, Divider, AutoComplete, Input, Icon } from 'antd';
+import API from 'API';
+import { from } from 'rxjs';
+import StakeholderForm from '../../../StakeholderForm';
 import './styles.css';
 
+const Option = AutoComplete.Option;
 
+
+function renderOption(item) {
+  return (
+    <Option key={item._id} name={`${item.name} <${item.email}>`}>
+      <div><strong>{item.name}</strong></div>
+      <div>{item.email}</div>
+    </Option>
+  );
+}
 class AddPersonnelForm extends Component {
-  state = { showAddPersonnelForm: false, dataSource: [], selected: null };
+  state = { showCreatePersonnelForm: false, dataSource: [], hits: [], selected: null, input: '' };
 
   onSelect = (value) => {
-    console.log(value);
     this.setState({ selected: value });
   }
 
-  handleSearch = (value) => {
+  handleSearch = () => {
     this.setState({ selected: null });
-    this.setState({
-      dataSource: !value ? [] : [
-        value,
-        value + value,
-        value + value + value,
-      ],
-    });
+  }
+
+
+  handleChange = value => {
+    this.setState({ input: value });
+    if (value.length > 1) {
+      from(API.searchStakeholder(value))
+        .subscribe(result => {
+          this.setState({ hits: result.data });
+        });
+    }
+  }
+
+  handleAttachPersonnel = () => {
+    console.log(this.state.selected);
+    this.setState({ input: '' });
+  }
+
+  toggleCreatePersonnelForm = () => {
+    this.setState({ showCreatePersonnelForm: !this.state.showCreatePersonnelForm });
   }
 
   render() {
-    const { showAddPersonnelForm, dataSource, selected } = this.state;
+    const { showCreatePersonnelForm, hits, selected, input } = this.state;
+
     return (<Fragment>
       {
-        showAddPersonnelForm ? '' : (
-          <Row type="flex" align="middle" justify="center">
-            <Col span={10}>
-              <div>
-                <div style={{ width: '100%' }}>
-                  <AutoComplete
-                    className="search-stakeholder"
-                    style={{ width: '100%' }}
-                    dataSource={dataSource}
-                    onSelect={this.onSelect}
-                    onSearch={this.handleSearch}
-                    placeholder="Search stakeholder...."
-                  >
-                    <Input
-                      suffix={selected ? (
-                        <Button className="search-btn" type="primary">
-                          <Icon type="plus" /> Add
-                    </Button>
-                      ) : (
-                          <Button className="search-btn" type="primary" disabled>
+        showCreatePersonnelForm ? <StakeholderForm
+          handleCancelClick={this.toggleCreatePersonnelForm} /> : (
+            <Row type="flex" align="middle" justify="center">
+              <Col span={10}>
+                <div>
+                  <div style={{ width: '100%' }}>
+                    <AutoComplete
+                      className="search-stakeholder"
+                      style={{ width: '100%' }}
+                      dataSource={hits.map(renderOption)}
+                      onSelect={this.onSelect}
+                      placeholder="Search stakeholder...."
+                      onChange={this.handleChange}
+                      onSearch={this.handleSearch}
+                      value={input}
+                      optionLabelProp="name"
+                    >
+                      <Input
+                        suffix={selected ? (
+                          <Button className="search-btn"
+                            type="primary" onClick={this.handleAttachPersonnel}>
                             <Icon type="plus" /> Add
                     </Button>
-                        )}
-                    />
-                  </AutoComplete>
+                        ) : (
+                            <Button className="search-btn" type="primary" disabled>
+                              <Icon type="plus" /> Add
+                    </Button>
+                          )}
+                      />
+                    </AutoComplete>
+                  </div>
+                  <Divider><div>OR</div></Divider>
+                  <Button
+                    type="primary"
+                    className='block'
+                    onClick={this.toggleCreatePersonnelForm}
+                  >Create New Personnel
+                </Button>
                 </div>
-                <Divider><div>OR</div></Divider>
-                <Button type="primary" block className='block' >Create New Personnel</Button>
-              </div>
-            </Col>
-          </Row>
-        )
+              </Col>
+            </Row>
+          )
       }
 
     </Fragment>)

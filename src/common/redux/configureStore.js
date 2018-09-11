@@ -22,24 +22,6 @@ const fakeStore = {
       $and: [{ phases: { $in: ['Mitigation'] } }, { types: { $in: ['Agency'] } }],
     },
   },
-  contacts: {
-    data: [
-      { name: 'Tanzania Red Cross Society', phone: '+233 54534545', email: 'trcs@mail.com' },
-      { name: 'Tanzania Red Cross Society', phone: '+233 54534545', email: 'trcs@mail.com' },
-      { name: 'Tanzania Red Cross Society', phone: '+233 54534545', email: 'trcs@mail.com' },
-      { name: 'Tanzania Red Cross Society', phone: '+233 54534545', email: 'trcs@mail.com' },
-      { name: 'Tanzania Red Cross Society', phone: '+233 54534545', email: 'trcs@mail.com' },
-      { name: 'Tanzania Red Cross Society', phone: '+233 54534545', email: 'trcs@mail.com' },
-      { name: 'Tanzania Red Cross Society', phone: '+233 54534545', email: 'trcs@mail.com' },
-      { name: 'Tanzania Red Cross Society', phone: '+233 54534545', email: 'trcs@mail.com' },
-      { name: 'Tanzania Red Cross Society', phone: '+233 54534545', email: 'trcs@mail.com' },
-      { name: 'Tanzania Red Cross Society', phone: '+233 54534545', email: 'trcs@mail.com' },
-      { name: 'Tanzania Red Cross Society', phone: '+233 54534545', email: 'trcs@mail.com' },
-      { name: 'Tanzania Red Cross Society', phone: '+233 54534545', email: 'trcs@mail.com' },
-      { name: 'Tanzania Red Cross Society', phone: '+233 54534545', email: 'trcs@mail.com' },
-    ],
-    total: 100,
-  },
 };
 
 

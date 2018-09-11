@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import { connect } from 'react-redux';
-import { Button, Checkbox, Col, List, Popover, Row } from 'antd';
+import { Button, Checkbox, Col, List, Popover, Row, Icon } from 'antd';
 import { selectStakeholder } from '../../../../actions';
 import styles from './styles.module.css';
 
@@ -70,18 +70,24 @@ class StakeholderItem extends Component {
             </Row>
           )}
           description={(
-            <Row>
-              <Col span={8}>
-                <Button icon="mobile" className={cx("b-0", { 'isSelected': isSelected })}>
-                  {phone}
-                </Button>
-              </Col>
-              <Col span={8}>
-                <Button icon="mail" className={cx("b-0", { 'isSelected': isSelected })}>
-                  {email}
-                </Button>
-              </Col>
-            </Row>
+            <div>
+              <Row>
+                <Col span={24}>
+                  <span icon="mobile" className={cx("b-0", { 'isSelected': isSelected })}>
+                    <Icon type="mobile" style={{ marginRight: '5px' }} />
+                    {phone}
+                  </span>
+                </Col>
+              </Row>
+              <Row>
+                <Col span={24}>
+                  <span icon="mail" className={cx("b-0", { 'isSelected': isSelected })}>
+                    <Icon type="mail" style={{ marginRight: '5px' }} />
+                    {email}
+                  </span>
+                </Col>
+              </Row>
+            </div>
           )}
         />
       </List.Item>
