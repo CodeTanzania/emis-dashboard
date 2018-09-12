@@ -39,9 +39,19 @@ class NewAlertForm extends React.Component {
       <Form onSubmit={this.handleSubmit} className={cx('ant-form-custom-styles')}>
         <FormItem
           {...formItemLayout}
-          label="Title"
+          label="Event"
         >
-          {getFieldDecorator('title', {
+          {getFieldDecorator('event', {
+            rules: [],
+          })(
+            <Input size='large' />
+          )}
+        </FormItem>
+        <FormItem
+          {...formItemLayout}
+          label="Headline"
+        >
+          {getFieldDecorator('headline', {
             rules: [],
           })(
             <Input size='large' />
@@ -63,54 +73,128 @@ class NewAlertForm extends React.Component {
         </FormItem>
         <FormItem
           {...formItemLayout}
-          label="Alert Type"
+          label="Status"
           hasFeedback
         >
-          {getFieldDecorator('AlertType', {
+          {getFieldDecorator('Status', {
             rules: [],
           })(
             <Select size='large'>
-              <Option value="flood">Flood</Option>
-              <Option value="fire">Fire</Option>
+              <Option value="tma">TMA</Option>
+              <Option value="tahmo">TAHMO</Option>
             </Select>
           )}
         </FormItem>
         <FormItem
           {...formItemLayout}
-          label="Expected Magnitude"
+          label="Type"
+          hasFeedback
         >
-          {getFieldDecorator('ExpectedMagnitude', {
+          {getFieldDecorator('type', {
             rules: [],
           })(
-            <Input size='large' maxLength="25" />
+            <Select size='large'>
+              <Option value="tma">TMA</Option>
+              <Option value="tahmo">TAHMO</Option>
+            </Select>
           )}
         </FormItem>
         <FormItem
           {...formItemLayout}
-          label="Probable Duration"
+          label="Scope"
+          hasFeedback
         >
-          {getFieldDecorator('probable-duration', rangeConfig)(
-            <RangePicker placeholder={['from', 'to']} size='large' />
+          {getFieldDecorator('scope', {
+            rules: [],
+          })(
+            <Select size='large'>
+              <Option value="tma">TMA</Option>
+              <Option value="tahmo">TAHMO</Option>
+            </Select>
           )}
         </FormItem>
         <FormItem
           {...formItemLayout}
-          label="Region(s)"
+          label="Urgency"
+          hasFeedback
         >
-          {getFieldDecorator('regions', {
+          {getFieldDecorator('urgency', {
             rules: [],
           })(
-            <Input size='large' maxLength="30" />
+            <Select size='large'>
+              <Option value="tma">TMA</Option>
+              <Option value="tahmo">TAHMO</Option>
+            </Select>
           )}
         </FormItem>
         <FormItem
           {...formItemLayout}
-          label="Prone Area(s)"
+          label="Severity"
+          hasFeedback
         >
-          {getFieldDecorator('prone-area', {
+          {getFieldDecorator('Severity', {
             rules: [],
           })(
-            <TextArea rows={4} />
+            <Select size='large'>
+              <Option value="tma">TMA</Option>
+              <Option value="tahmo">TAHMO</Option>
+            </Select>
+          )}
+        </FormItem>
+        <FormItem
+          {...formItemLayout}
+          label="Category"
+          hasFeedback
+        >
+          {getFieldDecorator('category', {
+            rules: [],
+          })(
+            <Select size='large'>
+              <Option value="tma">TMA</Option>
+              <Option value="tahmo">TAHMO</Option>
+            </Select>
+          )}
+        </FormItem>
+        <FormItem
+          {...formItemLayout}
+          label="Certainty"
+          hasFeedback
+        >
+          {getFieldDecorator('Certainty', {
+            rules: [],
+          })(
+            <Select size='large'>
+              <Option value="tma">TMA</Option>
+              <Option value="tahmo">TAHMO</Option>
+            </Select>
+          )}
+        </FormItem>
+        <FormItem
+          {...formItemLayout}
+          label="Response Type"
+          hasFeedback
+        >
+          {getFieldDecorator('response-type', {
+            rules: [],
+          })(
+            <Select size='large'>
+              <Option value="tma">TMA</Option>
+              <Option value="tahmo">TAHMO</Option>
+            </Select>
+          )}
+        </FormItem>
+        <FormItem
+          {...formItemLayout}
+          label="Code"
+          hasFeedback
+        >
+          {getFieldDecorator('code', {
+            rules: [],
+          })(
+            <Select size='large'>
+              <Option value="tma">TMA</Option>
+              <Option value="tahmo">TAHMO</Option>
+            </Select>
           )}
         </FormItem>
         <FormItem
@@ -121,6 +205,32 @@ class NewAlertForm extends React.Component {
             rules: [],
           })(
             <TextArea rows={4} />
+          )}
+        </FormItem>
+        <FormItem
+          {...formItemLayout}
+          label="Instruction"
+        >
+          {getFieldDecorator('instruction', {
+            rules: [],
+          })(
+            <TextArea rows={4} />
+          )}
+        </FormItem>
+        <FormItem
+          {...formItemLayout}
+          label="Onset"
+        >
+          {getFieldDecorator('onset')(
+            <DatePicker />
+          )}
+        </FormItem>
+        <FormItem
+          {...formItemLayout}
+          label="Expires"
+        >
+          {getFieldDecorator('expires')(
+            <DatePicker />
           )}
         </FormItem>
         <FormItem
