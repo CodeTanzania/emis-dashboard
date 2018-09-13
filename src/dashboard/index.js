@@ -4,9 +4,9 @@ import React from 'react';
 import { NavLink, Route, Switch } from 'react-router-dom';
 import logo from '../logo.svg';
 /* Components */
-import Contacts from './contacts';
+import Stakeholders from './Stakeholders';
 /* import styles */
-import styles from './dashboard.css';
+import styles from './styles.css';
 
 
 /* local constants */
@@ -37,10 +37,10 @@ export default function Dashboard() {
         <Menu mode="inline">
           {/* contact menu */}
           <Menu.Item key="1">
-            <NavLink to="/contacts">
+            <NavLink to="/stakeholders">
               <Icon type="idcard" className="f-25" />
               <span>
-                Contacts
+                Stakeholders
               </span>
             </NavLink>
           </Menu.Item>
@@ -60,7 +60,7 @@ export default function Dashboard() {
       <Layout>
         <Content className={cx('content')}>
           <Switch>
-            <Route path="/contacts" exact component={Contacts} />
+            <Route path="/stakeholders" exact component={Stakeholders} />
           </Switch>
         </Content>
       </Layout>
