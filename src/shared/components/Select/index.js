@@ -7,6 +7,10 @@ const { Option } = Select;
 
 /**
  * Select Components which renders provided options
+ *
+ * @function
+ * @name SelectComponent
+ *
  * @param {Object} props
  * @param {Object[]} props.options
  *
