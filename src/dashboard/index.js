@@ -3,10 +3,11 @@ import classnames from 'classnames';
 import React from 'react';
 import { NavLink, Route, Switch } from 'react-router-dom';
 import logo from '../logo.svg';
-/* Components */
-import Contacts from './contacts';
-import styles from './dashboard.css';
 import Plans from './plans';
+import Stakeholders from './Stakeholders';
+/* import styles */
+import styles from './styles.css';
+
 
 /* local constants */
 const { Sider, Content } = Layout;
@@ -40,9 +41,11 @@ export default function Dashboard() {
           {/* end plan menu */}
           {/* contact menu */}
           <Menu.Item key="2">
-            <NavLink to="/contacts">
+            <NavLink to="/stakeholders">
               <Icon type="idcard" className="f-25" />
-              <span>Contacts</span>
+              <span>
+                Stakeholders
+              </span>
             </NavLink>
           </Menu.Item>
           {/* end contact menu */}
@@ -61,7 +64,7 @@ export default function Dashboard() {
         <Content className={cx('content')}>
           <Switch>
             <Route path="/plans" component={Plans} />
-            <Route path="/contacts" exact component={Contacts} />
+            <Route path="/stakeholders" exact component={Stakeholders} />
           </Switch>
         </Content>
       </Layout>

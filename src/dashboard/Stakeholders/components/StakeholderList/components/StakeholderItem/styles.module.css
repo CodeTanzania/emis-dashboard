@@ -1,0 +1,8 @@
+.isSelected {
+  /* background: #f9f9f9; */
+  background: #e6f7ff;
+}
+
+.name {
+  cursor: pointer;
+}
