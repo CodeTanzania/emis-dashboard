@@ -9,7 +9,6 @@ import './utils.css';
 /* local constants */
 const store = configureStore();
 
-
 /**
  * Render the React application
  *
@@ -28,6 +27,5 @@ function App() {
     </Provider>
   );
 }
-
 
 export default App;
