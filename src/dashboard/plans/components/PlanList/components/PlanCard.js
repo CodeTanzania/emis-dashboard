@@ -1,7 +1,6 @@
-import { Badge, Card, Col, Icon, Row } from 'antd';
+import { Badge, Card, Col, Row } from 'antd';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 /* local constants */
 const { Meta } = Card;
@@ -63,7 +62,6 @@ export default function PlanCard({
   name,
   jurisdiction,
   activityCount,
-  createdAt,
   updatedAt,
 }) {
   return (
@@ -73,22 +71,15 @@ export default function PlanCard({
         margin: '20px auto',
         borderLeft: '3px solid #0092fd',
       }}
-      actions={[
-        <Link to="/plans/phases">
-          <Icon type="eye" title="Explore" />
-        </Link>,
-        <Icon type="edit" title="Edit" />,
-        <Icon type="hdd" title="Archive" />,
-      ]}
     >
       <Meta
         title={
           <Details
-  name={name}
-  jurisdiction={jurisdiction}
-  activityCount={activityCount}
-  updatedAt={updatedAt}
-/>
+            name={name}
+            jurisdiction={jurisdiction}
+            activityCount={activityCount}
+            updatedAt={updatedAt}
+          />
         }
       />
     </Card>
