@@ -1,9 +1,8 @@
 import { Col, Row } from 'antd';
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 /* import component */
 import InformationItem from './Item';
-
 
 /**
  * Contact information component
@@ -15,11 +14,8 @@ import InformationItem from './Item';
  * @version 0.1.0
  * @since 0.1.0
  */
-export default function Information(props) {
-  const { stakeholder } = props;
-  const {
-    phone, email, physicalAddress, fax,
-  } = stakeholder;
+export default function Information({ stakeholder }) {
+  const { phone, email, physicalAddress, fax } = stakeholder;
   return (
     <div>
       <Row>
@@ -44,8 +40,16 @@ export default function Information(props) {
   );
 }
 
+/* Props validation */
 Information.propTypes = {
-  stakeholder: PropTypes.object,
+  stakeholder: PropTypes.objectOf(
+    PropTypes.shape({
+      phone: PropTypes.string,
+      email: PropTypes.string,
+      physicalAddress: PropTypes.string,
+      fax: PropTypes.string,
+    })
+  ),
 };
 
 Information.defaultProps = {

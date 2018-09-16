@@ -3,23 +3,57 @@ import React from 'react';
 /* import component */
 import Responsibility from './Responsibility';
 
-
 // fake data
 const fakeData = [
-  { description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, dolore aliquid? Autem id, amet tempore vitae animi quae veniam tenetur dolorum fugiat maxime repudiandae eum saepe accusamus voluptates placeat dicta.' },
-  { description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, dolore aliquid? Autem id, amet tempore vitae animi quae veniam tenetur dolorum fugiat maxime repudiandae eum saepe accusamus voluptates placeat dicta.' },
-  { description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, dolore aliquid? Autem id, amet tempore vitae animi quae veniam tenetur dolorum fugiat maxime repudiandae eum saepe accusamus voluptates placeat dicta.' },
-  { description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, dolore aliquid? Autem id, amet tempore vitae animi quae veniam tenetur dolorum fugiat maxime repudiandae eum saepe accusamus voluptates placeat dicta.' },
-  { description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, dolore aliquid? Autem id, amet tempore vitae animi quae veniam tenetur dolorum fugiat maxime repudiandae eum saepe accusamus voluptates placeat dicta.' },
-  { description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, dolore aliquid? Autem id, amet tempore vitae animi quae veniam tenetur dolorum fugiat maxime repudiandae eum saepe accusamus voluptates placeat dicta.' },
-  { description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, dolore aliquid? Autem id, amet tempore vitae animi quae veniam tenetur dolorum fugiat maxime repudiandae eum saepe accusamus voluptates placeat dicta.' },
-  { description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, dolore aliquid? Autem id, amet tempore vitae animi quae veniam tenetur dolorum fugiat maxime repudiandae eum saepe accusamus voluptates placeat dicta.' },
-  { description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, dolore aliquid? Autem id, amet tempore vitae animi quae veniam tenetur dolorum fugiat maxime repudiandae eum saepe accusamus voluptates placeat dicta.' },
-  { description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, dolore aliquid? Autem id, amet tempore vitae animi quae veniam tenetur dolorum fugiat maxime repudiandae eum saepe accusamus voluptates placeat dicta.' },
-  { description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, dolore aliquid? Autem id, amet tempore vitae animi quae veniam tenetur dolorum fugiat maxime repudiandae eum saepe accusamus voluptates placeat dicta.' },
-  { description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, dolore aliquid? Autem id, amet tempore vitae animi quae veniam tenetur dolorum fugiat maxime repudiandae eum saepe accusamus voluptates placeat dicta.' },
+  {
+    description:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, dolore aliquid? Autem id, amet tempore vitae animi quae veniam tenetur dolorum fugiat maxime repudiandae eum saepe accusamus voluptates placeat dicta.',
+  },
+  {
+    description:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, dolore aliquid? Autem id, amet tempore vitae animi quae veniam tenetur dolorum fugiat maxime repudiandae eum saepe accusamus voluptates placeat dicta.',
+  },
+  {
+    description:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, dolore aliquid? Autem id, amet tempore vitae animi quae veniam tenetur dolorum fugiat maxime repudiandae eum saepe accusamus voluptates placeat dicta.',
+  },
+  {
+    description:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, dolore aliquid? Autem id, amet tempore vitae animi quae veniam tenetur dolorum fugiat maxime repudiandae eum saepe accusamus voluptates placeat dicta.',
+  },
+  {
+    description:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, dolore aliquid? Autem id, amet tempore vitae animi quae veniam tenetur dolorum fugiat maxime repudiandae eum saepe accusamus voluptates placeat dicta.',
+  },
+  {
+    description:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, dolore aliquid? Autem id, amet tempore vitae animi quae veniam tenetur dolorum fugiat maxime repudiandae eum saepe accusamus voluptates placeat dicta.',
+  },
+  {
+    description:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, dolore aliquid? Autem id, amet tempore vitae animi quae veniam tenetur dolorum fugiat maxime repudiandae eum saepe accusamus voluptates placeat dicta.',
+  },
+  {
+    description:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, dolore aliquid? Autem id, amet tempore vitae animi quae veniam tenetur dolorum fugiat maxime repudiandae eum saepe accusamus voluptates placeat dicta.',
+  },
+  {
+    description:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, dolore aliquid? Autem id, amet tempore vitae animi quae veniam tenetur dolorum fugiat maxime repudiandae eum saepe accusamus voluptates placeat dicta.',
+  },
+  {
+    description:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, dolore aliquid? Autem id, amet tempore vitae animi quae veniam tenetur dolorum fugiat maxime repudiandae eum saepe accusamus voluptates placeat dicta.',
+  },
+  {
+    description:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, dolore aliquid? Autem id, amet tempore vitae animi quae veniam tenetur dolorum fugiat maxime repudiandae eum saepe accusamus voluptates placeat dicta.',
+  },
+  {
+    description:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum, dolore aliquid? Autem id, amet tempore vitae animi quae veniam tenetur dolorum fugiat maxime repudiandae eum saepe accusamus voluptates placeat dicta.',
+  },
 ];
-
 
 /**
  * Render Contacts List
@@ -36,7 +70,7 @@ export default function ContactsList() {
       <List
         itemLayout="horizontal"
         dataSource={fakeData}
-        renderItem={item => (<Responsibility {...item} />)}
+        renderItem={item => <Responsibility {...item} />}
       />
     </div>
   );

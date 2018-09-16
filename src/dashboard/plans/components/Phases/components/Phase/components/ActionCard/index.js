@@ -1,7 +1,6 @@
-import { Badge, Card, Col, Icon, Row } from 'antd';
+import { Badge, Card, Col, Row } from 'antd';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 /* local constants */
 const { Meta } = Card;
@@ -62,13 +61,6 @@ export default function ActionCard({ name, incident, taskCount }) {
         margin: '20px auto',
         borderLeft: '3px solid #0092fd',
       }}
-      actions={[
-        <Link to="/plans/action">
-          <Icon type="eye" title="Explore" />
-        </Link>,
-        <Icon type="edit" title="Edit" />,
-        <Icon type="hdd" title="Archive" />,
-      ]}
     >
       <Meta
         title={

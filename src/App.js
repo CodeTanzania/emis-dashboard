@@ -1,7 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import configureStore from 'redux/configureStore';
+import configureStore from './common/store/configureStore';
 import Dashboard from './dashboard';
 /* import global styles */
 import './utils.css';

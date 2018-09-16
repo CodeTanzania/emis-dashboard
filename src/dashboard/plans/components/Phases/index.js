@@ -1,6 +1,6 @@
 import { Button, Col, Drawer, Dropdown, Icon, Layout, Menu, Row } from 'antd';
 import React, { Component } from 'react';
-import Select from '../../../../shared/components/Select';
+import Select from '../../../../common/components/Select';
 import Phase from './components/Phase';
 
 /* local constants */

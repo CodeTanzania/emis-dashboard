@@ -27,7 +27,6 @@ const actions = (
   </div>
 );
 
-
 /**
  * Renders Key personnel contact card
  *
@@ -40,9 +39,7 @@ const actions = (
  * @param {string} props.phone - contact phone number
  * @param {string} props.address  - contact physical address
  */
-export default function PersonnelCard({
-  name, title, phone, address,
-}) {
+export default function PersonnelCard({ name, title, phone, address }) {
   return (
     <Row className={cx('personnel-card')}>
       <Col xs={20} sm={20} md={20} lg={20} xl={22} xxl={22}>
@@ -53,9 +50,7 @@ export default function PersonnelCard({
           <Col xs={24} sm={24} md={24} lg={24} xl={18} xxl={20}>
             <Row>
               <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={14}>
-                <h3>
-                  {name}
-                </h3>
+                <h3>{name}</h3>
               </Col>
               <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={10}>
                 {phone}
@@ -78,7 +73,6 @@ export default function PersonnelCard({
     </Row>
   );
 }
-
 
 /* props validation */
 PersonnelCard.propTypes = {

@@ -1,14 +1,14 @@
-import React, { Fragment } from 'react';
 import { Col, Row } from 'antd';
-import Header from 'Header';
 import classNames from 'classnames/bind';
-import StakeholderProfile from './components/StakeholderProfile';
+import React, { Fragment } from 'react';
+import Header from '../../common/components/Header';
 import StakeholderFilter from './components/StakeholderFilter';
 import StakeholderList from './components/StakeholderList';
+import StakeholderProfile from './components/StakeholderProfile';
 /* load styles */
 import styles from './styles.css';
-const cx = classNames.bind(styles);
 
+const cx = classNames.bind(styles);
 
 /**
  * Render contacts panel component which have all the the components in relation
@@ -22,7 +22,7 @@ const cx = classNames.bind(styles);
  */
 const Stakeholders = () => (
   <Fragment>
-    <Header title='Stakeholders' />
+    <Header title="Stakeholders" />
     <Row>
       <Col span={4} className={cx('section')}>
         <StakeholderFilter />
@@ -36,6 +36,5 @@ const Stakeholders = () => (
     </Row>
   </Fragment>
 );
-
 
 export default Stakeholders;

@@ -2,7 +2,6 @@ import { Col } from 'antd';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-
 /**
  * Renders contents of contact details sections
  *
@@ -21,7 +20,6 @@ export default function SectionContent({ children }) {
     </Col>
   );
 }
-
 
 /* props validations */
 SectionContent.propTypes = {

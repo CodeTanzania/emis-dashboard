@@ -8,7 +8,6 @@ import Stakeholders from './Stakeholders';
 /* import styles */
 import styles from './styles.css';
 
-
 /* local constants */
 const { Sider, Content } = Layout;
 const cx = classnames.bind(styles);
@@ -43,9 +42,7 @@ export default function Dashboard() {
           <Menu.Item key="2">
             <NavLink to="/stakeholders">
               <Icon type="idcard" className="f-25" />
-              <span>
-                Stakeholders
-              </span>
+              <span>Stakeholders</span>
             </NavLink>
           </Menu.Item>
           {/* end contact menu */}

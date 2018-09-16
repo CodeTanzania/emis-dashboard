@@ -39,7 +39,8 @@ function Details({ name, jurisdiction, activityCount, updatedAt }) {
         </Col>
       </Row>
       <p style={{ fontSize: '11px', color: '#909090' }}>
-        Last updated Date: {new Intl.DateTimeFormat('en-GB').format(updatedAt)}
+        Last updated Date:
+        {new Intl.DateTimeFormat('en-GB').format(updatedAt)}
       </p>
     </React.Fragment>
   );
