@@ -4,38 +4,44 @@ import React from 'react';
 import PersonnelCard from './components/PersonnelCard';
 
 // fake data
-const personnelList = [{
-  name: 'John Done',
-  phone: '255 790 323',
-  title: 'Someone Out there',
-  address: 'This, That, There',
-}, {
-  name: 'John Done',
-  phone: '255 790 323',
-  title: 'Someone Out there',
-  address: 'This, That, There',
-}, {
-  name: 'John Done',
-  phone: '255 790 323',
-  title: 'Someone Out there',
-  address: 'This, That, There',
-}, {
-  name: 'John Done',
-  phone: '255 790 323',
-  title: 'Someone Out there',
-  address: 'This, That, There',
-}, {
-  name: 'John Done',
-  phone: '255 790 323',
-  title: 'Someone Out there',
-  address: 'This, That, There',
-}, {
-  name: 'John Done',
-  phone: '255 790 323',
-  title: 'Someone Out there',
-  address: 'This, That, There',
-}];
-
+const personnelList = [
+  {
+    name: 'John Done',
+    phone: '255 790 323',
+    title: 'Someone Out there',
+    address: 'This, That, There',
+  },
+  {
+    name: 'John Done',
+    phone: '255 790 323',
+    title: 'Someone Out there',
+    address: 'This, That, There',
+  },
+  {
+    name: 'John Done',
+    phone: '255 790 323',
+    title: 'Someone Out there',
+    address: 'This, That, There',
+  },
+  {
+    name: 'John Done',
+    phone: '255 790 323',
+    title: 'Someone Out there',
+    address: 'This, That, There',
+  },
+  {
+    name: 'John Done',
+    phone: '255 790 323',
+    title: 'Someone Out there',
+    address: 'This, That, There',
+  },
+  {
+    name: 'John Done',
+    phone: '255 790 323',
+    title: 'Someone Out there',
+    address: 'This, That, There',
+  },
+];
 
 /**
  * Renders a grid view list of key personnel

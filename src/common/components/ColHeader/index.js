@@ -4,10 +4,8 @@ import React from 'react';
 /* import styles */
 import styles from './index.module.css';
 
-
 /* local constants */
 const cx = classNames.bind(styles);
-
 
 /**
  * Header component for contact sections
@@ -23,22 +21,14 @@ const cx = classNames.bind(styles);
 export default function Header({ children }) {
   return (
     <div className={cx('container')}>
-      {React.isValidElement(children)
-        ? (
-          <div className={cx('component')}>
-            {children}
-          </div>
-        )
-        : (
-          <div className={cx('title')}>
-            {children}
-          </div>
-        )
-      }
+      {React.isValidElement(children) ? (
+        <div className={cx('component')}>{children}</div>
+      ) : (
+        <div className={cx('title')}>{children}</div>
+      )}
     </div>
   );
 }
-
 
 /* Prop validation */
 Header.propTypes = {

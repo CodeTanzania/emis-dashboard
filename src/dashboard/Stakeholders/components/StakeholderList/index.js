@@ -1,12 +1,11 @@
+import { Button, Checkbox, Col, Input, List, Popover, Row } from 'antd';
 import React, { Fragment } from 'react';
-import { List, Button, Checkbox, Col, Input, Popover, Row } from 'antd';
-import ColHeader from 'ColHeader';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+import ColHeader from '../../../../common/components/ColHeader';
+import { fetchStakeholders, searchStakeholders } from '../../actions';
 /* import component */
 import ListFooter from './components/ListFooter';
 import StakeholderItem from './components/StakeholderItem';
-import { fetchStakeholders, searchStakeholders } from '../../actions';
-
 
 const { Search } = Input;
 const actions = (
@@ -39,9 +38,9 @@ class StakeholderList extends React.Component {
     this.props.fetchStakeholders();
   }
 
-  onSearch = (searchText) => {
+  onSearch = searchText => {
     this.props.searchStakeholders(searchText);
-  }
+  };
 
   render() {
     const { stakeholders, loading } = this.props;
@@ -74,8 +73,7 @@ class StakeholderList extends React.Component {
             loading={loading}
             itemLayout="horizontal"
             dataSource={stakeholders}
-            renderItem={item => (
-              <StakeholderItem stakeholder={item} />)}
+            renderItem={item => <StakeholderItem stakeholder={item} />}
           />
         </div>
         <ListFooter />
@@ -86,7 +84,10 @@ class StakeholderList extends React.Component {
 
 const mapStateToProps = state => ({
   stakeholders: state.stakeholders.data,
-  loading: state.stakeholders.isLoading
+  loading: state.stakeholders.isLoading,
 });
 
-export default connect(mapStateToProps, { fetchStakeholders, searchStakeholders })(StakeholderList);
+export default connect(
+  mapStateToProps,
+  { fetchStakeholders, searchStakeholders }
+)(StakeholderList);

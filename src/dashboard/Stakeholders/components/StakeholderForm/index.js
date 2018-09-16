@@ -1,37 +1,44 @@
-import React, { Component } from 'react';
-import { Form, Input, Select, Button, Radio, Checkbox } from 'antd';
-import { connect } from 'react-redux'
-import { from } from 'rxjs';
-import API from 'API';
+import { Button, Checkbox, Form, Input, Radio, Select } from 'antd';
 import classNames from 'classnames/bind';
-import { addNewStakeholderSuccess, updateStakeholderSuccess } from '../../actions';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { from } from 'rxjs';
+import API from '../../../../common/API';
+import {
+  addNewStakeholderSuccess,
+  updateStakeholderSuccess,
+} from '../../actions';
 import styles from './styles.css';
-
 
 const cx = classNames.bind(styles);
 const FormItem = Form.Item;
-const Option = Select.Option;
+const { Option } = Select;
 const RadioGroup = Radio.Group;
 const CheckboxGroup = Checkbox.Group;
 
 class BasicDetailsForm extends Component {
-  state = { errorMsg: '', submitting: false };
+  // state = { errorMsg: '', submitting: false };
+  state = { submitting: false };
 
   componentDidMount() {
-    const { stakeholder } = this.props;
+    const { stakeholder, form } = this.props;
     if (stakeholder) {
-      const formFields = Object.keys(this.props.form.getFieldsValue());
-      // set field values only available in a form to prevent 
+      const formFields = Object.keys(form.getFieldsValue());
+      // set field values only available in a form to prevent
       // antd warning i.e you cannot set field before registering it.
-      let fieldsValues = {};
-      formFields.forEach(field => fieldsValues[field] = stakeholder[field]);
-      this.props.form.setFieldsValue(fieldsValues);
+      const fieldsValues = {};
+      formFields.forEach(field => {
+        fieldsValues[field] = stakeholder[field];
+        return fieldsValues[field];
+      });
+      form.setFieldsValue(fieldsValues);
     }
   }
 
-  handleSubmit = (e) => {
+  handleSubmit = e => {
     e.preventDefault();
-    this.props.form.validateFieldsAndScroll((err, data) => {
+    const { form } = this.props;
+    form.validateFieldsAndScroll((err, data) => {
       if (!err) {
         const { stakeholder } = this.props;
         if (stakeholder) {
@@ -41,45 +48,44 @@ class BasicDetailsForm extends Component {
         }
       }
     });
-  }
+  };
 
   /**
    * Create stakeholder helper function
    */
-  createStakeholder = (data) => {
+  createStakeholder = data => {
+    const { handleCancelClick } = this.props;
     this.setState({ submitting: true });
-    from(API.createStakeholder(data))
-      .subscribe(result => {
-        if (result.error) {
-          // There is an error upon submitting
-          this.setState({ submitting: false });
-          this.setState({ errorMsg: result.message });
-        } else {
-          // submitted successfully
-          this.props.addNewStakeholderSuccess(result);
-          this.setState({ submitting: false });
-          this.props.handleCancelClick();
-        }
-      });
-  }
+    from(API.createStakeholder(data)).subscribe(result => {
+      if (result.error) {
+        // There is an error upon submitting
+        this.setState({ submitting: false });
+        // this.setState({ errorMsg: result.message });
+      } else {
+        // submitted successfully
+        addNewStakeholderSuccess(result);
+        this.setState({ submitting: false });
+        handleCancelClick();
+      }
+    });
+  };
 
   updateStakeholder = (stakeholderId, updates) => {
+    const { handleCancelClick } = this.props;
     this.setState({ submitting: true });
-    from(API.updateStakeholder(stakeholderId, updates))
-      .subscribe(result => {
-        if (result.error) {
-          // There is an error upon submitting
-          this.setState({ submitting: false });
-          this.setState({ errorMsg: result.message });
-        } else {
-          // patch submitted successfully
-          this.props.updateStakeholderSuccess(result);
-          this.setState({ submitting: false });
-          this.props.handleCancelClick();
-        }
-      });
-  }
-
+    from(API.updateStakeholder(stakeholderId, updates)).subscribe(result => {
+      if (result.error) {
+        // There is an error upon submitting
+        this.setState({ submitting: false });
+        // this.setState({ errorMsg: result.message });
+      } else {
+        // patch submitted successfully
+        updateStakeholderSuccess(result);
+        this.setState({ submitting: false });
+        handleCancelClick();
+      }
+    });
+  };
 
   render() {
     const { handleCancelClick, form } = this.props;
@@ -121,47 +127,54 @@ class BasicDetailsForm extends Component {
     return (
       <div className={cx('content')}>
         <Form onSubmit={this.handleSubmit}>
-          <FormItem label='Name' {...formItemLayout} >
+          <FormItem label="Name" {...formItemLayout}>
             {getFieldDecorator('name', {
-              rules: [{ required: true, message: 'Please input stakeholder name!' }],
-            })(
-              <Input placeholder='Stakeholder Name' />
-            )}
-          </FormItem>
-          <FormItem label='Phone' {...formItemLayout} >
-            {getFieldDecorator('phone', {
-              rules: [{ required: true, message: 'Please input phone number!' }],
-            })(
-              <Input addonBefore={prefixSelector} placeholder='Phone Number' />
-            )}
-          </FormItem>
-          <FormItem label='Email' {...formItemLayout} >
-            {getFieldDecorator('email', {
-              rules: [{
-                type: 'email', message: 'The input is not valid E-mail!',
-              }, {
-                required: true, message: 'Please input stakeholder E-mail!',
-              }],
-            })(
-              <Input placeholder='Email' />
-            )}
-
-          </FormItem>
-          <FormItem label='Type' {...formItemLayout} >
-            {getFieldDecorator('type', {
               rules: [
-                { required: true, message: 'Please select stakeholder category' },
+                { required: true, message: 'Please input stakeholder name!' },
+              ],
+            })(<Input placeholder="Stakeholder Name" />)}
+          </FormItem>
+          <FormItem label="Phone" {...formItemLayout}>
+            {getFieldDecorator('phone', {
+              rules: [
+                { required: true, message: 'Please input phone number!' },
               ],
             })(
-              <Select placeholder='Select Type'>
-                <Option value='Agency'>Agency</Option>
-                <Option value='Committee'>Committee</Option>
-                <Option value='Team'>Team</Option>
-                <Option value='Individual'>Individual</Option>
+              <Input addonBefore={prefixSelector} placeholder="Phone Number" />
+            )}
+          </FormItem>
+          <FormItem label="Email" {...formItemLayout}>
+            {getFieldDecorator('email', {
+              rules: [
+                {
+                  type: 'email',
+                  message: 'The input is not valid E-mail!',
+                },
+                {
+                  required: true,
+                  message: 'Please input stakeholder E-mail!',
+                },
+              ],
+            })(<Input placeholder="Email" />)}
+          </FormItem>
+          <FormItem label="Type" {...formItemLayout}>
+            {getFieldDecorator('type', {
+              rules: [
+                {
+                  required: true,
+                  message: 'Please select stakeholder category',
+                },
+              ],
+            })(
+              <Select placeholder="Select Type">
+                <Option value="Agency">Agency</Option>
+                <Option value="Committee">Committee</Option>
+                <Option value="Team">Team</Option>
+                <Option value="Individual">Individual</Option>
               </Select>
             )}
           </FormItem>
-          <FormItem label='Ownership' {...formItemLayout} >
+          <FormItem label="Ownership" {...formItemLayout}>
             {getFieldDecorator('ownership', { initialValue: 'Government' })(
               <RadioGroup>
                 <Radio value="Government">Government</Radio>
@@ -169,47 +182,53 @@ class BasicDetailsForm extends Component {
               </RadioGroup>
             )}
           </FormItem>
-          <FormItem label='Area' {...formItemLayout} >
-            {getFieldDecorator('area')(
-              <Input placeholder='Area' />
-            )}
+          <FormItem label="Area" {...formItemLayout}>
+            {getFieldDecorator('area')(<Input placeholder="Area" />)}
           </FormItem>
-          <FormItem label='Physical Address' {...formItemLayout} >
+          <FormItem label="Physical Address" {...formItemLayout}>
             {getFieldDecorator('physicalAddress')(
-              <Input placeholder='Physical Address' />
+              <Input placeholder="Physical Address" />
             )}
           </FormItem>
-          <FormItem label='Postal Address' {...formItemLayout} >
+          <FormItem label="Postal Address" {...formItemLayout}>
             {getFieldDecorator('postalAddress')(
-              <Input placeholder='Postal Address' />
+              <Input placeholder="Postal Address" />
             )}
           </FormItem>
-          <FormItem label='Fax' {...formItemLayout} >
-            {getFieldDecorator('fax')(
-              <Input placeholder='Fax' />
-            )}
+          <FormItem label="Fax" {...formItemLayout}>
+            {getFieldDecorator('fax')(<Input placeholder="Fax" />)}
           </FormItem>
-          <FormItem label='Website' {...formItemLayout} >
-            {getFieldDecorator('website')(
-              <Input placeholder='Website' />
-            )}
+          <FormItem label="Website" {...formItemLayout}>
+            {getFieldDecorator('website')(<Input placeholder="Website" />)}
           </FormItem>
-          <FormItem label='Phase' {...formItemLayout} >
+          <FormItem label="Phase" {...formItemLayout}>
             {getFieldDecorator('phases', { initialValue: ['Mitigation'] })(
-              <CheckboxGroup options={['Mitigation', 'Preparedness', 'Response', 'Recovery']} />
+              <CheckboxGroup
+                options={['Mitigation', 'Preparedness', 'Response', 'Recovery']}
+              />
             )}
           </FormItem>
           <FormItem {...tailFormItemLayout}>
-            <Button onClick={handleCancelClick} >Cancel</Button>
-            <Button type="primary" htmlType="submit" style={{ marginLeft: 8 }} loading={submitting}>Save</Button>
+            <Button onClick={handleCancelClick}>Cancel</Button>
+            <Button
+              type="primary"
+              htmlType="submit"
+              style={{ marginLeft: 8 }}
+              loading={submitting}
+            >
+              Save
+            </Button>
           </FormItem>
         </Form>
       </div>
-    )
+    );
   }
 }
 
-export default connect(null, {
-  addNewStakeholderSuccess,
-  updateStakeholderSuccess
-})(Form.create()(BasicDetailsForm));
+export default connect(
+  null,
+  {
+    addNewStakeholderSuccess,
+    updateStakeholderSuccess,
+  }
+)(Form.create()(BasicDetailsForm));

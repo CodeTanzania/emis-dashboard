@@ -5,25 +5,32 @@ import { createEpicMiddleware } from 'redux-observable';
 import rootReducer from './rootReducer';
 import rootEpic from './rootEpic';
 
-
 /* local constants */
 const epicMiddleware = createEpicMiddleware();
 
 // fake data store
 const fakeStore = {
   filters: [
-    { group: 'phases', data: [{ name: 'Mitigation', count: 100, isActive: true }, { name: 'Preparedness', count: 20 }] },
+    {
+      group: 'phases',
+      data: [
+        { name: 'Mitigation', count: 100, isActive: true },
+        { name: 'Preparedness', count: 20 },
+      ],
+    },
     { group: 'types', data: [] },
     { group: 'roles', data: [] },
     { group: 'functions', data: [] },
   ],
   criteria: {
     filter: {
-      $and: [{ phases: { $in: ['Mitigation'] } }, { types: { $in: ['Agency'] } }],
+      $and: [
+        { phases: { $in: ['Mitigation'] } },
+        { types: { $in: ['Agency'] } },
+      ],
     },
   },
 };
-
 
 /**
  * Configure Redux store
@@ -37,15 +44,16 @@ const fakeStore = {
  * @since 0.1.0
  */
 const configureStore = () => {
-  const store = createStore(rootReducer, fakeStore, composeWithDevTools(
-    applyMiddleware(epicMiddleware),
-  ));
+  const store = createStore(
+    rootReducer,
+    fakeStore,
+    composeWithDevTools(applyMiddleware(epicMiddleware))
+  );
 
   // epicMiddleware.run(); add root epics here
   epicMiddleware.run(rootEpic);
 
   return store;
 };
-
 
 export default configureStore;

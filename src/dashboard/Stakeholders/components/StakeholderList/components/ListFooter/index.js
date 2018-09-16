@@ -1,10 +1,8 @@
 import { Button, Col, Row } from 'antd';
 import React from 'react';
 
-
 /* local constants */
 const ButtonGroup = Button.Group;
-
 
 /**
  * Contacts list footer component
@@ -22,9 +20,7 @@ export default function ContactsListFooter() {
         <Col span={8}>
           <h3>
             Total : &nbsp;
-            <span className="f-15">
-              300
-            </span>
+            <span className="f-15">300</span>
           </h3>
         </Col>
         <Col span={10}>

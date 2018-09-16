@@ -1,8 +1,13 @@
-.search-stakeholder.ant-select-auto-complete .ant-input-affix-wrapper .ant-input-suffix button {
+.search-stakeholder.ant-select-auto-complete
+  .ant-input-affix-wrapper
+  .ant-input-suffix
+  button {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
 
-.search-stakeholder.ant-select-auto-complete .ant-input-affix-wrapper .ant-input-suffix {
+.search-stakeholder.ant-select-auto-complete
+  .ant-input-affix-wrapper
+  .ant-input-suffix {
   right: 0;
 }

@@ -5,15 +5,13 @@ import App from './App';
 /* import styles */
 import registerServiceWorker from './registerServiceWorker';
 
-
 registerServiceWorker();
 
-
-const render = (Component) => { ReactDOM.render(<Component />, document.getElementById('root')); };
-
+const render = Component => {
+  ReactDOM.render(<Component />, document.getElementById('root')); // eslint-disable-line no-undef
+};
 
 render(App);
-
 
 if (module.hot) {
   module.hot.accept('./App', () => {

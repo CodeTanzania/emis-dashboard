@@ -1,18 +1,36 @@
-import React, { Fragment, Component } from 'react';
-import ColHeader from 'ColHeader';
-import { Drawer, Button } from 'antd';
+import { Button, Drawer } from 'antd';
+import React, { Component, Fragment } from 'react';
+import ColHeader from '../../../../common/components/ColHeader';
 import StakeholderForm from '../StakeholderForm';
 import FiltersGroup from './components/FilterGroup';
 
-
 // fake data
 const data = {
-  phases: [{ name: 'Mitigation' }, { name: 'Preparedness' }, { name: 'Response' }, { name: 'Recovery' }],
-  types: [{ name: 'Agency' }, { name: 'Committee' }, { name: 'Team' }, { name: 'Individual' }],
-  roles: [{ name: 'Regional Commissioner' }, { name: 'Ward Officer' }, { name: 'Doctors' }, { name: 'Police' }],
-  functions: [{ name: 'Evacuation' }, { name: 'Water and Utilities' }, { name: 'Medical Support' }, { name: 'Logistics' }],
+  phases: [
+    { name: 'Mitigation' },
+    { name: 'Preparedness' },
+    { name: 'Response' },
+    { name: 'Recovery' },
+  ],
+  types: [
+    { name: 'Agency' },
+    { name: 'Committee' },
+    { name: 'Team' },
+    { name: 'Individual' },
+  ],
+  roles: [
+    { name: 'Regional Commissioner' },
+    { name: 'Ward Officer' },
+    { name: 'Doctors' },
+    { name: 'Police' },
+  ],
+  functions: [
+    { name: 'Evacuation' },
+    { name: 'Water and Utilities' },
+    { name: 'Medical Support' },
+    { name: 'Logistics' },
+  ],
 };
-
 
 /**
  * Render contact filters component
@@ -25,9 +43,10 @@ const data = {
  */
 class StakeholderFilter extends Component {
   state = { visible: false };
+
   showDrawer = () => {
     this.setState({ visible: true });
-  }
+  };
 
   onClose = () => {
     this.setState({
@@ -41,7 +60,7 @@ class StakeholderFilter extends Component {
       <Fragment>
         <Drawer
           title="Create Stakeholder"
-          width='50%'
+          width="50%"
           placement="right"
           visible={visible}
           onClose={this.onClose}
@@ -50,13 +69,9 @@ class StakeholderFilter extends Component {
           <StakeholderForm handleCancelClick={this.onClose} />
         </Drawer>
         <ColHeader>
-          <Button
-            icon="plus"
-            type="primary"
-            onClick={this.showDrawer}
-          >
+          <Button icon="plus" type="primary" onClick={this.showDrawer}>
             New Contact
-            </Button>
+          </Button>
         </ColHeader>
         <div className="content scrollable">
           <FiltersGroup name="Phases" filters={data.phases} />

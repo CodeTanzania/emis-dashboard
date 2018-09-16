@@ -2,7 +2,6 @@ import { Col, Divider, Row } from 'antd';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-
 /**
  * Renders header for contact details sections
  *
@@ -19,18 +18,13 @@ export default function SectionHeader({ title, actions }) {
   return (
     <Row className="p-20">
       <Col span={23}>
-        <h2>
-          {title}
-        </h2>
+        <h2>{title}</h2>
       </Col>
-      <Col span={1}>
-        {actions}
-      </Col>
+      <Col span={1}>{actions}</Col>
       <Divider type="horizontal" />
     </Row>
   );
 }
-
 
 /* prop validations */
 SectionHeader.propTypes = {

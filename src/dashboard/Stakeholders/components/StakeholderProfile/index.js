@@ -1,15 +1,14 @@
+import { Button, Drawer, Row } from 'antd';
 import React, { Component, Fragment } from 'react';
-import { Button, Row, Drawer } from 'antd';
 import { connect } from 'react-redux';
-import ColHeader from 'ColHeader';
+import ColHeader from '../../../../common/components/ColHeader';
+import StakeholderForm from '../StakeholderForm';
+import AddPersonnelForm from './components/AddPersonnelForm';
 import BasicInfo from './components/BasicInfo';
 import PersonnelList from './components/PersonnelList';
+import ProfileItemContent from './components/ProfileItemContent';
 // import Responsibilities from './components/Responsibilities';
 import ProfileItemHeader from './components/ProfileItemHeader';
-import ProfileItemContent from './components/ProfileItemContent';
-import AddPersonnelForm from './components/AddPersonnelForm';
-import StakeholderForm from '../StakeholderForm';
-
 
 /**
  * Contact detail view component
@@ -25,16 +24,16 @@ class StakeholderProfile extends Component {
 
   handleOnClickEditProfile = () => {
     this.setState({ visible: true, showEditProfile: true });
-  }
+  };
 
   handleOnClickAddPersonnel = () => {
     this.setState({ visible: true });
-  }
+  };
 
   handleCancelEdit = () => {
     this.setState({
       visible: false,
-      showEditProfile: false
+      showEditProfile: false,
     });
   };
 
@@ -44,32 +43,52 @@ class StakeholderProfile extends Component {
     return stakeholder ? (
       <Fragment>
         <Drawer
-          title={showEditProfile ? "Edit Stakeholder" : 'Add Personnel'}
-          width='50%'
+          title={showEditProfile ? 'Edit Stakeholder' : 'Add Personnel'}
+          width="50%"
           placement="right"
           visible={visible}
           onClose={this.handleCancelEdit}
           maskClosable={false}
         >
-          {showEditProfile ?
-            <StakeholderForm handleCancelClick={this.handleCancelEdit} stakeholder={stakeholder} />
-            : <AddPersonnelForm />}
+          {showEditProfile ? (
+            <StakeholderForm
+              handleCancelClick={this.handleCancelEdit}
+              stakeholder={stakeholder}
+            />
+          ) : (
+            <AddPersonnelForm />
+          )}
         </Drawer>
         <ColHeader>
           <h3>Basic Information</h3>
         </ColHeader>
         <div className="content scrollable">
           <Row>
-            <ProfileItemHeader title={stakeholder.name}
-              actions={<Button icon="edit"
-                onClick={this.handleOnClickEditProfile} className="f-20 b-0" />} />
+            <ProfileItemHeader
+              title={stakeholder.name}
+              actions={
+                <Button
+                  icon="edit"
+                  onClick={this.handleOnClickEditProfile}
+                  className="f-20 b-0"
+                />
+              }
+            />
             <ProfileItemContent>
               <BasicInfo stakeholder={stakeholder} />
             </ProfileItemContent>
           </Row>
           <Row>
-            <ProfileItemHeader title="Key Personnel" actions={<Button icon="plus"
-              onClick={this.handleOnClickAddPersonnel} className="f-20 b-0" />} />
+            <ProfileItemHeader
+              title="Key Personnel"
+              actions={
+                <Button
+                  icon="plus"
+                  onClick={this.handleOnClickAddPersonnel}
+                  className="f-20 b-0"
+                />
+              }
+            />
             <ProfileItemContent>
               <PersonnelList />
             </ProfileItemContent>
@@ -82,7 +101,9 @@ class StakeholderProfile extends Component {
           </Row> */}
         </div>
       </Fragment>
-    ) : ''
+    ) : (
+      ''
+    );
   }
 }
 
@@ -90,7 +111,4 @@ const mapStateToProps = state => ({
   stakeholder: state.stakeholders.selected,
 });
 
-export default connect(
-  mapStateToProps,
-)(StakeholderProfile);
-
+export default connect(mapStateToProps)(StakeholderProfile);

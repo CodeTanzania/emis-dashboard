@@ -1,5 +1,4 @@
-const path = require('path');
-const { injectBabelPlugin, compose } = require('react-app-rewired'); // eslint-disable line import/no-extraneous-dependencies
+const { injectBabelPlugin, compose } = require('react-app-rewired'); // eslint-disable-line
 
 /**
  * Override webpack configurations for the application
@@ -8,29 +7,20 @@ const { injectBabelPlugin, compose } = require('react-app-rewired'); // eslint-d
  * @param {Object} env
  */
 module.exports = {
-  webpack: function (config, env) {
-    const newConfig = injectBabelPlugin(['import',
-      { libraryName: 'antd', libraryDirectory: 'es', style: 'css' },
-    ], config);
+  webpack(config, env) {
+    const newConfig = injectBabelPlugin(
+      ['import', { libraryName: 'antd', libraryDirectory: 'es', style: 'css' }],
+      config
+    );
 
     const rewires = compose(
-      // Add CSS modules 
+      // Add CSS modules
+      // eslint-disable-next-line
       require('react-app-rewire-css-modules-extensionless')({
-        include: /.*\.module\.css$/ // add css modules only to css files with keword module
+        include: /.*\.module\.css$/, // add css modules only to css files with keyword module
       })
     );
 
-    // Add src shared components to the webpack modules to make
-    // import from these folder possible without writing relative path
-    const modules = [
-      __dirname,
-      path.resolve(__dirname, 'src', 'common'),
-      path.resolve(__dirname, 'src', 'common', 'components'),
-      ...newConfig.resolve.modules
-    ];
-    newConfig.resolve.modules = modules;
-
-
     return rewires(newConfig, env);
-  }
+  },
 };
