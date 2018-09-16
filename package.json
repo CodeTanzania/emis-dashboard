@@ -28,6 +28,7 @@
     "eslint-plugin-import": "^2.13.0",
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-react": "^7.10.0",
+    "react-app-rewire-css-modules-extensionless": "^1.2.0",
     "react-app-rewired": "^1.5.2",
     "redux-devtools-extension": "^2.13.5"
   }
