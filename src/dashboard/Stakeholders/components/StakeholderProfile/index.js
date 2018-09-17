@@ -23,9 +23,9 @@ import ProfileItemHeader from './components/ProfileItemHeader';
 class StakeholderProfile extends Component {
   state = { visible: false, showEditProfile: false };
 
-  // static defaultProps = {
-  //   stakeholder: null,
-  // };
+  static defaultProps = {
+    stakeholder: null,
+  };
 
   static propTypes = {
     stakeholder: PropTypes.shape({
@@ -67,8 +67,8 @@ class StakeholderProfile extends Component {
               stakeholder={stakeholder}
             />
           ) : (
-              <AddPersonnelForm />
-            )}
+            <AddPersonnelForm />
+          )}
         </Drawer>
         <ColHeader>
           <h3>Basic Information</h3>
@@ -113,8 +113,8 @@ class StakeholderProfile extends Component {
         </div>
       </Fragment>
     ) : (
-        ''
-      );
+      ''
+    );
   }
 }
 
