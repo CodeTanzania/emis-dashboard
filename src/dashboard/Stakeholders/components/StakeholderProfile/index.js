@@ -1,5 +1,6 @@
 import { Button, Drawer, Row } from 'antd';
 import React, { Component, Fragment } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import ColHeader from '../../../../common/components/ColHeader';
 import StakeholderForm from '../StakeholderForm';
@@ -21,6 +22,16 @@ import ProfileItemHeader from './components/ProfileItemHeader';
  */
 class StakeholderProfile extends Component {
   state = { visible: false, showEditProfile: false };
+
+  // static defaultProps = {
+  //   stakeholder: null,
+  // };
+
+  static propTypes = {
+    stakeholder: PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+    }),
+  };
 
   handleOnClickEditProfile = () => {
     this.setState({ visible: true, showEditProfile: true });
@@ -56,8 +67,8 @@ class StakeholderProfile extends Component {
               stakeholder={stakeholder}
             />
           ) : (
-            <AddPersonnelForm />
-          )}
+              <AddPersonnelForm />
+            )}
         </Drawer>
         <ColHeader>
           <h3>Basic Information</h3>
@@ -102,8 +113,8 @@ class StakeholderProfile extends Component {
         </div>
       </Fragment>
     ) : (
-      ''
-    );
+        ''
+      );
   }
 }
 
