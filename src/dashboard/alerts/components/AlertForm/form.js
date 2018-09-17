@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, Select, DatePicker, Row, Col, Button } from 'antd';
+import { Form, Divider, Input, Select, DatePicker, Row, Col, Button } from 'antd';
 import classnames from 'classnames';
 import styles from './index.css';
 
@@ -31,7 +31,9 @@ class NewAlertForm extends React.Component {
       },
     };
 
-    const rangeConfig = {
+
+
+    const config = {
       rules: [],
     };
 
@@ -41,34 +43,10 @@ class NewAlertForm extends React.Component {
           {...formItemLayout}
           label="Event"
         >
-          {getFieldDecorator('event', {
+          {getFieldDecorator('Event', {
             rules: [],
           })(
-            <Input size='large' />
-          )}
-        </FormItem>
-        <FormItem
-          {...formItemLayout}
-          label="Headline"
-        >
-          {getFieldDecorator('headline', {
-            rules: [],
-          })(
-            <Input size='large' />
-          )}
-        </FormItem>
-        <FormItem
-          {...formItemLayout}
-          label="Source"
-          hasFeedback
-        >
-          {getFieldDecorator('Source', {
-            rules: [],
-          })(
-            <Select size='large'>
-              <Option value="tma">TMA</Option>
-              <Option value="tahmo">TAHMO</Option>
-            </Select>
+            <Input  />
           )}
         </FormItem>
         <FormItem
@@ -76,27 +54,37 @@ class NewAlertForm extends React.Component {
           label="Status"
           hasFeedback
         >
-          {getFieldDecorator('Status', {
+          {getFieldDecorator('status', {
             rules: [],
           })(
-            <Select size='large'>
-              <Option value="tma">TMA</Option>
-              <Option value="tahmo">TAHMO</Option>
+            <Select style={{ width: '50%' }} >
+              <Option value="flood">Flood</Option>
+              <Option value="fire">Fire</Option>
             </Select>
           )}
         </FormItem>
         <FormItem
           {...formItemLayout}
-          label="Type"
+          label="Message Type"
           hasFeedback
         >
-          {getFieldDecorator('type', {
+          {getFieldDecorator('message-type', {
             rules: [],
           })(
-            <Select size='large'>
-              <Option value="tma">TMA</Option>
-              <Option value="tahmo">TAHMO</Option>
+            <Select style={{ width: '50%' }} >
+              <Option value="flood">Flood</Option>
+              <Option value="fire">Fire</Option>
             </Select>
+          )}
+        </FormItem>
+        <FormItem
+          {...formItemLayout}
+          label="Source"
+        >
+          {getFieldDecorator('source', {
+            rules: [],
+          })(
+            <Input style={{ width: '50%' }}  />
           )}
         </FormItem>
         <FormItem
@@ -107,9 +95,112 @@ class NewAlertForm extends React.Component {
           {getFieldDecorator('scope', {
             rules: [],
           })(
-            <Select size='large'>
-              <Option value="tma">TMA</Option>
-              <Option value="tahmo">TAHMO</Option>
+            <Select style={{ width: '50%' }} >
+              <Option value="flood">Flood</Option>
+              <Option value="fire">Fire</Option>
+            </Select>
+          )}
+        </FormItem>
+        <FormItem
+          {...formItemLayout}
+          label="Restriction"
+          hasFeedback
+        >
+          {getFieldDecorator('restriction', {
+            rules: [],
+          })(
+            <Select style={{ width: '50%' }} >
+              <Option value="flood">Flood</Option>
+              <Option value="fire">Fire</Option>
+            </Select>
+          )}
+        </FormItem>
+        <FormItem
+          {...formItemLayout}
+          label="Addresses"
+        >
+          {getFieldDecorator('addresses', {
+            rules: [],
+          })(
+            <Input  />
+          )}
+        </FormItem>
+        <FormItem
+          {...formItemLayout}
+          label="Code"
+        >
+          {getFieldDecorator('code', {
+            rules: [],
+          })(
+            <Input  />
+          )}
+        </FormItem>
+        <FormItem
+          {...formItemLayout}
+          label="Note"
+        >
+          {getFieldDecorator('note', {
+            rules: [],
+          })(
+            <Input  />
+          )}
+        </FormItem>
+        <FormItem
+          {...formItemLayout}
+          label="Reference"
+        >
+          {getFieldDecorator('references', {
+            rules: [],
+          })(
+            <Input  />
+          )}
+        </FormItem>
+        <FormItem
+          {...formItemLayout}
+          label="Incidents"
+        >
+          {getFieldDecorator('references', {
+            rules: [],
+          })(
+            <Input  />
+          )}
+        </FormItem>
+        <FormItem
+          {...formItemLayout}
+          label="Message Type"
+          hasFeedback
+        >
+          {getFieldDecorator('message-type', {
+            rules: [],
+          })(
+            <Select style={{ width: '50%' }} >
+              <Option value="flood">Flood</Option>
+              <Option value="fire">Fire</Option>
+            </Select>
+          )}
+        </FormItem>
+        <FormItem
+          {...formItemLayout}
+          label="Language"
+        >
+          {getFieldDecorator('language', {
+            rules: [],
+          })(
+            <Input  />
+          )}
+        </FormItem>
+        <Divider />
+        <FormItem
+          {...formItemLayout}
+          label="Response Type"
+          hasFeedback
+        >
+          {getFieldDecorator('response-type', {
+            rules: [],
+          })(
+            <Select style={{ width: '50%' }} >
+              <Option value="flood">Flood</Option>
+              <Option value="fire">Fire</Option>
             </Select>
           )}
         </FormItem>
@@ -121,38 +212,20 @@ class NewAlertForm extends React.Component {
           {getFieldDecorator('urgency', {
             rules: [],
           })(
-            <Select size='large'>
-              <Option value="tma">TMA</Option>
-              <Option value="tahmo">TAHMO</Option>
+            <Select style={{ width: '50%' }} >
+              <Option value="flood">Flood</Option>
+              <Option value="fire">Fire</Option>
             </Select>
           )}
         </FormItem>
         <FormItem
           {...formItemLayout}
           label="Severity"
-          hasFeedback
         >
-          {getFieldDecorator('Severity', {
+          {getFieldDecorator('severity', {
             rules: [],
           })(
-            <Select size='large'>
-              <Option value="tma">TMA</Option>
-              <Option value="tahmo">TAHMO</Option>
-            </Select>
-          )}
-        </FormItem>
-        <FormItem
-          {...formItemLayout}
-          label="Category"
-          hasFeedback
-        >
-          {getFieldDecorator('category', {
-            rules: [],
-          })(
-            <Select size='large'>
-              <Option value="tma">TMA</Option>
-              <Option value="tahmo">TAHMO</Option>
-            </Select>
+            <Input style={{ width: '50%' }}  />
           )}
         </FormItem>
         <FormItem
@@ -160,41 +233,53 @@ class NewAlertForm extends React.Component {
           label="Certainty"
           hasFeedback
         >
-          {getFieldDecorator('Certainty', {
+          {getFieldDecorator('certainty', {
             rules: [],
           })(
-            <Select size='large'>
-              <Option value="tma">TMA</Option>
-              <Option value="tahmo">TAHMO</Option>
+            <Select style={{ width: '50%' }} >
+              <Option value="flood">Flood</Option>
+              <Option value="fire">Fire</Option>
             </Select>
           )}
         </FormItem>
         <FormItem
           {...formItemLayout}
-          label="Response Type"
+          label="Audience"
           hasFeedback
         >
-          {getFieldDecorator('response-type', {
+          {getFieldDecorator('audience', {
             rules: [],
           })(
-            <Select size='large'>
-              <Option value="tma">TMA</Option>
-              <Option value="tahmo">TAHMO</Option>
+            <Select style={{ width: '50%' }} >
+              <Option value="flood">Flood</Option>
+              <Option value="fire">Fire</Option>
             </Select>
           )}
         </FormItem>
         <FormItem
           {...formItemLayout}
-          label="Code"
-          hasFeedback
+          label="Onset"
         >
-          {getFieldDecorator('code', {
+          {getFieldDecorator('onset', config)(
+            <DatePicker />
+          )}
+        </FormItem>
+        <FormItem
+          {...formItemLayout}
+          label="Expires"
+        >
+          {getFieldDecorator('onset', config)(
+            <DatePicker />
+          )}
+        </FormItem>
+        <FormItem
+          {...formItemLayout}
+          label="HeadLine"
+        >
+          {getFieldDecorator('head-line', {
             rules: [],
           })(
-            <Select size='large'>
-              <Option value="tma">TMA</Option>
-              <Option value="tahmo">TAHMO</Option>
-            </Select>
+            <Input  />
           )}
         </FormItem>
         <FormItem
@@ -204,7 +289,7 @@ class NewAlertForm extends React.Component {
           {getFieldDecorator('description', {
             rules: [],
           })(
-            <TextArea rows={4} />
+            <Input  />
           )}
         </FormItem>
         <FormItem
@@ -214,34 +299,38 @@ class NewAlertForm extends React.Component {
           {getFieldDecorator('instruction', {
             rules: [],
           })(
-            <TextArea rows={4} />
+            <Input  />
           )}
         </FormItem>
         <FormItem
           {...formItemLayout}
-          label="Onset"
+          label="Web"
         >
-          {getFieldDecorator('onset')(
-            <DatePicker />
+          {getFieldDecorator('web', {
+            rules: [],
+          })(
+            <Input  />
           )}
         </FormItem>
         <FormItem
           {...formItemLayout}
-          label="Expires"
+          label="Contact"
         >
-          {getFieldDecorator('expires')(
-            <DatePicker />
+          {getFieldDecorator('contact', {
+            rules: [],
+          })(
+            <Input  />
           )}
         </FormItem>
         <FormItem
           {...formItemLayout}
         >
-          <Row className={cx('form-actions')}>
-            <Col span={6} offset={6}>
-            <Button id={cx('button-cancel')}>Cancel</Button>
+          <Row>
+            <Col span={4} offset={8}>
+            <Button>Cancel</Button>
             </Col>
-            <Col span={10} offset={1}>
-            <Button type="primary" id={cx('button-save')} htmlType="submit">Save</Button>
+            <Col span={8}>
+            <Button type="primary" htmlType="submit">Save</Button>
             </Col>
           </Row>
         </FormItem>
