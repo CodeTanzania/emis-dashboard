@@ -1,14 +1,12 @@
 import React, { Fragment } from 'react';
-import { Col, Row } from 'antd';
 import Header from '../../common/components/Header';
-import classNames from 'classnames/bind';
 
 /* child components */
 import IncidentFilter from './components/incidentFilter';
+import IncidentPhase from './components/incidentPhase';
+
 
 /*loaded css*/
-import styles from '../styles.css';
-const cx = classNames.bind(styles);
 
 /**
  * Render incidents panel component which have all components in relation
@@ -26,9 +24,10 @@ const Incidents = () => {
      <Fragment>
          <Header title="Incidents"/>
          <IncidentFilter />
-
-         <Row>
-         </Row>
+         <div>
+        <IncidentPhase />
+        </div>
+         
      </Fragment>
     )
  }

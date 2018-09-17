@@ -1,0 +1,29 @@
+.phaseLayout{
+     border-top: 1px solid #E0E0E0;
+      background-color: #fff;
+       margin-top:2%;
+
+}
+.phaseName{
+    color: #1890ff;
+}
+.mitigation{
+    border-bottom: 1px solid #E0E0E0;
+    padding-left: 12px;
+    padding-top: 8px;
+}
+.barge,.ellipsis{
+    margin-top: 2%;
+}
+.content {
+    background-color: #fff;
+  }
+  .ant-card-body{
+      padding: 12px;
+      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 3px 10px 0 rgba(0, 0, 0, 0.09);
+
+  }
+  .ant-card-bordered {
+    border: 1px solid #f3f3f3;
+}
+
