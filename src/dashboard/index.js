@@ -4,7 +4,9 @@ import React from 'react';
 import { NavLink, Route, Switch } from 'react-router-dom';
 import logo from '../logo.svg';
 import Plans from './plans';
+import Incidents from './incidents'
 import Stakeholders from './Stakeholders';
+
 /* import styles */
 import styles from './styles.css';
 
@@ -30,6 +32,16 @@ export default function Dashboard() {
         <img src={logo} alt="logo" className={cx('logo')} />
         {/* end application logo */}
         <Menu mode="inline">
+          {/* incident menu */}
+          <Menu.Item key="1">
+            <NavLink to="/incidents">
+              <Icon type="heat-map" theme="outlined" className="f-25" />
+              <span>
+                Incidents
+            </span>
+            </NavLink>
+          </Menu.Item>
+          {/* end incident menu */}
           {/* plan menu */}
           <Menu.Item key="1">
             <NavLink to="/plans/index">
@@ -60,6 +72,7 @@ export default function Dashboard() {
       <Layout>
         <Content className={cx('content')}>
           <Switch>
+            <Route path="/incidents" exact component={Incidents} />
             <Route path="/plans" component={Plans} />
             <Route path="/stakeholders" exact component={Stakeholders} />
           </Switch>
