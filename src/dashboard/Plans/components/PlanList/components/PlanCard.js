@@ -1,6 +1,7 @@
 import { Badge, Card, Col, Row } from 'antd';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 /* local constants */
 const { Meta } = Card;
@@ -21,27 +22,30 @@ const { Meta } = Card;
 function Details({ name, jurisdiction, activityCount, updatedAt }) {
   return (
     <React.Fragment>
-      <Row justify="space-between">
-        <Col span={21}>
-          <h3 title={name}>{name}</h3>
-          <p style={{ fontSize: '11px', color: '#909090' }}>{jurisdiction}</p>
-        </Col>
-        <Col span={2}>
-          <Badge
-            count={activityCount}
-            style={{
-              backgroundColor: '#fff',
-              color: '#999',
-              boxShadow: '0 0 0 1px #d9d9d9 inset',
-            }}
-          />
-          <p style={{ fontSize: '11px', marginTop: '5px' }}>Actions</p>
-        </Col>
-      </Row>
-      <p style={{ fontSize: '11px', color: '#909090' }}>
-        Last updated Date:
-        {new Intl.DateTimeFormat('en-GB').format(updatedAt)}
-      </p>
+      {/* TODO make sure once hover color changes */}
+      <Link to="/plans/phases">
+        <Row justify="space-between">
+          <Col span={21}>
+            <h3 title={name}>{name}</h3>
+            <p style={{ fontSize: '11px', color: '#909090' }}>{jurisdiction}</p>
+          </Col>
+          <Col span={2}>
+            <Badge
+              count={activityCount}
+              style={{
+                backgroundColor: '#fff',
+                color: '#999',
+                boxShadow: '0 0 0 1px #d9d9d9 inset',
+              }}
+            />
+            <p style={{ fontSize: '11px', marginTop: '5px' }}>Actions</p>
+          </Col>
+        </Row>
+        <p style={{ fontSize: '11px', color: '#909090' }}>
+          Last Review Date:
+          {new Intl.DateTimeFormat('en-GB').format(updatedAt)}
+        </p>
+      </Link>
     </React.Fragment>
   );
 }

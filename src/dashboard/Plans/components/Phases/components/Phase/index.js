@@ -34,7 +34,8 @@ const options = (
  */
 export default function Phase({ title, count, actions }) {
   return (
-    <Layout style={{ borderLeft: '1px solid #e0e0e0' }}>
+    <Layout style={{ borderRight: '1px solid #e0e0e0' }}>
+      {/* start header */}
       <Header
         style={{
           background: '#fff',
@@ -63,6 +64,8 @@ export default function Phase({ title, count, actions }) {
           </Col>
         </Row>
       </Header>
+      {/* end header */}
+      {/* start content */}
       <Content
         style={{
           backgroundColor: '#fff',
@@ -74,6 +77,7 @@ export default function Phase({ title, count, actions }) {
           <ActionCard {...action} />
         ))}
       </Content>
+      {/* end content */}
     </Layout>
   );
 }
