@@ -8,6 +8,7 @@ export const SEARCH_STAKEHOLDERS = 'SEARCH_STAKEHOLDERS';
 export const SELECT_STAKEHOLDER = 'SELECT_STAKEHOLDER';
 export const ADD_NEW_STAKEHOLDER_SUCCESS = 'ADD_NEW_STAKEHOLDER_SUCCESS';
 export const UPDATE_STAKEHOLDER_SUCCESS = 'UPDATE_STAKEHOLDER_SUCCESS';
+export const TOGGLE_STAKEHOLDER_FILTER = 'TOGGLE_STAKEHOLDER_FILTER';
 
 export const fetchStakeholders = () => ({ type: FETCH_STAKEHOLDERS });
 
@@ -43,4 +44,12 @@ export const addNewStakeholderSuccess = stakeholder => ({
 export const updateStakeholderSuccess = stakeholder => ({
   type: UPDATE_STAKEHOLDER_SUCCESS,
   stakeholder,
+});
+
+// toggle stakeholder filter select
+export const toggleStakeholderFilter = (filterGroup, filterName, selected) => ({
+  type: TOGGLE_STAKEHOLDER_FILTER,
+  filterGroup,
+  filterName,
+  selected,
 });

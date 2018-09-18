@@ -1,3 +1,4 @@
+/* eslint no-underscore-dangle: "off" */
 import { Button, Checkbox, Col, Icon, List, Popover, Row } from 'antd';
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
