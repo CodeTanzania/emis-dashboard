@@ -31,6 +31,7 @@ const locations = [
  */
 export default class PlanForm extends Component {
   handleSubmit = e => {
+    e.preventDefault();
     // todo handle form submission
   };
 

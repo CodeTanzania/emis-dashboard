@@ -1,4 +1,4 @@
-import { Button, Col, Drawer, Icon, Layout, List, Menu, Row } from 'antd';
+import { Button, Col, Drawer, Layout, List, Row } from 'antd';
 import React, { Component } from 'react';
 import Select from '../../../../common/components/Select';
 import PlanForm from '../PlanForm';
@@ -6,22 +6,7 @@ import PlanCard from './components/PlanCard';
 
 /* local constants */
 const { Header, Content } = Layout;
-const menu = (
-  <Menu>
-    <Menu.Item key="1">
-      <Icon type="file-pdf" />
-      PDF
-    </Menu.Item>
-    <Menu.Item key="2">
-      <Icon type="file-excel" />
-      Excel
-    </Menu.Item>
-    <Menu.Item key="3">
-      <Icon type="file-text" />
-      CSV
-    </Menu.Item>
-  </Menu>
-);
+// fake data
 const fakeData = [
   {
     name: 'Flood',
