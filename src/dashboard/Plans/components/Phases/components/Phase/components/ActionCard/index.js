@@ -1,6 +1,7 @@
 import { Badge, Card, Col, Row } from 'antd';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 /* local constants */
 const { Meta } = Card;
@@ -55,19 +56,21 @@ function Details({ name, incident, taskCount }) {
  */
 export default function ActionCard({ name, incident, taskCount }) {
   return (
-    <Card
-      style={{
-        width: '90%',
-        margin: '20px auto',
-        borderLeft: '3px solid #0092fd',
-      }}
-    >
-      <Meta
-        title={
-          <Details name={name} incident={incident} taskCount={taskCount} />
-        }
-      />
-    </Card>
+    <Link to="/plans/actions">
+      <Card
+        style={{
+          width: '90%',
+          margin: '20px auto',
+          borderLeft: '3px solid #0092fd',
+        }}
+      >
+        <Meta
+          title={
+            <Details name={name} incident={incident} taskCount={taskCount} />
+          }
+        />
+      </Card>
+    </Link>
   );
 }
 
