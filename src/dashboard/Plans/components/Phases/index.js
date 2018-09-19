@@ -52,23 +52,15 @@ const planActions = [
  * @since 0.1.0
  */
 export default class Phases extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      visibleDrawer: false,
-    };
+  state = { visibleDrawer: false };
 
-    this.onCloseDrawer = this.onCloseDrawer.bind(this);
-    this.onOpenDrawer = this.onOpenDrawer.bind(this);
-  }
-
-  onCloseDrawer() {
+  onCloseDrawer = () => {
     this.setState({ visibleDrawer: false });
-  }
+  };
 
-  onOpenDrawer() {
+  onOpenDrawer = () => {
     this.setState({ visibleDrawer: true });
-  }
+  };
 
   render() {
     const { visibleDrawer } = this.state;
@@ -84,7 +76,7 @@ export default class Phases extends Component {
         <Header
           style={{
             background: '#fff',
-            paddingLeft: 10,
+            padding: '0 10px',
             borderBottom: '1px solid #E0E0E0',
             flexBasis: '50px',
           }}
@@ -96,7 +88,7 @@ export default class Phases extends Component {
         <Header
           style={{
             background: '#fff',
-            paddingLeft: 10,
+            padding: '0 10px',
             borderBottom: '1px solid #E0E0E0',
             flexBasis: '50px',
           }}
@@ -117,8 +109,8 @@ export default class Phases extends Component {
             {/* end filters */}
             {/* start actions */}
             <Col span={4}>
-              <Row>
-                <Col span={12}>
+              <Row justify="space-around">
+                <Col span={10}>
                   <Button
                     icon="plus"
                     type="primary"
@@ -127,7 +119,7 @@ export default class Phases extends Component {
                     New Action
                   </Button>
                 </Col>
-                <Col span={12}>
+                <Col span={10}>
                   <Dropdown overlay={menu}>
                     <Button style={{ marginLeft: 8 }} type="primary">
                       <Icon type="export" />
