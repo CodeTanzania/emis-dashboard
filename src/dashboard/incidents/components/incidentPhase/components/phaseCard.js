@@ -9,12 +9,12 @@ import styles from '../styles.css'
 const cx = className.bind(styles);
 const { Meta } = Card;
 
-const CardContent = ({ name, updatedAt }) => {
+const CardContent = ({ name, incidentCode, updatedAt }) => {
     return (
         <React.Fragment>
             <div justify="space-between">
-                <h3 title={name} style={{ marginBottom: '0px' }}>0102Flood4</h3>
-                <p style={{ fontSize: '13px', color: '#909090' }}>floods</p>
+                <h3 style={{ marginBottom: '0px' }}>{incidentCode}</h3>
+                <p title={name} style={{ fontSize: '13px', color: '#909090' }}>{name}</p>
             </div>
             <p style={{ fontSize: '11px', color: '#909090' }}>
                 Created on:
@@ -31,7 +31,7 @@ const PhaseCard = () => {
                 borderLeft: '6px solid #0092fd',
                 }} >
             <Card>
-                <Meta title={ <CardContent /> } />
+                <Meta title={ <CardContent  name="floods" incidentCode = "0102Flood1"/> } />
             </Card>
             <Card className="explore">
                 <a href="{incidents}"><h3 style={{ textAlign: 'center', color: '#909090', margin: '0'}}>Explore</h3></a>
