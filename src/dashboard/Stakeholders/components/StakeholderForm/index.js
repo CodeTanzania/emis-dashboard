@@ -1,3 +1,4 @@
+/* eslint no-underscore-dangle: "off" */
 import { Button, Checkbox, Form, Input, Radio, Select } from 'antd';
 import classNames from 'classnames/bind';
 import React, { Component } from 'react';
@@ -118,7 +119,7 @@ class BasicDetailsForm extends Component {
     const prefixSelector = getFieldDecorator('prefix', {
       initialValue: '255',
     })(
-      <Select style={{ width: 70 }}>
+      <Select style={{ width: 80 }}>
         <Option value="255">+255</Option>
         <Option value="254">+254</Option>
       </Select>
