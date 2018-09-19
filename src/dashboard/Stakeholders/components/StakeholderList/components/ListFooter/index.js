@@ -26,8 +26,8 @@ export default function ContactsListFooter() {
         <Col span={10}>
           <ButtonGroup>
             <Button icon="reload" title="Refresh Contacts" />
-            <Button icon="export" title="Export Contacts" />
-            <Button icon="bars" title="Sort Contacts" />
+            {/* <Button icon="export" title="Export Contacts" /> */}
+            {/* <Button icon="bars" title="Sort Contacts" /> */}
             <Button icon="left" title="Previous" />
             <Button icon="right" title="Next" />
           </ButtonGroup>

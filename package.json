@@ -16,6 +16,7 @@
   },
   "scripts": {
     "start": "react-app-rewired start",
+    "prestart": "eslint --fix --ext .jsx,.js src/",
     "build": "react-app-rewired build",
     "test": "react-app-rewired test --env=jsdom",
     "eject": "react-scripts eject",

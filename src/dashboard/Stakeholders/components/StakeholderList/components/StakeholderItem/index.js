@@ -1,3 +1,4 @@
+/* eslint no-underscore-dangle: "off" */
 import { Button, Checkbox, Col, Icon, List, Popover, Row } from 'antd';
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
@@ -39,9 +40,25 @@ const actions = (
  */
 
 class StakeholderItem extends Component {
+  // set proptypes
+  static propTypes = {
+    stakeholder: PropTypes.shape({
+      _id: PropTypes.string,
+    }).isRequired,
+    selectedStakeholder: PropTypes.shape({
+      _id: PropTypes.string,
+    }),
+    handleSelectStakeholder: PropTypes.func.isRequired,
+  };
+
+  //  set default
+  static defaultProps = {
+    selectedStakeholder: null,
+  };
+
   onClick = () => {
-    const { stakeholder } = this.props;
-    selectStakeholder(stakeholder);
+    const { stakeholder, handleSelectStakeholder } = this.props;
+    handleSelectStakeholder(stakeholder);
   };
 
   render() {
@@ -59,7 +76,10 @@ class StakeholderItem extends Component {
               <Col xs={21}>
                 <span
                   className={cx('f-600 f-15', 'name')}
+                  role="link"
                   onClick={this.onClick}
+                  onKeyDown={this.onClick}
+                  tabIndex="0"
                   title="Click to view more"
                 >
                   {name}
@@ -101,16 +121,11 @@ class StakeholderItem extends Component {
   }
 }
 
-/* Validating props types */
-StakeholderItem.propTypes = {
-  stakeholder: PropTypes.object,
-};
-
 const mapStateToProps = state => ({
   selectedStakeholder: state.stakeholders.selected,
 });
 
 export default connect(
   mapStateToProps,
-  { selectStakeholder }
+  { handleSelectStakeholder: selectStakeholder }
 )(StakeholderItem);

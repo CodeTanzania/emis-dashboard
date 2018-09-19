@@ -14,7 +14,7 @@ import InformationItem from './Item';
  * @version 0.1.0
  * @since 0.1.0
  */
-export default function Information({ stakeholder }) {
+export default function BasicInfo({ stakeholder }) {
   const { phone, email, physicalAddress, fax } = stakeholder;
   return (
     <div>
@@ -41,17 +41,15 @@ export default function Information({ stakeholder }) {
 }
 
 /* Props validation */
-Information.propTypes = {
-  stakeholder: PropTypes.objectOf(
-    PropTypes.shape({
-      phone: PropTypes.string,
-      email: PropTypes.string,
-      physicalAddress: PropTypes.string,
-      fax: PropTypes.string,
-    })
-  ),
+BasicInfo.propTypes = {
+  stakeholder: PropTypes.shape({
+    phone: PropTypes.string,
+    email: PropTypes.string,
+    physicalAddress: PropTypes.string,
+    fax: PropTypes.string,
+  }),
 };
 
-Information.defaultProps = {
+BasicInfo.defaultProps = {
   stakeholder: {},
 };
