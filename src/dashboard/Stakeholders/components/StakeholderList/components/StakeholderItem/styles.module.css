@@ -1,7 +1,15 @@
+/* 
+Use this class to change to style of the selected item
+*/
+
 .isSelected {
-  /* background: #f9f9f9; */
   background: #f0f0f0;
 }
+
+/* 
+Use this class to add pointer like cursor when
+hovering on item name
+*/
 
 .name {
   cursor: pointer;

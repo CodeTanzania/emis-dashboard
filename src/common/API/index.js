@@ -8,6 +8,7 @@ const API = {
 
   /**
    * Search stakeholder using query string
+   * @param {string} searchText - Search query string
    */
   searchStakeholder: searchText =>
     fetch(`${API_END_POINT}/parties?q=${searchText}`).then(res => res.json()),

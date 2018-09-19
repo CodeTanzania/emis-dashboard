@@ -15,7 +15,9 @@ import {
  * It takes stakeholders UI filters,
  * extract only selected filters and format them ready to be utilized
  * by the API
- * @param {Array} filters filters as used in the UI
+ * @param {Object[]} filters filters as used in the UI
+ * @param {string} filters[].group - Filter group name
+ * @param {Object[]} filters.data - Filters in a specific group
  */
 function extractStakeholderFilters(filters) {
   const selectedFilters = filters.map(filterGroup => {
@@ -33,8 +35,8 @@ function extractStakeholderFilters(filters) {
 /**
  * It fetch stakeholders from the API
  *
- * @param {Observable<Action>} action$ action observable
- * @param {StateOverable<State>} state$ store state
+ * @param {Observable<Action>} action$ - Action observable
+ * @param {StateOverable<State>} state$ - Redux store state
  */
 export const fetchStakeholdersEpic = (action$, state$) =>
   action$.pipe(

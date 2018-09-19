@@ -23,7 +23,7 @@ const initialState = {
 
 /**
  * Create stakeholder filters using data from the API
- * ``` 
+ *
  * Transform
  * "filters": [
         {
@@ -49,8 +49,12 @@ const initialState = {
             ]
         }
       ]
-  ```
- * @param {*} filters 
+ * @param {Object[]} filters 
+ * @param {string} filters[].group - Filter group name, e.g phases, types etc
+ * @param {Object[]} filters[].data - Filter data
+ * @param {string} filters[].data[].name - Filter name
+ * @param {number} filters[].data[].count - Number of stakeholders tagged with this filter name
+ * @returns {Object[]} - Filters with filter item added selected property
  */
 function createUIFiltersFromAPI(filters) {
   return filters.map(filter => {
@@ -62,8 +66,12 @@ function createUIFiltersFromAPI(filters) {
 /**
  * It updates UIfilter count property using data from the API
  *
- * @param {Array} UIFilters filters as displayed in UI
- * @param {Array} APIFilters filters as returned from the API
+ * @param {Object[]} UIFilters filters as displayed in UI
+ * @param {string} UIFilters[].group - Filter group
+ * @param {Object[]} UIFilters[].data - Filters in a specific group
+ * @param {Object[]} APIFilters filters as returned from the API
+ * @param {string} APIFilters[].group
+ * @param {Object[]} APIFilters[].data
  */
 function updateUIFiltersFromAPI(UIFilters, APIFilters) {
   // Iterate all UI filters
@@ -96,11 +104,11 @@ function updateUIFiltersFromAPI(UIFilters, APIFilters) {
 }
 
 /**
- * Update filter item
- * @param {*} filters
- * @param {*} filterGroup
- * @param {*} filterName
- * @param {*} selected
+ * Update filter item with selected status
+ * @param {Object[]} filters
+ * @param {string} filterGroup - Filter group name
+ * @param {string} filterName - Filter name
+ * @param {boolean} selected - Filter selected status
  */
 function updateStakeholderFilterItem(
   filters,
@@ -130,6 +138,11 @@ function updateStakeholderFilterItem(
   });
 }
 
+/**
+ * Stakeholder reducer function
+ * @param {Object=} state - Redux store state
+ * @param {Object} action - Redux action
+ */
 export default function stakeholders(state = initialState, action) {
   switch (action.type) {
     case FETCH_STAKEHOLDERS:
