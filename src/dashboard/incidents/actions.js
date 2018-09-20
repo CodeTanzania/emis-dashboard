@@ -7,6 +7,7 @@
  const FILTER_INCIDENTS_TYPE = 'FILTER_INCIDENT_TYPE';
  const FILTER_PLACES = 'FILTER_PLACES';
  const TRIGGER_GET_INCIDENTS = 'INCIDENS:TRIGER_GET';
+ const STORE_INCIDENTS = 'INCIDENTS:STORE';
 
 /* Actions creaters */
 
@@ -18,6 +19,7 @@ const addNewIncident = incident => {
 }
 
 const triggerGetIncidents = () => ({type: TRIGGER_GET_INCIDENTS});
+const storeIncidents = (incidents = []) => ({type: STORE_INCIDENTS, incidents});
 
 const fetchIncidents = () => {
     return {
@@ -48,5 +50,6 @@ const filterPlaces = places => {
 
 export  {addNewIncident, fetchIncidents,
     selectIncident, filterIncidentType, filterPlaces,
-    TRIGGER_GET_INCIDENTS, triggerGetIncidents
+    TRIGGER_GET_INCIDENTS, triggerGetIncidents,
+    STORE_INCIDENTS, storeIncidents
 }

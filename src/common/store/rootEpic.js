@@ -6,5 +6,6 @@ import {
   fetchStakeholdersEpic,
   searchStakeholdersEpic,
 } from '../../dashboard/Stakeholders/epics';
+import { getIncidentsEpic } from '../../dashboard/incidents/epics';
 
-export default combineEpics(fetchStakeholdersEpic, searchStakeholdersEpic);
+export default combineEpics(fetchStakeholdersEpic, searchStakeholdersEpic, getIncidentsEpic);
