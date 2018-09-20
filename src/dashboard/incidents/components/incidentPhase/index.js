@@ -13,19 +13,12 @@ import styles from './styles.css'
 const cx = className.bind(styles);
 class IncidentPhase extends React.Component {
 
-constructor(props){
-    super(props);
-    this.state = {
-        incidents: []
-    }
-}
-
 componentDidMount(){
     const { triggerGetIncidents } = this.props;
     triggerGetIncidents();
 }
     render() {
-        const {incidents} = this.state;
+        const { incidents } = this.props;
         return (
             <Layout className={cx('phaseLayout')}>
                 <div >
@@ -57,6 +50,7 @@ componentDidMount(){
 
 const mapStateToProps = state => {
     return{
+        incidents: state.incidents.data ? state.incidents.data : []
     }
 }
 
