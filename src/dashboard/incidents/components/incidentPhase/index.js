@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { createSelector } from 'reselect';
+import { incidentsSelector } from '../../selectors';
 import { triggerGetIncidents } from '../../actions';
 import className from 'classnames/bind';
 import { Row, Col, Layout, List } from 'antd';
@@ -48,11 +50,12 @@ componentDidMount(){
     }
 }
 
-const mapStateToProps = state => {
-    return{
-        incidents: state.incidents.data ? state.incidents.data : []
-    }
-}
+const mapStateToProps = createSelector(
+    [
+        incidentsSelector
+    ],
+    incidents => ({incidents})
+);
 
 const mapDispatchToProps = dispatch => {
     return {
