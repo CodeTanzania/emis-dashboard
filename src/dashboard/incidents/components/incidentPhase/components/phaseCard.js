@@ -1,6 +1,6 @@
 import React from 'react';
 import className from 'classnames/bind';
-import {  Card } from 'antd';
+import { Card } from 'antd';
 
 /*Loaded css */
 import styles from '../styles.css'
@@ -23,21 +23,24 @@ const CardContent = ({ name, incidentCode, updatedAt }) => {
         </React.Fragment>
     )
 }
-const PhaseCard = () => {
+
+const PhaseCard = (props) => {
+    const { incidents, phase } = props;
     return (
-        <div style={{
-                width: '85%',
-                margin: '20px auto',
-                borderLeft: '6px solid #0092fd',
-                }} >
+        incidents.filter(({family}) => family === phase).map( ({name, _id, createdAt}) => (<div style={{
+            width: '85%',
+            margin: '20px auto',
+            borderLeft: '6px solid #0092fd',
+        }} >
             <Card>
-                <Meta title={ <CardContent  name="floods" incidentCode = "0102Flood1"/> } />
+                <Meta title={<CardContent name={name} incidentCode={_id} createdAt={createdAt} />} />
             </Card>
             <Card className="explore">
-                <a href="{incidents}"><h3 style={{ textAlign: 'center', color: '#909090', margin: '0'}}>Explore</h3></a>
+                <a href="{incidents}"><h3 style={{ textAlign: 'center', color: '#909090', margin: '0' }}>Explore</h3></a>
             </Card>
-            
-        </div>
+
+        </div>))
+        
     );
 }
 

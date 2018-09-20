@@ -1,11 +1,12 @@
 /* Actions for the incident */;
 
 /* const actions */
-export const ADD_NEW_INCIDENT = 'ADD_NEW_INCIDENT';
-export const FETCH_INCIDENTS = 'FETCH_INCIDENTS';
-export const SELECTED_INCIDENT = 'SELECTED_INCIDENT';
-export const FILTER_INCIDENTS_TYPE = 'FILTER_INCIDENT_TYPE';
-export const FILTER_PLACES = 'FILTER_PLACES';
+ const ADD_NEW_INCIDENT = 'ADD_NEW_INCIDENT';
+ const FETCH_INCIDENTS = 'FETCH_INCIDENTS';
+ const SELECTED_INCIDENT = 'SELECTED_INCIDENT';
+ const FILTER_INCIDENTS_TYPE = 'FILTER_INCIDENT_TYPE';
+ const FILTER_PLACES = 'FILTER_PLACES';
+ const TRIGGER_GET_INCIDENTS = 'INCIDENS:TRIGER_GET';
 
 /* Actions creaters */
 
@@ -15,6 +16,8 @@ const addNewIncident = incident => {
         incident
     }
 }
+
+const triggerGetIncidents = () => ({type: TRIGGER_GET_INCIDENTS});
 
 const fetchIncidents = () => {
     return {
@@ -43,6 +46,7 @@ const filterPlaces = places => {
 }
 
 
-export default (addNewIncident, fetchIncidents,
-    selectIncident, filterIncidentType, filterPlaces
-)
+export  {addNewIncident, fetchIncidents,
+    selectIncident, filterIncidentType, filterPlaces,
+    TRIGGER_GET_INCIDENTS, triggerGetIncidents
+}

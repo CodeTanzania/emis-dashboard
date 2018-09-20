@@ -29,6 +29,11 @@ const API = {
     };
     return fetch(url, config).then(res => res.json());
   },
+
+  getIncidents: () => 
+    fetch('https://emis-incident-type.herokuapp.com/v1/incidenttypes')
+      .then(res => res.json())
+      .then(response => response.data)
 };
 
 export default API;
