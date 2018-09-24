@@ -24,6 +24,7 @@ const locations = [
 /**
  * Form for creating and editing plan
  *
+ * @class
  * @extends React.Component
  *
  * @version 0.1.0
@@ -47,6 +48,7 @@ export default class PlanForm extends Component {
         sm: { span: 16 },
       },
     };
+
     /* layout for form action buttons */
     const tailFormItemLayout = {
       wrapperCol: {
@@ -61,6 +63,7 @@ export default class PlanForm extends Component {
       },
     };
 
+    /* destructuring props */
     const { onCancel } = this.props;
 
     return (

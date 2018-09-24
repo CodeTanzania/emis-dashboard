@@ -56,11 +56,11 @@ function Details({ name, incident, taskCount }) {
  */
 export default function ActionCard({ name, incident, taskCount }) {
   return (
-    <Link to="/plans/actions">
+    <Link to="/plans/actions/action">
       <Card
         style={{
           width: '90%',
-          margin: '20px auto',
+          margin: '5px auto',
           borderLeft: '3px solid #0092fd',
         }}
       >

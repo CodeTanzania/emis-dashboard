@@ -1,6 +1,5 @@
 import { Button, Col, Drawer, Dropdown, Icon, Layout, Menu, Row } from 'antd';
 import React, { Component } from 'react';
-import Select from '../../../../common/components/Select';
 import Phase from './components/Phase';
 
 /* local constants */
@@ -43,7 +42,8 @@ const planActions = [
 ];
 
 /**
- * Plan Components which arrange plan actions according to their phases
+ * Plan Components which arrange plan actions(activities) according
+ * to their phases
  *
  * @class
  * @name Phases
@@ -52,18 +52,36 @@ const planActions = [
  * @since 0.1.0
  */
 export default class Phases extends Component {
-  state = { visibleDrawer: false };
+  state = { showForm: false };
 
-  onCloseDrawer = () => {
-    this.setState({ visibleDrawer: false });
+  /**
+   * Open drawer which contains action form
+   *
+   * @function
+   * @name handleOpenForm
+   *
+   * @version 0.1.0
+   * @since 0.1.0
+   */
+  handleOpenForm = () => {
+    this.setState({ showForm: true });
   };
 
-  onOpenDrawer = () => {
-    this.setState({ visibleDrawer: true });
+  /**
+   * Close drawer which contains action form
+   *
+   * @function
+   * @name handleCloseForm
+   *
+   * @version 0.1.0
+   * @since 0.1.0
+   */
+  handleCloseForm = () => {
+    this.setState({ showForm: false });
   };
 
   render() {
-    const { visibleDrawer } = this.state;
+    const { showForm } = this.state;
     return (
       <Layout
         style={{
@@ -95,17 +113,7 @@ export default class Phases extends Component {
         >
           <Row justify="space-around">
             {/* start filters */}
-            <Col span={20}>
-              <Row>
-                <Col span={4}>
-                  <Select
-                    options={options}
-                    placeholder="Select Incident type"
-                    style={{ width: 250 }}
-                  />
-                </Col>
-              </Row>
-            </Col>
+            <Col span={20} />
             {/* end filters */}
             {/* start actions */}
             <Col span={4}>
@@ -136,17 +144,17 @@ export default class Phases extends Component {
         {/* end secondary header */}
         {/* start plan actions */}
         <Content style={{ backgroundColor: '#fff', flex: '1 0' }}>
-          <Row>
-            <Col span={6}>
+          <Row style={{ height: '100%' }}>
+            <Col span={6} style={{ height: '100%' }}>
               <Phase title="Mitigation" count={20} actions={planActions} />
             </Col>
-            <Col span={6}>
+            <Col span={6} style={{ height: '100%' }}>
               <Phase title="Preparedness" count={5} actions={planActions} />
             </Col>
-            <Col span={6}>
+            <Col span={6} style={{ height: '100%' }}>
               <Phase title="Response" count={30} />
             </Col>
-            <Col span={6}>
+            <Col span={6} style={{ height: '100%' }}>
               <Phase title="Recovery" count={40} />
             </Col>
           </Row>
@@ -157,8 +165,8 @@ export default class Phases extends Component {
           title="New Action"
           placement="right"
           width="600px"
-          onClose={this.onCloseDrawer}
-          visible={visibleDrawer}
+          onClose={this.handleCloseForm}
+          visible={showForm}
         />
         {/* end Drawer for plan form */}
       </Layout>

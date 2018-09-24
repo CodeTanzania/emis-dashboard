@@ -68,7 +68,7 @@ export default function PlanCard({
   updatedAt,
 }) {
   return (
-    <Link to="/plans/plan/phases">
+    <Link to="/plans/plan/actions">
       <Card
         style={{
           width: '90%',

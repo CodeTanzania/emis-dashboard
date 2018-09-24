@@ -1,4 +1,4 @@
-import { Badge, Button, Col, Layout, Popover, Row } from 'antd';
+import { Badge, Button, Col, Layout, List, Popover, Row } from 'antd';
 import PropTypes from 'prop-types';
 import React from 'react';
 import ActionCard from './components/ActionCard';
@@ -34,7 +34,13 @@ const options = (
  */
 export default function Phase({ title, count, actions }) {
   return (
-    <Layout style={{ borderRight: '1px solid #e0e0e0' }}>
+    <Layout
+      style={{
+        borderRight: '1px solid #e0e0e0',
+        height: '100%',
+        maxHeight: '100%',
+      }}
+    >
       {/* start header */}
       <Header
         style={{
@@ -49,6 +55,7 @@ export default function Phase({ title, count, actions }) {
             <Badge
               count={count}
               style={{
+                flex: '1 0',
                 display: 'block-inline',
                 marginLeft: '10px',
                 backgroundColor: '#fff',
@@ -69,13 +76,24 @@ export default function Phase({ title, count, actions }) {
       <Content
         style={{
           backgroundColor: '#fff',
-          overflowY: 'auto',
+          paddingTop: '20px',
           height: '100%',
         }}
       >
-        {actions.map(action => (
-          <ActionCard {...action} />
-        ))}
+        <div style={{ maxHeight: '100%', overflow: 'auto' }}>
+          {/* Action list */}
+          <List
+            grid={{ xs: 1, sm: 1, md: 1, lg: 1, xl: 1, xxl: 1 }}
+            dataSource={actions}
+            bordered={false}
+            renderItem={action => (
+              <List.Item>
+                <ActionCard {...action} />
+              </List.Item>
+            )}
+          />
+          {/* end Action list */}
+        </div>
       </Content>
       {/* end content */}
     </Layout>
