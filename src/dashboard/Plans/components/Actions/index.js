@@ -21,13 +21,6 @@ const menu = (
   </Menu>
 );
 
-// fake options
-const options = [
-  { label: 'Flood', value: 'flood' },
-  { label: 'Fire', value: 'fire' },
-  { label: 'Epidemic', value: 'epidemic' },
-];
-
 // fake Plan actions
 const planActions = [
   { name: 'Clean Up', incident: 'Flood', taskCount: 120 },
