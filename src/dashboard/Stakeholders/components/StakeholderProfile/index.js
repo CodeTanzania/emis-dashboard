@@ -1,5 +1,5 @@
-import { Button, Drawer, Row } from 'antd';
 import React, { Component, Fragment } from 'react';
+import { Button, Drawer, Row, Col } from 'antd';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import ColHeader from '../../../../common/components/ColHeader';
@@ -67,27 +67,20 @@ class StakeholderProfile extends Component {
               stakeholder={stakeholder}
             />
           ) : (
-            <AddPersonnelForm />
-          )}
+              <AddPersonnelForm />
+            )}
         </Drawer>
         <ColHeader>
-          <h3>Basic Information</h3>
+          <h2>Basic Information</h2>
         </ColHeader>
         <div className="content scrollable">
           <Row>
-            <ProfileItemHeader
-              title={stakeholder.name}
-              actions={
-                <Button
-                  icon="edit"
-                  onClick={this.handleOnClickEditProfile}
-                  className="f-20 b-0"
-                />
-              }
-            />
-            <ProfileItemContent>
-              <BasicInfo stakeholder={stakeholder} />
-            </ProfileItemContent>
+            <Col span={24}>
+              <BasicInfo
+                stakeholder={stakeholder}
+                onClickEdit={this.handleOnClickEditProfile}
+              />
+            </Col>
           </Row>
           <Row>
             <ProfileItemHeader
@@ -113,8 +106,8 @@ class StakeholderProfile extends Component {
         </div>
       </Fragment>
     ) : (
-      ''
-    );
+        ''
+      );
   }
 }
 

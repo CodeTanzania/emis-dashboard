@@ -1,8 +1,7 @@
-import { Col, Row } from 'antd';
-import PropTypes from 'prop-types';
 import React from 'react';
-/* import component */
-import InformationItem from './Item';
+import PropTypes from 'prop-types';
+import { Avatar, Button } from 'antd';
+import InfoLineItem from './components/InfoLineItem';
 
 /**
  * Contact information component
@@ -14,28 +13,39 @@ import InformationItem from './Item';
  * @version 0.1.0
  * @since 0.1.0
  */
-export default function BasicInfo({ stakeholder }) {
-  const { phone, email, physicalAddress, fax } = stakeholder;
+export default function BasicInfo({ stakeholder, onClickEdit }) {
+  const {
+    name,
+    phone,
+    email,
+    fax,
+    phases,
+    ownership,
+    physicalAddress,
+    postalAddress,
+    website,
+  } = stakeholder;
   return (
-    <div>
-      <Row>
-        <Col span={12}>
-          <InformationItem label="Phone" value={phone} />
-        </Col>
-        <Col span={12}>
-          <InformationItem label="Address" value={physicalAddress} />
-        </Col>
-      </Row>
-      <Row>
-        <Col span={12}>
-          <InformationItem label="Email" value={email} />
-        </Col>
-      </Row>
-      <Row>
-        <Col span={12}>
-          <InformationItem label="Fax" value={fax} />
-        </Col>
-      </Row>
+    <div style={{ padding: '20px' }}>
+      <div style={{ display: 'flex' }}>
+        <div style={{ width: '100px', marginRight: '20px' }}>
+          <Avatar shape="square" size={100} icon="user" />
+        </div>
+        <div style={{ flex: '1' }}>
+          <h2 style={{ marginBottom: '0px' }}>{name}</h2>
+          <InfoLineItem label="Ownership" value={ownership} />
+          <InfoLineItem label="Phases" value={phases} />
+        </div>
+        <div>
+          <Button icon="edit" onClick={() => onClickEdit()} />
+        </div>
+      </div>
+      <InfoLineItem label="Phone" value={phone} block />
+      <InfoLineItem label="Email" value={email} block />
+      <InfoLineItem label="Fax" value={fax} block />
+      <InfoLineItem label="Address" value={physicalAddress} block />
+      <InfoLineItem label="Postal Address" value={postalAddress} block />
+      <InfoLineItem label="Web" value={website} block />
     </div>
   );
 }
@@ -48,6 +58,7 @@ BasicInfo.propTypes = {
     physicalAddress: PropTypes.string,
     fax: PropTypes.string,
   }),
+  onClickEdit: PropTypes.func.isRequired,
 };
 
 BasicInfo.defaultProps = {

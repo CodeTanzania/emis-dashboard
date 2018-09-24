@@ -204,6 +204,7 @@ export default function stakeholders(state = initialState, action) {
       );
       return {
         ...state,
+        isLoading: true, // activate stakeholder list loading status
         filters,
       };
     }
