@@ -37,5 +37,9 @@
     "react-app-rewire-css-modules-extensionless": "^1.2.0",
     "react-app-rewired": "^1.6.2",
     "redux-devtools-extension": "^2.13.5"
+  },
+  "engines": {
+    "node": "8.11.1",
+    "npm": "6.0.1"
   }
 }
