@@ -27,15 +27,15 @@ const CardContent = ({ name, incidentCode, updatedAt }) => {
 const PhaseCard = (props) => {
     const { incidents, phase } = props;
     return (
-        incidents.filter(({family}) => family === phase).map( ({name, _id, createdAt}) => (<div style={{
+        incidents.filter(({family}) => family === phase).map( ({name, _id, createdAt,color}) => (<div style={{
             width: '85%',
             margin: '20px auto',
-            borderLeft: '6px solid #0092fd',
+            borderLeft: `6px solid ${color}`,
         }} >
-            <Card>
-                <Meta title={<CardContent name={name} incidentCode={_id} createdAt={createdAt} />} />
+            <Card className="cardContent">
+                <Meta title={<CardContent name={name} color={color} incidentCode={_id} createdAt={createdAt} />} />
             </Card>
-            <Card className="explore">
+            <Card className="cardContent">
                 <a href="{incidents}"><h3 style={{ textAlign: 'center', color: '#909090', margin: '0' }}>Explore</h3></a>
             </Card>
 

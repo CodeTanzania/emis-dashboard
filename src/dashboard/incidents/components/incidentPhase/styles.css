@@ -18,10 +18,12 @@
 .content {
     background-color: #fff;
   }
-  .ant-card-body {
-      padding: 12px;
+  .cardContent{
       box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 3px 10px 0 rgba(0, 0, 0, 0.09);
 
+  }
+  .cardContent .ant-card-body {
+    padding: 12px;
   }
   .ant-card-bordered {
     border: 1px solid #f3f3f3;

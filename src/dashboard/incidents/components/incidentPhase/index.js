@@ -5,7 +5,7 @@ import { createSelector } from 'reselect';
 import { incidentsSelector } from '../../selectors';
 import { triggerGetIncidents } from '../../actions';
 import className from 'classnames/bind';
-import { Row, Col, Layout, List } from 'antd';
+import { Row, Col, Layout, List, Spin } from 'antd';
 import Phase from './components/phaseHeader';
 import PhaseCard from './components/phaseCard'
 /*Loaded css */
@@ -15,16 +15,19 @@ import styles from './styles.css'
 const cx = className.bind(styles);
 class IncidentPhase extends React.Component {
 
-componentDidMount(){
-    const { triggerGetIncidents } = this.props;
-    triggerGetIncidents();
-}
+    componentDidMount() {
+        const { triggerGetIncidents } = this.props;
+        triggerGetIncidents();
+    }
     render() {
         const { incidents } = this.props;
+
         return (
             <Layout className={cx('phaseLayout')}>
                 <div >
                     <List>
+                    {incidents === undefined ? <Spin loading={incidents} style={{marginTop: '300px'}} size="large" />
+                         :
                         <Row >
                             <Col span={6} className={cx('section')} >
                                 <Phase title="Migation" count="25" />
@@ -32,17 +35,19 @@ componentDidMount(){
                             </Col>
                             <Col span={6} className={cx('section')}>
                                 <Phase title="Preparedness" count="22" />
-                                <PhaseCard incidents={incidents} phase="Technological"/>
+                                <PhaseCard incidents={incidents} phase="Technological" />
                             </Col>
                             <Col span={6} className={cx('section')}>
                                 <Phase title="Response" count="16" />
-                                <PhaseCard incidents={incidents} phase="Biological"/>
+                                <PhaseCard incidents={incidents} phase="Biological" />
                             </Col>
                             <Col span={6} className={cx('section')}>
                                 <Phase title="Recovery" count="15" />
-                                <PhaseCard incidents={incidents} phase="Meteorological"/>
+                                <PhaseCard incidents={incidents} phase="Meteorological" />
                             </Col>
                         </Row>
+                    
+                    }
                     </List>
                 </div>
             </Layout>
@@ -54,13 +59,15 @@ const mapStateToProps = createSelector(
     [
         incidentsSelector
     ],
-    incidents => ({incidents})
+    
+    incidents => ({ incidents })
+
 );
 
 const mapDispatchToProps = dispatch => {
     return {
-    triggerGetIncidents: bindActionCreators(triggerGetIncidents, dispatch)
+        triggerGetIncidents: bindActionCreators(triggerGetIncidents, dispatch)
     }
 }
 
-export default connect (mapStateToProps, mapDispatchToProps)(IncidentPhase)
+export default connect(mapStateToProps, mapDispatchToProps)(IncidentPhase)
