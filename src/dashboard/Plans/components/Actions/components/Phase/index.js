@@ -38,7 +38,6 @@ export default function Phase({ title, count, actions }) {
       style={{
         borderRight: '1px solid #e0e0e0',
         height: '100%',
-        maxHeight: '100%',
       }}
     >
       {/* start header */}
@@ -55,7 +54,6 @@ export default function Phase({ title, count, actions }) {
             <Badge
               count={count}
               style={{
-                flex: '1 0',
                 display: 'block-inline',
                 marginLeft: '10px',
                 backgroundColor: '#fff',
@@ -78,22 +76,21 @@ export default function Phase({ title, count, actions }) {
           backgroundColor: '#fff',
           paddingTop: '20px',
           height: '100%',
+          overflowY: 'auto',
         }}
       >
-        <div style={{ maxHeight: '100%', overflow: 'auto' }}>
-          {/* Action list */}
-          <List
-            grid={{ xs: 1, sm: 1, md: 1, lg: 1, xl: 1, xxl: 1 }}
-            dataSource={actions}
-            bordered={false}
-            renderItem={action => (
-              <List.Item>
-                <ActionCard {...action} />
-              </List.Item>
-            )}
-          />
-          {/* end Action list */}
-        </div>
+        {/* Action list */}
+        <List
+          grid={{ xs: 1, sm: 1, md: 1, lg: 1, xl: 1, xxl: 1 }}
+          dataSource={actions}
+          bordered={false}
+          renderItem={action => (
+            <List.Item>
+              <ActionCard {...action} />
+            </List.Item>
+          )}
+        />
+        {/* end Action list */}
       </Content>
       {/* end content */}
     </Layout>

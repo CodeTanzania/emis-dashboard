@@ -63,7 +63,7 @@ export default function Action() {
           <Col span={22} />
           {/* end filters */}
           {/* start actions */}
-          <Col span={1}>
+          <Col span={2}>
             <Row justify="end">
               <Col span={12}>
                 <Button icon="plus" type="primary">
