@@ -10,6 +10,6 @@ script:
 
 # cache node_modules directory on Travis to avoid
 # installing all dependencies every time a build is triggered
-cache:
-  directories:
-    - 'node_modules'
+# cache:
+#   directories:
+#     - 'node_modules'
