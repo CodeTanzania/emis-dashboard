@@ -48,6 +48,102 @@ const fakeData = [
     activityCount: 13,
     color: '#fedefe',
   },
+  {
+    name: 'Flood',
+    jurisdiction: 'Dar es Salaam',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    activityCount: 13,
+    color: '#fedefe',
+  },
+  {
+    name: 'Flood',
+    jurisdiction: 'Dar es Salaam',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    activityCount: 13,
+    color: '#fedefe',
+  },
+  {
+    name: 'Flood',
+    jurisdiction: 'Dar es Salaam',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    activityCount: 13,
+    color: '#fedefe',
+  },
+  {
+    name: 'Flood',
+    jurisdiction: 'Dar es Salaam',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    activityCount: 13,
+    color: '#fedefe',
+  },
+  {
+    name: 'Flood',
+    jurisdiction: 'Dar es Salaam',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    activityCount: 13,
+    color: '#fedefe',
+  },
+  {
+    name: 'Flood',
+    jurisdiction: 'Dar es Salaam',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    activityCount: 13,
+    color: '#fedefe',
+  },
+  {
+    name: 'Flood',
+    jurisdiction: 'Dar es Salaam',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    activityCount: 13,
+    color: '#fedefe',
+  },
+  {
+    name: 'Flood',
+    jurisdiction: 'Dar es Salaam',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    activityCount: 13,
+    color: '#fedefe',
+  },
+  {
+    name: 'Flood',
+    jurisdiction: 'Dar es Salaam',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    activityCount: 13,
+    color: '#fedefe',
+  },
+  {
+    name: 'Flood',
+    jurisdiction: 'Dar es Salaam',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    activityCount: 13,
+    color: '#fedefe',
+  },
+  {
+    name: 'Flood',
+    jurisdiction: 'Dar es Salaam',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    activityCount: 13,
+    color: '#fedefe',
+  },
+  {
+    name: 'Flood',
+    jurisdiction: 'Dar es Salaam',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    activityCount: 13,
+    color: '#fedefe',
+  },
 ];
 const options = [
   { label: 'Flood', value: 'flood' },
@@ -78,14 +174,20 @@ export default class PlanList extends Component {
   render() {
     const { showForm } = this.state;
     return (
-      <Layout>
+      <Layout
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          height: '100vh',
+          overflow: 'hidden',
+        }}
+      >
         {/* start primary header */}
         <Header
           style={{
             background: '#fff',
             paddingLeft: 10,
             borderBottom: '1px solid #E0E0E0',
-            flexBasis: '50px',
           }}
         >
           <h3>Plans</h3>
@@ -97,12 +199,11 @@ export default class PlanList extends Component {
             background: '#fff',
             padding: '0 10px',
             borderBottom: '1px solid #E0E0E0',
-            flexBasis: '50px',
           }}
         >
           <Row justify="space-around">
             {/* start filters */}
-            <Col span={22}>
+            <Col span={21}>
               <Row>
                 <Col span={4}>
                   <Select
@@ -115,7 +216,7 @@ export default class PlanList extends Component {
             </Col>
             {/* end filters */}
             {/* start actions */}
-            <Col span={1}>
+            <Col span={3}>
               <Row justify="end">
                 <Col span={12}>
                   <Button
@@ -133,7 +234,13 @@ export default class PlanList extends Component {
         </Header>
         {/* end Toolbar */}
         {/* Plan list content */}
-        <Content style={{ backgroundColor: '#fff' }}>
+        <Content
+          style={{
+            backgroundColor: '#fff',
+            flex: '1 0',
+            overflowY: 'auto',
+          }}
+        >
           <div style={{ margin: '15px 15px' }}>
             <List
               grid={{ gutter: 10, xs: 1, sm: 2, md: 3, lg: 4, xl: 4, xxl: 4 }}
