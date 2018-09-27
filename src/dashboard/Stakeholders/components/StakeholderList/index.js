@@ -91,7 +91,7 @@ class StakeholderList extends Component {
             dataSource={stakeholders}
             renderItem={item => <StakeholderItem stakeholder={item} />}
           />
-          <ListFooter />
+          {stakeholders.length ? <ListFooter /> : ''}
         </div>
       </Fragment>
     );
