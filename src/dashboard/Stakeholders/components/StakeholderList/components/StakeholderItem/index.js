@@ -75,7 +75,7 @@ class StakeholderItem extends Component {
             <Row>
               <Col xs={21}>
                 <span
-                  className={cx('f-600 f-15', 'name')}
+                  style={{ cursor: 'pointer' }}
                   role="link"
                   onClick={this.onClick}
                   onKeyDown={this.onClick}

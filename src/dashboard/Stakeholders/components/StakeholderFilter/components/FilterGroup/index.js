@@ -29,18 +29,15 @@ const FiltersGroup = ({
 
   return (
     <div>
-      {/* header */}
       <Row>
-        <Col span={24} className="p-20">
-          <h3>{groupName}</h3>
+        <Col span={24} style={{ padding: '10px' }}>
+          <h3>{groupName.charAt(0).toUpperCase() + groupName.slice(1)}</h3>
         </Col>
       </Row>
-      {/* end header */}
-      {/* start content */}
       <List
         dataSource={filters}
         renderItem={item => (
-          <List.Item className="p-l-20 b-0">
+          <List.Item style={{ paddingLeft: '10px', border: 'none' }}>
             <List.Item.Meta
               title={
                 <Row type="flex" justify="space-between">
@@ -49,7 +46,7 @@ const FiltersGroup = ({
                       onChange={event => onChange(item, event.target.checked)}
                       checked={item.selected}
                     >
-                      <span className="f-600 f-15">{item.name}</span>
+                      <span>{item.name}</span>
                     </Checkbox>
                   </Col>
                   <Col span={4}>
@@ -68,7 +65,6 @@ const FiltersGroup = ({
           </List.Item>
         )}
       />
-      {/* end content */}
     </div>
   );
 };

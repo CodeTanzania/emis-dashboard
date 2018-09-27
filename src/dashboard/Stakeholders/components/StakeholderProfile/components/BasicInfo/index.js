@@ -32,7 +32,7 @@ export default function BasicInfo({ stakeholder, onClickEdit }) {
           <Avatar shape="square" size={100} icon="user" />
         </div>
         <div style={{ flex: '1' }}>
-          <h2 style={{ marginBottom: '0px' }}>{name}</h2>
+          <h3 style={{ marginBottom: '7px' }}>{name}</h3>
           <InfoLineItem label="Ownership" value={ownership} />
           <InfoLineItem label="Phases" value={phases} />
         </div>

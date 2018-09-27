@@ -16,7 +16,7 @@ import PropTypes from 'prop-types';
 export default function InfoLineItem({ label, value, block }) {
   return (
     <div style={{ paddingTop: block ? '15px' : '0' }}>
-      <h4 style={{ display: 'inline', marginRight: '20px' }}>{`${label} :`}</h4>
+      <h5 style={{ display: 'inline', marginRight: '20px' }}>{`${label} :`}</h5>
       <span className="f-15">
         {Array.isArray(value) ? value.join(',') : value}
       </span>

@@ -2,7 +2,6 @@ import React, { Component, Fragment } from 'react';
 import { Button, Drawer, Row, Col } from 'antd';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import ColHeader from '../../../../common/components/ColHeader';
 import StakeholderForm from '../StakeholderForm';
 import AddPersonnelForm from './components/AddPersonnelForm';
 import BasicInfo from './components/BasicInfo';
@@ -67,47 +66,45 @@ class StakeholderProfile extends Component {
               stakeholder={stakeholder}
             />
           ) : (
-              <AddPersonnelForm />
-            )}
+            <AddPersonnelForm />
+          )}
         </Drawer>
-        <ColHeader>
-          <h2>Basic Information</h2>
-        </ColHeader>
-        <div className="content scrollable">
-          <Row>
-            <Col span={24}>
-              <BasicInfo
-                stakeholder={stakeholder}
-                onClickEdit={this.handleOnClickEditProfile}
-              />
-            </Col>
-          </Row>
-          <Row>
-            <ProfileItemHeader
-              title="Key Personnel"
-              actions={
-                <Button
-                  icon="plus"
-                  onClick={this.handleOnClickAddPersonnel}
-                  className="f-20 b-0"
+        <div style={{ background: '#fff', height: '100%', overflowY: 'auto' }}>
+          <div
+            style={{ padding: '7px 15px', borderBottom: '1px solid #E0E0E0' }}
+          >
+            <h3>Basic Information</h3>
+          </div>
+          <div>
+            <Row>
+              <Col span={24}>
+                <BasicInfo
+                  stakeholder={stakeholder}
+                  onClickEdit={this.handleOnClickEditProfile}
                 />
-              }
-            />
-            <ProfileItemContent>
-              <PersonnelList />
-            </ProfileItemContent>
-          </Row>
-          {/* <Row>
-            <ProfileItemHeader title="Responsibilities" actions={<Button icon="plus" className="f-20 b-0" />} />
-            <ProfileItemContent>
-              <Responsibilities />
-            </ProfileItemContent>
-          </Row> */}
+              </Col>
+            </Row>
+            <Row>
+              <ProfileItemHeader
+                title="Key Personnel"
+                actions={
+                  <Button
+                    icon="plus"
+                    onClick={this.handleOnClickAddPersonnel}
+                    className="f-20 b-0"
+                  />
+                }
+              />
+              <ProfileItemContent>
+                <PersonnelList />
+              </ProfileItemContent>
+            </Row>
+          </div>
         </div>
       </Fragment>
     ) : (
-        ''
-      );
+      ''
+    );
   }
 }
 

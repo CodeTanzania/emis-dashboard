@@ -16,11 +16,9 @@ import React from 'react';
  */
 export default function SectionHeader({ title, actions }) {
   return (
-    <Row
-      style={{ paddingTop: '20px' }}
-    >
+    <Row style={{ paddingTop: '20px' }}>
       <Col span={23}>
-        <h2 style={{ paddingLeft: '20px', paddingRight: '20px' }}>{title}</h2>
+        <h3 style={{ paddingLeft: '20px', paddingRight: '20px' }}>{title}</h3>
       </Col>
       <Col span={1}>{actions}</Col>
       <Divider type="horizontal" />

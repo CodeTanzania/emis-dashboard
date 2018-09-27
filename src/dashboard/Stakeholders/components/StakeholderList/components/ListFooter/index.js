@@ -15,7 +15,7 @@ const ButtonGroup = Button.Group;
  */
 export default function ContactsListFooter() {
   return (
-    <div className="footer p-10">
+    <div style={{ padding: '20px 0px 30px 20px' }}>
       <Row type="flex" justify="space-between">
         <Col span={8}>
           <h3>
