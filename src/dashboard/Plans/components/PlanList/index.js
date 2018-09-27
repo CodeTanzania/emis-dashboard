@@ -1,11 +1,13 @@
 import { Button, Col, Drawer, Layout, List, Row } from 'antd';
 import React, { Component } from 'react';
 import Select from '../../../../common/components/Select';
+import Toolbar from '../../../../common/components/Toolbar';
 import PlanForm from '../PlanForm';
 import PlanCard from './components/PlanCard';
 
 /* local constants */
 const { Header, Content } = Layout;
+const { Filters, Actions } = Toolbar;
 // fake data
 const fakeData = [
   {
@@ -194,44 +196,34 @@ export default class PlanList extends Component {
         </Header>
         {/* end primary header */}
         {/* Toolbar */}
-        <Header
+        <Toolbar
           style={{
             background: '#fff',
             padding: '0 10px',
             borderBottom: '1px solid #E0E0E0',
           }}
         >
-          <Row justify="space-around">
-            {/* start filters */}
-            <Col span={21}>
-              <Row>
-                <Col span={4}>
-                  <Select
-                    options={options}
-                    placeholder="Select Incident type"
-                    style={{ width: 250 }}
-                  />
-                </Col>
-              </Row>
-            </Col>
-            {/* end filters */}
-            {/* start actions */}
-            <Col span={3}>
-              <Row justify="end">
-                <Col span={12}>
-                  <Button
-                    icon="plus"
-                    type="primary"
-                    onClick={this.showPlanForm}
-                  >
-                    New Plan
-                  </Button>
-                </Col>
-              </Row>
-            </Col>
-            {/* end actions */}
-          </Row>
-        </Header>
+          <Filters span={21}>
+            <Row>
+              <Col span={4}>
+                <Select
+                  options={options}
+                  placeholder="Select Incident type"
+                  style={{ width: 250 }}
+                />
+              </Col>
+            </Row>
+          </Filters>
+          <Actions span={3}>
+            <Row type="flex" justify="center">
+              <Col span={12}>
+                <Button icon="plus" type="primary" onClick={this.showPlanForm}>
+                  New Plan
+                </Button>
+              </Col>
+            </Row>
+          </Actions>
+        </Toolbar>
         {/* end Toolbar */}
         {/* Plan list content */}
         <Content
