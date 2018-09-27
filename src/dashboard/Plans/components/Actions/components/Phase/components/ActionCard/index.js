@@ -28,16 +28,7 @@ export default function ActionCard({ name, incident, taskCount }) {
       >
         <Row type="flex" justify="space-around">
           <Col span={20}>
-            <h4
-              title={name}
-              style={{
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                whiteSpace: 'nowrap',
-              }}
-            >
-              {name}
-            </h4>
+            <h4 title={name}>{name}</h4>
             <p
               style={{
                 fontSize: '11px',
