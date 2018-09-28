@@ -1,9 +1,11 @@
 import { Button, Col, Drawer, Dropdown, Icon, Layout, Menu, Row } from 'antd';
 import React, { Component } from 'react';
 import Phase from './components/Phase';
+import Toolbar from '../../../../common/components/Toolbar';
 
 /* local constants */
 const { Header, Content } = Layout;
+const { Filters, Actions } = Toolbar;
 const menu = (
   <Menu>
     <Menu.Item key="1">
@@ -50,7 +52,7 @@ const planActions = [
  * @version 0.1.0
  * @since 0.1.0
  */
-export default class Phases extends Component {
+export default class PlanActions extends Component {
   state = { showForm: false };
 
   /**
@@ -101,52 +103,51 @@ export default class Phases extends Component {
           <h3>Plans</h3>
         </Header>
         {/* end primary header */}
-        {/* start secondary header */}
-        <Header
+        {/* Toolbar */}
+        <Toolbar
           style={{
             background: '#fff',
             padding: '0 10px',
             borderBottom: '1px solid #E0E0E0',
           }}
         >
-          <Row type="flex" justify="space-around">
-            {/* start filters */}
-            <Col span={18} />
-            {/* end filters */}
-            {/* start actions */}
-            <Col span={6}>
-              <Row type="flex" justify="end">
-                <Col span={10}>
-                  <Button
-                    icon="plus"
-                    type="primary"
-                    onClick={this.onOpenDrawer}
-                  >
-                    New Action
+          <Filters span={18} />
+          <Actions span={6}>
+            <Row type="flex" justify="end">
+              <Col span={10}>
+                <Button
+                  icon="plus"
+                  type="primary"
+                  onClick={this.handleOpenForm}
+                >
+                  New Action
+                </Button>
+              </Col>
+              <Col span={10}>
+                <Dropdown overlay={menu}>
+                  <Button style={{ marginLeft: 8 }} type="primary">
+                    <Icon type="export" />
+                    Export
+                    <Icon type="down" />
                   </Button>
-                </Col>
-                <Col span={10}>
-                  <Dropdown overlay={menu}>
-                    <Button style={{ marginLeft: 8 }} type="primary">
-                      <Icon type="export" />
-                      Export
-                      <Icon type="down" />
-                    </Button>
-                  </Dropdown>
-                </Col>
-              </Row>
-            </Col>
-            {/* end actions */}
-          </Row>
-        </Header>
-        {/* end secondary header */}
+                </Dropdown>
+              </Col>
+            </Row>
+          </Actions>
+        </Toolbar>
+        {/* end Toolbar */}
         {/* start plan actions */}
         <Content
           style={{ backgroundColor: '#fff', flex: '1 0', overflow: 'hidden' }}
         >
           <Row style={{ height: '100%' }}>
             <Col span={6} style={{ height: '100%' }}>
-              <Phase title="Mitigation" count={20} actions={planActions} />
+              <Phase
+                title="Mitigation"
+                count={20}
+                actions={planActions}
+                onClickCard={this.handleOpenForm}
+              />
             </Col>
             <Col span={6} style={{ height: '100%' }}>
               <Phase title="Preparedness" count={5} actions={planActions} />
@@ -164,7 +165,7 @@ export default class Phases extends Component {
         <Drawer
           title="New Action"
           placement="right"
-          width="600px"
+          width="100%"
           onClose={this.handleCloseForm}
           visible={showForm}
         />
