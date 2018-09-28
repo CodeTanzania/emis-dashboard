@@ -58,7 +58,7 @@ class StakeholderList extends Component {
       alignItems: 'center',
       width: '100%',
       background: '#fff',
-      padding: '7px',
+      padding: '7px 5px 7px 20px',
       borderBottom: '1px solid #E0E0E0',
     };
     return (
@@ -67,7 +67,7 @@ class StakeholderList extends Component {
           <Checkbox />
           <div style={{ flex: '1', margin: '0 10px' }}>
             <Search
-              placeholder="Search here"
+              placeholder="Search stakeholder..."
               onSearch={value => this.onSearch(value)}
               style={{ width: '100%' }}
               enterButton={<Button icon="search" />}

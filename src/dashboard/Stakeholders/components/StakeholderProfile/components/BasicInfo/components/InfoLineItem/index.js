@@ -31,6 +31,6 @@ InfoLineItem.defaultProps = {
 
 InfoLineItem.propTypes = {
   label: PropTypes.string.isRequired,
-  value: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   block: PropTypes.bool,
 };

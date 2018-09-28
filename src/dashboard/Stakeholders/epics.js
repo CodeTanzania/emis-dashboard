@@ -48,8 +48,7 @@ export const fetchStakeholdersEpic = (action$, state$) =>
       const selectedFilters = extractStakeholderFilters(
         state$.value.stakeholders.filters
       );
-      console.log(selectedFilters);
-      return from(API.findStakeholders()); // use Rx from operator to convert promise into observable
+      return from(API.findStakeholders(selectedFilters)); // use Rx from operator to convert promise into observable
     }),
     map(results => fetchStakeholdersSuccess(results)), // map the resulting array to an action of type FETCH_STAKEHOLDERS_SUCCESS
     catchError(error => fetchStakeholdersFailure(error.message))
