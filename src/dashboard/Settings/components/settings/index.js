@@ -2,6 +2,7 @@ import React from 'react';
 import classNames from 'classnames/bind';
 import { Button, Col, Layout, Menu, Row, Dropdown, Icon, Input } from 'antd';
 import styles from './styles.css';
+import  SideSettings from './components/sidebarSettings';
 
 const cx = classNames.bind(styles);
 const { Header, Content } = Layout;
@@ -87,7 +88,7 @@ const CommonSettings = () => {
             <Content> 
                 <Row>
                     <Col span={4} className={cx('section')}>
-                        <h2>System settings</h2>
+                    <SideSettings title="System Settings" />
                     </Col>
                     <Col span={6} className={cx('section')}>
                     </Col>
