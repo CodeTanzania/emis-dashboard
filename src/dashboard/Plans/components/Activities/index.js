@@ -1,7 +1,19 @@
-import { Button, Col, Drawer, Dropdown, Icon, Layout, Menu, Row } from 'antd';
+import {
+  Button,
+  Col,
+  Drawer,
+  Dropdown,
+  Icon,
+  Layout,
+  Menu,
+  Modal,
+  Row,
+} from 'antd';
 import React, { Component } from 'react';
-import Phase from './components/Phase';
 import Toolbar from '../../../../common/components/Toolbar';
+import Phase from './components/ActivitiesPhase';
+import { ActionBody, ActionHeader } from './components/ActivityDetails';
+import ActivityForm from './components/ActivityForm';
 
 /* local constants */
 const { Header, Content } = Layout;
@@ -23,8 +35,8 @@ const menu = (
   </Menu>
 );
 
-// fake Plan actions
-const planActions = [
+// fake Plan activities
+const planActivities = [
   { name: 'Clean Up', incident: 'Flood', taskCount: 120 },
   {
     name: 'Teach Risk education in schools',
@@ -43,7 +55,7 @@ const planActions = [
 ];
 
 /**
- * Plan Components which arrange plan actions(activities) according
+ * Plan Components which arrange plan activities according
  * to their phases
  *
  * @class
@@ -53,36 +65,62 @@ const planActions = [
  * @since 0.1.0
  */
 export default class PlanActions extends Component {
-  state = { showForm: false };
+  state = { showActivityForm: false, showActivityDetails: false };
 
   /**
    * Open drawer which contains action form
    *
    * @function
-   * @name handleOpenForm
+   * @name handleOpenActivityForm
    *
    * @version 0.1.0
    * @since 0.1.0
    */
-  handleOpenForm = () => {
-    this.setState({ showForm: true });
+  handleOpenActivityForm = () => {
+    this.setState({ showActivityForm: true });
   };
 
   /**
    * Close drawer which contains action form
    *
    * @function
-   * @name handleCloseForm
+   * @name handleCloseActivityForm
    *
    * @version 0.1.0
    * @since 0.1.0
    */
-  handleCloseForm = () => {
-    this.setState({ showForm: false });
+  handleCloseActivityForm = () => {
+    this.setState({ showActivityForm: false });
+  };
+
+  /**
+   * Handle Open Activity details drawer event
+   *
+   * @function
+   * @name handleOpenActivityDetails
+   *
+   * @version 0.1.0
+   * @since 0.1.0
+   */
+  handleOpenActivityDetails = () => {
+    this.setState({ showActivityDetails: true });
+  };
+
+  /**
+   * Handle Close Activity details drawer event
+   *
+   * @function
+   * @name handleCloseActivityDetails
+   *
+   * @version 0.1.0
+   * @since 0.1.0
+   */
+  handleCloseActivityDetails = () => {
+    this.setState({ showActivityDetails: false });
   };
 
   render() {
-    const { showForm } = this.state;
+    const { showActivityForm, showActivityDetails } = this.state;
     return (
       <Layout
         style={{
@@ -118,7 +156,7 @@ export default class PlanActions extends Component {
                 <Button
                   icon="plus"
                   type="primary"
-                  onClick={this.handleOpenForm}
+                  onClick={this.handleOpenActivityForm}
                 >
                   New Action
                 </Button>
@@ -145,31 +183,61 @@ export default class PlanActions extends Component {
               <Phase
                 title="Mitigation"
                 count={20}
-                actions={planActions}
-                onClickCard={this.handleOpenForm}
+                actions={planActivities}
+                onClickCard={this.handleOpenActivityDetails}
+                onClickAddActivity={this.handleOpenActivityForm}
               />
             </Col>
             <Col span={6} style={{ height: '100%' }}>
-              <Phase title="Preparedness" count={5} actions={planActions} />
+              <Phase
+                title="Preparedness"
+                count={5}
+                actions={planActivities}
+                onClickCard={this.handleOpenActivityDetails}
+                onClickAddActivity={this.handleOpenActivityForm}
+              />
             </Col>
             <Col span={6} style={{ height: '100%' }}>
-              <Phase title="Response" count={30} />
+              <Phase
+                title="Response"
+                count={30}
+                onClickCard={this.handleOpenActivityDetails}
+                onClickAddActivity={this.handleOpenActivityForm}
+              />
             </Col>
             <Col span={6} style={{ height: '100%' }}>
-              <Phase title="Recovery" count={40} />
+              <Phase
+                title="Recovery"
+                count={40}
+                onClickCard={this.handleOpenActivityDetails}
+                onClickAddActivity={this.handleOpenActivityForm}
+              />
             </Col>
           </Row>
         </Content>
         {/* end plan actions */}
         {/* Drawer for plan form */}
         <Drawer
-          title="New Action"
+          title={<ActionHeader />}
           placement="right"
           width="100%"
-          onClose={this.handleCloseForm}
-          visible={showForm}
-        />
+          onClose={this.handleCloseActivityDetails}
+          visible={showActivityDetails}
+        >
+          <ActionBody />
+        </Drawer>
         {/* end Drawer for plan form */}
+        {/* Activity form modal */}
+        <Modal
+          visible={showActivityForm}
+          title="New Activity"
+          onCancel={this.handleCloseActivityForm}
+          okText="Save"
+          maskClosable={false}
+        >
+          <ActivityForm />
+        </Modal>
+        {/* End Activity form modal */}
       </Layout>
     );
   }

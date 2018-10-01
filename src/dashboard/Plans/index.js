@@ -1,8 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Action from './components/Action';
-import Actions from './components/Actions';
+import Activities from './components/Activities';
 import PlanList from './components/PlanList';
 
 /**
@@ -20,8 +19,7 @@ export default function Plans({ match }) {
   return (
     <Switch>
       <Route path={`${match.url}/index`} component={PlanList} />
-      <Route path={`${match.url}/plan/actions`} component={Actions} />
-      <Route path={`${match.url}/actions/action`} component={Action} />
+      <Route path={`${match.url}/plan/activities`} component={Activities} />
     </Switch>
   );
 }

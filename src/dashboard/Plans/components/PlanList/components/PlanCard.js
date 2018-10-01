@@ -23,7 +23,7 @@ export default function PlanCard({
   updatedAt,
 }) {
   return (
-    <Link to="/plans/plan/actions">
+    <Link to="/plans/plan/activities">
       <Card
         style={{
           width: '90%',
@@ -46,7 +46,7 @@ export default function PlanCard({
                 boxShadow: '0 0 0 1px #d9d9d9 inset',
               }}
             />
-            <p style={{ fontSize: '11px', marginTop: '5px' }}>Actions</p>
+            <p style={{ fontSize: '11px', marginTop: '5px' }}>Activities</p>
           </Col>
         </Row>
         <p style={{ fontSize: '11px', color: '#909090' }}>
