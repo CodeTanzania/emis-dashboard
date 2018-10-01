@@ -8,13 +8,13 @@ class SytemDetail extends React.Component {
     }
 
     render() {
-        const { title, name } = this.props;
+        const { title, name,  } = this.props;
         return (
             <div>
                 {title}
                 <Row >
-                    <Col span="24" className="p-10">
-                        {name.map(({ name, type }) => <div
+                    <Col span="24" >
+                        {name.map(({ name, type, message}) => <div className="p-10"
                         style={{
                             color: '#909090'
                         }}
@@ -24,6 +24,8 @@ class SytemDetail extends React.Component {
                             }}
                             >{name}</h4>
                             <p className="p-l-10"> {type}</p>
+                            <p className="p-l-10"> {message}</p>
+
                         </div>
                         )}
 
@@ -39,9 +41,9 @@ class SytemDetail extends React.Component {
 const SidebarSettings = ({ title }) => {
     const data = {
         systemSetting: [
-            { name: 'Incident', type: 'Type' },
-            { name: 'Alert', type: 'Type' },
-            { name: 'Warning', type: 'Type' },
+            { name: 'Incident', type: 'Type',message:""},
+            { name: 'Alert', type: 'Category', message:"Message type" },
+            { name: 'Warning', type: 'Type',message:"" },
         ],
         generalSetting: [
             { name: 'User' },
@@ -59,7 +61,9 @@ const SidebarSettings = ({ title }) => {
             <Row>
                 <Col span={24} className="p-20">
                     <div style={{ marginBottom: "15px" }}>
-                        <SytemDetail className="p-a-md" title={title} name={data.systemSetting} type={data.systemSetting} />
+                        <SytemDetail className="p-a-md" 
+                        title={title} name={data.systemSetting} 
+                        type={data.systemSetting} message={data.systemSetting}/>
                     </div>
                     <Divider />
                     <SytemDetail title="General" name={data.generalSetting} />

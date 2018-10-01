@@ -1,10 +1,11 @@
 import classnames from 'classnames';
 import React from 'react';
 import SidebarSettings from '../SidebarSettings';
-import { Button, Col, Input, Row,Layout } from 'antd';
+import { Button, Col, Input, Row,Layout,Checkbox } from 'antd';
 
 /* load styles */
 import styles from './styles.css';
+import IncidentType from '../SystemSettings/Components/IncidentTypeList';
 
 /* local constants */
 const { Header, Content } = Layout;
@@ -20,7 +21,6 @@ const SettingsLayout = () => {
         <Layout
         style={{
             background: '#fff',
-            height: '100vh',
             display: 'flex',
             flexDirection: 'column',
             borderTop: '1px solid #e6e6e6'
@@ -38,10 +38,10 @@ const SettingsLayout = () => {
           <Col span={6} className={cx('section')}>
             <Header className={cx('ContentHeader')}>
               <Row type="flex" justify="space-around">
-                {/* <Col span={1}>
+                <Col span={2}>
                   <Checkbox />
-                </Col> */}
-                <Col span={24}>
+                </Col>
+                <Col span={22}>
                   <Search
                     placeholder="Search here"
                     onSearch={value => console.log(value)}
@@ -51,6 +51,9 @@ const SettingsLayout = () => {
                 </Col>
               </Row>
             </Header>
+            <Content>
+              <IncidentType />
+            </Content>
           </Col>
           <Col span={14} className={cx('section')}>
             <Header className={cx('ContentHeader')}>
