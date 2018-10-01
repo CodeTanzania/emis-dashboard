@@ -1,12 +1,8 @@
-import classNames from 'classnames/bind';
 import React, { Fragment } from 'react';
 import Header from '../../common/components/Header';
 
-/* load styles */
-import styles from './styles.css';
-import CommonSettings from './components/settings';
+import SettingsLayout from './components/SettingsLayout';
 
-const cx = classNames.bind(styles);
 /**
  * Render contacts panel component which have all the the components in relation
  * to contacts
@@ -20,7 +16,7 @@ const cx = classNames.bind(styles);
 const Settings = () => (
   <Fragment >
     <Header title="Settings" />
-    <CommonSettings/>
+    <SettingsLayout/>
   </Fragment>
 );
 
