@@ -217,7 +217,12 @@ export default class PlanList extends Component {
           <Actions span={3}>
             <Row type="flex" justify="center">
               <Col span={12}>
-                <Button icon="plus" type="primary" onClick={this.showPlanForm}>
+                <Button
+                  icon="plus"
+                  type="primary"
+                  title="Create New Plan"
+                  onClick={this.showPlanForm}
+                >
                   New Plan
                 </Button>
               </Col>
