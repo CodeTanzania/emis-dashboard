@@ -30,10 +30,19 @@ const locations = [
  * @version 0.1.0
  * @since 0.1.0
  */
-export default class PlanForm extends Component {
+class PlanForm extends Component {
   handleSubmit = e => {
     e.preventDefault();
     // todo handle form submission
+    const {
+      form: { validateFieldsAndScroll },
+    } = this.props;
+
+    validateFieldsAndScroll((err, values) => {
+      if (!err) {
+        console.log('Received values of form: ', values);
+      }
+    });
   };
 
   render() {
@@ -64,7 +73,10 @@ export default class PlanForm extends Component {
     };
 
     /* destructuring props */
-    const { onCancel } = this.props;
+    const {
+      onCancel,
+      form: { getFieldDecorator },
+    } = this.props;
 
     return (
       <Form
@@ -73,15 +85,31 @@ export default class PlanForm extends Component {
       >
         {/* incident type select input */}
         <FormItem label="Incident Type" {...formItemLayout}>
-          <Select
-            options={incidentTypes}
-            placeholder="Select Incident Type ..."
-          />
+          {getFieldDecorator('incidentType', {
+            rules: [
+              {
+                required: true,
+                please: 'Please Select Plan Incident Type',
+              },
+            ],
+          })(
+            <Select
+              options={incidentTypes}
+              placeholder="Select Incident Type ..."
+            />
+          )}
         </FormItem>
         {/* end incident type select input */}
         {/* location select input */}
         <FormItem label="Location" {...formItemLayout}>
-          <Select options={locations} placeholder="Select Location ..." />
+          {getFieldDecorator('location', {
+            rules: [
+              {
+                required: true,
+                message: 'Please Select Applicable Plan Location',
+              },
+            ],
+          })(<Select options={locations} placeholder="Select Location ..." />)}
         </FormItem>
         {/* end location select input */}
         {/* form action buttons */}
@@ -91,7 +119,9 @@ export default class PlanForm extends Component {
               <Button onClick={onCancel}>Cancel</Button>
             </Col>
             <Col span={10}>
-              <Button type="primary">Save</Button>
+              <Button type="primary" onClick={this.handleSubmit}>
+                Save
+              </Button>
             </Col>
           </Row>
         </FormItem>
@@ -100,3 +130,5 @@ export default class PlanForm extends Component {
     );
   }
 }
+
+export default Form.create()(PlanForm);
