@@ -179,7 +179,10 @@ export default class PlanActions extends Component {
           style={{ backgroundColor: '#fff', flex: '1 0', overflow: 'hidden' }}
         >
           <Row style={{ height: '100%' }}>
-            <Col span={6} style={{ height: '100%' }}>
+            <Col
+              span={6}
+              style={{ height: '100%', borderRight: '1px solid #e0e0e0' }}
+            >
               <Phase
                 title="Mitigation"
                 count={20}
@@ -188,7 +191,10 @@ export default class PlanActions extends Component {
                 onClickAddActivity={this.handleOpenActivityForm}
               />
             </Col>
-            <Col span={6} style={{ height: '100%' }}>
+            <Col
+              span={6}
+              style={{ height: '100%', borderRight: '1px solid #e0e0e0' }}
+            >
               <Phase
                 title="Preparedness"
                 count={5}
@@ -197,7 +203,10 @@ export default class PlanActions extends Component {
                 onClickAddActivity={this.handleOpenActivityForm}
               />
             </Col>
-            <Col span={6} style={{ height: '100%' }}>
+            <Col
+              span={6}
+              style={{ height: '100%', borderRight: '1px solid #e0e0e0' }}
+            >
               <Phase
                 title="Response"
                 count={30}

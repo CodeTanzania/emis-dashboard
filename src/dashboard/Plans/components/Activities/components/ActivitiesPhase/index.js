@@ -88,11 +88,10 @@ export default class Phase extends Component {
     return (
       <Layout
         style={{
-          borderRight: '1px solid #e0e0e0',
           height: '100%',
         }}
       >
-        {/* start header */}
+        {/* start phase header */}
         <Header
           style={{
             background: '#fff',
@@ -131,8 +130,8 @@ export default class Phase extends Component {
             </Col>
           </Row>
         </Header>
-        {/* end header */}
-        {/* start content */}
+        {/* end phase header */}
+        {/* start phase content */}
         <Content
           style={{
             backgroundColor: '#fff',
@@ -141,7 +140,7 @@ export default class Phase extends Component {
             overflowY: 'auto',
           }}
         >
-          {/* Action list */}
+          {/* Activity list */}
           <List
             grid={{ xs: 1, sm: 1, md: 1, lg: 1, xl: 1, xxl: 1 }}
             dataSource={actions}
@@ -152,9 +151,9 @@ export default class Phase extends Component {
               </List.Item>
             )}
           />
-          {/* end Action list */}
+          {/* end Activity list */}
         </Content>
-        {/* end content */}
+        {/* end phase content */}
       </Layout>
     );
   }
