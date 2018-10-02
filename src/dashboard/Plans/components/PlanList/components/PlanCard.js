@@ -20,6 +20,7 @@ export default function PlanCard({
   name,
   jurisdiction,
   activityCount,
+  color,
   updatedAt,
 }) {
   return (
@@ -28,7 +29,7 @@ export default function PlanCard({
         style={{
           width: '90%',
           margin: '20px auto',
-          borderLeft: '3px solid #0092fd',
+          borderLeft: `3px solid ${color}`,
         }}
       >
         {/* TODO make sure once hover color changes */}
@@ -61,6 +62,7 @@ export default function PlanCard({
 /* default Plan props */
 PlanCard.defaultProps = {
   activityCount: 0,
+  color: '#0071fc',
 };
 
 /* props validations for Plan */
@@ -68,5 +70,6 @@ PlanCard.propTypes = {
   name: PropTypes.string.isRequired,
   jurisdiction: PropTypes.string.isRequired,
   activityCount: PropTypes.number,
+  color: PropTypes.string,
   updatedAt: PropTypes.instanceOf(Date).isRequired,
 };
