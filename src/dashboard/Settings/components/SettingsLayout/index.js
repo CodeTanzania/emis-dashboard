@@ -1,11 +1,12 @@
 import classnames from 'classnames';
 import React from 'react';
 import SidebarSettings from '../SidebarSettings';
-import { Button, Col, Input, Row,Layout,Checkbox } from 'antd';
+import { Button, Col, Input, Row,Layout,Checkbox , Icon} from 'antd';
 
 /* load styles */
 import styles from './styles.css';
 import IncidentType from '../SystemSettings/Components/IncidentTypeList';
+import IncidentDetails from '../SystemSettings/Components/IncidentDetails';
 
 /* local constants */
 const { Header, Content } = Layout;
@@ -57,10 +58,25 @@ const SettingsLayout = () => {
           </Col>
           <Col span={14} className={cx('section')}>
             <Header className={cx('ContentHeader')}>
+            <Row>
+            <Col span={1}> 
+            <Icon type="plus" theme="outlined" />
+            </Col>
+            <Col span={1}> 
+            <Icon type="edit" theme="outlined" />
+            </Col>
+
+              <Col span={21}> 
               <h3>
                 Basic Information
               </h3>
+              
+              </Col>
+              </Row>
             </Header>
+            <Content>
+                <IncidentDetails />
+              </Content>
           </Col>
           
         </Row>
