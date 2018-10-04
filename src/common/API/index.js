@@ -1,4 +1,6 @@
 const API_END_POINT = 'https://emis-asat.herokuapp.com/v1';
+const INCIDENTS_API = 'https://emis-incident-type.herokuapp.com/v1'
+
 const API = {
   findStakeholders: () =>
     fetch(`${API_END_POINT}/parties`).then(res => res.json()),
@@ -29,6 +31,11 @@ const API = {
     };
     return fetch(url, config).then(res => res.json());
   },
+  getIncidentType: () => 
+  fetch(`${INCIDENTS_API}/incidenttypes`)
+    .then(res => res.json())
+    .then(response => response.data)
 };
+
 
 export default API;
