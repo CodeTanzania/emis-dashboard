@@ -12,10 +12,6 @@ import React from 'react';
  * @since 0.1.0
  */
 export default class IncidentTypeItem extends React.Component {
-    constructor(props) {
-        super(props);
-
-    }
 
     render() {
         const { name, natural, family, code, description, color } = this.props
