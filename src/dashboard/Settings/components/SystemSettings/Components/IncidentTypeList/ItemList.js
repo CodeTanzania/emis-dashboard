@@ -42,7 +42,12 @@ export default class IncidentTypeItem extends React.Component {
 
                             </Col>
 
-                            <Col span={24}>
+                            <Col span={24} style={{
+                                textOverflow: "ellipsis",
+                                width: "350px",
+                                whiteSpace: "nowrap",
+                                overflow: "hidden"
+                            }}>
                                 {description}
                             </Col>
                         </Row>

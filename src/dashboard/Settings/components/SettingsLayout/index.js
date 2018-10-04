@@ -1,13 +1,14 @@
 import classnames from 'classnames';
 import React from 'react';
 import SidebarSettings from '../SidebarSettings';
-import { Button, Col, Input, Row, Layout, Checkbox, Icon } from 'antd';
+import { Button, Col, Input, Row, Layout, Checkbox } from 'antd';
 
 /* load styles */
 import styles from './styles.css';
 import IncidentType from '../SystemSettings/Components/IncidentTypeList';
 import IncidentDetails from '../SystemSettings/Components/IncidentDetails';
-import AddnewIncidentType from '../SystemSettings/Components/IncidentTypeForm';
+import AddnewIncidentType from '../SystemSettings/Components/IncidentTypeForm/AddNewIncidentType';
+import EditIncidentType from '../SystemSettings/Components/IncidentTypeForm/EditIncidentType';
 
 /* local constants */
 const { Header, Content } = Layout;
@@ -64,7 +65,7 @@ const SettingsLayout = () => {
                 <AddnewIncidentType />
               </Col>
               <Col span={1}>
-                <Icon type="edit" theme="outlined" />
+              <EditIncidentType />
               </Col>
 
               <Col span={21}>

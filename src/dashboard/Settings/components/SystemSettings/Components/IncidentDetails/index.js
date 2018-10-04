@@ -46,7 +46,8 @@ const IncidentDetails = (props) => {
                                     <h4><span style={{color:"#1890ff", paddingRight: "10px"}}>System:</span> {code.cap}</h4>
                                     <h3><span style={{color:"#1890ff", paddingRight: "10px"}}>CAP: </span>Version 1.2.0</h3>
                                     <Divider />
-                                    <h3><span style={{color:"#1890ff", paddingRight: "10px"}}>Description</span></h3>
+                                    <h3><span style={{color:"#1890ff", paddingRight: "10px",
+                                }}>Description</span></h3>
                                     <p>{description}</p>
                                     <Divider />
                                     <div>
