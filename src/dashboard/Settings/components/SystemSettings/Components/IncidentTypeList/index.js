@@ -18,12 +18,7 @@ import IncidentTypeItem from './ItemList';
  */
 
 class IncidentType extends React.Component {
-  constructor(props){
-    super(props)
-    this.state= {
-      incidentsType : []
-    }
-  }
+ 
   onSelect = (selectedKeys, info) => {
     console.log('selected', selectedKeys, info);
   }
@@ -32,15 +27,15 @@ const {triggerGetIncidentstype} = this.props;
 triggerGetIncidentstype();
 }
   render() {
-    const { incidents } = this.props;
+    const { incidentsType } = this.props;
 
     return (
       <React.Fragment>
         <div className="content scrollable">
           <List
             itemLayout="horizontal"
-            dataSource={incidents}
-            renderItem={incidents => (<IncidentTypeItem {...incidents} />)}
+            dataSource={incidentsType}
+            renderItem={incidentsType => (<IncidentTypeItem {...incidentsType} />)}
           />
         </div>
         <IncidentTypeListFooter />
@@ -49,12 +44,16 @@ triggerGetIncidentstype();
   }
 }
 
-
+const mapStateToProps = state => {
+  return {
+      incidentsType:state.incidentsType.data
+  }
+}
 const mapDispatchToProps = dispatch => {
   return {
     triggerGetIncidentstype: bindActionCreators(triggerGetIncidentstype, dispatch)
   }
 }
 
-export default connect(null, mapDispatchToProps)(IncidentType)
+export default connect(mapStateToProps, mapDispatchToProps)(IncidentType)
 

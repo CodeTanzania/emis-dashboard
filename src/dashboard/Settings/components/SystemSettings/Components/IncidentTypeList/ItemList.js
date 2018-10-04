@@ -14,7 +14,7 @@ import React from 'react';
 export default class IncidentTypeItem extends React.Component {
 
     render() {
-        const { name, natural, family, code, description, color } = this.props
+        const { name, nature, family, code, description, color } = this.props
         return (
             <List.Item className="p-l-20">
                 <List.Item.Meta
@@ -38,7 +38,7 @@ export default class IncidentTypeItem extends React.Component {
                     description={(
                         <Row>
                             <Col span={24}>
-                                {natural}-{family}
+                                {nature}-{family}
 
                             </Col>
 
