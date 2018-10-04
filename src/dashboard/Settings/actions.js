@@ -18,7 +18,7 @@ const addNewIncident = incident => {
 }
 
 const triggerGetIncidentstype = () => ({type: TRIGGER_GET_INCIDENTS_TYPE});
-const storeIncidents = (incidents = []) => ({type: STORE_INCIDENTS_TYPE, incidents});
+const storeIncidents = (incidentsType = []) => ({type: STORE_INCIDENTS_TYPE, incidentsType});
 
 const fetchIncidents = () => {
    return {
