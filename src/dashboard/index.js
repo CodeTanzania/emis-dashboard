@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import React from 'react';
 import { NavLink, Route, Switch } from 'react-router-dom';
 import logo from '../logo.svg';
-import Plans from './plans';
+import Plans from './Plans';
 import Stakeholders from './Stakeholders';
 /* import styles */
 import styles from './styles.css';
