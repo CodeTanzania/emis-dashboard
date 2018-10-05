@@ -5,9 +5,12 @@
  */
 
 /* fetch action types */
-export const FETCH_PLANS = 'FETCH_PLANS';
-export const FETCH_PLAN_ACTIONS = 'FETCH_PLAN_ACTIONS';
-export const FETCH_PLAN_ACTION_TASKS = 'FETCH_PLAN_ACTION_TASKS';
+export const PLANS_GET_START = 'PLANS_GET_START';
+export const PLANS_GET_SUCCESS = 'PLANS_GET_SUCCESS';
+export const PLANS_GET_ERROR = 'PLANS_GET_ERROR';
+export const PLAN_ACTIVITIES_GET_START = 'PLAN_ACTIVITIES_GET_START';
+export const PLAN_ACTIVITIES_GET_SUCCESS = 'PLAN_ACTIVITIES_GET_SUCCESS';
+export const PLAN_ACTIVITIES_GET_ERROR = 'PLAN_ACTIVITIES_GET_ERROR';
 
 /* select action types */
 export const SELECT_PLAN = 'SELECT_PLAN';
@@ -35,7 +38,7 @@ export const ARCHIVE_ACTION = 'ARCHIVE_ACTION';
  */
 
 /**
- * Action to fetch plan from API
+ * Action dispatched to fetch plans from the API
  *
  * @function
  * @name fetchPlans
@@ -45,9 +48,63 @@ export const ARCHIVE_ACTION = 'ARCHIVE_ACTION';
  * @version 0.1.0
  * @since 0.1.0
  */
-export function fetchPlans() {
+export function getPlans() {
   return {
-    type: FETCH_PLANS,
+    type: PLANS_GET_START,
+    meta: {
+      page: 1,
+    },
+  };
+}
+
+/**
+ * Action dispatched when fetching plans from that API is successfully
+ *
+ * @function
+ * @name getPlansSuccess
+ *
+ * @param {Object[]} plans - Array of plans from API
+ * @param {number} page - page the results is from
+ * @param {number} total - total number of plans in the API
+ *
+ * @returns {Object} - Redux action
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function getPlansSuccess(plans, page = 1, total = 0) {
+  return {
+    type: PLANS_GET_SUCCESS,
+    payload: {
+      data: plans,
+    },
+    meta: {
+      page,
+      total,
+    },
+  };
+}
+
+/**
+ * Action dispatched when fetching plans from that API fails
+ *
+ * @function
+ * @name getPlansError
+ *
+ * @param {Object} error - Error object when fetching plans fails
+ *
+ * @returns {Object} - Redux action
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function getPlansError(error) {
+  return {
+    type: PLANS_GET_ERROR,
+    payload: {
+      data: error,
+    },
+    error: true,
   };
 }
 
@@ -57,17 +114,17 @@ export function fetchPlans() {
  * @function
  * @name fetchActions
  *
- * @returns {Object} -
  * @param {Object} planId - Redux action for fetching plan actions
+ * @returns {Object} - Redux action
  *
  * @version 0.1.0
  * @since 0.1.0
  */
-export function fetchPlanActions(planId) {
+export function fetchPlanActivities(planId) {
   return {
-    type: FETCH_PLAN_ACTIONS,
+    type: PLAN_ACTIVITIES_GET_START,
     payload: {
-      planId,
+      data: planId,
     },
   };
 }
