@@ -16,7 +16,7 @@ import React from 'react';
  * @version 0.1.0
  * @since 0.1.0
  */
-export default function ActionCard({ name, incident, taskCount, onClick }) {
+export default function ActivityCard({ name, incident, taskCount, onClick }) {
   return (
     <Card
       style={{
@@ -55,12 +55,12 @@ export default function ActionCard({ name, incident, taskCount, onClick }) {
 }
 
 /* default Action props */
-ActionCard.defaultProps = {
+ActivityCard.defaultProps = {
   taskCount: 0,
 };
 
 /* props validations for Action */
-ActionCard.propTypes = {
+ActivityCard.propTypes = {
   name: PropTypes.string.isRequired,
   incident: PropTypes.string.isRequired,
   taskCount: PropTypes.number,

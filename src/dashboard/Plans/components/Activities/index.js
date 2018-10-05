@@ -12,7 +12,7 @@ import {
 import React, { Component } from 'react';
 import Toolbar from '../../../../common/components/Toolbar';
 import Phase from './components/ActivitiesPhase';
-import { ActionBody, ActionHeader } from './components/ActivityDetails';
+import { ActivityBody, ActivityHeader } from './components/ActivityDetails';
 import ActivityForm from './components/ActivityForm';
 
 /* local constants */
@@ -227,13 +227,13 @@ export default class PlanActions extends Component {
         {/* end plan actions */}
         {/* Drawer for plan form */}
         <Drawer
-          title={<ActionHeader />}
+          title={<ActivityHeader />}
           placement="right"
           width="100%"
           onClose={this.handleCloseActivityDetails}
           visible={showActivityDetails}
         >
-          <ActionBody />
+          <ActivityBody />
         </Drawer>
         {/* end Drawer for plan form */}
         {/* Activity form modal */}
