@@ -8,7 +8,13 @@ import ActivityTaskItem from './ActivityTaskItem';
 /**
  * ActivityTaskList
  *
+ * @class
+ * @name ActivityTaskList
+ *
  * @returns {ReactComponent}
+ *
+ * @version 0.1.0
+ * @since 0.1.0
  */
 class ActivityTaskList extends Component {
   state = {

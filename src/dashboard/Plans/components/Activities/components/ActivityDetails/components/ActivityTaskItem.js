@@ -10,7 +10,7 @@ const ITEM_TYPE = 'ACTIVITY_TASK';
 /**
  * Specify the Drag and Drop spec object for the dragged item
  *
- * @see http://react-dnd.github.io/react-dnd/docs-overview.html
+ * @see {@link http://react-dnd.github.io/react-dnd/docs-overview.html}
  *
  * @version 0.1.0
  * @since 0.1.0
@@ -43,7 +43,7 @@ const ActivityTaskItemSource = {
  * Specify the Drag and Drop spec object for the dropped item
  * In other words it is spec object for drop target
  *
- * @see http://react-dnd.github.io/react-dnd/docs-overview.html
+ * @see {@link http://react-dnd.github.io/react-dnd/docs-overview.html}
  *
  * @version 0.1.0
  * @since 0.1.0
@@ -67,9 +67,14 @@ const ActivityTaskItemTarget = {
 /**
  * collectSource
  *
+ * @function
+ * @name collectSource
+ *
  * @param connect
  * @param monitor
  * @returns {Object}
+ *
+ * @see {@link http://react-dnd.github.io/react-dnd/docs-overview.html}
  *
  * @version 0.1.0
  * @since 0.1.0
@@ -84,9 +89,14 @@ function collectSource(connect, monitor) {
 /**
  * collectTarget
  *
+ * @function
+ * @name collectTarget
+ *
  * @param connect
  * @param monitor
  * @returns {Object}
+ *
+ * @see {@link http://react-dnd.github.io/react-dnd/docs-overview.html}
  *
  * @version 0.1.0
  * @since 0.1.0
@@ -105,6 +115,8 @@ function collectTarget(connect, monitor) {
  * @name ActivityTaskItem
  *
  * @returns {ReactComponent}
+ *
+ * @see {@link http://react-dnd.github.io/react-dnd/docs-overview.html}
  *
  * @version 0.1.0
  * @since 0.1.0

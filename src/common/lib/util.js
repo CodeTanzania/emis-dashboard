@@ -5,10 +5,10 @@
  * @name shuffleList
  *
  *
- * @param {any[]} list
+ * @param {*[]} list
  * @param {number} fromIndex
  * @param {number} toIndex
- * @returns {any[]} shuffled array
+ * @returns {*[]} shuffled array
  *
  * @version 0.1.0
  * @since 0.1.0
