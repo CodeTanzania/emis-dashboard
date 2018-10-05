@@ -1,6 +1,7 @@
 import React from 'react';
 import { List, Avatar, Popover, Button } from 'antd';
 import PropTypes from 'prop-types';
+import ActivityTaskList from './components/ActivityTaskList';
 
 /* local constants */
 const members = [
@@ -41,20 +42,6 @@ const members = [
     email: 'test@mail.com',
   },
 ];
-const tasks = [
-  {
-    name: 'Notify respective stakeholders on the upcoming cleanup',
-  },
-  {
-    name: 'Make sure contractors are well organized and prepared',
-  },
-  {
-    name: 'Notify Ward leaders about upcoming cleanup',
-  },
-  {
-    name: 'Make sure the Municipal responsible is notified',
-  },
-];
 
 /**
  * StakeholderDetails
@@ -79,6 +66,7 @@ function StakeholderDetails({ name, phone, email }) {
           {
             String(name)
               .trim()
+
               .split('')[0]
           }
         </Avatar>{' '}
@@ -95,17 +83,17 @@ function StakeholderDetails({ name, phone, email }) {
 }
 
 /**
- * ActionHeader
+ * ActivityHeader
  *
  * @function
- * @name ActionHeader
+ * @name ActivityHeader
  *
  * @returns {ReactComponent}
  *
  * @version 0.1.0
  * @since 0.1.0
  */
-export function ActionHeader() {
+export function ActivityHeader() {
   return (
     <div>
       <h4>Community Organized cleanup</h4>
@@ -124,17 +112,17 @@ export function ActionHeader() {
 }
 
 /**
- * ActionMembers
+ * ActivityMembers
  *
  * @function
- * @name ActionMembers
+ * @name ActivityMembers
  *
  * @returns {ReactComponent}
  *
  * @version 0.1.0
  * @since 0.1.0
  */
-function ActionMembers() {
+function ActivityMembers() {
   const Members = members.map(member => (
     <Popover
       content={
@@ -145,9 +133,9 @@ function ActionMembers() {
         />
       }
       placement="bottomLeft"
-      trigger="click"
+      trigger="hover"
     >
-      <Avatar title={member.name} style={{ backgroundColor: member.color }}>
+      <Avatar style={{ backgroundColor: member.color }}>
         {
           String(member.name)
             .trim()
@@ -183,17 +171,17 @@ function ActionMembers() {
 }
 
 /**
- * ActionDescription
+ * ActivityDescription
  *
  * @function
- * @name ActionDescription
+ * @name ActivityDescription
  *
  * @returns {ReactComponent}
  *
  * @version 0.1.0
  * @since 0.1.0
  */
-function ActionDescription() {
+function ActivityDescription() {
   return (
     <div style={{ marginTop: 20 }}>
       <h4 style={{ borderBottom: '1px solid #e0e0e0', paddingBottom: 10 }}>
@@ -215,50 +203,22 @@ function ActionDescription() {
 }
 
 /**
- * ActionTasks
+ * ActivityBody
  *
  * @function
- * @name ActionTasks
+ * @name ActivityBody
  *
  * @returns {ReactComponent}
  *
  * @version 0.1.0
  * @since 0.1.0
  */
-function ActionTasks() {
-  return (
-    <div style={{ marginTop: 20 }}>
-      <h4 style={{ borderBottom: '1px solid #e0e0e0', paddingBottom: 10 }}>
-        Tasks (SOP)
-        <Button
-          title="Add new Task"
-          type="default"
-          icon="plus"
-          style={{ border: 0 }}
-        />
-      </h4>
-      <List dataSource={tasks} renderItem={task => <p>{task.name}</p>} />
-    </div>
-  );
-}
-
-/**
- * ActionBody
- *
- * @function
- * @name ActionBody
- *
- * @returns {ReactComponent}
- *
- * @version 0.1.0
- * @since 0.1.0
- */
-export function ActionBody() {
+export function ActivityBody() {
   return (
     <div>
-      <ActionMembers />
-      <ActionDescription />
-      <ActionTasks />
+      <ActivityMembers />
+      <ActivityDescription />
+      <ActivityTaskList />
     </div>
   );
 }
