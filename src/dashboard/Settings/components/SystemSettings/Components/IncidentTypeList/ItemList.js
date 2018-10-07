@@ -1,6 +1,11 @@
 import { Col, List, Avatar, Row } from 'antd';
-import React from 'react';
+import classNames from 'classnames/bind';
 
+import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import {selectedIncidentType} from '../../../../actions'
+import styles from '../../SystemSettings.css';
 
 
 /**
@@ -11,12 +16,29 @@ import React from 'react';
  * @version 0.1.0
  * @since 0.1.0
  */
-export default class IncidentTypeItem extends React.Component {
 
+const cx = classNames.bind(styles);
+
+ class IncidentTypeItem extends React.Component {
+
+      onClick = () => {
+        const {incidentSelected, handleselectedIncidentType } = this.props;
+        handleselectedIncidentType(incidentSelected);
+        console.log('icidents');
+        console.log(incidentSelected)
+        console.log('icidents handle')
+        console.log(handleselectedIncidentType)
+
+      };
+    
     render() {
-        const { name, nature, family, code, description, color } = this.props
+        const { incidentsType, selectedIncidentType } = this.props;
+        const { name, nature, family, code, description, color, _id } = this.props;;
+        const isSelected = selectedIncidentType
+          ? selectedIncidentType._id === _id
+          : false;
         return (
-            <List.Item className="p-l-20">
+            <List.Item className={cx('p-l-20', { isSelected })}>
                 <List.Item.Meta
                     avatar={<Avatar style={{ backgroundColor: color, verticalAlign: 'middle' }} size="large">
                         {name.charAt(0)}
@@ -24,7 +46,14 @@ export default class IncidentTypeItem extends React.Component {
                     title={(
                         <Row>
                             <Col xs={21}>
-                                <span className="f-600 f-15">
+                                <span
+                                className={cx('f-600 f-15', 'name')}
+                                role="link"
+                                onClick={this.onClick}
+                                onKeyDown={this.onClick}
+                                tabIndex="0"
+                                title="Click to view more"
+                                >
                                     {name}
                                 </span>
                             </Col>
@@ -37,7 +66,7 @@ export default class IncidentTypeItem extends React.Component {
                     )}
                     description={(
                         <Row>
-                            <Col span={24}>
+                            <Col span={24} className={cx('b-0', { isSelected })}>
                                 {nature}-{family}
 
                             </Col>
@@ -47,7 +76,7 @@ export default class IncidentTypeItem extends React.Component {
                                 width: "350px",
                                 whiteSpace: "nowrap",
                                 overflow: "hidden"
-                            }}>
+                            }} className={cx('b-0', { isSelected })}>
                                 {description}
                             </Col>
                         </Row>
@@ -57,3 +86,17 @@ export default class IncidentTypeItem extends React.Component {
         );
     }
 }
+
+const mapStateToProps = state => {
+    return{
+        selectedIncidentType: state.incidentsType.data
+    }
+};
+const mapDispatchToProps = dispatch => {
+return {
+    handleselectedIncidentType: bindActionCreators(selectedIncidentType, dispatch)
+
+}
+}
+ 
+export default connect(mapStateToProps, mapDispatchToProps)(IncidentTypeItem)

@@ -1,5 +1,6 @@
 import classnames from 'classnames';
 import React from 'react';
+import { connect } from 'react-redux';
 import SidebarSettings from '../SidebarSettings';
 import { Button, Col, Input, Row, Layout, Checkbox } from 'antd';
 
@@ -19,8 +20,9 @@ const cx = classnames.bind(styles);
 * Search function
 * 
 **/
-const SettingsLayout = () => {
-  return (
+const SettingsLayout = (props)=>  {
+    const { incidentsType } = props;
+  return  (
     <Layout
       style={{
         background: '#fff',
@@ -72,7 +74,6 @@ const SettingsLayout = () => {
                 <h3>
                   Basic Information
               </h3>
-
               </Col>
             </Row>
           </Header>
@@ -83,7 +84,11 @@ const SettingsLayout = () => {
 
       </Row>
     </Layout>
-  );
+  )
 }
+const mapStateToProps = state => ({
+  incidentsType: state.incidentsType.data,
+});
 
-export default SettingsLayout;
+export default connect(mapStateToProps)(SettingsLayout);
+

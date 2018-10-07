@@ -1,4 +1,7 @@
-import {  STORE_INCIDENTS_TYPE } from './actions';
+import {
+  STORE_INCIDENTS_TYPE,
+  SELECTED_INCIDENT_TYPE, 
+  TRIGGER_GET_INCIDENTS_TYPE} from './actions';
 
 /**
  * Incident reducers
@@ -14,13 +17,46 @@ import {  STORE_INCIDENTS_TYPE } from './actions';
  * @since 0.1.0
  **/
 
-export default function incidentsType(state = [], action) {
+const initialState = {
+  filters: [],
+  data: [],
+  total: 0,
+  isLoading: false,
+  error: null,
+};
+
+
+export default function incidentsType(state = initialState, action) {
   switch (action.type) {
-    case STORE_INCIDENTS_TYPE:
-      return Object.assign({}, state, {
+    case TRIGGER_GET_INCIDENTS_TYPE:
+    return  {
+        state,
+        isLoading: true,
+        error: null,
+        total: 0
+    };
+  
+    case STORE_INCIDENTS_TYPE:  {
+      return {
         data: action.incidentsType,
-      });
+        total: action.incidentsType.length,
+        isLoading: false,
+        error: null,
+        incidentType:action.incidentsType[0]
+      };
+    }
+      case SELECTED_INCIDENT_TYPE:
+      return {
+        ...state,
+        payload: action.incidentSelected,
+      };
     default:
       return state;
   }
 }
+
+
+
+
+
+

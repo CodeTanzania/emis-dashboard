@@ -1,25 +1,18 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { SketchPicker } from 'react-color';
 
 import { List, Avatar, Divider } from 'antd';
 
 
-const fakeData = [
-    {
-        name: 'Flood', family: 'Geophysical', description: 'trcs@mail.com', code: {
-            "given": "NMA",
-            "cap": "Geo"
-        }, natural: "Natural", color: '#00a2ae'
-    },
-]
-
-const IncidentDetails = (props) => {
-    return (
+const IncidentDetails = ({ incidentType }) => {
+    console.log(incidentType);
+    return incidentType ? (
         <div className="content scrollable">
             <List
                 itemLayout="horizontal"
-                dataSource={fakeData}
-                renderItem={({ name, code, family, description, color, natural }) => (
+                dataSource={ incidentType}
+                renderItem={({ name, code, family, description, color, nature }) => (
                     <List.Item className="p-20">
                         <List.Item.Meta
                             avatar={<Avatar
@@ -39,8 +32,8 @@ const IncidentDetails = (props) => {
                             description={
 
                                 <div>
-                                    <h3><span style={{color:"#1890ff", paddingRight: "10px"}}>Nature:</span> {natural}</h3>
-                                    <h4><span style={{color:"#1890ff", paddingRight: "10px"}}>Family:</span>{family}</h4>
+                                    <h3><span style={{color:"#1890ff", paddingRight: "10px"}}>Nature:</span> {nature}</h3>
+                                    <h4><span style={{color:"#1890ff", paddingRight: "10px"}}>Family:</span> {family} </h4>
                                     <Divider />
                                     <h3><span style={{color:"#1890ff", paddingRight: "10px"}}>Code:</span> {code.given}</h3>
                                     <h4><span style={{color:"#1890ff", paddingRight: "10px"}}>System:</span> {code.cap}</h4>
@@ -61,6 +54,15 @@ const IncidentDetails = (props) => {
                 )}
             />
         </div>
-    )
+    ) : (<h1> Waiting for data</h1>)
 }
-export default IncidentDetails;
+
+const mapStateToProps = state => {
+
+    return{
+        incidentType: state.incidentsType.incidentType ? [state.incidentsType.incidentType] : []
+    }
+
+};
+ 
+export default connect(mapStateToProps)(IncidentDetails)

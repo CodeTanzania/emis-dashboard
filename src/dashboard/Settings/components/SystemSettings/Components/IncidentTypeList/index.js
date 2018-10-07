@@ -19,9 +19,6 @@ import IncidentTypeItem from './ItemList';
 
 class IncidentType extends React.Component {
  
-  onSelect = (selectedKeys, info) => {
-    console.log('selected', selectedKeys, info);
-  }
 componentDidMount(){
 const {triggerGetIncidentstype} = this.props;
 triggerGetIncidentstype();
