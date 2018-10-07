@@ -24,16 +24,12 @@ const cx = classNames.bind(styles);
       onClick = () => {
         const {incidentSelected, handleselectedIncidentType } = this.props;
         handleselectedIncidentType(incidentSelected);
-        console.log('icidents');
-        console.log(incidentSelected)
-        console.log('icidents handle')
-        console.log(handleselectedIncidentType)
-
+      
       };
     
     render() {
-        const { incidentsType, selectedIncidentType } = this.props;
-        const { name, nature, family, code, description, color, _id } = this.props;;
+        const { incidentSelected, selectedIncidentType } = this.props;
+        const { name, nature, family, code, description, color, _id } = incidentSelected;
         const isSelected = selectedIncidentType
           ? selectedIncidentType._id === _id
           : false;
@@ -46,9 +42,8 @@ const cx = classNames.bind(styles);
                     title={(
                         <Row>
                             <Col xs={21}>
-                                <span
+                                <span style={{cursor:"pointer"}}
                                 className={cx('f-600 f-15', 'name')}
-                                role="link"
                                 onClick={this.onClick}
                                 onKeyDown={this.onClick}
                                 tabIndex="0"

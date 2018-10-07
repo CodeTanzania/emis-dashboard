@@ -6,7 +6,8 @@ import React from 'react';
 const ButtonGroup = Button.Group;
 
 
-export default function IncidentTypeListFooter() {
+export default function IncidentTypeListFooter(props) {
+  const {total} = props
   return (
     <div className="footer p-10">
       <Row type="flex" justify="space-between">
@@ -14,7 +15,7 @@ export default function IncidentTypeListFooter() {
           <h3>
             Total : &nbsp;
             <span className="f-15">
-              300
+              {total}
             </span>
           </h3>
         </Col>

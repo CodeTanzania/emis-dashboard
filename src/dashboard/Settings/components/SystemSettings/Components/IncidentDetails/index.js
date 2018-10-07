@@ -44,7 +44,7 @@ const IncidentDetails = ({ incidentType }) => {
                                     <p>{description}</p>
                                     <Divider />
                                     <div>
-                                    <SketchPicker />
+                                    <SketchPicker color={color}/>
                                     
                                     </div>
                                 

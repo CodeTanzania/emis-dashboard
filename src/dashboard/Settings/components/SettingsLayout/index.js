@@ -21,7 +21,7 @@ const cx = classnames.bind(styles);
 * 
 **/
 const SettingsLayout = (props)=>  {
-    const { incidentsType } = props;
+  
   return  (
     <Layout
       style={{

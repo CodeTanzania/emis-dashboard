@@ -48,7 +48,7 @@ export default function incidentsType(state = initialState, action) {
       case SELECTED_INCIDENT_TYPE:
       return {
         ...state,
-        payload: action.incidentSelected,
+        incidentType: action.incidentSelected,
       };
     default:
       return state;

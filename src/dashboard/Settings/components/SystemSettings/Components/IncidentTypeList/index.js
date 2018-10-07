@@ -32,7 +32,7 @@ triggerGetIncidentstype();
           <List
             itemLayout="horizontal"
             dataSource={incidentsType}
-            renderItem={incidentsType => (<IncidentTypeItem {...incidentsType} />)}
+            renderItem={incidentsType => (<IncidentTypeItem incidentSelected={incidentsType} />)}
           />
         </div>
         <IncidentTypeListFooter />
