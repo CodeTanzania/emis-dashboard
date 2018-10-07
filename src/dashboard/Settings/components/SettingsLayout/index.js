@@ -25,12 +25,14 @@ const SettingsLayout = (props)=>  {
   return  (
     <Layout
       style={{
-        background: '#fff',
+        height: '100vh',
         display: 'flex',
         flexDirection: 'column',
-        borderTop: '1px solid #e6e6e6'
-
-      }}
+        overflow: 'hidden',
+        background: '#fff',
+        borderTop: '1px solid #e6e6e6',
+         
+        }}
     >
       <Row>
         <Col span={4} className={cx('section')}>

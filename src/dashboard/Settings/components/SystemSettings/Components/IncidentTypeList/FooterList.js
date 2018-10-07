@@ -1,12 +1,14 @@
 import { Button, Col, Row } from 'antd';
 import React from 'react';
+import { connect } from 'react-redux';
+
 
 
 /* local constants */
 const ButtonGroup = Button.Group;
 
 
-export default function IncidentTypeListFooter(props) {
+ const IncidentTypeListFooter = (props) => {
   const {total} = props
   return (
     <div className="footer p-10">
@@ -32,3 +34,8 @@ export default function IncidentTypeListFooter(props) {
     </div>
   );
 }
+const mapStateToProps = state => ({
+  total: state.incidentsType.total,
+});
+
+export default connect(mapStateToProps)(IncidentTypeListFooter);
