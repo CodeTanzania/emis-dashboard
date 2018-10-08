@@ -1,0 +1,26 @@
+/* 
+Use this class to change to style of the selected item
+*/
+
+.StakeholderItem {
+  padding-left: 20px;
+}
+
+.StakeholderItem.isSelected {
+  background: #f0f0f0;
+}
+
+.StakeholderItem .actionBtn {
+  font-size: 20px;
+  border: none !important;
+}
+
+.StakeholderItem .actionBtn.isSelected {
+  background: #f0f0f0;
+}
+
+.StakeholderItem .infoItem {
+  display: inline-block;
+  margin-left: 5px;
+  border: none !important;
+}

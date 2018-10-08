@@ -6,15 +6,32 @@
  */
 
 import React, { Component, Fragment } from 'react';
-import { Layout, Button, Drawer } from 'antd';
+import { Layout, Button, Drawer, Spin } from 'antd';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import classNames from 'classnames';
+import { fetchStakeholders } from './actions';
 import StakeholderFilter from './components/StakeholderFilter';
 import StakeholderList from './components/StakeholderList';
 import StakeholderProfile from './components/StakeholderProfile';
 import StakeholderForm from './components/StakeholderForm';
+import styles from './styles.css';
+
+const cx = classNames.bind(styles);
 
 const { Header } = Layout;
 class Stakeholders extends Component {
   state = { visible: false };
+
+  static propTypes = {
+    handleFetchStakeholders: PropTypes.func.isRequired,
+    loading: PropTypes.bool.isRequired,
+  };
+
+  componentDidMount() {
+    const { handleFetchStakeholders } = this.props;
+    handleFetchStakeholders();
+  }
 
   handleCancelEdit = () => {
     this.setState({ visible: false });
@@ -25,24 +42,8 @@ class Stakeholders extends Component {
   };
 
   render() {
+    const { loading } = this.props;
     const { visible } = this.state;
-    const headerStyle = {
-      background: '#fafafa',
-      paddingLeft: '10px',
-      borderBottom: '1px solid rgb(224, 224, 224)',
-    };
-
-    const secondaryHeaderStyle = {
-      display: 'flex',
-      justifyContent: 'flex-end',
-      background: '#ffffff',
-      paddingTop: '10px',
-      paddingBottom: '10px',
-      paddingRight: '5%',
-      borderBottom: '1px solid rgb(224, 224, 224)',
-      lineHeight: 'normal',
-      height: 'auto',
-    };
 
     return (
       <Fragment>
@@ -56,30 +57,39 @@ class Stakeholders extends Component {
         >
           <StakeholderForm handleCancelClick={this.handleCancelEdit} />
         </Drawer>
-        <Layout style={{ height: '100vh', overflow: 'hidden' }}>
-          <Header style={headerStyle}>
+        <Layout className={cx('Stakeholders')}>
+          <Header className={cx('header')}>
             <h3>Stakeholders</h3>
           </Header>
-          <Header style={secondaryHeaderStyle}>
-            <Button
-              icon="plus"
-              type="primary"
-              onClick={this.handleOnClickAddPersonnel}
-            >
-              New Stakeholder
-            </Button>
-          </Header>
-          <Layout style={{ flexDirection: 'row', flex: 1 }}>
-            <div style={{ width: '20%', borderRight: '1px solid #E0E0E0' }}>
-              <StakeholderFilter />
-            </div>
-            <div style={{ width: '25%', borderRight: '1px solid #E0E0E0' }}>
-              <StakeholderList />
-            </div>
-            <div style={{ width: '55%' }}>
-              {' '}
-              <StakeholderProfile />
-            </div>
+          {!loading && (
+            <Header className={cx('actionBar')}>
+              <Button
+                icon="plus"
+                type="primary"
+                onClick={this.handleOnClickAddPersonnel}
+              >
+                New Stakeholder
+              </Button>
+            </Header>
+          )}
+          <Layout className={cx('content')}>
+            {loading ? (
+              <div className={cx('loading')}>
+                <Spin />
+              </div>
+            ) : (
+              <Fragment>
+                <div className={cx('stakeholderFilters')}>
+                  <StakeholderFilter />
+                </div>
+                <div className={cx('stakeholderList')}>
+                  <StakeholderList />
+                </div>
+                <div className={cx('stakeholderProfile')}>
+                  <StakeholderProfile />
+                </div>
+              </Fragment>
+            )}
           </Layout>
         </Layout>
       </Fragment>
@@ -87,4 +97,13 @@ class Stakeholders extends Component {
   }
 }
 
-export default Stakeholders;
+const mapStateToProps = state => ({
+  loading: state.stakeholders.isLoading,
+});
+
+export default connect(
+  mapStateToProps,
+  {
+    handleFetchStakeholders: fetchStakeholders,
+  }
+)(Stakeholders);
