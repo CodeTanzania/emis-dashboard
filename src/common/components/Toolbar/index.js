@@ -1,5 +1,6 @@
 import { Col, Layout, Row } from 'antd';
 import React from 'react';
+import './styles.css';
 
 /* local constants */
 const { Header } = Layout;
@@ -19,7 +20,7 @@ const { Header } = Layout;
 function Toolbar(props) {
   const { children } = props;
   return (
-    <Header {...props}>
+    <Header {...props} className="Toolbar">
       <Row>{children}</Row>
     </Header>
   );
