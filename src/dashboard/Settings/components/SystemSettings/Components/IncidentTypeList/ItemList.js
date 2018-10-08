@@ -4,7 +4,7 @@ import classNames from 'classnames/bind';
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import {selectedIncidentType} from '../../../../actions'
+import { selectedIncidentType } from '../../../../actions'
 import styles from '../../SystemSettings.css';
 
 
@@ -19,20 +19,20 @@ import styles from '../../SystemSettings.css';
 
 const cx = classNames.bind(styles);
 
- class IncidentTypeItem extends React.Component {
+class IncidentTypeItem extends React.Component {
 
-      onClick = () => {
-        const {incidentSelected, handleselectedIncidentType } = this.props;
+    onClick = () => {
+        const { incidentSelected, handleselectedIncidentType } = this.props;
         handleselectedIncidentType(incidentSelected);
-      
-      };
-    
+
+    };
+
     render() {
         const { incidentSelected, selectedIncidentType } = this.props;
         const { name, nature, family, code, description, color, _id } = incidentSelected;
         const isSelected = selectedIncidentType
-          ? selectedIncidentType._id === _id
-          : false;
+            ? selectedIncidentType._id === _id
+            : false;
         return (
             <List.Item className={cx('p-l-20', { isSelected })}>
                 <List.Item.Meta
@@ -41,21 +41,21 @@ const cx = classNames.bind(styles);
                     </Avatar>}
                     title={(
                         <Row>
-                            <Col xs={21}>
-                                <span style={{cursor:"pointer"}}
-                                className={cx('f-600 f-15', 'name')}
-                                onClick={this.onClick}
-                                onKeyDown={this.onClick}
-                                tabIndex="0"
-                                title="Click to view more"
+                            <Col xs={18}>
+                                <span style={{ cursor: "pointer" }}
+                                    className={cx('f-600 f-15', 'name')}
+                                    onClick={this.onClick}
+                                    onKeyDown={this.onClick}
+                                    tabIndex="0"
+                                    title="Click to view more"
                                 >
                                     {name}
                                 </span>
                             </Col>
-                            <Col xs={3} style={{
+                            <Col xs={6} style={{
                                 paddingRight: '10px'
                             }}>
-                                {code.given}
+                                {code.cap}
                             </Col>
                         </Row>
                     )}
@@ -83,15 +83,15 @@ const cx = classNames.bind(styles);
 }
 
 const mapStateToProps = state => {
-    return{
+    return {
         selectedIncidentType: state.incidentsType.data
     }
 };
 const mapDispatchToProps = dispatch => {
-return {
-    handleselectedIncidentType: bindActionCreators(selectedIncidentType, dispatch)
+    return {
+        handleselectedIncidentType: bindActionCreators(selectedIncidentType, dispatch)
 
+    }
 }
-}
- 
+
 export default connect(mapStateToProps, mapDispatchToProps)(IncidentTypeItem)

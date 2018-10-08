@@ -35,9 +35,9 @@ const IncidentDetails = ({ incidentType }) => {
                                     <h3><span style={{color:"#1890ff", paddingRight: "10px"}}>Nature:</span> {nature}</h3>
                                     <h4><span style={{color:"#1890ff", paddingRight: "10px"}}>Family:</span> {family} </h4>
                                     <Divider />
-                                    <h3><span style={{color:"#1890ff", paddingRight: "10px"}}>Code:</span> {code.given}</h3>
-                                    <h4><span style={{color:"#1890ff", paddingRight: "10px"}}>System:</span> {code.cap}</h4>
-                                    <h3><span style={{color:"#1890ff", paddingRight: "10px"}}>CAP: </span>Version 1.2.0</h3>
+                                    <h3><span style={{color:"#1890ff", paddingRight: "10px"}}>Code-Given:</span> {code.given}</h3>
+                                    <h4><span style={{color:"#1890ff", paddingRight: "10px"}}>Code-CAP:</span> {code.cap}</h4>
+                                    <h3><span style={{color:"#1890ff", paddingRight: "10px"}}>System: </span>Version 1.2.0</h3>
                                     <Divider />
                                     <h3><span style={{color:"#1890ff", paddingRight: "10px",
                                 }}>Description</span></h3>

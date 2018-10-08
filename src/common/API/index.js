@@ -45,7 +45,6 @@ const API = {
         'content-type': 'application/json',
       },
     };
-    console.log('create data');
     return fetch(url, config).then(res => res.json());
   },
   updateIncidentType: (incidentTypeId, updates) => {
@@ -57,7 +56,6 @@ const API = {
         'content-type': 'application/json',
       },
     };
-    console.log('create update')
     return fetch(url, config).then(res => res.json());
   },
 };

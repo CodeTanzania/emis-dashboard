@@ -19,10 +19,13 @@ const { Search } = Input;
 const cx = classnames.bind(styles);
 
 class SettingsLayout extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.handleCancel = this.handleCancel.bind(this)
+  }
   state = { visible: false, showEditProfile: false };
-componentDidMount(){
-  
-}
+
   handleOnClickEditProfile = () => {
     this.setState({ visible: true, showEditProfile: true });
   };
@@ -113,13 +116,12 @@ componentDidMount(){
         </Row>
         <Modal
           title={showEditProfile ? 'Settings: Edit Incident-Type' : ' Settings: Add New Incident-Type'}
-          okText="Send"
           visible={visible}
-          onOk={this.handleOk}
           onCancel={this.handleCancel}
+          footer={null}
           width="50%"
         >
-          <IncidentTypeForm />
+          <IncidentTypeForm handleCancelClick={this.handleCancel} />
         </Modal>
       </Layout>
     )
