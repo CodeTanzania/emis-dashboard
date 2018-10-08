@@ -1,6 +1,7 @@
 import { Button, Col, Form, Row } from 'antd';
 import React, { Component } from 'react';
 import Select from '../../../../../../common/components/Select';
+import './styles.css';
 
 /* local constants */
 const FormItem = Form.Item;
@@ -79,10 +80,7 @@ class PlanForm extends Component {
     } = this.props;
 
     return (
-      <Form
-        onSubmit={this.handleSubmit}
-        style={{ maxWidth: '400px', margin: '0 auto' }}
-      >
+      <Form onSubmit={this.handleSubmit} className="PlanForm">
         {/* incident type select input */}
         <FormItem label="Incident Type" {...formItemLayout}>
           {getFieldDecorator('incidentType', {
