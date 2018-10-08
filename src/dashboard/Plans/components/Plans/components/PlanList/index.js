@@ -4,6 +4,7 @@ import Select from '../../../../../../common/components/Select';
 import Toolbar from '../../../../../../common/components/Toolbar';
 import PlanCard from '../PlanCard';
 import PlanForm from '../PlanForm';
+import './styles.css';
 
 /* local constants */
 const { Header, Content } = Layout;
@@ -96,33 +97,14 @@ export default class PlanList extends Component {
   render() {
     const { showForm } = this.state;
     return (
-      <Layout
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          height: '100vh',
-          overflow: 'hidden',
-        }}
-      >
+      <Layout className="PlanList">
         {/* start primary header */}
-        <Header
-          style={{
-            background: '#fff',
-            paddingLeft: 10,
-            borderBottom: '1px solid #E0E0E0',
-          }}
-        >
+        <Header className="header">
           <h3>Plans</h3>
         </Header>
         {/* end primary header */}
         {/* Toolbar */}
-        <Toolbar
-          style={{
-            background: '#fff',
-            padding: '0 10px',
-            borderBottom: '1px solid #E0E0E0',
-          }}
-        >
+        <Toolbar>
           <Filters span={21}>
             <Row>
               <Col span={4}>
@@ -152,14 +134,10 @@ export default class PlanList extends Component {
         </Toolbar>
         {/* end Toolbar */}
         {/* Plan list content */}
-        <Content
-          style={{
-            backgroundColor: '#fff',
-            flex: '1 0',
-            overflowY: 'auto',
-          }}
-        >
-          <div style={{ margin: '15px 15px' }}>
+        <Content className="content">
+          {/* plan list container */}
+          <div className="listCardContainer">
+            {/* plan list */}
             <List
               grid={{ gutter: 10, xs: 1, sm: 2, md: 3, lg: 4, xl: 4, xxl: 4 }}
               dataSource={fakeData}
@@ -169,7 +147,9 @@ export default class PlanList extends Component {
                 </List.Item>
               )}
             />
+            {/* end plan list */}
           </div>
+          {/* end plan list container */}
         </Content>
         {/* end Plan list content */}
         {/* drawer for showing plan form */}
