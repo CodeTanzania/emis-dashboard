@@ -31,10 +31,35 @@ const API = {
     };
     return fetch(url, config).then(res => res.json());
   },
-  getIncidentType: () => 
-  fetch(`${INCIDENTS_API}/incidenttypes`)
+  getIncidentType: () => {
+  return fetch(`${INCIDENTS_API}/incidenttypes`)
     .then(res => res.json())
     .then(response => response.data)
+  },
+  createIncidentType: data => {
+    const url = `${INCIDENTS_API}/incidenttypes`;
+    const config = {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'content-type': 'application/json',
+      },
+    };
+    console.log('create data');
+    return fetch(url, config).then(res => res.json());
+  },
+  updateIncidentType: (incidentTypeId, updates) => {
+    const url = `${INCIDENTS_API}/incidenttypes/:${incidentTypeId}`;
+    const config = {
+      method: 'PATCH',
+      body: JSON.stringify(updates),
+      headers: {
+        'content-type': 'application/json',
+      },
+    };
+    console.log('create update')
+    return fetch(url, config).then(res => res.json());
+  },
 };
 
 

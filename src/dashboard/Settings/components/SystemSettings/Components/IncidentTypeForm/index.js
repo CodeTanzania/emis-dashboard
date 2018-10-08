@@ -1,38 +1,13 @@
 import React from 'react'
 import {
-    Form, Input, Row, Col, Divider, Modal, Icon
+    Form, Input, Row, Col, Divider,
 } from 'antd';
-import { ChromePicker
-} from 'react-color';
+import { ChromePicker } from 'react-color';
 
 const FormItem = Form.Item;
 const { TextArea } = Input;
 
-class EditIncidentType extends React.Component {
-
-    state = { visible: false }
-
-    showModal = () => {
-        this.setState({
-            visible: true,
-            edit: false
-        });
-    }
-
-    handleOk = (e) => {
-        console.log(e);
-        this.setState({
-            visible: false,
-        });
-    }
-
-    handleCancel = (e) => {
-        console.log(e);
-        this.setState({
-            visible: false,
-        });
-    }
-
+class IncidentTypeForm extends React.Component {
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.form.validateFieldsAndScroll((err, values) => {
@@ -74,17 +49,8 @@ class EditIncidentType extends React.Component {
         };
 
         return (
-            <div>
-                <Icon style={{ cursor: "pointer" }} type="edit"
-                    theme="outlined" onClick={this.showModal} />
-                <Modal
-                    title="Settings Edit Incident Type"
-                    okText="Send"
-                    visible={this.state.visible}
-                    onOk={this.handleOk}
-                    onCancel={this.handleCancel}
-                    width='50%'
-                >
+            <div >
+                
                     <Form onSubmit={this.handleSubmit}>
                         <FormItem
                             {...formItemLayout}
@@ -172,6 +138,8 @@ class EditIncidentType extends React.Component {
                             )}
 
                             <ChromePicker />
+
+
                         </FormItem>
                         <FormItem {...tailFormItemLayout}>
                             <Row>
@@ -181,10 +149,9 @@ class EditIncidentType extends React.Component {
                             </Row>
                         </FormItem>
                     </Form>
-                </Modal>
             </div>
         );
     }
 }
 
-export default Form.create()(EditIncidentType);
+export default Form.create()(IncidentTypeForm);

@@ -1,7 +1,9 @@
 import {
   STORE_INCIDENTS_TYPE,
   SELECTED_INCIDENT_TYPE, 
-  TRIGGER_GET_INCIDENTS_TYPE} from './actions';
+  TRIGGER_GET_INCIDENTS_TYPE,
+  ADD_NEW_INCIDENT_TYPE,
+  UPDATE_INCIDENT_TYPE} from './actions';
 
 /**
  * Incident reducers
@@ -50,6 +52,22 @@ export default function incidentsType(state = initialState, action) {
         ...state,
         incidentType: action.incidentSelected,
       };
+      case ADD_NEW_INCIDENT_TYPE:
+      return {
+        ...state,
+        data: [action.incidentType, ...state.data],
+      };
+    case UPDATE_INCIDENT_TYPE: {
+      const data = [...state.data]; 
+      const { incidentType } = action; 
+      const index = data.findIndex(item => item._id === incidentType._id);
+      data[index] = incidentType;
+      return {
+        ...state,
+        data,
+        incidentsType: incidentType,
+      };
+    }
     default:
       return state;
   }
