@@ -2,8 +2,8 @@ import { Button, List } from 'antd';
 import React, { Component } from 'react';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
-import shuffleList from '../../../../../../../common/lib/util';
-import ActivityTaskItem from './ActivityTaskItem';
+import shuffleList from '../../../../../../../../common/lib/util';
+import ActivityTaskItem from '../ActivityTaskItem';
 
 /**
  * ActivityTaskList

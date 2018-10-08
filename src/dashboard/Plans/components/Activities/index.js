@@ -11,9 +11,11 @@ import {
 } from 'antd';
 import React, { Component } from 'react';
 import Toolbar from '../../../../common/components/Toolbar';
-import Phase from './components/ActivitiesPhase';
-import { ActivityBody, ActivityHeader } from './components/ActivityDetails';
+import ActivityDetailsBody from './components/ActivityDetails';
+import ActivityDetailsHeader from './components/ActivityDetails/components/ActivityDetailsHeader';
 import ActivityForm from './components/ActivityForm';
+import Phase from './components/PhaseActivities';
+import './styles.css';
 
 /* local constants */
 const { Header, Content } = Layout;
@@ -64,7 +66,7 @@ const planActivities = [
  * @version 0.1.0
  * @since 0.1.0
  */
-export default class PlanActions extends Component {
+export default class PlanActivitiesLayout extends Component {
   state = { showActivityForm: false, showActivityDetails: false };
 
   /**
@@ -122,33 +124,14 @@ export default class PlanActions extends Component {
   render() {
     const { showActivityForm, showActivityDetails } = this.state;
     return (
-      <Layout
-        style={{
-          height: '100vh',
-          display: 'flex',
-          flexDirection: 'column',
-          overflow: 'hidden',
-        }}
-      >
+      <Layout className="PlanActivitiesLayout">
         {/* start primary header */}
-        <Header
-          style={{
-            background: '#fff',
-            padding: '0 10px',
-            borderBottom: '1px solid #E0E0E0',
-          }}
-        >
+        <Header className="header">
           <h3>Plans</h3>
         </Header>
         {/* end primary header */}
         {/* Toolbar */}
-        <Toolbar
-          style={{
-            background: '#fff',
-            padding: '0 10px',
-            borderBottom: '1px solid #E0E0E0',
-          }}
-        >
+        <Toolbar>
           <Filters span={18} />
           <Actions span={6}>
             <Row type="flex" justify="end">
@@ -163,7 +146,7 @@ export default class PlanActions extends Component {
               </Col>
               <Col span={10}>
                 <Dropdown overlay={menu}>
-                  <Button style={{ marginLeft: 8 }} type="primary">
+                  <Button className="exportButton" type="primary">
                     <Icon type="export" />
                     Export
                     <Icon type="down" />
@@ -175,14 +158,9 @@ export default class PlanActions extends Component {
         </Toolbar>
         {/* end Toolbar */}
         {/* start plan actions */}
-        <Content
-          style={{ backgroundColor: '#fff', flex: '1 0', overflow: 'hidden' }}
-        >
-          <Row style={{ height: '100%' }}>
-            <Col
-              span={6}
-              style={{ height: '100%', borderRight: '1px solid #e0e0e0' }}
-            >
+        <Content className="content">
+          <Row className="sectionLayout">
+            <Col span={6} className="section section-b-r">
               <Phase
                 title="Mitigation"
                 count={20}
@@ -191,10 +169,7 @@ export default class PlanActions extends Component {
                 onClickAddActivity={this.handleOpenActivityForm}
               />
             </Col>
-            <Col
-              span={6}
-              style={{ height: '100%', borderRight: '1px solid #e0e0e0' }}
-            >
+            <Col span={6} className="section section-b-r">
               <Phase
                 title="Preparedness"
                 count={5}
@@ -203,10 +178,7 @@ export default class PlanActions extends Component {
                 onClickAddActivity={this.handleOpenActivityForm}
               />
             </Col>
-            <Col
-              span={6}
-              style={{ height: '100%', borderRight: '1px solid #e0e0e0' }}
-            >
+            <Col span={6} className="section section-b-r">
               <Phase
                 title="Response"
                 count={30}
@@ -214,7 +186,7 @@ export default class PlanActions extends Component {
                 onClickAddActivity={this.handleOpenActivityForm}
               />
             </Col>
-            <Col span={6} style={{ height: '100%' }}>
+            <Col span={6} className="section">
               <Phase
                 title="Recovery"
                 count={40}
@@ -227,13 +199,13 @@ export default class PlanActions extends Component {
         {/* end plan actions */}
         {/* Drawer for plan form */}
         <Drawer
-          title={<ActivityHeader />}
+          title={<ActivityDetailsHeader />}
           placement="right"
           width="100%"
           onClose={this.handleCloseActivityDetails}
           visible={showActivityDetails}
         >
-          <ActivityBody />
+          <ActivityDetailsBody />
         </Drawer>
         {/* end Drawer for plan form */}
         {/* Activity form modal */}

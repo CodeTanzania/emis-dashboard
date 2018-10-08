@@ -1,0 +1,29 @@
+.ActivityCard {
+  width: 90%;
+  margin: 5px auto;
+  border-left: 3px solid #0092fd;
+}
+
+.ActivityCard .subtitle {
+  font-size: 12px;
+  line-height: 20px;
+  color: #909090;
+}
+
+.ActivityCard .tasksBadge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ActivityCard .tasksBadgeCount {
+  background-color: #fff;
+  color: #999;
+  box-shadow: 0 0 0 1px #d9d9d9 inset;
+}
+
+.ActivityCard .tasksBadgeTitle {
+  font-size: 12px;
+  line-height: 20px;
+  margin-top: 5px;
+}

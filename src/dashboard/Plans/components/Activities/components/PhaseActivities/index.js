@@ -25,7 +25,7 @@ function PhaseOptions({ onClickAddActivity }) {
 }
 
 /**
- * Phase component
+ * Phase Activities component
  * This renders Phase Header and Phase content which is a list of actions
  * under a particular phase.
  *
@@ -35,8 +35,29 @@ function PhaseOptions({ onClickAddActivity }) {
  * @version 0.1.0
  * @since 0.1.0
  */
-export default class Phase extends Component {
+export default class PhaseActivities extends Component {
   state = { showPopover: false };
+
+  /* default props */
+  static defaultProps = {
+    count: 0,
+    actions: [],
+  };
+
+  /* props validation */
+  static propTypes = {
+    title: PropTypes.string.isRequired,
+    count: PropTypes.number,
+    actions: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string,
+        incident: PropTypes.string,
+        taskCount: PropTypes.number,
+      })
+    ),
+    onClickCard: PropTypes.func.isRequired,
+    onClickAddActivity: PropTypes.func.isRequired,
+  };
 
   /**
    * Handle Antd popover visible prop
@@ -86,19 +107,9 @@ export default class Phase extends Component {
 
     const { showPopover } = this.state;
     return (
-      <Layout
-        style={{
-          height: '100%',
-        }}
-      >
+      <Layout className="PhaseActivities">
         {/* start phase header */}
-        <Header
-          style={{
-            background: '#fff',
-            paddingLeft: 10,
-            borderBottom: '1px solid #E0E0E0',
-          }}
-        >
+        <Header className="header">
           <Row justify="space-between">
             <Col span={22}>
               {title}
@@ -132,14 +143,7 @@ export default class Phase extends Component {
         </Header>
         {/* end phase header */}
         {/* start phase content */}
-        <Content
-          style={{
-            backgroundColor: '#fff',
-            paddingTop: '20px',
-            height: '100%',
-            overflowY: 'auto',
-          }}
-        >
+        <Content className="content">
           {/* Activity list */}
           <List
             grid={{ xs: 1, sm: 1, md: 1, lg: 1, xl: 1, xxl: 1 }}
@@ -159,27 +163,7 @@ export default class Phase extends Component {
   }
 }
 
-/* default props */
-Phase.defaultProps = {
-  count: 0,
-  actions: [],
-};
-
 /* Props validation */
-Phase.propTypes = {
-  title: PropTypes.string.isRequired,
-  count: PropTypes.number,
-  actions: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string,
-      incident: PropTypes.string,
-      taskCount: PropTypes.number,
-    })
-  ),
-  onClickCard: PropTypes.func.isRequired,
-  onClickAddActivity: PropTypes.func.isRequired,
-};
-
 PhaseOptions.propTypes = {
   onClickAddActivity: PropTypes.func.isRequired,
 };

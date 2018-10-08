@@ -1,6 +1,7 @@
 import { Badge, Card, Col, Row } from 'antd';
 import PropTypes from 'prop-types';
 import React from 'react';
+import './styles.css';
 
 /**
  * Action card component
@@ -18,27 +19,13 @@ import React from 'react';
  */
 export default function ActivityCard({ name, incident, taskCount, onClick }) {
   return (
-    <Card
-      style={{
-        width: '90%',
-        margin: '5px auto',
-        borderLeft: '3px solid #0092fd',
-      }}
-      onClick={onClick}
-    >
+    <Card className="ActivityCard" onClick={onClick}>
       <Row type="flex" justify="space-around">
         <Col span={20}>
           <h4 title={name}>{name}</h4>
-          <p
-            style={{
-              fontSize: '11px',
-              color: '#909090',
-            }}
-          >
-            {incident}
-          </p>
+          <p className="subtitle">{incident}</p>
         </Col>
-        <Col span={2}>
+        <Col span={2} className="tasksBadge">
           <Badge
             count={taskCount}
             style={{
@@ -47,7 +34,7 @@ export default function ActivityCard({ name, incident, taskCount, onClick }) {
               boxShadow: '0 0 0 1px #d9d9d9 inset',
             }}
           />
-          <p style={{ fontSize: '11px', marginTop: '5px' }}>Tasks</p>
+          <p className="tasksBadgeTitle">Tasks</p>
         </Col>
       </Row>
     </Card>

@@ -1,6 +1,6 @@
-import React from 'react';
-import { List, Avatar, Popover, Button } from 'antd';
+import { Avatar, Button, List, Popover } from 'antd';
 import PropTypes from 'prop-types';
+import React from 'react';
 import ActivityTaskList from './components/ActivityTaskList';
 
 /* local constants */
@@ -78,35 +78,6 @@ function StakeholderDetails({ name, phone, email }) {
       <Button icon="mail" style={{ border: 0, display: 'block' }}>
         {email}
       </Button>
-    </div>
-  );
-}
-
-/**
- * ActivityHeader
- *
- * @function
- * @name ActivityHeader
- *
- * @returns {ReactComponent}
- *
- * @version 0.1.0
- * @since 0.1.0
- */
-export function ActivityHeader() {
-  return (
-    <div>
-      <h4>Community Organized cleanup</h4>
-      <p
-        style={{
-          fontSize: '12px',
-          lineHeight: '20px',
-          color: '#909090',
-          marginBottom: 0,
-        }}
-      >
-        Dar es Salaam &gt; Floods &gt; Mitigation
-      </p>
     </div>
   );
 }
@@ -213,7 +184,7 @@ function ActivityDescription() {
  * @version 0.1.0
  * @since 0.1.0
  */
-export function ActivityBody() {
+export default function ActivityDetailsBody() {
   return (
     <div>
       <ActivityMembers />
