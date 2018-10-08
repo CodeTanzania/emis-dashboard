@@ -1,9 +1,9 @@
 import { Button, Col, Drawer, Layout, List, Row } from 'antd';
 import React, { Component } from 'react';
-import Select from '../../../../common/components/Select';
-import Toolbar from '../../../../common/components/Toolbar';
+import Select from '../../../../../../common/components/Select';
+import Toolbar from '../../../../../../common/components/Toolbar';
+import PlanCard from '../PlanCard';
 import PlanForm from '../PlanForm';
-import PlanCard from './components/PlanCard';
 
 /* local constants */
 const { Header, Content } = Layout;

@@ -1,0 +1,34 @@
+/* Styles for Plan Card component */
+
+.PlanCard {
+  width: 90%;
+  margin: 20px auto;
+}
+
+.PlanCard:hover {
+  background-color: #e0e0e04a;
+}
+
+.PlanCard .subtitle {
+  font-size: 12px;
+  line-height: 20px;
+  color: #909090;
+}
+
+.PlanCard .activitiesBadge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.PlanCard .activitiesBadgeCount {
+  background-color: #fff;
+  color: #999;
+  box-shadow: 0 0 0 1px #d9d9d9 inset;
+}
+
+.PlanCard .activitiesBadgeTitle {
+  font-size: 12px;
+  line-height: 20px;
+  margin-top: 5px;
+}

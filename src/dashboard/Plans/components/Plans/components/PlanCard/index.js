@@ -2,12 +2,16 @@ import { Badge, Card, Col, Row } from 'antd';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import './styles.css';
 
 /**
  * Plan card component
  *
+ * A card component renders in plan list
+ *
  * @function
  * @name Plan
+ *
  * @param {Object} props
  * @param {string} props.name
  * @param {string} props.incident
@@ -26,19 +30,17 @@ export default function PlanCard({
   return (
     <Link to="/plans/plan/activities">
       <Card
+        className="PlanCard"
         style={{
-          width: '90%',
-          margin: '20px auto',
           borderLeft: `3px solid ${color}`,
         }}
       >
-        {/* TODO make sure once hover color changes */}
         <Row justify="space-between">
-          <Col span={21}>
+          <Col span={21} xl={18} xxl={20}>
             <h3 title={name}>{name}</h3>
-            <p style={{ fontSize: '11px', color: '#909090' }}>{jurisdiction}</p>
+            <p className="subtitle">{jurisdiction}</p>
           </Col>
-          <Col span={2}>
+          <Col span={3} xl={6} xxl={4} className="activitiesBadge">
             <Badge
               count={activityCount}
               style={{
@@ -47,12 +49,11 @@ export default function PlanCard({
                 boxShadow: '0 0 0 1px #d9d9d9 inset',
               }}
             />
-            <p style={{ fontSize: '11px', marginTop: '5px' }}>Activities</p>
+            <p className="activitiesBadgeTitle">Activities</p>
           </Col>
         </Row>
-        <p style={{ fontSize: '11px', color: '#909090' }}>
-          Last Review Date:
-          {new Intl.DateTimeFormat('en-GB').format(updatedAt)}
+        <p className="subtitle">
+          Last Review Date: {new Intl.DateTimeFormat('en-GB').format(updatedAt)}
         </p>
       </Card>
     </Link>
