@@ -21,7 +21,7 @@ Use your best judgment, and feel free to propose changes to this document in a p
 - [Layout Guide]()
 - [Typography]()
 
-### 1. Redux Actions <a name="redux-actions"></a>
+#### 1. Redux Actions <a name="redux-actions"></a>
 
 I this project we have agreed to establish a standard to which we will use to write our redux actions. Inspired by [flux-standard-action](https://github.com/redux-utilities/flux-standard-action) the following convention was established;
 
@@ -75,9 +75,20 @@ e.g
 }
 ```
 
+```js
+// action to handle posting (adding) new user
+{
+  type:'POST_USER_START',
+  payload:{
+    data:{}
+  },
+}
+```
+
 For those actions which are not asynchronous, we recommend to use this convention `ACTION_VERB`
 
 ```js
+// action to handle user select from a redux store
 {
  type: 'SELECT_USER',
  payload: {
@@ -86,12 +97,12 @@ For those actions which are not asynchronous, we recommend to use this conventio
 }
 ```
 
-### 2. Project Structure <a name="project-structure"></a>
+#### 2. <a name="project-structure">Project Structure</a>
 
-### 3. CSS Class Names
+#### 3. CSS Class Names
 
-### 4. Commit Messages
+#### 4. Commit Messages
 
-### 4. UI Layout Guide
+#### 4. UI Layout Guide
 
-### 5. Project Typography
+#### 5. Project Typography
