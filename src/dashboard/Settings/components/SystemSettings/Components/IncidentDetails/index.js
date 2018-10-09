@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { SketchPicker } from 'react-color';
 
 import { List, Avatar, Divider } from 'antd';
@@ -57,12 +56,5 @@ const IncidentDetails = ({ incidentType }) => {
     ) : (<h1> Waiting for data</h1>)
 }
 
-const mapStateToProps = state => {
 
-    return{
-        incidentType: state.incidentsType.incidentType ? [state.incidentsType.incidentType] : []
-    }
-
-};
- 
-export default connect(mapStateToProps)(IncidentDetails)
+export default IncidentDetails

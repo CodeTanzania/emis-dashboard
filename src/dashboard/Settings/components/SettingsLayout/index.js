@@ -4,14 +4,15 @@ import { connect } from 'react-redux';
 import SidebarSettings from '../SidebarSettings';
 import {
   Button, Col, Input, Row,
-  Layout, Checkbox, Icon, Modal
+  Layout, Checkbox, 
 } from 'antd';
 
 /* load styles */
 import styles from './styles.css';
 import IncidentType from '../SystemSettings/Components/IncidentTypeList';
 import IncidentDetails from '../SystemSettings/Components/IncidentDetails';
-import IncidentTypeForm from '../SystemSettings/Components/IncidentTypeForm';
+import AddNewIncidentType from '../SystemSettings/Components/IncidentTypeForm/AddNewIncidentType';
+import EditIncidentTypeForm from '../SystemSettings/Components/IncidentTypeForm/EditIncidentTypeForm';
 
 /* local constants */
 const { Header, Content } = Layout;
@@ -20,36 +21,8 @@ const cx = classnames.bind(styles);
 
 class SettingsLayout extends React.Component {
 
-  constructor(props) {
-    super(props);
-    this.handleCancel = this.handleCancel.bind(this)
-  }
-  state = { visible: false, showEditProfile: false };
-
-  handleOnClickEditProfile = () => {
-    this.setState({ visible: true, showEditProfile: true });
-  };
-
-  handleOnClickAddNewIncidentType = () => {
-    this.setState({ visible: true });
-  };
-
-  handleOk = (e) => {
-    console.log(e);
-    this.setState({
-      visible: false,
-    });
-  }
-
-  handleCancel = (e) => {
-    console.log(e);
-    this.setState({
-      visible: false,
-    });
-  }
-
   render() {
-    const { visible, showEditProfile } = this.state;
+    const { incidentType } = this.props;
 
     return (
       <Layout
@@ -91,16 +64,10 @@ class SettingsLayout extends React.Component {
             <Header className={cx('ContentHeader')}>
               <Row>
                 <Col span={1}>
-                  <Icon style={{ cursor: "pointer" }} type="plus"
-                    theme="outlined" onClick={this.handleOnClickAddNewIncidentType}
-                  >
-                  </Icon>
+                  <AddNewIncidentType />
                 </Col>
                 <Col span={1}>
-                  <Icon style={{ cursor: "pointer" }} type="edit"
-                    theme="outlined" onClick={this.handleOnClickEditProfile}
-                  >
-                  </Icon>
+                  <EditIncidentTypeForm incidentType={incidentType[0]}/>
                 </Col>
                 <Col span={21}>
                   <h3>
@@ -110,25 +77,17 @@ class SettingsLayout extends React.Component {
               </Row>
             </Header>
             <Content>
-              <IncidentDetails />
+              <IncidentDetails incidentType={incidentType} />
             </Content>
           </Col>
         </Row>
-        <Modal
-          title={showEditProfile ? 'Settings: Edit Incident-Type' : ' Settings: Add New Incident-Type'}
-          visible={visible}
-          onCancel={this.handleCancel}
-          footer={null}
-          width="50%"
-        >
-          <IncidentTypeForm handleCancelClick={this.handleCancel} />
-        </Modal>
       </Layout>
     )
   }
 }
 const mapStateToProps = state => ({
   incidentsType: state.incidentsType.data,
+  incidentType: state.incidentsType.incidentType ? [state.incidentsType.incidentType] : []
 });
 
 export default connect(mapStateToProps)(SettingsLayout);
