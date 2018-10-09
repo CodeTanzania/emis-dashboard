@@ -4,6 +4,11 @@
   border-left: 3px solid #0092fd;
 }
 
+.ActivityCard:hover {
+  background: #e0e0e04a;
+  cursor: pointer;
+}
+
 .ActivityCard .subtitle {
   font-size: 12px;
   line-height: 20px;
