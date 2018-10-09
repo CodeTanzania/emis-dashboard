@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { from } from 'rxjs';
 import API from '../../../../../../common/API';
 import { updateIncidentType } from '../../../../actions';
+import { bindActionCreators } from 'redux';
 import {
     Form, Input, Select, Modal,
     Divider, Button, Row, Col, Icon
@@ -74,7 +75,8 @@ class EditIncidentTypeForm extends Component {
             if (result.error) {
                 this.setState({ submitting: false });
             } else {
-                this.updateIncidentType(result);
+                const { updateIncidentType } = this.props;
+                updateIncidentType(result);
                 this.setState({ submitting: false });
                 this.handleCancel();
             }
@@ -246,10 +248,14 @@ class EditIncidentTypeForm extends Component {
     }
 }
 
-export default connect(
-    null,
-    {
-        updateIncidentType,
+const mapDispatchToProps = dispatch => {
+    return {
+        updateIncidentType: bindActionCreators(updateIncidentType, dispatch)
+
     }
+}
+
+export default connect(
+    null,mapDispatchToProps
 )(Form.create()(EditIncidentTypeForm));
 

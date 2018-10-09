@@ -65,7 +65,7 @@ export default function incidentsType(state = initialState, action) {
       return {
         ...state,
         data,
-        incidentsType: incidentType,
+        incidentType: incidentType,
       };
     }
     default:
