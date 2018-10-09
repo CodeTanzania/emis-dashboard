@@ -16,12 +16,12 @@ Use your best judgment, and feel free to propose changes to this document in a p
 
 - [Redux Actions](#redux-actions)
 - [Project Structure](#project-structure)
-- [CSS Class Names]()
-- [Commit Messages]()
-- [Layout Guide]()
-- [Typography]()
+- [CSS Guideline](#css-guidline)
+- [Commit Messages](#git-commit-messages)
+- [Layout Guide](#layout-guide)
+- [Typography](#typography)
 
-#### 1. Redux Actions <a name="redux-actions"></a>
+#### 1. <a name="redux-actions">Redux Actions</a>
 
 I this project we have agreed to establish a standard to which we will use to write our redux actions. Inspired by [flux-standard-action](https://github.com/redux-utilities/flux-standard-action) the following convention was established;
 
@@ -99,10 +99,10 @@ For those actions which are not asynchronous, we recommend to use this conventio
 
 #### 2. <a name="project-structure">Project Structure</a>
 
-#### 3. CSS Class Names
+#### 3. <a name="css-guideline">CSS Class Names</a>
 
-#### 4. Commit Messages
+#### 4. <a name="git-commit-messages">Commit Messages</a>
 
-#### 4. UI Layout Guide
+#### 5. <a name="layout-guide">UI Layout Guide</a>
 
-#### 5. Project Typography
+#### 6. <a name="typography">Project Typography</a>
