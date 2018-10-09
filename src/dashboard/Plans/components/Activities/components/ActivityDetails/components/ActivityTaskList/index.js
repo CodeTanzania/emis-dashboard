@@ -63,7 +63,7 @@ class ActivityTaskList extends Component {
       <div style={{ marginTop: 20 }}>
         {/* Activity tasks section header */}
         <h4 style={{ borderBottom: '1px solid #e0e0e0', paddingBottom: 10 }}>
-          Tasks (SOP)
+          Procedures (SOP)
           <Button
             title="Add new Task"
             type="default"
@@ -78,7 +78,7 @@ class ActivityTaskList extends Component {
           renderItem={(task, index) => (
             <ActivityTaskItem
               index={index}
-              description={task.description}
+              {...task}
               shuffleTaskItem={this.shuffleTaskItem}
             />
           )}

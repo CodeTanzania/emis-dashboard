@@ -122,6 +122,7 @@ function collectTarget(connect, monitor) {
  * @since 0.1.0
  */
 function ActivityTaskItem({
+  index,
   description,
   isDragging,
   connectDragSource,
@@ -138,12 +139,19 @@ function ActivityTaskItem({
             margin: '10px 0',
           }}
         >
-          <Col span={1}>
-            <Checkbox />{' '}
+          <Col
+            span={1}
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
+            <Checkbox />
           </Col>
-          <Col span={22}>{description}</Col>
+          <Col span={22}>{`${index + 1} : ${description}`}</Col>
           <Col span={1}>
-            <Icon type="bars" theme="outlined" />
+            <Icon type="close" title="Remove procedure" theme="outlined" />
           </Col>
         </Row>
       </div>
