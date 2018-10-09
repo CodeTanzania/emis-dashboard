@@ -1,0 +1,11 @@
+.ActivityTaskItem {
+  line-height: 50px;
+  border-bottom: 1px dashed #e0e0e0;
+  margin: 10px 0;
+}
+
+.ActivityTaskItem .checkboxContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

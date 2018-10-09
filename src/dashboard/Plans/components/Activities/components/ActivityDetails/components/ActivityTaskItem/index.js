@@ -3,6 +3,7 @@ import flow from 'lodash/flow';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { DragSource, DropTarget } from 'react-dnd';
+import './styles.css';
 
 /* local constants */
 const ITEM_TYPE = 'ACTIVITY_TASK';
@@ -110,6 +111,8 @@ function collectTarget(connect, monitor) {
 
 /**
  * ActivityTaskItem
+ * This item is both drag source and drop target.Allow dragging this item and drop
+ * it on another item of the same nature(type)
  *
  * @function
  * @name ActivityTaskItem
@@ -130,23 +133,13 @@ function ActivityTaskItem({
 }) {
   return connectDragSource(
     connectDropTarget(
-      <div>
-        <Row
-          style={{
-            lineHeight: '50px',
-            opacity: isDragging ? 0.5 : 1,
-            border: '1px dashed #e0e0e0',
-            margin: '10px 0',
-          }}
-        >
-          <Col
-            span={1}
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-            }}
-          >
+      <div
+        className="ActivityTaskItem"
+        style={{ opacity: isDragging ? 0.5 : 1 }}
+      >
+        {/* TODO use classnames here */}
+        <Row>
+          <Col span={1} className="checkboxContainer">
             <Checkbox />
           </Col>
           <Col span={22}>{`${index + 1} : ${description}`}</Col>
