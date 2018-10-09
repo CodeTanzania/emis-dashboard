@@ -66,7 +66,6 @@ function StakeholderDetails({ name, phone, email }) {
           {
             String(name)
               .trim()
-
               .split('')[0]
           }
         </Avatar>{' '}

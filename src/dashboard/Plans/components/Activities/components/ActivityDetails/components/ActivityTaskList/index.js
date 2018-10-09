@@ -39,7 +39,7 @@ class ActivityTaskList extends Component {
   };
 
   /**
-   * Shuffle the activity task items in a list after based on preffered order
+   * Shuffle the activity task items in a list after based on preferred order
    * by the user using drag and drop feature
    *
    * @function
