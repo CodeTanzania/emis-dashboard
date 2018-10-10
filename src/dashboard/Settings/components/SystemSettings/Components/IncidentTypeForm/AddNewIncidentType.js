@@ -125,7 +125,7 @@ class AddIncidentTypeForm extends Component {
 
         };
 
-        return (<div className={cx('content')}>
+        return (<div>
             <Icon style={{ cursor: "pointer" }} type="plus"
                 theme="outlined" onClick={this.handleOnClickAddNewIncidentType}
             >

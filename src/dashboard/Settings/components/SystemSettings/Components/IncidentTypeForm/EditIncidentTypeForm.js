@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { from } from 'rxjs';
 import API from '../../../../../../common/API';
-import { updateIncidentType,colorAutofill } from '../../../../actions';
+import { updateIncidentType, colorAutofill } from '../../../../actions';
 import { bindActionCreators } from 'redux';
 import {
     Form, Input, Select, Modal,
@@ -21,15 +21,15 @@ const { Option } = Select;
 
 
 class EditIncidentTypeForm extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
-        const { incidentType} = this.props
+        const { incidentType } = this.props
         this.state = {
-            visible: false, 
+            visible: false,
             showEditProfile: false,
             background: `${incidentType}`,
-   
-           };
+
+        };
     }
 
 
@@ -40,15 +40,15 @@ class EditIncidentTypeForm extends Component {
             name, given, cap, nature, family, description, color }) => {
             const data = { name, code: { given, cap }, nature, family, description, color }
             if (!err) {
-                    this.updateIncidentType(incidentType._id, data);
+                this.updateIncidentType(incidentType._id, data);
             }
-             else {
-                    console.log("errors");
-                
+            else {
+                console.log("errors");
+
             }
         });
     };
-  
+
 
     handleOnClickEditIncidentType = () => {
         this.setState({ visible: true, showEditProfile: true });
@@ -89,7 +89,7 @@ class EditIncidentTypeForm extends Component {
     render() {
         const { form } = this.props;
         const { submitting } = this.state;
-        const { getFieldDecorator,setFieldsValue,getFieldValue } = form;
+        const { getFieldDecorator, setFieldsValue, getFieldValue } = form;
 
         getFieldDecorator("a");
         getFieldDecorator("color");
@@ -139,7 +139,7 @@ class EditIncidentTypeForm extends Component {
 
         };
         return (
-            <div className={cx('content')}>
+            <div >
 
                 <Icon style={{ cursor: "pointer" }} type="edit"
                     theme="outlined" onClick={this.handleOnClickEditIncidentType}
@@ -237,25 +237,25 @@ class EditIncidentTypeForm extends Component {
                         </FormItem>
                         <Divider />
                         {getFieldValue("a") === "1" ? (
-                        <FormItem {...formItemLayout}
+                            <FormItem {...formItemLayout}
+                                label="Color code" >
+                                {getFieldDecorator("color")(<Input placeholder="Color code" />)}
+
+                            </FormItem>
+                        ) : <FormItem
+                            {...formItemLayout}
                             label="Color code" >
-                            {getFieldDecorator("color")(<Input placeholder="Color code" />)}
+                                {getFieldDecorator('color')(
+                                    <Input placeholder="Color code" />
+                                )}
+                            </FormItem>
+                        }
+                        <FormItem {...formItemLayout}
+                            label="Pick color">
 
+                            <ChromePicker color={this.state.background}
+                                onChangeComplete={handleChangeComplete} />
                         </FormItem>
-                    ) : <FormItem
-                    {...formItemLayout}
-                    label="Color code" >
-                    {getFieldDecorator('color')(
-                        <Input placeholder="Color code" />
-                    )}
-                    </FormItem>
-                    }
-                    <FormItem {...formItemLayout}
-                        label="Pick color">
-
-                        <ChromePicker color={this.state.background}
-                            onChangeComplete={handleChangeComplete} />
-                    </FormItem>
                         <FormItem {...tailFormItemLayout}>
                             <Row>
                                 <Col span={4} offset={14}>
@@ -276,14 +276,14 @@ class EditIncidentTypeForm extends Component {
 
                         </FormItem>
                     </Form>
-            </Modal>
+                </Modal>
             </div>
         );
     }
 }
 
 const mapStateToProps = state => {
-    return{
+    return {
         colorSelected: state.incidentsType.colorSelected
     }
 }
@@ -296,6 +296,6 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default connect(
-    mapStateToProps,mapDispatchToProps
+    mapStateToProps, mapDispatchToProps
 )(Form.create()(EditIncidentTypeForm));
 

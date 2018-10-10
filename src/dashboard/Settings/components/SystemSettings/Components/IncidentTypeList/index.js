@@ -32,7 +32,8 @@ class IncidentType extends React.Component {
           <List
             itemLayout="horizontal"
             dataSource={incidentsType}
-            renderItem={incidentsType => (<IncidentTypeItem incidentSelected={incidentsType} />)}
+            renderItem={incidentsType => (
+              <IncidentTypeItem incidentSelected={incidentsType} />)}
           />
           <IncidentTypeListFooter />
 

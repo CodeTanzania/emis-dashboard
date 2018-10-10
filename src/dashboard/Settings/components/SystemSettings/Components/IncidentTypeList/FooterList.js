@@ -8,8 +8,8 @@ import { connect } from 'react-redux';
 const ButtonGroup = Button.Group;
 
 
- const IncidentTypeListFooter = (props) => {
-  const {total} = props
+const IncidentTypeListFooter = (props) => {
+  const { total } = props
   return (
     <div className="footer p-10">
       <Row type="flex" justify="space-between">
