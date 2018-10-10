@@ -137,5 +137,5 @@ IncidentTypeItem.propTypes = {
 IncidentTypeItem.defaultProps = {
   selected: null,
   incidentSelected: null,
-  handleselectedIncidentType: () => { },
+  handleselectedIncidentType: () => {},
 };

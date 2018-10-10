@@ -35,11 +35,11 @@ const SytemDetail = props => {
 };
 SytemDetail.propTypes = {
   title: PropTypes.string,
-  name: PropTypes.string,
+  names: PropTypes.string,
 };
 SytemDetail.defaultProps = {
   title: '',
-  name: '',
+  names: '',
 };
 
 const SidebarSettings = ({ title }) => {

@@ -87,8 +87,8 @@ const IncidentDetails = ({ incidentType }) =>
       />
     </div>
   ) : (
-      <h1> Waiting for data</h1>
-    );
+    <h1> Waiting for data</h1>
+  );
 
 export default IncidentDetails;
 IncidentDetails.propTypes = {

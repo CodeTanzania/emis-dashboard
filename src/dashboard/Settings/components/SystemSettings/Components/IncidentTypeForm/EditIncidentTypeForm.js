@@ -242,10 +242,10 @@ class EditIncidentTypeForm extends Component {
                 {getFieldDecorator('color')(<Input placeholder="Color code" />)}
               </FormItem>
             ) : (
-                <FormItem {...formItemLayout} label="Color code">
-                  {getFieldDecorator('color')(<Input placeholder="Color code" />)}
-                </FormItem>
-              )}
+              <FormItem {...formItemLayout} label="Color code">
+                {getFieldDecorator('color')(<Input placeholder="Color code" />)}
+              </FormItem>
+            )}
             <FormItem {...formItemLayout} label="Pick color">
               <ChromePicker
                 color={background}
