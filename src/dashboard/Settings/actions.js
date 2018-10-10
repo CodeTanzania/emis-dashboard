@@ -6,7 +6,8 @@ const SELECTED_INCIDENT_TYPE = 'INCIDENTS_TYPE :SELECTED_INCIDENTS_TYPE ';
 const FILTER_INCIDENTS_TYPE = 'INCIDENTS_TYPE :FILTER_INCIDENT_TYPE';
 const TRIGGER_GET_INCIDENTS_TYPE = 'INCIDENTS_TYPE :TRIGER_GET';
 const STORE_INCIDENTS_TYPE = 'INCIDENTS_TYPE:STORE';
-const UPDATE_INCIDENT_TYPE ="INCIDENTS_TYPE :UPDATE_INCIDENT_TYPE"
+const UPDATE_INCIDENT_TYPE ="INCIDENTS_TYPE :UPDATE_INCIDENT_TYPE";
+const COLOR_AUTOFILL = "INCIDENTS_TYPE :COLOR_AUTOFILL";
 
 /* Actions creater */
 
@@ -33,12 +34,18 @@ const filterIncidentType = filterIcident => {
         filterIcident
     }
 }
-
+const colorAutofill = colorSelected =>{
+    return {
+        type:COLOR_AUTOFILL,
+        colorSelected
+    }
+}
 export {
    ADD_NEW_INCIDENT_TYPE, addNewIncidentType,
     SELECTED_INCIDENT_TYPE,selectedIncidentType, 
-    filterIncidentType,
+    FILTER_INCIDENTS_TYPE, filterIncidentType,
     TRIGGER_GET_INCIDENTS_TYPE, triggerGetIncidentstype,
     STORE_INCIDENTS_TYPE, storeIncidents,
-    UPDATE_INCIDENT_TYPE, updateIncidentType
+    UPDATE_INCIDENT_TYPE, updateIncidentType,
+    COLOR_AUTOFILL, colorAutofill
 }

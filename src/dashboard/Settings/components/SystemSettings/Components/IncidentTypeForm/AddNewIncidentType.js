@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { from } from 'rxjs';
 import API from '../../../../../../common/API';
-import { addNewIncidentType } from '../../../../actions';
+import { addNewIncidentType, colorAutofill } from '../../../../actions';
 
 import {
     Form, Input, Select, Modal, Icon,
@@ -22,21 +22,16 @@ const { Option } = Select;
 
 
 class AddIncidentTypeForm extends Component {
-    state= {
-        submitting:false
+    state = {
+        submitting: false,
+        background: '#fff',
     }
+
     handleOnClickAddNewIncidentType = () => {
         this.setState({ visible: true, showEditProfile: false });
     };
-    handleOk = (e) => {
-        console.log(e);
-        this.setState({
-            visible: false,
-        });
-    }
 
     handleCancel = (e) => {
-        console.log(e);
         this.setState({
             visible: false,
             showEditProfile: false,
@@ -52,9 +47,9 @@ class AddIncidentTypeForm extends Component {
             if (!err) {
                 this.createIncidentType(data);
             }
-                else {
-                    console.log("Error occurs")
-                }
+            else {
+                console.log("Error occurs")
+            }
         });
     };
 
@@ -77,9 +72,15 @@ class AddIncidentTypeForm extends Component {
     };
 
     render() {
-        const {  form } = this.props;
-        const { submitting } = this.state;
-        const { getFieldDecorator } = form;
+        const { form, } = this.props;
+        const { submitting, } = this.state;
+        const { getFieldDecorator,
+            getFieldValue,
+            setFieldsValue } = form;
+
+        getFieldDecorator("a");
+        getFieldDecorator("color");
+
         const formItemLayout = {
             labelCol: {
                 xs: { span: 24 },
@@ -108,7 +109,21 @@ class AddIncidentTypeForm extends Component {
                 },
             },
         };
+        const onClick = () => {
+            const { colorSelected } = this.props;
+            setFieldsValue({
+                a: '1',
+                color: colorSelected
+            });
+        }
+        const handleChangeComplete = (color, e) => {
+            const { colorAutofill, } = this.props;
+            colorAutofill(color.hex);
+            this.setState(
+                { background: color.hex });
+            onClick()
 
+        };
 
         return (<div className={cx('content')}>
             <Icon style={{ cursor: "pointer" }} type="plus"
@@ -116,7 +131,7 @@ class AddIncidentTypeForm extends Component {
             >
             </Icon>
             <Modal
-                title='Settings: Edit Incident-Type'
+                title='Settings: Add new Incident-Type'
                 visible={this.state.visible}
                 onCancel={this.handleCancel}
                 footer={null}
@@ -206,14 +221,21 @@ class AddIncidentTypeForm extends Component {
                         )}
                     </FormItem>
                     <Divider />
-                    <FormItem
-                        {...formItemLayout}
-                        label="Color code" >
-                        {getFieldDecorator('color')(
-                            <Input placeholder="Color code" />
-                        )}
-                        <ChromePicker />
+                    {getFieldValue("a") === "1" ? (
+                        <FormItem {...formItemLayout}
+                            label="Color code" >
+                            {getFieldDecorator("color")(<Input placeholder="Color code" />)}
+
+                        </FormItem>
+                    ) : null
+                    }
+                    <FormItem {...formItemLayout}
+                        label="Pick color">
+
+                        <ChromePicker color={this.state.background}
+                            onChangeComplete={handleChangeComplete} />
                     </FormItem>
+
                     <FormItem {...tailFormItemLayout}>
                         <Row>
                             <Col span={4} offset={14}>
@@ -239,14 +261,20 @@ class AddIncidentTypeForm extends Component {
         );
     }
 }
+const mapStateToProps = state => {
+    return {
+        colorSelected: state.incidentsType.colorSelected
+    }
+}
 const mapDispatchToProps = dispatch => {
     return {
-        addNewIncidentType: bindActionCreators(addNewIncidentType, dispatch)
+        addNewIncidentType: bindActionCreators(addNewIncidentType, dispatch),
+        colorAutofill: bindActionCreators(colorAutofill, dispatch)
 
     }
 }
 
 export default connect(
-    null,mapDispatchToProps
+    mapStateToProps, mapDispatchToProps
 )(Form.create()(AddIncidentTypeForm));
 

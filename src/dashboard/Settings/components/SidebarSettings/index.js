@@ -2,22 +2,18 @@ import React from 'react';
 import { Row, Col, Divider } from 'antd';
 
 
-class SytemDetail extends React.Component {
-    onSelect = (selectedKeys, info) => {
-        console.log('selected', selectedKeys, info);
-    }
-
-    render() {
-        const { title, name,  } = this.props;
+const SytemDetail = (props) => {
+        const { title, name,  } = props;
         return (
             <div>
                 {title}
                 <Row >
                     <Col span="24" >
-                        {name.map(({ name, type, message}) => <div className="p-10"
+                        {name.map(({ name, type, message}, i) => <div className="p-10"
                         style={{
                             color: '#909090'
                         }}
+                        key={i}
                         >
                             <h4 style={{
                                 color: '#909090'
@@ -36,7 +32,7 @@ class SytemDetail extends React.Component {
 
         );
     }
-}
+
 
 const SidebarSettings = ({ title }) => {
     const data = {
@@ -63,7 +59,8 @@ const SidebarSettings = ({ title }) => {
                     <div style={{ marginBottom: "15px" }}>
                         <SytemDetail className="p-a-md" 
                         title={title} name={data.systemSetting} 
-                        type={data.systemSetting} message={data.systemSetting}/>
+                        type={data.systemSetting} message={data.systemSetting}
+                        />
                     </div>
                     <Divider />
                     <SytemDetail title="General" name={data.generalSetting} />

@@ -5,7 +5,6 @@ import { List, Avatar, Divider } from 'antd';
 
 
 const IncidentDetails = ({ incidentType }) => {
-    console.log(incidentType);
     return incidentType ? (
         <div className="content scrollable">
             <List

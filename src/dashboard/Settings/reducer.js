@@ -3,7 +3,8 @@ import {
   SELECTED_INCIDENT_TYPE, 
   TRIGGER_GET_INCIDENTS_TYPE,
   ADD_NEW_INCIDENT_TYPE,
-  UPDATE_INCIDENT_TYPE} from './actions';
+  UPDATE_INCIDENT_TYPE,
+  COLOR_AUTOFILL} from './actions';
 
 /**
  * Incident reducers
@@ -68,6 +69,11 @@ export default function incidentsType(state = initialState, action) {
         incidentType: incidentType,
       };
     }
+    case COLOR_AUTOFILL:
+    return{
+      ...state,
+      colorSelected: action.colorSelected
+    };
     default:
       return state;
   }

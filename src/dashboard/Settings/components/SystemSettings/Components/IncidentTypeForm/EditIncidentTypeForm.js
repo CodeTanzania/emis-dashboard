@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { from } from 'rxjs';
 import API from '../../../../../../common/API';
-import { updateIncidentType } from '../../../../actions';
+import { updateIncidentType,colorAutofill } from '../../../../actions';
 import { bindActionCreators } from 'redux';
 import {
     Form, Input, Select, Modal,
@@ -21,7 +21,16 @@ const { Option } = Select;
 
 
 class EditIncidentTypeForm extends Component {
-    state = { visible: false, showEditProfile: false };
+    constructor(props){
+        super(props);
+        const { incidentType} = this.props
+        this.state = {
+            visible: false, 
+            showEditProfile: false,
+            background: `${incidentType}`,
+   
+           };
+    }
 
 
     handleSubmit = e => {
@@ -39,6 +48,7 @@ class EditIncidentTypeForm extends Component {
             }
         });
     };
+  
 
     handleOnClickEditIncidentType = () => {
         this.setState({ visible: true, showEditProfile: true });
@@ -52,17 +62,10 @@ class EditIncidentTypeForm extends Component {
             });
             form.setFieldsValue(fieldsValues);
         }
+
     };
 
-    handleOk = (e) => {
-        console.log(e);
-        this.setState({
-            visible: false,
-        });
-    }
-
     handleCancel = (e) => {
-        console.log(e);
         this.setState({
             visible: false,
             showEditProfile: false,
@@ -86,7 +89,11 @@ class EditIncidentTypeForm extends Component {
     render() {
         const { form } = this.props;
         const { submitting } = this.state;
-        const { getFieldDecorator } = form;
+        const { getFieldDecorator,setFieldsValue,getFieldValue } = form;
+
+        getFieldDecorator("a");
+        getFieldDecorator("color");
+
         const formItemLayout = {
             labelCol: {
                 xs: { span: 24 },
@@ -116,9 +123,24 @@ class EditIncidentTypeForm extends Component {
             },
         };
 
+        const onClick = () => {
+            const { colorSelected } = this.props;
+            setFieldsValue({
+                a: '1',
+                color: colorSelected
+            });
+        }
+        const handleChangeComplete = (color, e) => {
+            const { colorAutofill, } = this.props;
+            colorAutofill(color.hex);
+            this.setState(
+                { background: color.hex });
+            onClick()
 
+        };
         return (
             <div className={cx('content')}>
+
                 <Icon style={{ cursor: "pointer" }} type="edit"
                     theme="outlined" onClick={this.handleOnClickEditIncidentType}
                 >
@@ -214,14 +236,26 @@ class EditIncidentTypeForm extends Component {
                             )}
                         </FormItem>
                         <Divider />
-                        <FormItem
-                            {...formItemLayout}
+                        {getFieldValue("a") === "1" ? (
+                        <FormItem {...formItemLayout}
                             label="Color code" >
-                            {getFieldDecorator('color')(
-                                <Input placeholder="Color code" />
-                            )}
-                            <ChromePicker />
+                            {getFieldDecorator("color")(<Input placeholder="Color code" />)}
+
                         </FormItem>
+                    ) : <FormItem
+                    {...formItemLayout}
+                    label="Color code" >
+                    {getFieldDecorator('color')(
+                        <Input placeholder="Color code" />
+                    )}
+                    </FormItem>
+                    }
+                    <FormItem {...formItemLayout}
+                        label="Pick color">
+
+                        <ChromePicker color={this.state.background}
+                            onChangeComplete={handleChangeComplete} />
+                    </FormItem>
                         <FormItem {...tailFormItemLayout}>
                             <Row>
                                 <Col span={4} offset={14}>
@@ -248,14 +282,20 @@ class EditIncidentTypeForm extends Component {
     }
 }
 
+const mapStateToProps = state => {
+    return{
+        colorSelected: state.incidentsType.colorSelected
+    }
+}
 const mapDispatchToProps = dispatch => {
     return {
-        updateIncidentType: bindActionCreators(updateIncidentType, dispatch)
+        updateIncidentType: bindActionCreators(updateIncidentType, dispatch),
+        colorAutofill: bindActionCreators(colorAutofill, dispatch)
 
     }
 }
 
 export default connect(
-    null,mapDispatchToProps
+    mapStateToProps,mapDispatchToProps
 )(Form.create()(EditIncidentTypeForm));
 
