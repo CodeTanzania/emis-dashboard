@@ -14,10 +14,10 @@ import SettingsLayout from './components/SettingsLayout';
  * @since 0.1.0
  */
 const Settings = () => (
-  <Fragment >
+  <Fragment>
     <Header title="Settings" />
-    <SettingsLayout/>
+    <SettingsLayout />
   </Fragment>
 );
 
-export default Settings ;
+export default Settings;

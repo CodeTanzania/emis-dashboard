@@ -1,14 +1,15 @@
 import {
   STORE_INCIDENTS_TYPE,
-  SELECTED_INCIDENT_TYPE, 
+  SELECTED_INCIDENT_TYPE,
   TRIGGER_GET_INCIDENTS_TYPE,
   ADD_NEW_INCIDENT_TYPE,
   UPDATE_INCIDENT_TYPE,
-  COLOR_AUTOFILL} from './actions';
+  COLOR_AUTOFILL,
+} from './actions';
 
 /**
  * Incident reducers
- * 
+ *
  * @function
  * @name IncidentsType
  *
@@ -18,7 +19,7 @@ import {
  *
  * @version 0.1.0
  * @since 0.1.0
- **/
+ * */
 
 const initialState = {
   filters: [],
@@ -28,59 +29,53 @@ const initialState = {
   error: null,
 };
 
-
 export default function incidentsType(state = initialState, action) {
   switch (action.type) {
     case TRIGGER_GET_INCIDENTS_TYPE:
-    return  {
+      return {
         state,
         isLoading: true,
         error: null,
-        total: 0
-    };
-  
-    case STORE_INCIDENTS_TYPE:  {
+        total: 0,
+      };
+
+    case STORE_INCIDENTS_TYPE: {
       return {
         data: action.incidentsType,
         total: action.incidentsType.length,
         isLoading: false,
         error: null,
-        incidentType:action.incidentsType[0]
+        incidentType: action.incidentsType[0],
       };
     }
-      case SELECTED_INCIDENT_TYPE:
+    case SELECTED_INCIDENT_TYPE:
       return {
         ...state,
         incidentType: action.incidentSelected,
       };
-      case ADD_NEW_INCIDENT_TYPE:
+    case ADD_NEW_INCIDENT_TYPE:
       return {
         ...state,
         data: [action.incidentType, ...state.data],
       };
     case UPDATE_INCIDENT_TYPE: {
-      const data = [...state.data]; 
-      const { incidentType } = action; 
-      const index = data.findIndex(item => item._id === incidentType._id);
+      const data = [...state.data];
+      const { incidentType } = action;
+      const { _id: id } = incidentsType;
+      const index = data.findIndex(({ _id }) => _id === id);
       data[index] = incidentType;
       return {
         ...state,
         data,
-        incidentType: incidentType,
+        incidentType,
       };
     }
     case COLOR_AUTOFILL:
-    return{
-      ...state,
-      colorSelected: action.colorSelected
-    };
+      return {
+        ...state,
+        colorSelected: action.colorSelected,
+      };
     default:
       return state;
   }
 }
-
-
-
-
-
-

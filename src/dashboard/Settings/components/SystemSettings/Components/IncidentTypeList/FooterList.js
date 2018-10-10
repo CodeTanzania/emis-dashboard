@@ -1,24 +1,20 @@
 import { Button, Col, Row } from 'antd';
+import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-
-
 
 /* local constants */
 const ButtonGroup = Button.Group;
 
-
-const IncidentTypeListFooter = (props) => {
-  const { total } = props
+const IncidentTypeListFooter = props => {
+  const { total } = props;
   return (
     <div className="footer p-10">
       <Row type="flex" justify="space-between">
         <Col span={8}>
           <h3>
             Total : &nbsp;
-            <span className="f-15">
-              {total}
-            </span>
+            <span className="f-15">{total}</span>
           </h3>
         </Col>
         <Col span={10}>
@@ -33,9 +29,17 @@ const IncidentTypeListFooter = (props) => {
       </Row>
     </div>
   );
-}
+};
 const mapStateToProps = state => ({
   total: state.incidentsType.total,
 });
 
 export default connect(mapStateToProps)(IncidentTypeListFooter);
+
+IncidentTypeListFooter.propTypes = {
+  total: PropTypes.number,
+};
+
+IncidentTypeListFooter.defaultProps = {
+  total: 0,
+};

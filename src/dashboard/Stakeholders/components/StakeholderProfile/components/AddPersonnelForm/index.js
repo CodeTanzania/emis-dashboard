@@ -1,3 +1,4 @@
+/* eslint no-underscore-dangle: "off" */
 import { AutoComplete, Button, Col, Divider, Icon, Input, Row } from 'antd';
 import React, { Component, Fragment } from 'react';
 import { from } from 'rxjs';
@@ -5,7 +6,7 @@ import API from '../../../../../../common/API';
 import StakeholderForm from '../../../StakeholderForm';
 import './styles.css';
 
-const Option = AutoComplete.Option;
+const { Option } = AutoComplete;
 
 function renderOption(item) {
   return (
@@ -20,7 +21,6 @@ function renderOption(item) {
 class AddPersonnelForm extends Component {
   state = {
     showCreatePersonnelForm: false,
-    dataSource: [],
     hits: [],
     selected: null,
     input: '',
@@ -44,14 +44,13 @@ class AddPersonnelForm extends Component {
   };
 
   handleAttachPersonnel = () => {
-    console.log(this.state.selected);
     this.setState({ input: '' });
   };
 
   toggleCreatePersonnelForm = () => {
-    this.setState({
-      showCreatePersonnelForm: !this.state.showCreatePersonnelForm,
-    });
+    this.setState(prevState => ({
+      showCreatePersonnelForm: !prevState.showCreatePersonnelForm,
+    }));
   };
 
   render() {

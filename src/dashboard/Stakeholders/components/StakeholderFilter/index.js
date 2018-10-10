@@ -1,36 +1,10 @@
-import { Button, Drawer } from 'antd';
-import React, { Component, Fragment } from 'react';
+import React, { Fragment, Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { Drawer, Button } from 'antd';
 import ColHeader from '../../../../common/components/ColHeader';
 import StakeholderForm from '../StakeholderForm';
 import FiltersGroup from './components/FilterGroup';
-
-// fake data
-const data = {
-  phases: [
-    { name: 'Mitigation' },
-    { name: 'Preparedness' },
-    { name: 'Response' },
-    { name: 'Recovery' },
-  ],
-  types: [
-    { name: 'Agency' },
-    { name: 'Committee' },
-    { name: 'Team' },
-    { name: 'Individual' },
-  ],
-  roles: [
-    { name: 'Regional Commissioner' },
-    { name: 'Ward Officer' },
-    { name: 'Doctors' },
-    { name: 'Police' },
-  ],
-  functions: [
-    { name: 'Evacuation' },
-    { name: 'Water and Utilities' },
-    { name: 'Medical Support' },
-    { name: 'Logistics' },
-  ],
-};
 
 /**
  * Render contact filters component
@@ -44,6 +18,10 @@ const data = {
 class StakeholderFilter extends Component {
   state = { visible: false };
 
+  static propTypes = {
+    filters: PropTypes.arrayOf(PropTypes.object).isRequired,
+  };
+
   showDrawer = () => {
     this.setState({ visible: true });
   };
@@ -56,6 +34,8 @@ class StakeholderFilter extends Component {
 
   render() {
     const { visible } = this.state;
+    const { filters } = this.props;
+
     return (
       <Fragment>
         <Drawer
@@ -74,14 +54,21 @@ class StakeholderFilter extends Component {
           </Button>
         </ColHeader>
         <div className="content scrollable">
-          <FiltersGroup name="Phases" filters={data.phases} />
-          <FiltersGroup name="Types" filters={data.types} />
-          <FiltersGroup name="Roles" filters={data.roles} />
-          <FiltersGroup name="Functions" filters={data.functions} />
+          {filters.map(filter => (
+            <FiltersGroup
+              groupName={filter.group}
+              filters={filter.data}
+              key={filter.group}
+            />
+          ))}
         </div>
       </Fragment>
     );
   }
 }
 
-export default StakeholderFilter;
+const mapStateToProps = state => ({
+  filters: state.stakeholders.filters,
+});
+
+export default connect(mapStateToProps)(StakeholderFilter);

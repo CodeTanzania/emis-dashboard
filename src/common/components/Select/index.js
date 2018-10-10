@@ -35,7 +35,9 @@ export default function SelectComponent({
       style={style}
     >
       {options.map(option => (
-        <Option value={option.value}>{option.label}</Option>
+        <Option value={option.value} key={option.value}>
+          {option.label}
+        </Option>
       ))}
     </Select>
   );

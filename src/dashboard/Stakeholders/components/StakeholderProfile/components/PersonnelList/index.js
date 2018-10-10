@@ -1,3 +1,4 @@
+/* eslint no-underscore-dangle: "off" */
 import { Col, Row } from 'antd';
 import React from 'react';
 // import component
@@ -6,36 +7,42 @@ import PersonnelCard from './components/PersonnelCard';
 // fake data
 const personnelList = [
   {
+    _id: 1,
     name: 'John Done',
     phone: '255 790 323',
     title: 'Someone Out there',
     address: 'This, That, There',
   },
   {
+    _id: 2,
     name: 'John Done',
     phone: '255 790 323',
     title: 'Someone Out there',
     address: 'This, That, There',
   },
   {
+    _id: 3,
     name: 'John Done',
     phone: '255 790 323',
     title: 'Someone Out there',
     address: 'This, That, There',
   },
   {
+    _id: 4,
     name: 'John Done',
     phone: '255 790 323',
     title: 'Someone Out there',
     address: 'This, That, There',
   },
   {
+    _id: 5,
     name: 'John Done',
     phone: '255 790 323',
     title: 'Someone Out there',
     address: 'This, That, There',
   },
   {
+    _id: 6,
     name: 'John Done',
     phone: '255 790 323',
     title: 'Someone Out there',
@@ -56,7 +63,7 @@ export default function PersonnelList() {
   return (
     <Row type="flex" justify="space-around">
       {personnelList.map(personnel => (
-        <Col span={10}>
+        <Col key={personnel._id} span={10}>
           <PersonnelCard {...personnel} />
         </Col>
       ))}
