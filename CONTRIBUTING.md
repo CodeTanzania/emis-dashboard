@@ -101,7 +101,32 @@ For those actions which are not asynchronous, we recommend to use this conventio
 
 #### 3. <a name="css-guideline">CSS Class Names</a>
 
+On writing CSS we agreed to use components namespace to write CSS. Apart from component specific styles, the remaining styles will be under `global.css` file which will contain utility classes and other global classes needed.
+
+e.g of styling a component.
+
 #### 4. <a name="git-commit-messages">Commit Messages</a>
+
+We recommend prefix commit message subject line with the module/section you are working on. e.g
+`PlanList: Improve layout responsiveness` then on the details section you can explain what you did on that commit in details. Here are some guidelines to observe while writing commit messages
+
+##### **Commit Message Best Practices**
+
+- Separate subject from body with a blank line.
+- Limit the subject line to 50 characters.
+- Capitalize the subject line.
+- Do not end the subject line with a period.
+- Use the imperative mood in the subject line.
+- Wrap the body at 72 characters.
+- Use the body to explain what and why vs. how.
+
+##### **Examples**
+
+- If applied, this commit will ***refactor subsystem X for readability***.
+- If applied, this commit will ***update getting started documentation***.
+- If applied, this commit will ***remove deprecated methods***.
+- If applied, this commit will ***release version 1.0.0***.
+- If applied, this commit will ***merge pull request #123 from user/branch***.
 
 #### 5. <a name="layout-guide">UI Layout Guide</a>
 
