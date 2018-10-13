@@ -1,22 +1,22 @@
-.PlanList {
+.PlansLayout {
   display: flex;
   flex-direction: column;
   height: 100vh;
   overflow: hidden;
 }
 
-.PlanList .header {
+.PlansLayout .header {
   background: #fff;
   padding-left: 10px;
   border-bottom: 1px solid #e0e0e0;
 }
 
-.PlanList .content {
+.PlansLayout .content {
   background: #fff;
   flex: 1 0;
   overflow-y: auto;
 }
 
-.PlanList .listCardContainer {
+.PlansLayout .listCardContainer {
   margin: 15px;
 }

@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import ActivitiesLayout from './ActivitiesLayout';
-import PlanLayout from './PlansLayout/components/PlanList';
+import PlanLayout from './PlansLayout';
 
 /**
  * Plans Base Layout component

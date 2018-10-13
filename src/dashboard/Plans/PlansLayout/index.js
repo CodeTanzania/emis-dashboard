@@ -1,9 +1,9 @@
 import { Button, Col, Drawer, Layout, List, Row } from 'antd';
 import React, { Component } from 'react';
-import Select from '../../../../../common/components/Select';
-import Toolbar from '../../../../../common/components/Toolbar';
-import PlanCard from '../PlanCard';
-import PlanForm from '../PlanForm';
+import Select from '../../../common/components/Select';
+import Toolbar from '../../../common/components/Toolbar';
+import PlanCard from './components/PlanCard';
+import PlanForm from './components/PlanForm';
 import './styles.css';
 
 /* local constants */
@@ -78,12 +78,12 @@ const options = [
  * Render Initial List of plans based on selected filters
  *
  * @class
- * @name PlanList
+ * @name PlansLayout
  *
  * @version 0.1.0
  * @since 0.1.0
  */
-export default class PlanList extends Component {
+export default class PlansLayout extends Component {
   state = { showForm: false };
 
   showPlanForm = () => {
@@ -97,7 +97,7 @@ export default class PlanList extends Component {
   render() {
     const { showForm } = this.state;
     return (
-      <Layout className="PlanList">
+      <Layout className="PlansLayout">
         {/* start primary header */}
         <Header className="header">
           <h3>Plans</h3>
