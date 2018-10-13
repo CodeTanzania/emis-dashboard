@@ -1,6 +1,6 @@
 import { Button, Col, Form, Row } from 'antd';
 import React, { Component } from 'react';
-import Select from '../../../../../../common/components/Select';
+import Select from '../../../../../common/components/Select';
 import './styles.css';
 
 /* local constants */

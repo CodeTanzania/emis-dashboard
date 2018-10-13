@@ -10,7 +10,7 @@ import {
   Row,
 } from 'antd';
 import React, { Component } from 'react';
-import Toolbar from '../../../../common/components/Toolbar';
+import Toolbar from '../../../common/components/Toolbar';
 import ActivityDetailsBody from './components/ActivityDetails';
 import ActivityDetailsHeader from './components/ActivityDetails/components/ActivityDetailsHeader';
 import ActivityForm from './components/ActivityForm';

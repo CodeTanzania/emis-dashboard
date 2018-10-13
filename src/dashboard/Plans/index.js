@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Activities from './components/Activities';
-import PlanList from './components/Plans/components/PlanList';
+import ActivitiesLayout from './ActivitiesLayout';
+import PlanLayout from './PlansLayout/components/PlanList';
 
 /**
  * Plans Base Layout component
@@ -18,8 +18,11 @@ import PlanList from './components/Plans/components/PlanList';
 export default function Plans({ match }) {
   return (
     <Switch>
-      <Route path={`${match.url}/index`} component={PlanList} />
-      <Route path={`${match.url}/plan/activities`} component={Activities} />
+      <Route path={`${match.url}/index`} component={PlanLayout} />
+      <Route
+        path={`${match.url}/plan/activities`}
+        component={ActivitiesLayout}
+      />
     </Switch>
   );
 }
