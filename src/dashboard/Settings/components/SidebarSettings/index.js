@@ -33,13 +33,20 @@ const SytemDetail = props => {
     </div>
   );
 };
+
+/* props validation */
+const dataPropTypes = PropTypes.shape({
+  name: PropTypes.string,
+  title: PropTypes.string,
+}).isRequired;
+
 SytemDetail.propTypes = {
   title: PropTypes.string,
-  names: PropTypes.string,
+  names: PropTypes.arrayOf(dataPropTypes),
 };
 SytemDetail.defaultProps = {
-  title: '',
-  names: '',
+  title: null,
+  names: null,
 };
 
 const SidebarSettings = ({ title }) => {

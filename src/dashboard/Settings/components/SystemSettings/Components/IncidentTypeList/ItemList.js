@@ -51,7 +51,7 @@ class IncidentTypeItem extends React.Component {
           }
           title={
             <Row>
-              <Col xs={18}>
+              <Col xs={18} sm={16} span={20}>
                 <span
                   role="link"
                   style={{ cursor: 'pointer' }}
@@ -66,6 +66,8 @@ class IncidentTypeItem extends React.Component {
               </Col>
               <Col
                 xs={6}
+                sm={8}
+                span={4}
                 style={{
                   paddingRight: '10px',
                 }}
@@ -129,7 +131,7 @@ const incidentsTypePropTypes = PropTypes.shape({
 }).isRequired;
 
 IncidentTypeItem.propTypes = {
-  selected: incidentsTypePropTypes,
+  selected: PropTypes.arrayOf(incidentsTypePropTypes),
   incidentSelected: incidentsTypePropTypes,
   handleselectedIncidentType: PropTypes.func,
 };

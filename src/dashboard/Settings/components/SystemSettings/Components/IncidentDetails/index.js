@@ -91,8 +91,22 @@ const IncidentDetails = ({ incidentType }) =>
   );
 
 export default IncidentDetails;
+
+const incidentDetailPropTypes = PropTypes.shape({
+  name: PropTypes.string,
+  nature: PropTypes.string.isRequired,
+  family: PropTypes.string.isRequired,
+  code: PropTypes.shape({
+    given: PropTypes.string,
+    cap: PropTypes.string.isRequired,
+  }).isRequired,
+  description: PropTypes.string,
+  color: PropTypes.string,
+  _id: PropTypes.string,
+}).isRequired;
+
 IncidentDetails.propTypes = {
-  incidentType: PropTypes.string,
+  incidentType: PropTypes.arrayOf(incidentDetailPropTypes),
 };
 
 IncidentDetails.defaultProps = {
