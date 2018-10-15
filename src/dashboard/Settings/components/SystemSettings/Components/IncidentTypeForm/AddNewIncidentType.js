@@ -138,7 +138,7 @@ class AddIncidentTypeForm extends Component {
                 width="50%"
             >
 
-                <Form onSubmit={this.handleSubmit}>
+                <Form onSubmit={this.handleSubmit}>  className={cx("addForm")}
                     <FormItem label="Name" {...formItemLayout}>
                         {getFieldDecorator('name', {
                             rules: [

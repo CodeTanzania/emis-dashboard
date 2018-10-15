@@ -153,7 +153,7 @@ class EditIncidentTypeForm extends Component {
                     width="50%"
                 >
 
-                    <Form onSubmit={this.handleSubmit}>
+                    <Form onSubmit={this.handleSubmit} className={cx("editForm")}>
                         <FormItem label="Name" {...formItemLayout}>
                             {getFieldDecorator('name', {
                                 rules: [
