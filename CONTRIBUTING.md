@@ -129,5 +129,8 @@ We recommend prefix commit message subject line with the module/section you are 
 - If applied, this commit will ***merge pull request #123 from user/branch***.
 
 #### 5. <a name="layout-guide">UI Layout Guide</a>
+We agreed to use the layout displayed on the image below as the base layout UI for all components.
+
+![Layout Guideline] (references/layout_guideline.jpg "Layout Guideline")
 
 #### 6. <a name="typography">Project Typography</a>
