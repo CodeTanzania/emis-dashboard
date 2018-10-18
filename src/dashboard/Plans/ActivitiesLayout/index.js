@@ -212,11 +212,11 @@ export default class PlanActivitiesLayout extends Component {
         <Modal
           visible={showActivityForm}
           title="New Activity"
-          onCancel={this.handleCloseActivityForm}
-          okText="Save"
           maskClosable={false}
+          onCancel={this.handleCloseActivityForm}
+          footer={null}
         >
-          <ActivityForm />
+          <ActivityForm onCancel={this.handleCloseActivityForm} />
         </Modal>
         {/* End Activity form modal */}
       </Layout>
