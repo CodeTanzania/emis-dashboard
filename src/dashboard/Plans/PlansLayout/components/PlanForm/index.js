@@ -87,7 +87,7 @@ class PlanForm extends Component {
             rules: [
               {
                 required: true,
-                please: 'Please Select Plan Incident Type',
+                message: 'Please Select Plan Incident Type',
               },
             ],
           })(
