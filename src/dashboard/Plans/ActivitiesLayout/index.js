@@ -141,7 +141,7 @@ export default class PlanActivitiesLayout extends Component {
                   type="primary"
                   onClick={this.handleOpenActivityForm}
                 >
-                  New Action
+                  New Activity
                 </Button>
               </Col>
               <Col span={10}>
