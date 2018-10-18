@@ -1,8 +1,9 @@
-import { Button, List } from 'antd';
+import { Button, List, Modal } from 'antd';
 import React, { Component } from 'react';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import shuffleList from '../../../../../../../common/lib/util';
+import ActivityTaskForm from '../ActivityTaskForm';
 import ActivityTaskItem from '../ActivityTaskItem';
 
 /**
@@ -36,6 +37,7 @@ class ActivityTaskList extends Component {
         number: 4,
       },
     ],
+    showActivityTaskForm: false,
   };
 
   /**
@@ -57,18 +59,45 @@ class ActivityTaskList extends Component {
     this.setState({ tasks: shuffleList(tasks, fromIndex, toIndex) });
   };
 
+  /**
+   * Handle click action to open activity task form modal window
+   *
+   * @function
+   * @name handleOpenActivityTaskForm
+   *
+   * @version 0.1.0
+   * @since 0.1.0
+   */
+  handleOpenActivityTaskForm = () => {
+    this.setState({ showActivityTaskForm: true });
+  };
+
+  /**
+   * Handle click action to close activity task form modal window
+   *
+   * @function
+   * @name handleCloseActivityTaskForm
+   *
+   * @version 0.1.0
+   * @since 0.1.0
+   */
+  handleCloseActivityTaskForm = () => {
+    this.setState({ showActivityTaskForm: false });
+  };
+
   render() {
-    const { tasks } = this.state;
+    const { tasks, showActivityTaskForm } = this.state;
     return (
       <div style={{ marginTop: 20 }}>
         {/* Activity tasks section header */}
         <h4 style={{ borderBottom: '1px solid #e0e0e0', paddingBottom: 10 }}>
-          Procedures (SOP)
+          Standard Operating Procedures (SOP)
           <Button
             title="Add new Task"
             type="default"
             icon="plus"
             style={{ border: 0 }}
+            onClick={this.handleOpenActivityTaskForm}
           />
         </h4>
         {/* end Activity tasks section header */}
@@ -84,6 +113,17 @@ class ActivityTaskList extends Component {
           )}
         />
         {/* end activity task draggable list */}
+        {/* Activity form modal */}
+        <Modal
+          visible={showActivityTaskForm}
+          title="New Standard Operating Procedure (SOP)"
+          maskClosable={false}
+          onCancel={this.handleCloseActivityTaskForm}
+          footer={null}
+        >
+          <ActivityTaskForm onCancel={this.handleCloseActivityTaskForm} />
+        </Modal>
+        {/* End Activity form modal */}
       </div>
     );
   }
