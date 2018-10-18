@@ -1,6 +1,7 @@
+import React, { Component, Fragment } from 'react';
 import { Button, Checkbox, Col, Input, List, Popover, Row } from 'antd';
-import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import ColHeader from '../../../../common/components/ColHeader';
 import { fetchStakeholders, searchStakeholders } from '../../actions';
 /* import component */
@@ -33,13 +34,22 @@ const actions = (
  * @version 0.1.0
  * @since 0.1.0
  */
-class StakeholderList extends React.Component {
+class StakeholderList extends Component {
+  static propTypes = {
+    handleFetchStakeholders: PropTypes.func.isRequired,
+    handleSearchStakeholders: PropTypes.func.isRequired,
+    stakeholders: PropTypes.arrayOf(PropTypes.object).isRequired,
+    loading: PropTypes.bool.isRequired,
+  };
+
   componentDidMount() {
-    this.props.fetchStakeholders();
+    const { handleFetchStakeholders } = this.props;
+    handleFetchStakeholders();
   }
 
   onSearch = searchText => {
-    this.props.searchStakeholders(searchText);
+    const { handleSearchStakeholders } = this.props;
+    handleSearchStakeholders(searchText);
   };
 
   render() {
@@ -89,5 +99,8 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { fetchStakeholders, searchStakeholders }
+  {
+    handleFetchStakeholders: fetchStakeholders,
+    handleSearchStakeholders: searchStakeholders,
+  }
 )(StakeholderList);

@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import React from 'react';
 import { NavLink, Route, Switch } from 'react-router-dom';
 import logo from '../logo.svg';
-import Plans from './plans';
+import Plans from './Plans';
 import Stakeholders from './Stakeholders';
 import Settings from './Settings';
 /* import styles */
@@ -58,19 +58,20 @@ export default function Dashboard() {
         </Menu>
       </Sider>
       {/* content section */}
-      <Layout style={{
-        display: 'flex',
-        flexDirection: 'column',
-        overflow: 'hidden',
-        background: '#fff',
-        borderTop: '1px solid #e6e6e6',
-         
-        }}>
+      <Layout
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          overflow: 'hidden',
+          background: '#fff',
+          borderTop: '1px solid #e6e6e6',
+        }}
+      >
         <Content className={cx('content')}>
           <Switch>
             <Route path="/plans" component={Plans} />
             <Route path="/stakeholders" exact component={Stakeholders} />
-            <Route path="/settings/incidentType" exact component={Settings}></Route>
+            <Route path="/settings/incidentType" exact component={Settings} />
           </Switch>
         </Content>
       </Layout>

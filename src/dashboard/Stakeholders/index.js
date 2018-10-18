@@ -20,6 +20,7 @@ const cx = classNames.bind(styles);
  * @version 0.1.0
  * @since 0.1.0
  */
+
 const Stakeholders = () => (
   <Fragment>
     <Header title="Stakeholders" />

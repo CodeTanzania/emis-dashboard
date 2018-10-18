@@ -1,5 +1,6 @@
 import { List } from 'antd';
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { triggerGetIncidentstype } from '../../../../actions';
@@ -18,41 +19,65 @@ import IncidentTypeItem from './ItemList';
  */
 
 class IncidentType extends React.Component {
-
   componentDidMount() {
-    const { triggerGetIncidentstype } = this.props;
-    triggerGetIncidentstype();
+    const { getIncidentstypeTrigger } = this.props;
+    getIncidentstypeTrigger();
   }
+
   render() {
     const { incidentsType } = this.props;
 
     return (
       <React.Fragment>
-        <div >
+        <div>
           <List
             itemLayout="horizontal"
             dataSource={incidentsType}
-            renderItem={incidentsType => (
-              <IncidentTypeItem incidentSelected={incidentsType} />)}
+            renderItem={incidentType => (
+              <IncidentTypeItem incidentSelected={incidentType} />
+            )}
           />
           <IncidentTypeListFooter />
-
         </div>
       </React.Fragment>
     );
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    incidentsType: state.incidentsType.data
-  }
-}
-const mapDispatchToProps = dispatch => {
-  return {
-    triggerGetIncidentstype: bindActionCreators(triggerGetIncidentstype, dispatch)
-  }
-}
+const mapStateToProps = state => ({
+  incidentsType: state.incidentsType.data,
+});
+const mapDispatchToProps = dispatch => ({
+  getIncidentstypeTrigger: bindActionCreators(
+    triggerGetIncidentstype,
+    dispatch
+  ),
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(IncidentType)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(IncidentType);
 
+const incidentsTypePropTypes = PropTypes.shape({
+  name: PropTypes.string,
+  nature: PropTypes.string.isRequired,
+  family: PropTypes.string.isRequired,
+  code: PropTypes.shape({
+    given: PropTypes.string,
+    cap: PropTypes.string.isRequired,
+  }).isRequired,
+  description: PropTypes.string,
+  color: PropTypes.string,
+  _id: PropTypes.string,
+}).isRequired;
+
+IncidentType.propTypes = {
+  getIncidentstypeTrigger: PropTypes.func,
+  incidentsType: PropTypes.arrayOf(incidentsTypePropTypes),
+};
+
+IncidentType.defaultProps = {
+  getIncidentstypeTrigger: () => {},
+  incidentsType: [],
+};

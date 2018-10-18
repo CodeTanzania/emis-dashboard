@@ -8,30 +8,6 @@ import rootEpic from './rootEpic';
 /* local constants */
 const epicMiddleware = createEpicMiddleware();
 
-// fake data store
-const fakeStore = {
-  filters: [
-    {
-      group: 'phases',
-      data: [
-        { name: 'Mitigation', count: 100, isActive: true },
-        { name: 'Preparedness', count: 20 },
-      ],
-    },
-    { group: 'types', data: [] },
-    { group: 'roles', data: [] },
-    { group: 'functions', data: [] },
-  ],
-  criteria: {
-    filter: {
-      $and: [
-        { phases: { $in: ['Mitigation'] } },
-        { types: { $in: ['Agency'] } },
-      ],
-    },
-  },
-};
-
 /**
  * Configure Redux store
  * Enable redux dev tools
@@ -46,7 +22,6 @@ const fakeStore = {
 const configureStore = () => {
   const store = createStore(
     rootReducer,
-    fakeStore,
     composeWithDevTools(applyMiddleware(epicMiddleware))
   );
 
