@@ -28,18 +28,16 @@ class IncidentType extends React.Component {
     const { incidentsType } = this.props;
 
     return (
-      <React.Fragment>
-        <div>
-          <List
-            itemLayout="horizontal"
-            dataSource={incidentsType}
-            renderItem={incidentType => (
-              <IncidentTypeItem incidentSelected={incidentType} />
-            )}
-          />
-          <IncidentTypeListFooter />
-        </div>
-      </React.Fragment>
+      <div className="content scrollable">
+        <List
+          itemLayout="horizontal"
+          dataSource={incidentsType}
+          renderItem={incidentType => (
+            <IncidentTypeItem incidentSelected={incidentType} />
+          )}
+        />
+        <IncidentTypeListFooter />
+      </div>
     );
   }
 }

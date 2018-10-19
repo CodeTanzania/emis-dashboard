@@ -10,14 +10,15 @@ const SytemDetail = props => {
       <Row>
         <Col span="24">
           {names.map(({ name, message }, i) => (
-            <div
-              className="p-10"
+            <div 
+              className="p-l-10"
               style={{
                 color: '#909090',
+                fontSize:"11px",
               }}
               key={i.toString()}
             >
-              {name}
+              <p >{name}</p>
               <p className="p-l-10"> {message}</p>
             </div>
           ))}

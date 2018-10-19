@@ -41,6 +41,7 @@ class IncidentTypeItem extends React.Component {
     return (
       <List.Item className={cx('p-l-20', { isSelected })}>
         <List.Item.Meta
+          className="IncidentTypeItemMeta"
           avatar={
             <Avatar
               style={{ backgroundColor: color, verticalAlign: 'middle' }}
@@ -50,8 +51,8 @@ class IncidentTypeItem extends React.Component {
             </Avatar>
           }
           title={
-            <Row>
-              <Col xs={18} sm={16} span={20}>
+            <Row type="flex">
+              <Col xs={18}>
                 <span
                   role="link"
                   style={{ cursor: 'pointer' }}
@@ -61,40 +62,30 @@ class IncidentTypeItem extends React.Component {
                   tabIndex="0"
                   title="Click to view more"
                 >
-                  {name}
+                  <h3>{name}</h3>
                 </span>
               </Col>
-              <Col
-                xs={6}
-                sm={8}
-                span={4}
-                style={{
-                  paddingRight: '10px',
-                }}
-              >
-                {code.cap}
+              <Col xs={6}>
+                <p>{code.cap}</p>
               </Col>
             </Row>
           }
           description={
-            <Row>
-              <Col span={24} className={cx('b-0', { isSelected })}>
+            <div>
+              <p>
                 {nature}-{family}
-              </Col>
-
-              <Col
-                span={24}
-                style={{
-                  textOverflow: 'ellipsis',
-                  width: '350px',
-                  whiteSpace: 'nowrap',
-                  overflow: 'hidden',
-                }}
-                className={cx('b-0', { isSelected })}
-              >
-                {description}
-              </Col>
-            </Row>
+              </p>
+              <p 
+              style={{
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                wordSpacing: "initial",
+                height: "40px",
+                wordBreak: "break-all",
+                paddingRight: "7px"
+              }}
+              className={cx('b-0', { isSelected })}>{description}...</p>
+            </div>
           }
         />
       </List.Item>

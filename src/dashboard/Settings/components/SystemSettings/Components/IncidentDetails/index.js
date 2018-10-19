@@ -1,9 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { SketchPicker } from 'react-color';
+import classNames from 'classnames/bind';
 
 import { List, Avatar, Divider } from 'antd';
+import styles from './IncidentTypeDetails.css';
 
+const cx = classNames.bind(styles);
 const IncidentDetails = ({ incidentType }) =>
   incidentType ? (
     <div className="content scrollable">
@@ -26,55 +29,41 @@ const IncidentDetails = ({ incidentType }) =>
               }
               title={
                 <div>
-                  <span className="f-600 f-15">{name}</span>
+                  <h3 className="f-600 f-15">{name}</h3>
                   <Divider />
                 </div>
               }
               description={
                 <div>
-                  <h3>
-                    <span style={{ color: '#1890ff', paddingRight: '10px' }}>
+                    <span className={cx("IncidentTypeDetail")}>
                       Nature:
                     </span>{' '}
-                    {nature}
-                  </h3>
-                  <h4>
-                    <span style={{ color: '#1890ff', paddingRight: '10px' }}>
+                    {nature}{' '}
+                    <br/>
+                    <span className={cx("IncidentTypeDetail")}>
                       Family:
                     </span>{' '}
                     {family}{' '}
-                  </h4>
                   <Divider />
-                  <h3>
-                    <span style={{ color: '#1890ff', paddingRight: '10px' }}>
+                    <span className={cx("IncidentTypeDetail")}>
                       Code-Given:
                     </span>{' '}
                     {code.given}
-                  </h3>
-                  <h4>
-                    <span style={{ color: '#1890ff', paddingRight: '10px' }}>
+                    <br />
+                    <span className={cx("IncidentTypeDetail")}>
                       Code-CAP:
                     </span>{' '}
                     {code.cap}
-                  </h4>
-                  <h3>
-                    <span style={{ color: '#1890ff', paddingRight: '10px' }}>
+                    <br />
+                    <span className={cx("IncidentTypeDetail")}>
                       System:{' '}
                     </span>
                     Version 1.2.0
-                  </h3>
                   <Divider />
-                  <h3>
-                    <span
-                      style={{
-                        color: '#1890ff',
-                        paddingRight: '10px',
-                      }}
-                    >
+                    <span className={cx("IncidentTypeDetail")} >
                       Description
                     </span>
-                  </h3>
-                  <p>{description}</p>
+                  <p className="IncidentTypeDiscription">{description}</p>
                   <Divider />
                   <div>
                     <SketchPicker color={color} />
