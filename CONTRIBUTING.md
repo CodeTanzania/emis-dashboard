@@ -131,6 +131,24 @@ We recommend prefix commit message subject line with the module/section you are 
 #### 5. <a name="layout-guide">UI Layout Guide</a>
 We agreed to use the layout displayed on the image below as the base layout UI for all components.
 
-![Layout Guideline] (references/layout_guideline.jpg "Layout Guideline")
+![Layout Guideline](references/layout_guideline.jpg "Layout Guideline")
 
 #### 6. <a name="typography">Project Typography</a>
+##### **Font Family**
+We use Lato as the main font family for all UI components.
+
+##### **Font Size**
+The base font size is 14px. 
+
+Headers will use font sizes as shown below:
+ 
+ h1 - 22px
+
+ h2 - 20px
+
+ h3 - 18px
+
+ h4 - 16px
+
+##### **Line Height**
+The line height is 1.6 for all texts
