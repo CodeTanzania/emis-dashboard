@@ -22,8 +22,8 @@ class ActivityTaskForm extends Component {
       form: { validateFields },
     } = this.props;
 
-    validateFields((err, values) => {
-      if (!err) {
+    validateFields((error, values) => {
+      if (!error) {
         console.log('Received values of form: ', values);
         onCancel();
       }
