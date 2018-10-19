@@ -5,31 +5,50 @@
  */
 
 /* fetch action types */
-export const PLANS_GET_START = 'PLANS_GET_START';
-export const PLANS_GET_SUCCESS = 'PLANS_GET_SUCCESS';
-export const PLANS_GET_ERROR = 'PLANS_GET_ERROR';
-export const PLAN_ACTIVITIES_GET_START = 'PLAN_ACTIVITIES_GET_START';
-export const PLAN_ACTIVITIES_GET_SUCCESS = 'PLAN_ACTIVITIES_GET_SUCCESS';
-export const PLAN_ACTIVITIES_GET_ERROR = 'PLAN_ACTIVITIES_GET_ERROR';
+export const GET_PLANS_START = 'GET_PLANS_START';
+export const GET_PLANS_SUCCESS = 'GET_PLANS_SUCCESS';
+export const GET_PLANS_ERROR = 'GET_PLANS_ERROR';
+
+/* add action types */
+export const POST_PLAN_START = 'POST_PLAN_START';
+export const POST_PLAN_SUCCESS = 'POST_PLAN_SUCCESS';
+export const POST_PLAN_ERROR = 'POST_PLAN_ERROR';
+
+/* edit action types */
+export const PUT_PLAN_START = 'PUT_PLAN_START';
+export const PUT_PLAN_SUCCESS = 'PUT_PLAN_SUCCESS';
+export const PUT_PLAN_ERROR = 'PUT_PLAN_ERROR';
+
+/* delete action types */
+export const DELETE_PLAN_START = 'DELETE_PLAN_START';
+export const DELETE_PLAN_SUCCESS = 'DELETE_PLAN_SUCCESS';
+export const DELETE_PLAN_ERROR = 'DELETE_PLAN_ERROR';
 
 /* select action types */
 export const SELECT_PLAN = 'SELECT_PLAN';
-export const SELECT_ACTION = 'SELECT_ACTION';
-export const SELECT_TASK = 'SELECT_TASK';
 
-/* add action types */
-export const ADD_PLAN = 'ADD_PLAN';
-export const ADD_ACTION = 'ADD_ACTION';
-export const ADD_ACTION_TASK = 'ADD_ACTION_TASK';
+/*
+ *------------------------------------------------------------------------------
+ * Plan activity action types
+ *------------------------------------------------------------------------------
+ */
+/* get/fetch actions type */
+export const GET_PLAN_ACTIVITIES_START = 'GET_PLAN_ACTIVITIES_START';
+export const GET_PLAN_ACTIVITIES_SUCCESS = 'GET_PLAN_ACTIVITIES_SUCCESS';
+export const GET_PLAN_ACTIVITIES_ERROR = 'GET_PLAN_ACTIVITIES_ERROR';
 
-/* update action types */
-export const UPDATE_PLAN = 'UPDATE_PLAN';
-export const UPDATE_ACTION = 'UPDATE_ACTION';
-export const UPDATE_TASK = 'UPDATE_TASK';
+/* post action types */
+export const POST_PLAN_ACTIVITY_START = 'POST_PLAN_ACTIVITY_START';
+export const POST_PLAN_ACTIVITY_SUCCESS = 'POST_PLAN_ACTIVITY_SUCCESS';
+export const POST_PLAN_ACTIVITY_ERROR = 'POST_PLAN_ACTIVITY_ERROR';
 
-/* archive action types */
-export const ARCHIVE_PLAN = 'ARCHIVE_PLAN';
-export const ARCHIVE_ACTION = 'ARCHIVE_ACTION';
+/* edit action types */
+export const PUT_PLAN_ACTIVITY_START = 'PUT_PLAN_ACTIVITY_START';
+export const PUT_PLAN_ACTIVITY_SUCCESS = 'PUT_PLAN_ACTIVITY_SUCCESS';
+export const PUT_PLAN_ACTIVITY_ERROR = 'PUT_PLAN_ACTIVITY_ERROR';
+
+/* select action types */
+export const SELECT_PLAN_ACTIVITY = 'SELECT_PLAN_ACTIVITY';
 
 /*
  *------------------------------------------------------------------------------
@@ -50,10 +69,7 @@ export const ARCHIVE_ACTION = 'ARCHIVE_ACTION';
  */
 export function getPlans() {
   return {
-    type: PLANS_GET_START,
-    meta: {
-      page: 1,
-    },
+    type: GET_PLANS_START,
   };
 }
 
@@ -74,7 +90,7 @@ export function getPlans() {
  */
 export function getPlansSuccess(plans, page = 1, total = 0) {
   return {
-    type: PLANS_GET_SUCCESS,
+    type: GET_PLANS_SUCCESS,
     payload: {
       data: plans,
     },
@@ -100,7 +116,7 @@ export function getPlansSuccess(plans, page = 1, total = 0) {
  */
 export function getPlansError(error) {
   return {
-    type: PLANS_GET_ERROR,
+    type: GET_PLANS_ERROR,
     payload: {
       data: error,
     },
@@ -109,22 +125,129 @@ export function getPlansError(error) {
 }
 
 /**
- * Action to fetch plan actions from API
+ * Action dispatched when posting plan to the API
  *
  * @function
- * @name fetchActions
+ * @name postPlan
  *
- * @param {Object} planId - Redux action for fetching plan actions
  * @returns {Object} - Redux action
  *
  * @version 0.1.0
  * @since 0.1.0
  */
-export function fetchPlanActivities(planId) {
+export function postPlan() {
   return {
-    type: PLAN_ACTIVITIES_GET_START,
+    type: POST_PLAN_START,
+  };
+}
+
+/**
+ * Action dispatched when posting plan to the API is successful
+ *
+ * @param {Object[]} plans - updated list of plans from the API after post action
+ * @param {number} page=1 - current plan page
+ * @param {number} total=0 - total number of plans in the API
+ * @returns {Object} - Redux action
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function postPlanSuccess(plans, page = 1, total = 0) {
+  return {
+    type: POST_PLAN_SUCCESS,
     payload: {
-      data: planId,
+      data: plans,
     },
+    meta: {
+      page,
+      total,
+    },
+  };
+}
+
+/**
+ * Action dispatched when posting plan to the API fails
+ *
+ * @param {Error} error - Error object when posting plans fails
+ * @returns {Object} - Redux action
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function postPlanError(error) {
+  return {
+    type: POST_PLAN_SUCCESS,
+    payload: {
+      data: error,
+    },
+    error: true,
+  };
+}
+
+/**
+ * Action dispatched when fetching plan activities from API
+ *
+ * @function
+ * @name fetchActions
+ *
+ * @param {Object} planId - Redux action for fetching plan actions
+ * @param {number} page - Page to fetch plan activities from.
+ * @returns {Object} - Redux action
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function getPlanActivities() {
+  return {
+    type: GET_PLAN_ACTIVITIES_START,
+  };
+}
+
+/**
+ * Action dispatched when fetching plan activities from API is successful
+ *
+ * @function
+ * @name getPlanActivitiesSuccess
+ *
+ * @param {Object[]} activities - list of activities from the server
+ * @param {number} page - current activities page number
+ * @param {number} total - total number of activities in a plan
+ * @returns {Object} - Redux action
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function getPlanActivitiesSuccess(activities, page = 1, total = 0) {
+  return {
+    type: GET_PLAN_ACTIVITIES_SUCCESS,
+    payload: {
+      data: activities,
+    },
+    meta: {
+      page,
+      total,
+    },
+  };
+}
+
+/**
+ * Action dispatched when fetching plan activities from API fails
+ *
+ * @function
+ * @name getPlanActivitiesError
+ *
+ * @param {Error} error - Error instance
+ * @returns {Object} - Redux action
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function getPlanActivitiesError(error) {
+  return {
+    type: GET_PLAN_ACTIVITIES_ERROR,
+    payload: {
+      data: error,
+    },
+    error: true,
   };
 }
