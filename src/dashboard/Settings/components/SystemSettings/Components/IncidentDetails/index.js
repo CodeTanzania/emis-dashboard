@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { SketchPicker } from 'react-color';
+import { BlockPicker } from 'react-color';
 import classNames from 'classnames/bind';
 
 import { List, Avatar, Divider } from 'antd';
@@ -65,9 +65,7 @@ const IncidentDetails = ({ incidentType }) =>
                     </span>
                   <p className="IncidentTypeDiscription">{description}</p>
                   <Divider />
-                  <div>
-                    <SketchPicker color={color} />
-                  </div>
+                  <BlockPicker color={color}/>
                 </div>
               }
             />
