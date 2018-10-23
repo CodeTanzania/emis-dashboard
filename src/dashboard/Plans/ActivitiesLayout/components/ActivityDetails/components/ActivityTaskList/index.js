@@ -5,6 +5,7 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import shuffleList from '../../../../../../../common/lib/util';
 import ActivityTaskForm from '../ActivityTaskForm';
 import ActivityTaskItem from '../ActivityTaskItem';
+import './styles.css';
 
 /**
  * ActivityTaskList
@@ -88,9 +89,9 @@ class ActivityTaskList extends Component {
   render() {
     const { tasks, showActivityTaskForm } = this.state;
     return (
-      <div style={{ marginTop: 20 }}>
+      <div className="ActivityTaskList">
         {/* Activity tasks section header */}
-        <h4 style={{ borderBottom: '1px solid #e0e0e0', paddingBottom: 10 }}>
+        <h4 className="header">
           Standard Operating Procedures (SOP)
           <Button
             title="Add new Task"

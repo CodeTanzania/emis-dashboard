@@ -1,0 +1,8 @@
+.ActivityTaskList {
+  margin-top: 20px;
+}
+
+.ActivityTaskList .header {
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 10px;
+}
