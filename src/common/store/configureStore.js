@@ -1,9 +1,11 @@
 import { applyMiddleware, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension'; // eslint-disable-line import/no-extraneous-dependencies
 import { createEpicMiddleware } from 'redux-observable';
+import thunk from 'redux-thunk';
 /* local dependencies */
 import rootReducer from './rootReducer';
 import rootEpic from './rootEpic';
+import * as API from '../API/api';
 
 /* local constants */
 const epicMiddleware = createEpicMiddleware();
@@ -22,10 +24,11 @@ const epicMiddleware = createEpicMiddleware();
 const configureStore = () => {
   const store = createStore(
     rootReducer,
-    composeWithDevTools(applyMiddleware(epicMiddleware))
+    composeWithDevTools(
+      applyMiddleware(epicMiddleware, thunk.withExtraArgument(API))
+    )
   );
 
-  // epicMiddleware.run(); add root epics here
   epicMiddleware.run(rootEpic);
 
   return store;
