@@ -3,12 +3,12 @@ import { plans, selectedPlan } from '../reducers';
 describe('Plan:Reducers', () => {
   describe('plans', () => {
     it('should return default state when no initial state is provided', () => {
-      const expectedState = [];
+      const expectedState = {};
       expect(plans(undefined, {})).toEqual(expectedState);
     });
 
     it('should return initial state when given invalid action type', () => {
-      const initialState = [];
+      const initialState = {};
       expect(plans(initialState, { type: null })).toEqual(initialState);
     });
   });
@@ -23,4 +23,10 @@ describe('Plan:Reducers', () => {
       expect(selectedPlan(initialState, { type: null })).toEqual(initialState);
     });
   });
+
+  describe('selectedPlan', () => {});
+
+  describe('planActivities', () => {});
+
+  describe('selectedPlanActivity', () => {});
 });

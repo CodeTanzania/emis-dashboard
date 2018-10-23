@@ -3,7 +3,7 @@ import * as Actions from '../actions';
 describe('Plans', () => {
   describe('Plans:Actions', () => {
     it('should return fetch plans action', () => {
-      expect(Actions.getPlans()).toEqual({
+      expect(Actions.getPlansStart()).toEqual({
         type: Actions.GET_PLANS_START,
       });
     });
@@ -38,7 +38,7 @@ describe('Plans', () => {
 
   describe('Activities:Actions', () => {
     it('should return get activities action', () => {
-      expect(Actions.getPlanActivities()).toEqual({
+      expect(Actions.getPlanActivitiesStart()).toEqual({
         type: Actions.GET_PLAN_ACTIVITIES_START,
       });
     });
