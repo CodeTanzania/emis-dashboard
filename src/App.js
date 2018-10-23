@@ -5,10 +5,10 @@ import configureStore from './common/store/configureStore';
 import Dashboard from './dashboard';
 /* import global styles */
 import './utils.css';
-
+import { getPlans } from './dashboard/Plans/actions';
 /* local constants */
 const store = configureStore();
-
+store.dispatch(getPlans());
 /**
  * Render the React application
  *

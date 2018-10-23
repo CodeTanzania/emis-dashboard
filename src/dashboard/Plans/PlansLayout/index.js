@@ -1,5 +1,7 @@
-import { Button, Col, Drawer, Layout, List, Row } from 'antd';
+import { Button, Col, Drawer, Icon, Layout, List, Row, Spin } from 'antd';
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Select from '../../../common/components/Select';
 import Toolbar from '../../../common/components/Toolbar';
 import PlanCard from './components/PlanCard';
@@ -9,65 +11,8 @@ import './styles.css';
 /* local constants */
 const { Header, Content } = Layout;
 const { Filters, Actions } = Toolbar;
+const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
 // fake data
-const fakeData = [
-  {
-    name: 'Flood',
-    jurisdiction: 'Dar es Salaam',
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    activityCount: 23,
-    color: '#0071fc',
-  },
-  {
-    name: 'Flood',
-    jurisdiction: 'Pwani',
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    activityCount: 24,
-    color: '#0071fc',
-  },
-  {
-    name: 'Fire',
-    jurisdiction: 'Dar es Salaam',
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    activityCount: 13,
-    color: '#FADF7F',
-  },
-  {
-    name: 'Epidemic',
-    jurisdiction: 'Dar es Salaam',
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    activityCount: 123,
-    color: '#e55934',
-  },
-  {
-    name: 'Road Accident',
-    jurisdiction: 'Dar es Salaam',
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    activityCount: 13,
-    color: '#596157',
-  },
-  {
-    name: 'Earthquake',
-    jurisdiction: 'Dar es Salaam',
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    activityCount: 13,
-    color: '#627C85',
-  },
-  {
-    name: 'Marine Accident',
-    jurisdiction: 'Dar es Salaam',
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    activityCount: 13,
-    color: '#FCEADE',
-  },
-];
 const options = [
   { label: 'Flood', value: 'flood' },
   { label: 'Fire', value: 'fire' },
@@ -83,19 +28,51 @@ const options = [
  * @version 0.1.0
  * @since 0.1.0
  */
-export default class PlansLayout extends Component {
+class PlansLayout extends Component {
   state = { showForm: false };
 
+  propTypes = {
+    plans: PropTypes.arrayOf(
+      PropTypes.shape({
+        incidentType: PropTypes.shape({
+          name: PropTypes.string,
+          color: PropTypes.string,
+        }),
+      })
+    ),
+    loading: PropTypes.boolean,
+  };
+
+  /**
+   * Show modal window which have plan form
+   *
+   * @function
+   * @name showPlanForm
+   *
+   * @version 0.1.0
+   * @since 0.1.0
+   */
   showPlanForm = () => {
     this.setState({ showForm: true });
   };
 
+  /**
+   * Hide modal window which have plan form
+   *
+   * @function
+   * @name hidePlanForm
+   *
+   * @version 0.1.0
+   * @since 0.1.0
+   */
   hidePlanForm = () => {
     this.setState({ showForm: false });
   };
 
   render() {
     const { showForm } = this.state;
+    const { plans, loading } = this.props;
+
     return (
       <Layout className="PlansLayout">
         {/* start primary header */}
@@ -135,21 +112,37 @@ export default class PlansLayout extends Component {
         {/* end Toolbar */}
         {/* Plan list content */}
         <Content className="content">
-          {/* plan list container */}
-          <div className="listCardContainer">
-            {/* plan list */}
-            <List
-              grid={{ gutter: 10, xs: 1, sm: 2, md: 3, lg: 4, xl: 4, xxl: 4 }}
-              dataSource={fakeData}
-              renderItem={item => (
-                <List.Item>
-                  <PlanCard {...item} />
-                </List.Item>
-              )}
-            />
-            {/* end plan list */}
-          </div>
-          {/* end plan list container */}
+          <Spin
+            indicator={antIcon}
+            size="large"
+            tip="Loading Plans ..."
+            spinning={loading}
+          >
+            {/* plan list container */}
+            <div className="listCardContainer">
+              {/* plan list */}
+              <List
+                grid={{ gutter: 10, xs: 1, sm: 2, md: 3, lg: 3, xl: 3, xxl: 4 }}
+                dataSource={plans}
+                renderItem={plan => (
+                  <List.Item>
+                    <PlanCard
+                      incidentType={plan.incidentType.name}
+                      jurisdiction="Dar es Salaam"
+                      description={plan.description}
+                      nature={plan.incidentType.nature}
+                      family={plan.incidentType.family}
+                      updatedAt={plan.updatedAt}
+                      color={plan.incidentType.color}
+                      activityCount={20}
+                    />
+                  </List.Item>
+                )}
+              />
+              {/* end plan list */}
+            </div>
+            {/* end plan list container */}
+          </Spin>
         </Content>
         {/* end Plan list content */}
         {/* drawer for showing plan form */}
@@ -170,3 +163,10 @@ export default class PlansLayout extends Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  plans: state.plans.data,
+  loading: state.plans.loading,
+});
+
+export default connect(mapStateToProps)(PlansLayout);

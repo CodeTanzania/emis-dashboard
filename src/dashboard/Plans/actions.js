@@ -67,7 +67,7 @@ export const SELECT_PLAN_ACTIVITY = 'SELECT_PLAN_ACTIVITY';
  * @version 0.1.0
  * @since 0.1.0
  */
-export function getPlans() {
+export function getPlansStart() {
   return {
     type: GET_PLANS_START,
   };
@@ -135,7 +135,7 @@ export function getPlansError(error) {
  * @version 0.1.0
  * @since 0.1.0
  */
-export function postPlan() {
+export function postPlanStart() {
   return {
     type: POST_PLAN_START,
   };
@@ -197,7 +197,7 @@ export function postPlanError(error) {
  * @version 0.1.0
  * @since 0.1.0
  */
-export function getPlanActivities() {
+export function getPlanActivitiesStart() {
   return {
     type: GET_PLAN_ACTIVITIES_START,
   };
@@ -249,5 +249,41 @@ export function getPlanActivitiesError(error) {
       data: error,
     },
     error: true,
+  };
+}
+
+/*
+ * -----------------------------------------------------------------------------
+ * Thunks
+ * -----------------------------------------------------------------------------
+ */
+
+/**
+ * getPlans thunk
+ * A Thunk function which perform asynchronous fetching of plans from the API
+ *
+ * @function
+ * @name getPlans
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function getPlans() {
+  return (dispatch, getState, API) => {
+    dispatch(getPlansStart());
+
+    return API.getPlans()
+      .then(response => {
+        dispatch(
+          getPlansSuccess(
+            response.data.data,
+            response.data.page,
+            response.data.total
+          )
+        );
+      })
+      .catch(error => {
+        dispatch(getPlansError(error));
+      });
   };
 }
