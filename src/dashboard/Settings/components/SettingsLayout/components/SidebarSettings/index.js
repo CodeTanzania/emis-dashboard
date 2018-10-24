@@ -2,23 +2,22 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Row, Col, Divider } from 'antd';
 
-const SytemDetail = props => {
-  const { title, names } = props;
+function SytemDetail({ title, names }) {
   return (
     <div>
       {title}
       <Row>
         <Col span="24">
           {names.map(({ name, message }, i) => (
-            <div 
+            <div
               className="p-l-10"
               style={{
                 color: '#909090',
-                fontSize:"11px",
+                fontSize: '11px',
               }}
               key={i.toString()}
             >
-              <p >{name}</p>
+              <p>{name}</p>
               <p className="p-l-10"> {message}</p>
             </div>
           ))}
@@ -26,7 +25,7 @@ const SytemDetail = props => {
       </Row>
     </div>
   );
-};
+}
 
 /* props validation */
 const dataPropTypes = PropTypes.shape({
@@ -38,12 +37,13 @@ SytemDetail.propTypes = {
   title: PropTypes.string,
   names: PropTypes.arrayOf(dataPropTypes),
 };
+
 SytemDetail.defaultProps = {
   title: null,
   names: null,
 };
 
-const SidebarSettings = ({ title }) => {
+function SidebarSettings({ title }) {
   const data = {
     systemSetting: [
       { name: 'Incident Type', message: '' },
@@ -78,7 +78,7 @@ const SidebarSettings = ({ title }) => {
       </Row>
     </div>
   );
-};
+}
 
 export default SidebarSettings;
 SidebarSettings.propTypes = {

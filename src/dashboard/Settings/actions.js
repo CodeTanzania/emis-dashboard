@@ -1,54 +1,54 @@
 /* Actions for the incident */ /* const actions */
-const ADD_NEW_INCIDENT_TYPE = 'INCIDENTS_TYPE:ADD_NEW_INCIDENT_TYPE';
-const SELECTED_INCIDENT_TYPE = 'INCIDENTS_TYPE :SELECTED_INCIDENTS_TYPE ';
-const TRIGGER_GET_INCIDENTS_TYPE = 'INCIDENTS_TYPE :TRIGER_GET';
-const STORE_INCIDENTS_TYPE = 'INCIDENTS_TYPE:STORE';
-const UPDATE_INCIDENT_TYPE = 'INCIDENTS_TYPE :UPDATE_INCIDENT_TYPE';
-const COLOR_AUTOFILL = 'INCIDENTS_TYPE :COLOR_AUTOFILL';
-const SEARCH_INCIDENT_TYPE = 'INCIDENTS_TYPE :SEARCH_INCIDENT_TYPE';
+export const ADD_INCIDENT_TYPE = 'INCIDENTS_TYPE:ADD_NEW_INCIDENT_TYPE';
+export const SELECT_INCIDENT_TYPE = 'INCIDENTS_TYPE :SELECTED_INCIDENTS_TYPE ';
+export const GET_INCIDENTS_TYPE = 'INCIDENTS_TYPE :TRIGER_GET';
+export const STORE_INCIDENTS_TYPE = 'INCIDENTS_TYPE:STORE';
+export const UPDATE_INCIDENT_TYPE = 'INCIDENTS_TYPE :UPDATE_INCIDENT_TYPE';
+export const SELECT_COLOR_AUTOFILL = 'INCIDENTS_TYPE :COLOR_AUTOFILL';
+export const SEARCH_INCIDENT_TYPE = 'INCIDENTS_TYPE :SEARCH_INCIDENT_TYPE';
 
 /* Actions creater */
 
-const triggerGetIncidentstype = () => ({ type: TRIGGER_GET_INCIDENTS_TYPE });
+export const getIncidentstype = () => ({ type: GET_INCIDENTS_TYPE });
 
-const storeIncidents = (incidentsType = []) => ({
+export const storeIncidents = (incidentsType = []) => ({
   type: STORE_INCIDENTS_TYPE,
-  incidentsType,
+  payload: {
+    incidentsType,
+  },
 });
 
-const selectedIncidentType = incidentSelected => ({
-  type: SELECTED_INCIDENT_TYPE,
-  incidentSelected,
+export const selectIncidentType = incidentSelected => ({
+  type: SELECT_INCIDENT_TYPE,
+  payload:{
+    incidentSelected,
+  }
 });
-const addNewIncidentType = incidentType => ({
-  type: ADD_NEW_INCIDENT_TYPE,
-  incidentType,
+
+export const addIncidentType = incidentType => ({
+  type: ADD_INCIDENT_TYPE,
+  payload : {
+     incidentType,
+  }
 });
-const updateIncidentType = incidentType => ({
+
+export const updateIncidentType = incidentType => ({
   type: UPDATE_INCIDENT_TYPE,
-  incidentType,
+  payload: {
+    incidentType,
+  }
 });
-const searchIncidentType = searchValue => ({
+
+export const searchIncidentType = searchValue => ({
   type: SEARCH_INCIDENT_TYPE,
-  searchValue,
+  payload:{
+    searchValue,
+  }
 });
-const colorAutofill = colorSelected => ({
-  type: COLOR_AUTOFILL,
-  colorSelected,
+
+export const selectColorAutofill = colorSelected => ({
+  type: SELECT_COLOR_AUTOFILL,
+ payload:{
+   colorSelected,
+ } 
 });
-export {
-  ADD_NEW_INCIDENT_TYPE,
-  addNewIncidentType,
-  SELECTED_INCIDENT_TYPE,
-  selectedIncidentType,
-  SEARCH_INCIDENT_TYPE,
-  searchIncidentType,
-  TRIGGER_GET_INCIDENTS_TYPE,
-  triggerGetIncidentstype,
-  STORE_INCIDENTS_TYPE,
-  storeIncidents,
-  UPDATE_INCIDENT_TYPE,
-  updateIncidentType,
-  COLOR_AUTOFILL,
-  colorAutofill,
-};

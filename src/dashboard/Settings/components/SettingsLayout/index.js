@@ -6,15 +6,15 @@ import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 
 import { searchIncidentType } from '../../actions';
-import SidebarSettings from '../SidebarSettings';
+import SidebarSettings from './components/SidebarSettings';
 import ColHeader from '../../../../common/components/ColHeader';
-import IncidentType from '../SystemSettings/Components/IncidentTypeList';
-import IncidentDetails from '../SystemSettings/Components/IncidentDetails';
-import AddNewIncidentType from '../SystemSettings/Components/IncidentTypeForm/AddNewIncidentType';
-import EditIncidentTypeForm from '../SystemSettings/Components/IncidentTypeForm/EditIncidentTypeForm';
+import IncidentType from './components/SystemSettings/Components/SettingsIncidentTypeList';
+import IncidentDetails from './components/SystemSettings/Components/SettingsIncidentTypeDetails';
+import AddNewIncidentType from './components/SystemSettings/Components/SettingsIncidentTypeForm/AddNewIncidentTypeForm';
+import EditIncidentTypeForm from './components/SystemSettings/Components/SettingsIncidentTypeForm/EditIncidentTypeForm';
 
 /* load styles */
-import styles from './styles.css';
+import styles from './SettingsLayout.css';
 
 /* local constants */
 const { Content } = Layout;
@@ -101,6 +101,7 @@ class SettingsLayout extends React.Component {
     );
   }
 }
+
 const mapStateToProps = state => ({
   incidentsType: state.incidentsType.data,
   incidentType: state.incidentsType.incidentType
@@ -111,6 +112,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   searchIncidentTypeValue: bindActionCreators(searchIncidentType, dispatch),
 });
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps
@@ -134,6 +136,7 @@ SettingsLayout.propTypes = {
   incidentType: PropTypes.arrayOf(incidentTypePropTypes),
   searchIncidentTypeValue: PropTypes.func,
 };
+
 SettingsLayout.defaultProps = {
   incidentType: null,
   searchIncidentTypeValue: null,

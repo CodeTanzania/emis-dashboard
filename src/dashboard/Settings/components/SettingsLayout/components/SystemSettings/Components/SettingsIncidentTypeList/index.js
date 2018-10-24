@@ -3,10 +3,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { triggerGetIncidentstype } from '../../../../actions';
+import { getIncidentstype } from '../../../../../../actions';
 /* import component */
-import IncidentTypeListFooter from './FooterList';
-import IncidentTypeItem from './ItemList';
+import IncidentTypeListFooter from './components/IncidentTypeListFooter';
+import IncidentTypeItem from './components/IncidentTypeItemList';
 
 /**
  * IncidentType list component
@@ -45,11 +45,9 @@ class IncidentType extends React.Component {
 const mapStateToProps = state => ({
   incidentsType: state.incidentsType.data,
 });
+
 const mapDispatchToProps = dispatch => ({
-  getIncidentstypeTrigger: bindActionCreators(
-    triggerGetIncidentstype,
-    dispatch
-  ),
+  getIncidentstypeTrigger: bindActionCreators(getIncidentstype, dispatch),
 });
 
 export default connect(

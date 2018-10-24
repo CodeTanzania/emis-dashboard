@@ -13,11 +13,11 @@ import SettingsLayout from './components/SettingsLayout';
  * @version 0.1.0
  * @since 0.1.0
  */
-const Settings = () => (
-  <Fragment>
-    <Header title="Settings" />
-    <SettingsLayout />
-  </Fragment>
-);
-
-export default Settings;
+export default function Settings() {
+  return (
+    <Fragment>
+      <Header title="Settings" />
+      <SettingsLayout />
+    </Fragment>
+  );
+}

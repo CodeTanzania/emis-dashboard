@@ -185,7 +185,7 @@ export default function stakeholders(state = initialState, action) {
         data: [action.stakeholder, ...state.data],
       };
     case UPDATE_STAKEHOLDER_SUCCESS: {
-      const data = [...state.data]; // grab stakeholder array
+      const data = [...state.data]; // grab stakeholder array 
       const { stakeholder } = action; // grab stakeholder
       const foundIndex = data.findIndex(item => item._id === stakeholder._id);
       data[foundIndex] = stakeholder;

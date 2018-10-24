@@ -6,8 +6,7 @@ import { connect } from 'react-redux';
 /* local constants */
 const ButtonGroup = Button.Group;
 
-const IncidentTypeListFooter = props => {
-  const { total } = props;
+function IncidentTypeListFooter({ total }) {
   return (
     <div className="footer p-10">
       <Row type="flex" justify="space-between">
@@ -28,7 +27,8 @@ const IncidentTypeListFooter = props => {
       </Row>
     </div>
   );
-};
+}
+
 const mapStateToProps = state => ({
   total: state.incidentsType.total,
 });

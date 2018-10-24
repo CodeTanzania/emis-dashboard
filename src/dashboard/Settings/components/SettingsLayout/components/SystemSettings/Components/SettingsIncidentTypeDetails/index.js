@@ -1,14 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { BlockPicker } from 'react-color';
-import classNames from 'classnames/bind';
 
 import { List, Avatar, Divider } from 'antd';
-import styles from './IncidentTypeDetails.css';
+import './IncidentTypeDetails.css';
 
-const cx = classNames.bind(styles);
-const IncidentDetails = ({ incidentType }) =>
-  incidentType ? (
+export default function IncidentDetails({ incidentType }) {
+  return incidentType ? (
     <div className="content scrollable">
       <List
         itemLayout="horizontal"
@@ -35,37 +33,23 @@ const IncidentDetails = ({ incidentType }) =>
               }
               description={
                 <div>
-                    <span className={cx("IncidentTypeDetail")}>
-                      Nature:
-                    </span>{' '}
-                    {nature}{' '}
-                    <br/>
-                    <span className={cx("IncidentTypeDetail")}>
-                      Family:
-                    </span>{' '}
-                    {family}{' '}
+                  <span className="IncidentTypeDetail">Nature:</span> {nature}{' '}
+                  <br />
+                  <span className="IncidentTypeDetail">Family:</span> {family}{' '}
                   <Divider />
-                    <span className={cx("IncidentTypeDetail")}>
-                      Code-Given:
-                    </span>{' '}
-                    {code.given}
-                    <br />
-                    <span className={cx("IncidentTypeDetail")}>
-                      Code-CAP:
-                    </span>{' '}
-                    {code.cap}
-                    <br />
-                    <span className={cx("IncidentTypeDetail")}>
-                      System:{' '}
-                    </span>
-                    Version 1.2.0
+                  <span className="IncidentTypeDetail">Code-Given:</span>{' '}
+                  {code.given}
+                  <br />
+                  <span className="IncidentTypeDetail">Code-CAP:</span>{' '}
+                  {code.cap}
+                  <br />
+                  <span className="IncidentTypeDetail">System: </span>
+                  Version 1.2.0
                   <Divider />
-                    <span className={cx("IncidentTypeDetail")} >
-                      Description
-                    </span>
+                  <span className="IncidentTypeDetail">Description</span>
                   <p className="IncidentTypeDiscription">{description}</p>
                   <Divider />
-                  <BlockPicker color={color}/>
+                  <BlockPicker color={color} />
                 </div>
               }
             />
@@ -76,8 +60,7 @@ const IncidentDetails = ({ incidentType }) =>
   ) : (
     <h1> Waiting for data</h1>
   );
-
-export default IncidentDetails;
+}
 
 const incidentDetailPropTypes = PropTypes.shape({
   name: PropTypes.string,

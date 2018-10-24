@@ -1,50 +1,44 @@
 /* eslint no-underscore-dangle: "off" */
-import classNames from 'classnames/bind';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { from } from 'rxjs';
+import { bindActionCreators } from 'redux';
 import {
   Form,
   Input,
   Select,
   Modal,
-  Icon,
   Divider,
   Button,
   Row,
   Col,
+  Icon,
 } from 'antd';
 import { ChromePicker } from 'react-color';
-import API from '../../../../../../common/API';
-import { addNewIncidentType, colorAutofill } from '../../../../actions';
+import {
+  updateIncidentType,
+  selectColorAutofill,
+} from '../../../../../../actions';
+import API from '../../../../../../../../common/API';
+import '../../SystemSettings.css';
 
-import styles from '../../SystemSettings.css';
-
-const cx = classNames.bind(styles);
 const FormItem = Form.Item;
 const { TextArea } = Input;
 const { Option } = Select;
 
-class AddIncidentTypeForm extends Component {
-  state = {
-    submitting: false,
-    background: '#fff',
-  };
-
-  handleOnClickAddNewIncidentType = () => {
-    this.setState({ visible: true });
-  };
-
-  handleCancel = () => {
-    this.setState({
+class EditIncidentTypeForm extends Component {
+  constructor(props) {
+    super(props);
+    const { incidentType } = this.props;
+    this.state = {
       visible: false,
-    });
-  };
+      background: `${incidentType}`,
+    };
+  }
 
   handleSubmit = e => {
     e.preventDefault();
-    const { form } = this.props;
+    const { form, incidentType } = this.props;
     form.validateFieldsAndScroll(
       (err, { name, given, cap, nature, family, description, color }) => {
         const data = {
@@ -56,23 +50,42 @@ class AddIncidentTypeForm extends Component {
           color,
         };
         if (!err) {
-          this.createIncidentType(data);
+          this.incidentTypeEdit(incidentType._id, data);
         }
       }
     );
   };
 
-  /**
-   * Create incidentType helper function
-   */
-  createIncidentType = data => {
+  handleOnClickEditIncidentType = () => {
+    this.setState({ visible: true });
+    const { incidentType, form } = this.props;
+    if (incidentType) {
+      const formFields = Object.keys(form.getFieldsValue());
+      const fieldsValues = {};
+      formFields.forEach(field => {
+        fieldsValues[field] = incidentType[field]
+          ? incidentType[field]
+          : incidentType.code[field];
+        return fieldsValues[field];
+      });
+      form.setFieldsValue(fieldsValues);
+    }
+  };
+
+  handleCancel = () => {
+    this.setState({
+      visible: false,
+    });
+  };
+
+  incidentTypeEdit = (incidentTypeId, updates) => {
     this.setState({ submitting: true });
-    from(API.createIncidentType(data)).subscribe(result => {
+    from(API.editIncidentType(incidentTypeId, updates)).subscribe(result => {
       if (result.error) {
         this.setState({ submitting: false });
       } else {
-        const { newIncidentTpeAdd } = this.props;
-        newIncidentTpeAdd(result);
+        const { incidentTypeUpdate } = this.props;
+        incidentTypeUpdate(result);
         this.setState({ submitting: false });
         this.handleCancel();
       }
@@ -82,9 +95,10 @@ class AddIncidentTypeForm extends Component {
   render() {
     const { form } = this.props;
     const { submitting, visible, background } = this.state;
-    const { getFieldDecorator, getFieldValue, setFieldsValue } = form;
+    const { getFieldDecorator, setFieldsValue, getFieldValue } = form;
 
-    getFieldDecorator('a');
+    getFieldDecorator('prevColor');
+
     getFieldDecorator('color');
 
     const formItemLayout = {
@@ -114,13 +128,15 @@ class AddIncidentTypeForm extends Component {
         },
       },
     };
+
     const onClick = () => {
       const { colorSelected } = this.props;
       setFieldsValue({
-        a: '1',
+        prevColor: '',
         color: colorSelected,
       });
     };
+
     const handleChangeComplete = color => {
       const { autoFillColor } = this.props;
       autoFillColor(color.hex);
@@ -129,15 +145,15 @@ class AddIncidentTypeForm extends Component {
     };
 
     return (
-      <div className={cx('AddNewIncidentType')}>
+      <div className="EditIncidentTypeForm">
         <Icon
           style={{ cursor: 'pointer' }}
-          type="plus"
+          type="edit"
           theme="outlined"
-          onClick={this.handleOnClickAddNewIncidentType}
+          onClick={this.handleOnClickEditIncidentType}
         />
         <Modal
-          title="Settings: Add new Incident-Type"
+          title="Settings: Edit Incident-Type"
           visible={visible}
           onCancel={this.handleCancel}
           footer={null}
@@ -225,18 +241,21 @@ class AddIncidentTypeForm extends Component {
               )}
             </FormItem>
             <Divider />
-            {getFieldValue('a') === '1' ? (
+            {getFieldValue('prevColor') === '9' ? (
               <FormItem {...formItemLayout} label="Color code">
                 {getFieldDecorator('color')(<Input placeholder="Color code" />)}
               </FormItem>
-            ) : null}
+            ) : (
+              <FormItem {...formItemLayout} label="Color code">
+                {getFieldDecorator('color')(<Input placeholder="Color code" />)}
+              </FormItem>
+            )}
             <FormItem {...formItemLayout} label="Pick color">
               <ChromePicker
                 color={background}
                 onChangeComplete={handleChangeComplete}
               />
             </FormItem>
-
             <FormItem {...tailFormItemLayout}>
               <Row>
                 <Col span={4} offset={14}>
@@ -260,15 +279,17 @@ class AddIncidentTypeForm extends Component {
     );
   }
 }
+
 const mapStateToProps = state => ({
   colorSelected: state.incidentsType.colorSelected,
 });
+
 const mapDispatchToProps = dispatch => ({
-  newIncidentTpeAdd: bindActionCreators(addNewIncidentType, dispatch),
-  autoFillColor: bindActionCreators(colorAutofill, dispatch),
+  incidentTypeUpdate: bindActionCreators(updateIncidentType, dispatch),
+  autoFillColor: bindActionCreators(selectColorAutofill, dispatch),
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Form.create()(AddIncidentTypeForm));
+)(Form.create()(EditIncidentTypeForm));

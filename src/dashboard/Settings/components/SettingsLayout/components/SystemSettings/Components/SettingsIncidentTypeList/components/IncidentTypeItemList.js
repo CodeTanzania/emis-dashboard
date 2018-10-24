@@ -5,8 +5,8 @@ import classNames from 'classnames/bind';
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { selectedIncidentType } from '../../../../actions';
-import styles from '../../SystemSettings.css';
+import { selectIncidentType } from '../../../../../../../actions';
+import styles from '../../../SystemSettings.css';
 
 /**
  * Render a single contact item component for contacts list
@@ -28,6 +28,7 @@ class IncidentTypeItem extends React.Component {
   render() {
     const { incidentSelected, selected } = this.props;
     const { _id: id } = selected;
+
     const {
       name,
       nature,
@@ -38,6 +39,7 @@ class IncidentTypeItem extends React.Component {
       _id,
     } = incidentSelected;
     const isSelected = selected ? id === _id : false;
+
     return (
       <List.Item className={cx('p-l-20', { isSelected })}>
         <List.Item.Meta
@@ -55,7 +57,6 @@ class IncidentTypeItem extends React.Component {
               <Col xs={18}>
                 <span
                   role="link"
-                  style={{ cursor: 'pointer' }}
                   className={cx('f-600 f-15', 'name')}
                   onClick={this.onClick}
                   onKeyDown={this.onClick}
@@ -75,16 +76,10 @@ class IncidentTypeItem extends React.Component {
               <p>
                 {nature}-{family}
               </p>
-              <p 
-              style={{
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                wordSpacing: "initial",
-                height: "40px",
-                wordBreak: "break-all",
-                paddingRight: "7px"
-              }}
-              className={cx('b-0', { isSelected })}>{description}...</p>
+              <p className={cx('IncidentTypeItemDescription', { isSelected })}>
+                {description}
+                ...
+              </p>
             </div>
           }
         />
@@ -96,11 +91,9 @@ class IncidentTypeItem extends React.Component {
 const mapStateToProps = state => ({
   selected: state.incidentsType.data,
 });
+
 const mapDispatchToProps = dispatch => ({
-  handleselectedIncidentType: bindActionCreators(
-    selectedIncidentType,
-    dispatch
-  ),
+  handleselectedIncidentType: bindActionCreators(selectIncidentType, dispatch),
 });
 
 export default connect(

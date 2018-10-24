@@ -1,10 +1,10 @@
 import {
   STORE_INCIDENTS_TYPE,
-  SELECTED_INCIDENT_TYPE,
-  TRIGGER_GET_INCIDENTS_TYPE,
-  ADD_NEW_INCIDENT_TYPE,
+  SELECT_INCIDENT_TYPE,
+  GET_INCIDENTS_TYPE,
+  ADD_INCIDENT_TYPE,
   UPDATE_INCIDENT_TYPE,
-  COLOR_AUTOFILL,
+  SELECT_COLOR_AUTOFILL,
 } from './actions';
 
 /**
@@ -31,7 +31,7 @@ const initialState = {
 
 export default function incidentsType(state = initialState, action) {
   switch (action.type) {
-    case TRIGGER_GET_INCIDENTS_TYPE:
+    case GET_INCIDENTS_TYPE:
       return {
         state,
         isLoading: true,
@@ -41,23 +41,26 @@ export default function incidentsType(state = initialState, action) {
 
     case STORE_INCIDENTS_TYPE: {
       return {
-        data: action.incidentsType,
-        total: action.incidentsType.length,
+        data: action.payload.incidentsType,
+        total: action.payload.incidentsType.length,
         isLoading: false,
         error: null,
-        incidentType: action.incidentsType[0],
+        incidentType: action.payload.incidentsType[0],
       };
     }
-    case SELECTED_INCIDENT_TYPE:
+
+    case SELECT_INCIDENT_TYPE:
       return {
         ...state,
-        incidentType: action.incidentSelected,
+        incidentType: action.payload.incidentSelected,
       };
-    case ADD_NEW_INCIDENT_TYPE:
+
+    case ADD_INCIDENT_TYPE:
       return {
         ...state,
-        data: [action.incidentType, ...state.data],
+        data: [action.payload.incidentType, ...state.data],
       };
+
     case UPDATE_INCIDENT_TYPE: {
       const data = [...state.data];
       const { incidentType } = action;
@@ -70,10 +73,11 @@ export default function incidentsType(state = initialState, action) {
         incidentType,
       };
     }
-    case COLOR_AUTOFILL:
+
+    case SELECT_COLOR_AUTOFILL:
       return {
         ...state,
-        colorSelected: action.colorSelected,
+        colorSelected: action.payload.colorSelected,
       };
 
     default:
