@@ -47,12 +47,12 @@ class AddIncidentTypeForm extends Component {
     form.validateFieldsAndScroll(
       (err, { name, given, cap, nature, family, description, color }) => {
         const data = {
-            name,
-            code: { given, cap },
-            nature,
-            family,
-            description,
-            color,
+          name,
+          code: { given, cap },
+          nature,
+          family,
+          description,
+          color,
         };
         if (!err) {
           this.createIncidentType(data);

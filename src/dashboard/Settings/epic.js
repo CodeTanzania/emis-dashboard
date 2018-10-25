@@ -24,9 +24,7 @@ export const getIncidentsTypeEpic = action$ =>
 export const addIncidentTypeEpic = action$ =>
   action$.pipe(
     ofType(ADD_INCIDENT_TYPE),
-    switchMap(data =>
-      from(API.createIncidentType(data.payload.incidentType))
-    ),
+    switchMap(data => from(API.createIncidentType(data.payload.incidentType))),
     switchMap(() => of(getIncidentstype()))
   );
 
