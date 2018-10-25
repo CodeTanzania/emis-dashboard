@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { from } from 'rxjs';
 import {
   Form,
   Input,
@@ -15,7 +14,6 @@ import {
   Col,
 } from 'antd';
 import { ChromePicker } from 'react-color';
-import API from '../../../../../../../../common/API';
 import {
   addIncidentType,
   selectColorAutofill,
@@ -49,12 +47,12 @@ class AddIncidentTypeForm extends Component {
     form.validateFieldsAndScroll(
       (err, { name, given, cap, nature, family, description, color }) => {
         const data = {
-          name,
-          code: { given, cap },
-          nature,
-          family,
-          description,
-          color,
+            name,
+            code: { given, cap },
+            nature,
+            family,
+            description,
+            color,
         };
         if (!err) {
           this.createIncidentType(data);
@@ -68,22 +66,36 @@ class AddIncidentTypeForm extends Component {
    */
   createIncidentType = data => {
     this.setState({ submitting: true });
-    from(API.createIncidentType(data)).subscribe(result => {
-      if (result.error) {
-        this.setState({ submitting: false });
-      } else {
-        const { newIncidentTpeAdd } = this.props;
-        newIncidentTpeAdd(result);
-        this.setState({ submitting: false });
-        this.handleCancel();
-      }
+    const { newIncidentTpeAdd } = this.props;
+    newIncidentTpeAdd(data);
+
+    if (data.error) {
+      this.setState({ submitting: false });
+    } else {
+      this.setState({ submitting: false });
+      this.handleCancel();
+    }
+  };
+
+  onClick = () => {
+    const { colorSelected, form } = this.props;
+    form.setFieldsValue({
+      prevColor: '',
+      color: colorSelected,
     });
+  };
+
+  handleChangeComplete = color => {
+    const { autoFillColor } = this.props;
+    autoFillColor(color.hex);
+    this.setState({ background: color.hex });
+    this.onClick();
   };
 
   render() {
     const { form } = this.props;
     const { submitting, visible, background } = this.state;
-    const { getFieldDecorator, getFieldValue, setFieldsValue } = form;
+    const { getFieldDecorator, getFieldValue } = form;
 
     getFieldDecorator('prevColor');
     getFieldDecorator('color');
@@ -114,21 +126,6 @@ class AddIncidentTypeForm extends Component {
           offset: 8,
         },
       },
-    };
-
-    const onClick = () => {
-      const { colorSelected } = this.props;
-      setFieldsValue({
-        a: '1',
-        color: colorSelected,
-      });
-    };
-
-    const handleChangeComplete = color => {
-      const { autoFillColor } = this.props;
-      autoFillColor(color.hex);
-      this.setState({ background: color.hex });
-      onClick();
     };
 
     return (
@@ -228,7 +225,7 @@ class AddIncidentTypeForm extends Component {
               )}
             </FormItem>
             <Divider />
-            {getFieldValue('prevColor') !== '' ? (
+            {getFieldValue('prevColor') === '' ? (
               <FormItem {...formItemLayout} label="Color code">
                 {getFieldDecorator('color')(<Input placeholder="Color code" />)}
               </FormItem>
@@ -236,7 +233,7 @@ class AddIncidentTypeForm extends Component {
             <FormItem {...formItemLayout} label="Pick color">
               <ChromePicker
                 color={background}
-                onChangeComplete={handleChangeComplete}
+                onChangeComplete={this.handleChangeComplete}
               />
             </FormItem>
 

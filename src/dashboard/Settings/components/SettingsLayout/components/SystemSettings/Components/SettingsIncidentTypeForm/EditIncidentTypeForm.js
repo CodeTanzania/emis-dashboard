@@ -1,7 +1,6 @@
 /* eslint no-underscore-dangle: "off" */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { from } from 'rxjs';
 import { bindActionCreators } from 'redux';
 import {
   Form,
@@ -19,7 +18,6 @@ import {
   updateIncidentType,
   selectColorAutofill,
 } from '../../../../../../actions';
-import API from '../../../../../../../../common/API';
 import '../../SystemSettings.css';
 
 const FormItem = Form.Item;
@@ -79,23 +77,31 @@ class EditIncidentTypeForm extends Component {
   };
 
   incidentTypeEdit = (incidentTypeId, updates) => {
-    this.setState({ submitting: true });
-    from(API.editIncidentType(incidentTypeId, updates)).subscribe(result => {
-      if (result.error) {
-        this.setState({ submitting: false });
-      } else {
-        const { incidentTypeUpdate } = this.props;
-        incidentTypeUpdate(result);
-        this.setState({ submitting: false });
-        this.handleCancel();
-      }
+    const { incidentTypeUpdate } = this.props;
+    incidentTypeUpdate(incidentTypeId, updates);
+    this.setState({ submitting: false });
+    this.handleCancel();
+  };
+
+  onClick = () => {
+    const { colorSelected, form } = this.props;
+    form.setFieldsValue({
+      prevColor: '',
+      color: colorSelected,
     });
+  };
+
+  handleChangeComplete = color => {
+    const { autoFillColor } = this.props;
+    autoFillColor(color.hex);
+    this.setState({ background: color.hex });
+    this.onClick();
   };
 
   render() {
     const { form } = this.props;
     const { submitting, visible, background } = this.state;
-    const { getFieldDecorator, setFieldsValue, getFieldValue } = form;
+    const { getFieldDecorator, getFieldValue } = form;
 
     getFieldDecorator('prevColor');
 
@@ -127,21 +133,6 @@ class EditIncidentTypeForm extends Component {
           offset: 8,
         },
       },
-    };
-
-    const onClick = () => {
-      const { colorSelected } = this.props;
-      setFieldsValue({
-        prevColor: '',
-        color: colorSelected,
-      });
-    };
-
-    const handleChangeComplete = color => {
-      const { autoFillColor } = this.props;
-      autoFillColor(color.hex);
-      this.setState({ background: color.hex });
-      onClick();
     };
 
     return (
@@ -241,7 +232,7 @@ class EditIncidentTypeForm extends Component {
               )}
             </FormItem>
             <Divider />
-            {getFieldValue('prevColor') === '9' ? (
+            {getFieldValue('prevColor') === '' ? (
               <FormItem {...formItemLayout} label="Color code">
                 {getFieldDecorator('color')(<Input placeholder="Color code" />)}
               </FormItem>
@@ -253,7 +244,7 @@ class EditIncidentTypeForm extends Component {
             <FormItem {...formItemLayout} label="Pick color">
               <ChromePicker
                 color={background}
-                onChangeComplete={handleChangeComplete}
+                onChangeComplete={this.handleChangeComplete}
               />
             </FormItem>
             <FormItem {...tailFormItemLayout}>

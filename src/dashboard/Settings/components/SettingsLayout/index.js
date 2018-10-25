@@ -52,13 +52,13 @@ class SettingsLayout extends React.Component {
         >
           <Row>
             <Col span={4} className={cx('section')}>
-              <ColHeader className={cx('ContentHeader')} />
+              <ColHeader className={cx('SettingLayoutContentHeader')} />
               <Content className={cx('SettingLayoutContent')}>
                 <SidebarSettings title="System" />
               </Content>
             </Col>
             <Col span={6} className={cx('section')}>
-              <ColHeader className={cx('ContentHeader')}>
+              <ColHeader className={cx('SettingLayoutContentHeader')}>
                 <Row type="flex" justify="space-around">
                   <Col span={1}>
                     <Checkbox />
@@ -78,7 +78,7 @@ class SettingsLayout extends React.Component {
               </Content>
             </Col>
             <Col span={14} className={cx('section')}>
-              <ColHeader className={cx('ContentHeader')}>
+              <ColHeader className={cx('SettingLayoutContentHeader')}>
                 <Row>
                   <Col span={1}>
                     <AddNewIncidentType />

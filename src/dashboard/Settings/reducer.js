@@ -1,10 +1,11 @@
 import {
-  STORE_INCIDENTS_TYPE,
+  STORE_INCIDENTS_TYPE_SUCCESS,
   SELECT_INCIDENT_TYPE,
   GET_INCIDENTS_TYPE,
   ADD_INCIDENT_TYPE,
   UPDATE_INCIDENT_TYPE,
   SELECT_COLOR_AUTOFILL,
+  FETCH_INCIDENT_TYPE_FAILURE,
 } from './actions';
 
 /**
@@ -29,7 +30,7 @@ const initialState = {
   error: null,
 };
 
-export default function incidentsType(state = initialState, action) {
+export default function incidentsTypeSettings(state = initialState, action) {
   switch (action.type) {
     case GET_INCIDENTS_TYPE:
       return {
@@ -39,15 +40,20 @@ export default function incidentsType(state = initialState, action) {
         total: 0,
       };
 
-    case STORE_INCIDENTS_TYPE: {
+    case STORE_INCIDENTS_TYPE_SUCCESS:
       return {
-        data: action.payload.incidentsType,
-        total: action.payload.incidentsType.length,
+        data: action.payload.incidentsType.data,
+        total: action.payload.incidentsType.total,
         isLoading: false,
         error: null,
-        incidentType: action.payload.incidentsType[0],
+        incidentType: action.payload.incidentsType.data[0],
       };
-    }
+    case FETCH_INCIDENT_TYPE_FAILURE:
+      return {
+        data: [],
+        isLoading: false,
+        error: action.payload,
+      };
 
     case SELECT_INCIDENT_TYPE:
       return {
@@ -64,7 +70,7 @@ export default function incidentsType(state = initialState, action) {
     case UPDATE_INCIDENT_TYPE: {
       const data = [...state.data];
       const { incidentType } = action;
-      const { _id: id } = incidentsType;
+      const { _id: id } = incidentsTypeSettings;
       const index = data.findIndex(({ _id }) => _id === id);
       data[index] = incidentType;
       return {

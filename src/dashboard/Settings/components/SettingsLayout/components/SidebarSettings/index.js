@@ -5,7 +5,7 @@ import { Row, Col, Divider } from 'antd';
 function SytemDetail({ title, names }) {
   return (
     <div>
-      {title}
+      <h3>{title}</h3>
       <Row>
         <Col span="24">
           {names.map(({ name, message }, i) => (

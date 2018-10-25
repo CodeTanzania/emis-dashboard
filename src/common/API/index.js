@@ -50,7 +50,10 @@ const API = {
   getIncidentType: () =>
     fetch(`${INCIDENTS_API}/incidenttypes`)
       .then(res => res.json())
-      .then(response => response.data),
+      .then(response => {
+        const { data, total } = response;
+        return { data, total };
+      }),
 
   createIncidentType: data => {
     const url = `${INCIDENTS_API}/incidenttypes`;
@@ -63,7 +66,7 @@ const API = {
     };
     return fetch(url, config).then(res => res.json());
   },
-  editIncidentType: (incidentTypeId, updates) => {
+  updateIncidentType: (incidentTypeId, updates) => {
     const url = `${INCIDENTS_API}/incidenttypes/${incidentTypeId}`;
     const config = {
       method: 'PATCH',
@@ -78,7 +81,10 @@ const API = {
   searchIncidentsType: searchValue =>
     fetch(`${INCIDENTS_API}/incidenttypes?q=${searchValue}`)
       .then(res => res.json())
-      .then(response => response.data),
+      .then(response => {
+        const { data, total } = response;
+        return { data, total };
+      }),
 };
 
 export default API;

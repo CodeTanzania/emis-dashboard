@@ -8,14 +8,16 @@ import {
 } from '../../dashboard/Stakeholders/epics';
 import {
   getIncidentsTypeEpic,
-  addIncidentType,
+  addIncidentTypeEpic,
   searchIncidentTypeEpic,
+  updateIncidentTypeEpic,
 } from '../../dashboard/Settings/epic';
 
 export default combineEpics(
   fetchStakeholdersEpic,
   searchStakeholdersEpic,
-  addIncidentType,
+  addIncidentTypeEpic,
   getIncidentsTypeEpic,
-  searchIncidentTypeEpic
+  searchIncidentTypeEpic,
+  updateIncidentTypeEpic
 );

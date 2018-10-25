@@ -18,10 +18,9 @@ function IncidentTypeListFooter({ total }) {
         </Col>
         <Col span={10}>
           <ButtonGroup>
-            <Button icon="reload" title="Refresh incidents-type" />
-            <Button icon="bars" title="Sort incidents-type" />
             <Button icon="left" title="Previous" />
             <Button icon="right" title="Next" />
+            <Button icon="reload" title="Refresh incidents-type" />
           </ButtonGroup>
         </Col>
       </Row>

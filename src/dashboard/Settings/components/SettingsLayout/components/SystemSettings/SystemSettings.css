@@ -10,9 +10,6 @@
     font-size: 12px;
     color: rgb(144, 144, 144);
 }
-.isSelected {
-    background: #f0f0f0;
-  }
   .name{
     cursor: pointer;
   }
