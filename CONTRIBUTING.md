@@ -129,5 +129,32 @@ We recommend prefix commit message subject line with the module/section you are 
 - If applied, this commit will ***merge pull request #123 from user/branch***.
 
 #### 5. <a name="layout-guide">UI Layout Guide</a>
+We agreed to use the layout displayed on the image below as the base layout UI for all components.
+
+![Layout Guideline](references/layout_guideline.jpg "Layout Guideline")
+ Here's [the link](https://xd.adobe.com/view/0a273792-7528-4de3-6930-6289f81d1849-7c16/screen/3d8511dd-df43-4dd4-a623-e0bd2ebb4ae5/Layout-Guideline?fullscreen)
+ to view the layout design on Adobe XD
 
 #### 6. <a name="typography">Project Typography</a>
+##### **Font Family**
+We use Lato as the main font family for all UI components.
+
+
+##### **Font Size**
+The base font size is 14px. 
+
+Headers will use font sizes as shown below:
+ 
+ h1 - 22px
+
+ h2 - 20px
+
+ h3 - 18px
+
+ h4 - 16px
+
+##### **Line Height**
+The line height is 1.6 for all texts
+
+Here's [the link](https://xd.adobe.com/view/0a273792-7528-4de3-6930-6289f81d1849-7c16/screen/2db583e2-4cc2-40fc-845b-0e63c2aeb9e0/Design-Specs?fullscreen) view the typography guide and other design specs on Adobe XD. 
+
