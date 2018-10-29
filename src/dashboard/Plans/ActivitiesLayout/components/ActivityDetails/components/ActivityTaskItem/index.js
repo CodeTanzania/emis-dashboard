@@ -137,7 +137,6 @@ function ActivityTaskItem({
         className="ActivityTaskItem"
         style={{ opacity: isDragging ? 0.5 : 1 }}
       >
-        {/* TODO use classnames here */}
         <Row>
           <Col span={1} className="checkboxContainer">
             <Checkbox />

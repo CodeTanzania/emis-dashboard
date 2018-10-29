@@ -2,8 +2,33 @@ import {
   GET_PLANS_ERROR,
   GET_PLANS_START,
   GET_PLANS_SUCCESS,
+  GET_PLAN_ACTIVITIES_ERROR,
+  GET_PLAN_ACTIVITIES_START,
+  GET_PLAN_ACTIVITIES_SUCCESS,
+  GET_PLAN_ACTIVITY_PROCEDURES_ERROR,
+  GET_PLAN_ACTIVITY_PROCEDURES_START,
+  GET_PLAN_ACTIVITY_PROCEDURES_SUCCESS,
   SELECT_PLAN,
+  SELECT_PLAN_ACTIVITY,
 } from './actions';
+
+/* initial state */
+const defaultPlanActivities = {
+  Mitigation: [],
+  Preparedness: [],
+  Response: [],
+  Recovery: [],
+  page: 1,
+  total: 0,
+  loading: false,
+};
+
+const defaultState = {
+  data: [],
+  page: 1,
+  total: 0,
+  loading: false,
+};
 
 /*
  *------------------------------------------------------------------------------
@@ -84,8 +109,23 @@ export function selectedPlan(state = null, action) {
  * @version 0.1.0
  * @since 0.1.0
  */
-export function planActivities(state = {}, action) {
+export function planActivities(state = defaultPlanActivities, action) {
   switch (action.type) {
+    case GET_PLAN_ACTIVITIES_START:
+      return Object.assign({}, state, {
+        Mitigation: [],
+        Preparedness: [],
+        Response: [],
+        Recovery: [],
+        loading: true,
+      });
+    case GET_PLAN_ACTIVITIES_SUCCESS:
+      return Object.assign({}, state, action.payload.data, { loading: false });
+    case GET_PLAN_ACTIVITIES_ERROR:
+      return Object.assign({}, state, {
+        error: action.payload.data,
+        loading: false,
+      });
     default:
       return state;
   }
@@ -104,8 +144,10 @@ export function planActivities(state = {}, action) {
  * @version 0.1.0
  * @since 0.1.0
  */
-export function selectedPlanActivity(state = {}, action) {
+export function selectedPlanActivity(state = null, action) {
   switch (action.type) {
+    case SELECT_PLAN_ACTIVITY:
+      return Object.assign({}, state, action.payload.data);
     default:
       return state;
   }
@@ -123,8 +165,22 @@ export function selectedPlanActivity(state = {}, action) {
  * @version 0.1.0
  * @since 0.1.0
  */
-export function planActivityProcedures(state = {}, action) {
+export function planActivityProcedures(state = defaultState, action) {
   switch (action.type) {
+    case GET_PLAN_ACTIVITY_PROCEDURES_START:
+      return Object.assign({}, state, { data: [], loading: true });
+    case GET_PLAN_ACTIVITY_PROCEDURES_SUCCESS:
+      return Object.assign({}, state, {
+        data: action.payload.data,
+        page: action.meta.page,
+        total: action.meta.total,
+        loading: false,
+      });
+    case GET_PLAN_ACTIVITY_PROCEDURES_ERROR:
+      return Object.assign({}, state, {
+        error: action.payload.data,
+        loading: false,
+      });
     default:
       return state;
   }

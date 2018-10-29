@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Select from '../../../common/components/Select';
 import Toolbar from '../../../common/components/Toolbar';
+import { getPlanActivities, selectPlan } from '../actions';
 import PlanCard from './components/PlanCard';
 import PlanForm from './components/PlanForm';
 import './styles.css';
@@ -31,7 +32,7 @@ const options = [
 class PlansLayout extends Component {
   state = { showForm: false };
 
-  propTypes = {
+  static propTypes = {
     plans: PropTypes.arrayOf(
       PropTypes.shape({
         incidentType: PropTypes.shape({
@@ -40,7 +41,12 @@ class PlansLayout extends Component {
         }),
       })
     ),
-    loading: PropTypes.boolean,
+    loading: PropTypes.bool.isRequired,
+    onSelectPlan: PropTypes.func.isRequired,
+  };
+
+  static defaultProps = {
+    plans: [],
   };
 
   /**
@@ -71,53 +77,54 @@ class PlansLayout extends Component {
 
   render() {
     const { showForm } = this.state;
-    const { plans, loading } = this.props;
+    const { plans, loading, onSelectPlan } = this.props;
 
     return (
-      <Layout className="PlansLayout">
-        {/* start primary header */}
-        <Header className="header">
-          <h3>Plans</h3>
-        </Header>
-        {/* end primary header */}
-        {/* Toolbar */}
-        <Toolbar>
-          <Filters span={21}>
-            <Row>
-              <Col span={4}>
-                <Select
-                  options={options}
-                  placeholder="Select Incident type"
-                  style={{ width: '250px' }}
-                  onChange={() => {}}
-                />
-              </Col>
-            </Row>
-          </Filters>
-          <Actions span={3}>
-            <Row type="flex" justify="center">
-              <Col span={12}>
-                <Button
-                  icon="plus"
-                  type="primary"
-                  title="Create New Plan"
-                  onClick={this.showPlanForm}
-                >
-                  New Plan
-                </Button>
-              </Col>
-            </Row>
-          </Actions>
-        </Toolbar>
-        {/* end Toolbar */}
-        {/* Plan list content */}
-        <Content className="content">
-          <Spin
-            indicator={antIcon}
-            size="large"
-            tip="Loading Plans ..."
-            spinning={loading}
-          >
+      <Spin
+        indicator={antIcon}
+        size="large"
+        tip="Loading Plans ..."
+        spinning={loading}
+        style={{ top: '30%' }}
+      >
+        <Layout className="PlansLayout">
+          {/* start primary header */}
+          <Header className="header">
+            <h3>Plans</h3>
+          </Header>
+          {/* end primary header */}
+          {/* Toolbar */}
+          <Toolbar>
+            <Filters span={21}>
+              <Row>
+                <Col span={4}>
+                  <Select
+                    options={options}
+                    placeholder="Select Incident type"
+                    style={{ width: '250px' }}
+                    onChange={() => {}}
+                  />
+                </Col>
+              </Row>
+            </Filters>
+            <Actions span={3}>
+              <Row type="flex" justify="center">
+                <Col span={12}>
+                  <Button
+                    icon="plus"
+                    type="primary"
+                    title="Create New Plan"
+                    onClick={this.showPlanForm}
+                  >
+                    New Plan
+                  </Button>
+                </Col>
+              </Row>
+            </Actions>
+          </Toolbar>
+          {/* end Toolbar */}
+          {/* Plan list content */}
+          <Content className="content">
             {/* plan list container */}
             <div className="listCardContainer">
               {/* plan list */}
@@ -135,6 +142,9 @@ class PlansLayout extends Component {
                       updatedAt={plan.updatedAt}
                       color={plan.incidentType.color}
                       activityCount={20}
+                      onClickPlan={() => {
+                        onSelectPlan(plan);
+                      }}
                     />
                   </List.Item>
                 )}
@@ -142,24 +152,24 @@ class PlansLayout extends Component {
               {/* end plan list */}
             </div>
             {/* end plan list container */}
-          </Spin>
-        </Content>
-        {/* end Plan list content */}
-        {/* drawer for showing plan form */}
-        <Drawer
-          title="Create New Plan"
-          placement="right"
-          width="35%"
-          onClose={this.hidePlanForm}
-          maskClosable={false}
-          visible={showForm}
-        >
-          {/* plan form */}
-          <PlanForm onCancel={this.hidePlanForm} />
-          {/* end plan form */}
-        </Drawer>
-        {/* end drawer for showing plan form */}
-      </Layout>
+          </Content>
+          {/* end Plan list content */}
+          {/* drawer for showing plan form */}
+          <Drawer
+            title="Create New Plan"
+            placement="right"
+            width="35%"
+            onClose={this.hidePlanForm}
+            maskClosable={false}
+            visible={showForm}
+          >
+            {/* plan form */}
+            <PlanForm onCancel={this.hidePlanForm} />
+            {/* end plan form */}
+          </Drawer>
+          {/* end drawer for showing plan form */}
+        </Layout>
+      </Spin>
     );
   }
 }
@@ -169,4 +179,14 @@ const mapStateToProps = state => ({
   loading: state.plans.loading,
 });
 
-export default connect(mapStateToProps)(PlansLayout);
+const mapDispatchToProps = dispatch => ({
+  onSelectPlan(plan) {
+    dispatch(selectPlan(plan));
+    dispatch(getPlanActivities());
+  },
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PlansLayout);

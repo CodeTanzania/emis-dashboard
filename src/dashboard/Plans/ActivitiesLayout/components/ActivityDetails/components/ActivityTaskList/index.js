@@ -1,7 +1,9 @@
 import { Button, List, Modal } from 'antd';
+import flow from 'lodash/flow';
 import React, { Component } from 'react';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
+import { connect } from 'react-redux';
 import shuffleList from '../../../../../../../common/lib/util';
 import ActivityTaskForm from '../ActivityTaskForm';
 import ActivityTaskItem from '../ActivityTaskItem';
@@ -20,26 +22,24 @@ import './styles.css';
  */
 class ActivityTaskList extends Component {
   state = {
-    tasks: [
-      {
-        description: 'Notify respective stakeholders on the upcoming cleanup',
-        number: 1,
-      },
-      {
-        description: 'Make sure contractors are well organized and prepared',
-        number: 2,
-      },
-      {
-        description: 'Notify Ward leaders about upcoming cleanup',
-        number: 3,
-      },
-      {
-        description: 'Make sure the Municipal responsible is notified',
-        number: 4,
-      },
-    ],
+    procedures: [],
     showActivityTaskForm: false,
   };
+
+  constructor(props) {
+    super(props);
+    const { procedures } = this.props;
+    this.setState({ procedures });
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    if (props.procedures !== state.procedures) {
+      return {
+        procedures: props.procedures,
+      };
+    }
+    return null;
+  }
 
   /**
    * Shuffle the activity task items in a list after based on preferred order
@@ -56,8 +56,8 @@ class ActivityTaskList extends Component {
    * @since 0.1.0
    */
   shuffleTaskItem = (fromIndex, toIndex) => {
-    const { tasks } = this.state;
-    this.setState({ tasks: shuffleList(tasks, fromIndex, toIndex) });
+    const { procedures } = this.state;
+    this.setState({ procedures: shuffleList(procedures, fromIndex, toIndex) });
   };
 
   /**
@@ -87,10 +87,10 @@ class ActivityTaskList extends Component {
   };
 
   render() {
-    const { tasks, showActivityTaskForm } = this.state;
+    const { procedures, showActivityTaskForm } = this.state;
     return (
       <div className="ActivityTaskList">
-        {/* Activity tasks section header */}
+        {/* Activity procedures section header */}
         <h4 className="header">
           Standard Operating Procedures (SOP)
           <Button
@@ -101,10 +101,10 @@ class ActivityTaskList extends Component {
             onClick={this.handleOpenActivityTaskForm}
           />
         </h4>
-        {/* end Activity tasks section header */}
+        {/* end Activity procedures section header */}
         {/* start activity task draggable list */}
         <List
-          dataSource={tasks}
+          dataSource={procedures}
           renderItem={(task, index) => (
             <ActivityTaskItem
               index={index}
@@ -130,4 +130,11 @@ class ActivityTaskList extends Component {
   }
 }
 
-export default DragDropContext(HTML5Backend)(ActivityTaskList);
+const mapStateToProps = state => ({
+  procedures: state.planActivityProcedures.data,
+});
+
+export default flow(
+  DragDropContext(HTML5Backend),
+  connect(mapStateToProps)
+)(ActivityTaskList);

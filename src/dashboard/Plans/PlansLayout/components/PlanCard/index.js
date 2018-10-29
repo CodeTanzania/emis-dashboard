@@ -10,12 +10,18 @@ import './styles.css';
  * A card component renders in plan list
  *
  * @function
- * @name Plan
+ * @name PlanCard
  *
  * @param {Object} props
- * @param {string} props.name
- * @param {string} props.incident
+ * @param {string} props.incidentType
+ * @param {string} props.jurisdiction
+ * @param {string} props.description
+ * @param {string} props.nature
+ * @param {string} props.family
  * @param {number} props.activityCount
+ * @param {string} props.color
+ * @param {Date} updatedAt
+ * @param {function} onClickPlan
  *
  * @version 0.1.0
  * @since 0.1.0
@@ -29,9 +35,10 @@ export default function PlanCard({
   activityCount,
   color,
   updatedAt,
+  onClickPlan,
 }) {
   return (
-    <Link to="/plans/plan/activities" title={description}>
+    <Link to="/plans/plan/activities" title={description} onClick={onClickPlan}>
       <Card
         className="PlanCard"
         style={{
@@ -89,4 +96,5 @@ PlanCard.propTypes = {
   activityCount: PropTypes.number,
   color: PropTypes.string,
   updatedAt: PropTypes.instanceOf(Date).isRequired,
+  onClickPlan: PropTypes.func.isRequired,
 };

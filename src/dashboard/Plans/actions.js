@@ -1,3 +1,5 @@
+import groupBy from 'lodash/groupBy';
+
 /*
  *------------------------------------------------------------------------------
  * Plan action types
@@ -32,7 +34,7 @@ export const SELECT_PLAN = 'SELECT_PLAN';
  * Plan activity action types
  *------------------------------------------------------------------------------
  */
-/* get/fetch actions type */
+/* get/fetch actions types */
 export const GET_PLAN_ACTIVITIES_START = 'GET_PLAN_ACTIVITIES_START';
 export const GET_PLAN_ACTIVITIES_SUCCESS = 'GET_PLAN_ACTIVITIES_SUCCESS';
 export const GET_PLAN_ACTIVITIES_ERROR = 'GET_PLAN_ACTIVITIES_ERROR';
@@ -52,15 +54,63 @@ export const SELECT_PLAN_ACTIVITY = 'SELECT_PLAN_ACTIVITY';
 
 /*
  *------------------------------------------------------------------------------
+ * Plan activity Procedures action types
+ *------------------------------------------------------------------------------
+ */
+
+/* get/fetch actions types */
+export const GET_PLAN_ACTIVITY_PROCEDURES_START =
+  'GET_PLAN_ACTIVITY_PROCEDURES_START';
+export const GET_PLAN_ACTIVITY_PROCEDURES_SUCCESS =
+  'GET_PLAN_ACTIVITY_PROCEDURES_SUCCESS';
+export const GET_PLAN_ACTIVITY_PROCEDURES_ERROR =
+  'GET_PLAN_ACTIVITY_PROCEDURES_ERROR';
+
+/* post action types */
+export const POST_PLAN_ACTIVITY_PROCEDURES_START =
+  'POST_PLAN_ACTIVITY_PROCEDURES_START';
+export const POST_PLAN_ACTIVITY_PROCEDURES_SUCCESS =
+  'POST_PLAN_ACTIVITY_PROCEDURES_SUCCESS';
+export const POST_PLAN_ACTIVITY_PROCEDURES_ERROR =
+  'POST_PLAN_ACTIVITY_PROCEDURES_ERROR';
+
+/* put action types */
+export const PUT_PLAN_ACTIVITY_PROCEDURES_START =
+  'PUT_PLAN_ACTIVITY_PROCEDURES_START';
+export const PUT_PLAN_ACTIVITY_PROCEDURES_SUCCESS =
+  'PUT_PLAN_ACTIVITY_PROCEDURES_SUCCESS';
+export const PUT_PLAN_ACTIVITY_PROCEDURES_ERROR =
+  'PUT_PLAN_ACTIVITY_PROCEDURES_ERROR';
+
+/*
+ *------------------------------------------------------------------------------
  * Plan action creators
  *------------------------------------------------------------------------------
  */
 
 /**
+ * Action dispatched when a plan is selected
+ *
+ * @function
+ * @name selectPlan
+ *
+ * @param {Object} plan - Selected plan object
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function selectPlan(plan) {
+  return {
+    type: SELECT_PLAN,
+    payload: { data: plan },
+  };
+}
+
+/**
  * Action dispatched to fetch plans from the API
  *
  * @function
- * @name fetchPlans
+ * @name fetchPlansStart
  *
  * @returns {Object} - Redux action for fetching plans
  *
@@ -128,7 +178,7 @@ export function getPlansError(error) {
  * Action dispatched when posting plan to the API
  *
  * @function
- * @name postPlan
+ * @name postPlanStart
  *
  * @returns {Object} - Redux action
  *
@@ -143,6 +193,9 @@ export function postPlanStart() {
 
 /**
  * Action dispatched when posting plan to the API is successful
+ *
+ * @function
+ * @name postPlanSuccess
  *
  * @param {Object[]} plans - updated list of plans from the API after post action
  * @param {number} page=1 - current plan page
@@ -168,6 +221,9 @@ export function postPlanSuccess(plans, page = 1, total = 0) {
 /**
  * Action dispatched when posting plan to the API fails
  *
+ * @function
+ * @name postPlanError
+ *
  * @param {Error} error - Error object when posting plans fails
  * @returns {Object} - Redux action
  *
@@ -185,10 +241,28 @@ export function postPlanError(error) {
 }
 
 /**
+ * Action dispatched when plan activity is selected
+ *
+ * @param {Object} activity
+ * @returns {Object} - Redux action
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function selectPlanActivity(activity) {
+  return {
+    type: SELECT_PLAN_ACTIVITY,
+    payload: {
+      data: activity,
+    },
+  };
+}
+
+/**
  * Action dispatched when fetching plan activities from API
  *
  * @function
- * @name fetchActions
+ * @name getPlanActivitiesStart
  *
  * @param {Object} planId - Redux action for fetching plan actions
  * @param {number} page - Page to fetch plan activities from.
@@ -252,6 +326,74 @@ export function getPlanActivitiesError(error) {
   };
 }
 
+/**
+ * Action dispatched when fetching plan activity procedures from API
+ *
+ * @function
+ * @name getPlanActivityProceduresStart
+ *
+ * @param {Object} planId - Redux action for fetching plan actions
+ * @param {number} page - Page to fetch plan activities from.
+ * @returns {Object} - Redux action
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function getPlanActivityProceduresStart() {
+  return {
+    type: GET_PLAN_ACTIVITY_PROCEDURES_START,
+  };
+}
+
+/**
+ * Action dispatched when fetching plan activity Procedures from API is successful
+ *
+ * @function
+ * @name getPlanActivityProceduresSuccess
+ *
+ * @param {Object[]} activities - list of activities from the server
+ * @param {number} page - current activities page number
+ * @param {number} total - total number of activities in a plan
+ * @returns {Object} - Redux action
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function getPlanActivityProceduresSuccess(procedures, page, total) {
+  return {
+    type: GET_PLAN_ACTIVITY_PROCEDURES_SUCCESS,
+    payload: {
+      data: procedures,
+    },
+    meta: {
+      page,
+      total,
+    },
+  };
+}
+
+/**
+ * Action dispatched when fetching plan activity procedures from API fails
+ *
+ * @function
+ * @name getPlanActivityProceduresError
+ *
+ * @param {Error} error - Error instance
+ * @returns {Object} - Redux action
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function getPlanActivityProceduresError(error) {
+  return {
+    type: GET_PLAN_ACTIVITY_PROCEDURES_ERROR,
+    payload: {
+      data: error,
+    },
+    error: true,
+  };
+}
+
 /*
  * -----------------------------------------------------------------------------
  * Thunks
@@ -259,7 +401,6 @@ export function getPlanActivitiesError(error) {
  */
 
 /**
- * getPlans thunk
  * A Thunk function which perform asynchronous fetching of plans from the API
  *
  * @function
@@ -284,6 +425,66 @@ export function getPlans() {
       })
       .catch(error => {
         dispatch(getPlansError(error));
+      });
+  };
+}
+
+/**
+ * A thunk function which perform asynchronous fetching of plan activities from API
+ *
+ * @function
+ * @name getPlanActivities
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function getPlanActivities() {
+  return (dispatch, getState, API) => {
+    dispatch(getPlanActivitiesStart());
+
+    const planId = getState().selectedPlan._id; //eslint-disable-line
+
+    return API.getPlanActivities(planId)
+      .then(response => {
+        const data = groupBy(response.data.data, 'phase');
+        data.page = response.data.page;
+        data.total = response.data.total;
+        dispatch(getPlanActivitiesSuccess(data));
+      })
+      .catch(error => {
+        dispatch(getPlanActivitiesError(error));
+      });
+  };
+}
+
+/**
+ * A thunk function which perform asynchronous fetching of plan activity
+ * procedures from API
+ *
+ * @function
+ * @name getPlanActivityProcedures
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function getPlanActivityProcedures() {
+  return (dispatch, getState, API) => {
+    dispatch(getPlanActivityProceduresStart());
+
+    const activityId = getState().selectedPlanActivity._id; //eslint-disable-line
+
+    return API.getPlanActivityProcedures(activityId)
+      .then(response => {
+        dispatch(
+          getPlanActivityProceduresSuccess(
+            response.data.data,
+            response.data.page,
+            response.data.total
+          )
+        );
+      })
+      .catch(error => {
+        dispatch(getPlanActivityProceduresError(error));
       });
   };
 }

@@ -1,7 +1,7 @@
 .ActivityCard {
   width: 90%;
   margin: 5px auto;
-  border-left: 3px solid #0092fd;
+  /* border-left: 3px solid #0092fd; */
 }
 
 .ActivityCard:hover {

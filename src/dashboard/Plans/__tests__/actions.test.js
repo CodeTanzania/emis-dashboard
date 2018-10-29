@@ -70,4 +70,41 @@ describe('Plans', () => {
       });
     });
   });
+
+  describe('Procedures(SOP):Actions', () => {
+    it('should return get plan activity procedures action', () => {
+      expect(Actions.getPlanActivityProceduresStart()).toEqual({
+        type: Actions.GET_PLAN_ACTIVITY_PROCEDURES_START,
+      });
+    });
+
+    it('should return get plan activity procedures success action', () => {
+      const procedures = [];
+
+      expect(
+        Actions.getPlanActivityProceduresSuccess(procedures, 1, 200)
+      ).toEqual({
+        type: Actions.GET_PLAN_ACTIVITY_PROCEDURES_SUCCESS,
+        payload: {
+          data: procedures,
+        },
+        meta: {
+          page: 1,
+          total: 200,
+        },
+      });
+    });
+
+    it('should return get activities error action', () => {
+      const error = new Error();
+
+      expect(Actions.getPlanActivityProceduresError(error)).toEqual({
+        type: Actions.GET_PLAN_ACTIVITY_PROCEDURES_ERROR,
+        payload: {
+          data: error,
+        },
+        error: true,
+      });
+    });
+  });
 });

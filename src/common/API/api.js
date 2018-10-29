@@ -21,7 +21,7 @@ export function getPlans(page = 1) {
 }
 
 /**
- * Get Plans from the API
+ * Get Plans Activities from the API
  *
  * @function
  * @name getPlanActivities
@@ -35,9 +35,37 @@ export function getPlans(page = 1) {
  * @since 0.1.0
  */
 export function getPlanActivities(planId, page = 1) {
-  return axios.get(`/plans/${planId}/activities`, {
+  return axios.get(`/activities`, {
     params: {
       page,
+      filter: {
+        plan: planId,
+      },
+    },
+  });
+}
+
+/**
+ * Get Standard operating procedures(SOP)  from the API
+ *
+ * @function
+ * @name getPlanActivityProcedures
+ *
+ * @param {string} activityId - Activity Id
+ * @param {number} page=1 - Page to retrieve results from
+ *
+ * @returns {Promise}
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function getPlanActivityProcedures(activityId, page = 1) {
+  return axios.get(`/procedures`, {
+    params: {
+      page,
+      filter: {
+        activity: activityId,
+      },
     },
   });
 }

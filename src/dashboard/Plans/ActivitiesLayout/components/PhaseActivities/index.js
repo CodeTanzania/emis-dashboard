@@ -1,7 +1,7 @@
 import { Badge, Button, Col, Layout, List, Popover, Row } from 'antd';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import ActionCard from '../ActivityCard';
+import ActivityCard from '../ActivityCard';
 import './style.css';
 
 /* local constants */
@@ -26,7 +26,7 @@ function PhaseOptions({ onClickAddActivity }) {
 
 /**
  * Phase Activities component
- * This renders Phase Header and Phase content which is a list of actions
+ * This renders Phase Header and Phase content which is a list of activities
  * under a particular phase.
  *
  * @function
@@ -41,17 +41,19 @@ export default class PhaseActivities extends Component {
   /* default props */
   static defaultProps = {
     count: 0,
-    actions: [],
+    activities: [],
   };
 
   /* props validation */
   static propTypes = {
     title: PropTypes.string.isRequired,
     count: PropTypes.number,
-    actions: PropTypes.arrayOf(
+    activities: PropTypes.arrayOf(
       PropTypes.shape({
+        plan: PropTypes.shape({ description: PropTypes.string }),
+        incidentType: PropTypes.shape({ name: PropTypes.string }),
         name: PropTypes.string,
-        incident: PropTypes.string,
+        description: PropTypes.string,
         taskCount: PropTypes.number,
       })
     ),
@@ -60,7 +62,7 @@ export default class PhaseActivities extends Component {
   };
 
   /**
-   * Handle Antd popover visible prop
+   * Handle popover visible prop
    *
    * @function
    * @name handlePopoverVisibleChange
@@ -75,7 +77,7 @@ export default class PhaseActivities extends Component {
   };
 
   /**
-   * Hide Antd popover component
+   * Hide popover component
    *
    * @function
    * @name hidePopover
@@ -103,7 +105,7 @@ export default class PhaseActivities extends Component {
   };
 
   render() {
-    const { title, count, actions, onClickCard } = this.props;
+    const { title, count, activities, onClickCard } = this.props;
 
     const { showPopover } = this.state;
     return (
@@ -147,11 +149,17 @@ export default class PhaseActivities extends Component {
           {/* Activity list */}
           <List
             grid={{ xs: 1, sm: 1, md: 1, lg: 1, xl: 1, xxl: 1 }}
-            dataSource={actions}
+            dataSource={activities}
             bordered={false}
-            renderItem={action => (
+            renderItem={activity => (
               <List.Item>
-                <ActionCard {...action} onClick={onClickCard} />
+                <ActivityCard
+                  name={activity.name}
+                  taskCount={20}
+                  onClick={() => {
+                    onClickCard(activity);
+                  }}
+                />
               </List.Item>
             )}
           />
