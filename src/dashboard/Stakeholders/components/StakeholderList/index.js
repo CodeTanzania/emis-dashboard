@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { searchStakeholders } from '../../actions';
 /* import component */
-import ListFooter from './components/ListFooter';
+import StakeholderListFooter from './components/StakeholderListFooter';
 import StakeholderItem from './components/StakeholderItem';
 
 const { Search } = Input;
@@ -39,11 +39,6 @@ class StakeholderList extends Component {
     stakeholders: PropTypes.arrayOf(PropTypes.object).isRequired,
     loading: PropTypes.bool.isRequired,
   };
-
-  // componentDidMount() {
-  //   const { handleFetchStakeholders } = this.props;
-  //   handleFetchStakeholders();
-  // }
 
   onSearch = searchText => {
     const { handleSearchStakeholders } = this.props;
@@ -90,7 +85,7 @@ class StakeholderList extends Component {
             dataSource={stakeholders}
             renderItem={item => <StakeholderItem stakeholder={item} />}
           />
-          {stakeholders.length ? <ListFooter /> : ''}
+          {stakeholders.length ? <StakeholderListFooter /> : ''}
         </div>
       </Fragment>
     );

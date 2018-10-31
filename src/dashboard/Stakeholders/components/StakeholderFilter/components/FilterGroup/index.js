@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Badge, Checkbox, Col, List, Row } from 'antd';
+import { Checkbox, Col, List, Row } from 'antd';
 import { connect } from 'react-redux';
-import { toggleStakeholderFilter } from '../../../../actions';
+import { toggleFilter } from '../../../../actions';
 
 /**
  * Render filters under their respective groups
@@ -18,13 +18,9 @@ import { toggleStakeholderFilter } from '../../../../actions';
  * @version 0.1.0
  * @since 0.1.0
  */
-const FiltersGroup = ({
-  groupName,
-  filters,
-  handleToggleStakeholderFilter,
-}) => {
+const FiltersGroup = ({ groupName, filters, handleToggleFilter }) => {
   const onChange = (filter, selected) => {
-    handleToggleStakeholderFilter(groupName, filter.name, selected);
+    handleToggleFilter(groupName, filter.name, selected);
   };
 
   return (
@@ -49,7 +45,7 @@ const FiltersGroup = ({
                       <span>{item.name}</span>
                     </Checkbox>
                   </Col>
-                  <Col span={4}>
+                  {/* <Col span={4}>
                     <Badge
                       count={item.count}
                       style={{
@@ -58,7 +54,7 @@ const FiltersGroup = ({
                         boxShadow: '0 0 0 1px #d9d9d9 inset',
                       }}
                     />
-                  </Col>
+                  </Col> */}
                 </Row>
               }
             />
@@ -74,10 +70,10 @@ FiltersGroup.propTypes = {
   groupName: PropTypes.string.isRequired,
   filters: PropTypes.arrayOf(PropTypes.shape({ name: PropTypes.string }))
     .isRequired,
-  handleToggleStakeholderFilter: PropTypes.func.isRequired,
+  handleToggleFilter: PropTypes.func.isRequired,
 };
 
 export default connect(
   null,
-  { handleToggleStakeholderFilter: toggleStakeholderFilter }
+  { handleToggleFilter: toggleFilter }
 )(FiltersGroup);

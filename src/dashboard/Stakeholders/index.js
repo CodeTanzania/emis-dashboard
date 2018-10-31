@@ -10,7 +10,7 @@ import { Layout, Button, Drawer, Spin } from 'antd';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { fetchStakeholders } from './actions';
+import { initStakeholders } from './actions';
 import StakeholderFilter from './components/StakeholderFilter';
 import StakeholderList from './components/StakeholderList';
 import StakeholderProfile from './components/StakeholderProfile';
@@ -24,13 +24,12 @@ class Stakeholders extends Component {
   state = { visible: false };
 
   static propTypes = {
-    handleFetchStakeholders: PropTypes.func.isRequired,
+    initStakeholders: PropTypes.func.isRequired,
     loading: PropTypes.bool.isRequired,
   };
 
   componentDidMount() {
-    const { handleFetchStakeholders } = this.props;
-    handleFetchStakeholders();
+    this.props.initStakeholders(); // eslint-disable-line react/destructuring-assignment
   }
 
   handleCancelEdit = () => {
@@ -98,12 +97,12 @@ class Stakeholders extends Component {
 }
 
 const mapStateToProps = state => ({
-  loading: state.stakeholders.isLoading,
+  loading: state.stakeholders.init,
 });
 
 export default connect(
   mapStateToProps,
   {
-    handleFetchStakeholders: fetchStakeholders,
+    initStakeholders,
   }
 )(Stakeholders);
