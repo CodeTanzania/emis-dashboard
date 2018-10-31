@@ -1,4 +1,10 @@
-import { plans, selectedPlan } from '../reducers';
+import {
+  planActivities,
+  planActivityProcedures,
+  plans,
+  selectedPlan,
+  selectedPlanActivity,
+} from '../reducers';
 
 describe('Plan:Reducers', () => {
   describe('plans', () => {
@@ -7,26 +13,82 @@ describe('Plan:Reducers', () => {
       expect(plans(undefined, {})).toEqual(expectedState);
     });
 
-    it('should return initial state when given invalid action type', () => {
-      const initialState = {};
-      expect(plans(initialState, { type: null })).toEqual(initialState);
+    it('should return previous state when given invalid action type', () => {
+      const previousState = {};
+      expect(plans(previousState, { type: null })).toEqual(previousState);
     });
   });
 
-  describe('selectedPlans', () => {
+  describe('selectedPlan', () => {
     it('should return default state when no initial state is provided', () => {
       expect(selectedPlan(undefined, {})).toBeNull();
     });
 
-    it('should return initial state when given invalid action type', () => {
-      const initialState = { name: 'test' };
-      expect(selectedPlan(initialState, { type: null })).toEqual(initialState);
+    it('should return previous state when given invalid action type', () => {
+      const previousState = { name: 'test' };
+      expect(selectedPlan(previousState, { type: null })).toEqual(
+        previousState
+      );
     });
   });
 
-  describe('selectedPlan', () => {});
+  describe('planActivities', () => {
+    it('should return default state when initial state is undefined', () => {
+      expect(planActivities(undefined, {})).toEqual({
+        Mitigation: [],
+        Preparedness: [],
+        Response: [],
+        Recovery: [],
+        page: 1,
+        total: 0,
+        loading: false,
+      });
+    });
 
-  describe('planActivities', () => {});
+    it('should return previous state when provided action is invalid', () => {
+      const previousState = {
+        Mitigation: [],
+        Preparedness: [],
+        Response: [],
+        Recovery: [],
+        page: 1,
+        total: 2,
+        loading: true,
+      };
+      expect(planActivities(previousState, {})).toEqual(previousState);
+    });
+  });
 
-  describe('selectedPlanActivity', () => {});
+  describe('selectedPlanActivity', () => {
+    it('should return default state when initial state is undefined', () => {
+      expect(selectedPlanActivity(undefined, {})).toBeNull();
+    });
+
+    it('should return previous state when provided action is invalid', () => {
+      const previousState = { test: 'test' };
+      expect(selectedPlanActivity(previousState, {})).toEqual(previousState);
+    });
+  });
+
+  describe('planActivityProcedures', () => {
+    it('should return default state when initial state is undefined', () => {
+      const defaultState = {
+        data: [],
+        page: 1,
+        total: 0,
+        loading: false,
+      };
+      expect(planActivityProcedures(undefined, {})).toEqual(defaultState);
+    });
+
+    it('should return previous state when provided action is invalid', () => {
+      const previousState = {
+        data: [],
+        page: 1,
+        total: 0,
+        loading: true,
+      };
+      expect(planActivityProcedures(previousState, {})).toEqual(previousState);
+    });
+  });
 });
