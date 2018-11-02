@@ -1,8 +1,8 @@
 import React, { Fragment, Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Drawer, Button } from 'antd';
-import ColHeader from '../../../../common/components/ColHeader';
+import { Drawer } from 'antd';
+// import ColHeader from '../../../../common/components/ColHeader';
 import StakeholderForm from '../StakeholderForm';
 import FiltersGroup from './components/FilterGroup';
 
@@ -48,12 +48,14 @@ class StakeholderFilter extends Component {
         >
           <StakeholderForm handleCancelClick={this.onClose} />
         </Drawer>
-        <ColHeader>
+        {/* <ColHeader>
           <Button icon="plus" type="primary" onClick={this.showDrawer}>
             New Contact
           </Button>
-        </ColHeader>
-        <div className="content scrollable">
+        </ColHeader> */}
+        <div
+          style={{ height: '100%', overflowY: 'auto', background: '#ffffff' }}
+        >
           {filters.map(filter => (
             <FiltersGroup
               groupName={filter.group}
