@@ -1,9 +1,11 @@
-import { Form, Input, Row, Col, Button } from 'antd';
+import { Button, Col, Form, Input, Radio, Row } from 'antd';
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
 /* local constants */
 const FormItem = Form.Item;
 const { TextArea } = Input;
+const RadioGroup = Radio.Group;
 
 /**
  * Activity Form component
@@ -15,16 +17,26 @@ const { TextArea } = Input;
  * @since 0.1.0
  */
 class ActivityForm extends Component {
+  static defaultProps = {
+    initialSelectedPhase: undefined,
+  };
+
+  static propTypes = {
+    initialSelectedPhase: PropTypes.string,
+    onCancel: PropTypes.func.isRequired,
+  };
+
   handleSubmit = e => {
     e.preventDefault();
     const {
       onCancel,
-      form: { validateFields },
+      form: { validateFields, resetFields },
     } = this.props;
 
     validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
+        resetFields();
         onCancel();
       }
     });
@@ -32,6 +44,7 @@ class ActivityForm extends Component {
 
   render() {
     const {
+      initialSelectedPhase,
       onCancel,
       form: { getFieldDecorator },
     } = this.props;
@@ -57,6 +70,7 @@ class ActivityForm extends Component {
 
     return (
       <Form onSubmit={this.handleSubmit}>
+        {/* activity description */}
         <FormItem {...formItemLayout} label="Activity Description">
           {getFieldDecorator('description', {
             rules: [
@@ -69,6 +83,29 @@ class ActivityForm extends Component {
             />
           )}
         </FormItem>
+        {/* end activity description */}
+
+        {/* activity phases */}
+        {!!initialSelectedPhase === false && (
+          <FormItem label="Phases">
+            {getFieldDecorator('phase', {
+              rules: [
+                { required: true, message: 'Activity Phase is Required' },
+              ],
+              initialValue: initialSelectedPhase,
+            })(
+              <RadioGroup>
+                <Radio value="Mitigation">Mitigation</Radio>
+                <Radio value="Preparedness">Preparedness</Radio>
+                <Radio value="Response">Response</Radio>
+                <Radio value="Recovery">Recovery</Radio>
+              </RadioGroup>
+            )}
+          </FormItem>
+        )}
+        {/* end activity phases */}
+
+        {/* form actions */}
         <Row>
           <Col span={24} style={{ textAlign: 'right' }}>
             <Button type="primary" htmlType="submit">
@@ -79,6 +116,7 @@ class ActivityForm extends Component {
             </Button>
           </Col>
         </Row>
+        {/* end form actions */}
       </Form>
     );
   }

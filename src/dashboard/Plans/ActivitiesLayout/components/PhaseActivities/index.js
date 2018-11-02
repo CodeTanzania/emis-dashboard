@@ -99,8 +99,8 @@ export default class PhaseActivities extends Component {
    * @since 0.1.0
    */
   handleAddNewActivity = () => {
-    const { onClickAddActivity } = this.props;
-    onClickAddActivity();
+    const { onClickAddActivity, title } = this.props;
+    onClickAddActivity(title);
     this.hidePopover();
   };
 
