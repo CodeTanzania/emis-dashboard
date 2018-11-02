@@ -1,17 +1,54 @@
+import axios from 'axios';
+
 const API_END_POINT = 'https://emis-asat.herokuapp.com/v1';
+
+/**
+ * Initialize axios library
+ *
+ * Add headers to HTTP requests that sent to the server
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+const Axios = axios.create({
+  baseURL: '/api',
+  headers: {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+  },
+});
+
 const API = {
   /**
    * Find stakeholders
    */
-  findStakeholders: () =>
-    fetch(`${API_END_POINT}/parties`).then(res => res.json()),
+  findStakeholders: ({ filters = [], page } = {}) => {
+    const params = { page: page || 1 };
+    filters.forEach(filter => {
+      params[`filter[${filter.group}][$in]`] = JSON.stringify(filter.selected);
+    });
+    return Axios.get('/parties', {
+      params,
+    }).then(response => response.data);
+  },
+  /**
+   * Retrieve stakeholder schema
+   */
+  loadStakeholdersSchema: () =>
+    Axios.get('/parties/schema').then(response => response.data),
 
   /**
    * Search stakeholder using query string
    * @param {string} searchText - Search query string
    */
-  searchStakeholder: searchText =>
-    fetch(`${API_END_POINT}/parties?q=${searchText}`).then(res => res.json()),
+  searchStakeholder: searchText => {
+    const config = {
+      params: {
+        q: searchText,
+      },
+    };
+    return Axios.get('/parties', config).then(response => response.data);
+  },
 
   /**
    * Create new stakeholder
