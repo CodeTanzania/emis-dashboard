@@ -5,6 +5,7 @@ import { NavLink, Route, Switch } from 'react-router-dom';
 import logo from '../logo.svg';
 import Plans from './Plans';
 import Stakeholders from './Stakeholders';
+import Settings from './Settings';
 /* import styles */
 import styles from './styles.css';
 
@@ -48,7 +49,7 @@ export default function Dashboard() {
           {/* end contact menu */}
           {/* setting menu */}
           <Menu.Item key="3">
-            <NavLink to="/contacts">
+            <NavLink to="/settings/incidentType">
               <Icon type="setting" className="f-25" />
               <span>Settings</span>
             </NavLink>
@@ -57,11 +58,20 @@ export default function Dashboard() {
         </Menu>
       </Sider>
       {/* content section */}
-      <Layout>
+      <Layout
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          overflow: 'hidden',
+          background: '#fff',
+          borderTop: '1px solid #e6e6e6',
+        }}
+      >
         <Content className={cx('content')}>
           <Switch>
             <Route path="/plans" component={Plans} />
             <Route path="/stakeholders" exact component={Stakeholders} />
+            <Route path="/settings/incidentType" exact component={Settings} />
           </Switch>
         </Content>
       </Layout>

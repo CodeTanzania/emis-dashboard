@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const API_END_POINT = 'https://emis-asat.herokuapp.com/v1';
+const INCIDENTS_API = 'https://emis-incident-type.herokuapp.com/v1';
 
 /**
  * Initialize axios library
@@ -82,6 +83,44 @@ const API = {
     };
     return fetch(url, config).then(res => res.json());
   },
+  getIncidentType: () =>
+    fetch(`${INCIDENTS_API}/incidenttypes`)
+      .then(res => res.json())
+      .then(response => {
+        const { data, total } = response;
+        return { data, total };
+      }),
+
+  createIncidentType: data => {
+    const url = `${INCIDENTS_API}/incidenttypes`;
+    const config = {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'content-type': 'application/json',
+      },
+    };
+    return fetch(url, config).then(res => res.json());
+  },
+  updateIncidentType: (incidentTypeId, updates) => {
+    const url = `${INCIDENTS_API}/incidenttypes/${incidentTypeId}`;
+    const config = {
+      method: 'PATCH',
+      body: JSON.stringify(updates),
+      headers: {
+        'content-type': 'application/json',
+      },
+    };
+    return fetch(url, config).then(res => res.json());
+  },
+
+  searchIncidentsType: searchValue =>
+    fetch(`${INCIDENTS_API}/incidenttypes?q=${searchValue}`)
+      .then(res => res.json())
+      .then(response => {
+        const { data, total } = response;
+        return { data, total };
+      }),
 };
 
 export default API;

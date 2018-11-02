@@ -19,6 +19,16 @@ import styles from './styles.css';
 
 const cx = classNames.bind(styles);
 
+/**
+ * Render contacts panel component which have all the the components in relation
+ * to contacts
+ *
+ * @function
+ * @name Contacts
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
 const { Header } = Layout;
 class Stakeholders extends Component {
   state = { visible: false };
