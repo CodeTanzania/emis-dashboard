@@ -1,19 +1,14 @@
-import { Button, Col, Form, Row } from 'antd';
+import { Button, Col, Form, Row, Select } from 'antd';
 import React, { Component } from 'react';
-import Select from '../../../../../common/components/Select';
+import { getIncidentTypes } from '../../../../../common/API/api';
+import SelectSearchBox from '../../../../../common/components/SelectSearchBox';
 import './styles.css';
 
 /* local constants */
 const FormItem = Form.Item;
+const { Option } = Select;
 
 // fake data
-const incidentTypes = [
-  { label: 'Flood', value: 'flood' },
-  { label: 'Earthquake', value: 'earthquake' },
-  { label: 'Fire', value: 'fire' },
-  { label: 'Cholera', value: 'cholera' },
-  { label: 'Tornado', value: 'tornado' },
-];
 const locations = [
   { label: 'Dar es salaam', value: 'dar es salaam' },
   { label: 'Mwanza', value: 'mwanza' },
@@ -91,9 +86,10 @@ class PlanForm extends Component {
               },
             ],
           })(
-            <Select
-              options={incidentTypes}
+            <SelectSearchBox
               placeholder="Select Incident Type ..."
+              onSearch={getIncidentTypes}
+              onChange={() => {}}
             />
           )}
         </FormItem>
@@ -107,7 +103,13 @@ class PlanForm extends Component {
                 message: 'Please Select Applicable Plan Location',
               },
             ],
-          })(<Select options={locations} placeholder="Select Location ..." />)}
+          })(
+            <Select placeholder="Select Location ...">
+              {locations.map(location => (
+                <Option key={location.value}>{location.label}</Option>
+              ))}
+            </Select>
+          )}
         </FormItem>
         {/* end location select input */}
         {/* form action buttons */}

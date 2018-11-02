@@ -2,7 +2,8 @@ import { Button, Col, Drawer, Icon, Layout, List, Row, Spin } from 'antd';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Select from '../../../common/components/Select';
+import { getIncidentTypes } from '../../../common/API/api';
+import SelectSearchBox from '../../../common/components/SelectSearchBox';
 import Toolbar from '../../../common/components/Toolbar';
 import { getPlanActivities, selectPlan } from '../actions';
 import PlanCard from './components/PlanCard';
@@ -13,12 +14,6 @@ import './styles.css';
 const { Header, Content } = Layout;
 const { Filters, Actions } = Toolbar;
 const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
-// fake data
-const options = [
-  { label: 'Flood', value: 'flood' },
-  { label: 'Fire', value: 'fire' },
-  { label: 'Epidemic', value: 'epidemic' },
-];
 
 /**
  * Render Initial List of plans based on selected filters
@@ -98,11 +93,13 @@ class PlansLayout extends Component {
             <Filters span={21}>
               <Row>
                 <Col span={4}>
-                  <Select
-                    options={options}
+                  <SelectSearchBox
+                    onChange={value => {
+                      console.log(value);
+                    }}
+                    onSearch={getIncidentTypes}
                     placeholder="Select Incident type"
                     style={{ width: '250px' }}
-                    onChange={() => {}}
                   />
                 </Col>
               </Row>
