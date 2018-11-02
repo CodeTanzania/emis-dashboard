@@ -24,7 +24,7 @@ import './styles.css';
 /* local constants */
 const { Header, Content } = Layout;
 const { Filters, Actions } = Toolbar;
-const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
+const spinIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
 
 const menu = (
   <Menu>
@@ -54,7 +54,11 @@ const menu = (
  * @since 0.1.0
  */
 class PlanActivitiesLayout extends Component {
-  state = { showActivityForm: false, showActivityDetails: false };
+  state = {
+    showActivityForm: false,
+    showActivityDetails: false,
+    initialSelectedPhase: undefined,
+  };
 
   static propTypes = {
     mitigationActivities: PropTypes.arrayOf(
@@ -107,8 +111,11 @@ class PlanActivitiesLayout extends Component {
    * @version 0.1.0
    * @since 0.1.0
    */
-  handleOpenActivityForm = () => {
-    this.setState({ showActivityForm: true });
+  handleOpenActivityForm = (initialPhase = undefined) => {
+    this.setState({
+      showActivityForm: true,
+      initialSelectedPhase: initialPhase,
+    });
   };
 
   /**
@@ -121,7 +128,9 @@ class PlanActivitiesLayout extends Component {
    * @since 0.1.0
    */
   handleCloseActivityForm = () => {
-    this.setState({ showActivityForm: false });
+    this.setState({
+      showActivityForm: false,
+    });
   };
 
   /**
@@ -154,7 +163,12 @@ class PlanActivitiesLayout extends Component {
   };
 
   render() {
-    const { showActivityForm, showActivityDetails } = this.state;
+    const {
+      showActivityForm,
+      showActivityDetails,
+      initialSelectedPhase,
+    } = this.state;
+
     const {
       mitigationActivities,
       preparednessActivities,
@@ -165,7 +179,7 @@ class PlanActivitiesLayout extends Component {
 
     return (
       <Spin
-        indicator={antIcon}
+        indicator={spinIcon}
         size="large"
         tip="Loading Activities ..."
         spinning={loading}
@@ -186,7 +200,9 @@ class PlanActivitiesLayout extends Component {
                   <Button
                     icon="plus"
                     type="primary"
-                    onClick={this.handleOpenActivityForm}
+                    onClick={() => {
+                      this.handleOpenActivityForm();
+                    }}
                   >
                     New Activity
                   </Button>
@@ -260,12 +276,19 @@ class PlanActivitiesLayout extends Component {
           {/* Activity form modal */}
           <Modal
             visible={showActivityForm}
-            title="New Activity"
+            title={
+              initialSelectedPhase
+                ? `Add New Activity in ${initialSelectedPhase} phase`
+                : 'Add New Activity'
+            }
             maskClosable={false}
             onCancel={this.handleCloseActivityForm}
             footer={null}
           >
-            <ActivityForm onCancel={this.handleCloseActivityForm} />
+            <ActivityForm
+              onCancel={this.handleCloseActivityForm}
+              initialSelectedPhase={initialSelectedPhase}
+            />
           </Modal>
           {/* End Activity form modal */}
         </Layout>
