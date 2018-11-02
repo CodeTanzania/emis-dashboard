@@ -3,7 +3,6 @@ import axios from 'axios';
 const API_END_POINT = 'https://emis-asat.herokuapp.com/v1';
 const INCIDENTS_API = 'https://emis-incident-type.herokuapp.com/v1';
 
-
 /**
  * Initialize axios library
  *
