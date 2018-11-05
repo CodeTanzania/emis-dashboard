@@ -126,7 +126,7 @@ function collectTarget(connect, monitor) {
  */
 function ActivityTaskItem({
   index,
-  description,
+  name,
   isDragging,
   connectDragSource,
   connectDropTarget,
@@ -141,7 +141,7 @@ function ActivityTaskItem({
           <Col span={1} className="checkboxContainer">
             <Checkbox />
           </Col>
-          <Col span={22}>{`${index + 1} : ${description}`}</Col>
+          <Col span={22}>{`${index + 1} : ${name}`}</Col>
           <Col span={1}>
             <Icon type="close" title="Remove procedure" theme="outlined" />
           </Col>
@@ -153,7 +153,7 @@ function ActivityTaskItem({
 
 /* Props validation */
 ActivityTaskItem.propTypes = {
-  description: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
   number: PropTypes.number.isRequired,
   isDragging: PropTypes.bool.isRequired,
   connectDragSource: PropTypes.func.isRequired,

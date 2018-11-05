@@ -42,6 +42,7 @@ describe('Plan:Reducers', () => {
         page: 1,
         total: 0,
         loading: false,
+        posting: false,
       });
     });
 
@@ -77,6 +78,7 @@ describe('Plan:Reducers', () => {
         page: 1,
         total: 0,
         loading: false,
+        posting: false,
       };
       expect(planActivityProcedures(undefined, {})).toEqual(defaultState);
     });

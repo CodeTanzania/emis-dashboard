@@ -16,6 +16,11 @@ function PhaseOptions({ onClickAddActivity }) {
         </Button>
       </div>
       <div>
+        <Button icon="sound" className="b-0">
+          Disseminate
+        </Button>
+      </div>
+      <div>
         <Button icon="hdd" className="b-0">
           Archive selected
         </Button>

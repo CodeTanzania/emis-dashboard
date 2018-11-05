@@ -13,7 +13,7 @@ import './styles.css';
 /* local constants */
 const { Header, Content } = Layout;
 const { Filters, Actions } = Toolbar;
-const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
+const spinIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
 
 /**
  * Render Initial List of plans based on selected filters
@@ -76,7 +76,7 @@ class PlansLayout extends Component {
 
     return (
       <Spin
-        indicator={antIcon}
+        indicator={spinIcon}
         size="large"
         tip="Loading Plans ..."
         spinning={loading}

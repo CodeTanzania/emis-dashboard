@@ -8,6 +8,12 @@ import {
   GET_PLAN_ACTIVITY_PROCEDURES_ERROR,
   GET_PLAN_ACTIVITY_PROCEDURES_START,
   GET_PLAN_ACTIVITY_PROCEDURES_SUCCESS,
+  POST_PLAN_ACTIVITY_ERROR,
+  POST_PLAN_ACTIVITY_START,
+  POST_PLAN_ACTIVITY_SUCCESS,
+  POST_PLAN_ACTIVITY_PROCEDURE_START,
+  POST_PLAN_ACTIVITY_PROCEDURE_SUCCESS,
+  POST_PLAN_ACTIVITY_PROCEDURE_ERROR,
   SELECT_PLAN,
   SELECT_PLAN_ACTIVITY,
 } from './actions';
@@ -21,6 +27,7 @@ const defaultPlanActivities = {
   page: 1,
   total: 0,
   loading: false,
+  posting: false,
 };
 
 const defaultState = {
@@ -28,6 +35,7 @@ const defaultState = {
   page: 1,
   total: 0,
   loading: false,
+  posting: false,
 };
 
 /*
@@ -126,6 +134,19 @@ export function planActivities(state = defaultPlanActivities, action) {
         error: action.payload.data,
         loading: false,
       });
+    case POST_PLAN_ACTIVITY_START:
+      return Object.assign({}, state, {
+        posting: true,
+      });
+    case POST_PLAN_ACTIVITY_SUCCESS:
+      return Object.assign({}, state, {
+        posting: false,
+      });
+    case POST_PLAN_ACTIVITY_ERROR:
+      return Object.assign({}, state, {
+        error: action.payload.data,
+        posting: false,
+      });
     default:
       return state;
   }
@@ -180,6 +201,18 @@ export function planActivityProcedures(state = defaultState, action) {
       return Object.assign({}, state, {
         error: action.payload.data,
         loading: false,
+      });
+    case POST_PLAN_ACTIVITY_PROCEDURE_START:
+      return Object.assign({}, state, {
+        posting: true,
+      });
+    case POST_PLAN_ACTIVITY_PROCEDURE_SUCCESS:
+      return Object.assign({}, state, {
+        posting: false,
+      });
+    case POST_PLAN_ACTIVITY_PROCEDURE_ERROR:
+      return Object.assign({}, state, {
+        posting: false,
       });
     default:
       return state;

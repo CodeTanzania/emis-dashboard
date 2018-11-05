@@ -17,13 +17,12 @@ import './styles.css';
  * @version 0.1.0
  * @since 0.1.0
  */
-export default function ActivityCard({ name, incident, taskCount, onClick }) {
+export default function ActivityCard({ name, taskCount, onClick }) {
   return (
     <Card className="ActivityCard" onClick={onClick}>
       <Row type="flex" justify="space-around">
         <Col span={20}>
           <h4 title={name}>{name}</h4>
-          <p className="subtitle">{incident}</p>
         </Col>
         <Col span={2} className="tasksBadge">
           <Badge
@@ -49,7 +48,6 @@ ActivityCard.defaultProps = {
 /* props validations for Action */
 ActivityCard.propTypes = {
   name: PropTypes.string.isRequired,
-  incident: PropTypes.string.isRequired,
   taskCount: PropTypes.number,
   onClick: PropTypes.func.isRequired,
 };

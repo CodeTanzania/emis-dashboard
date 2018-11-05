@@ -74,6 +74,13 @@ export const POST_PLAN_ACTIVITY_PROCEDURES_SUCCESS =
 export const POST_PLAN_ACTIVITY_PROCEDURES_ERROR =
   'POST_PLAN_ACTIVITY_PROCEDURES_ERROR';
 
+export const POST_PLAN_ACTIVITY_PROCEDURE_START =
+  'POST_PLAN_ACTIVITY_PROCEDURE_START';
+export const POST_PLAN_ACTIVITY_PROCEDURE_SUCCESS =
+  'POST_PLAN_ACTIVITY_PROCEDURE_SUCCESS';
+export const POST_PLAN_ACTIVITY_PROCEDURE_ERROR =
+  'POST_PLAN_ACTIVITY_PROCEDURE_ERROR';
+
 /* put action types */
 export const PUT_PLAN_ACTIVITY_PROCEDURES_START =
   'PUT_PLAN_ACTIVITY_PROCEDURES_START';
@@ -327,6 +334,62 @@ export function getPlanActivitiesError(error) {
 }
 
 /**
+ * Action dispatched when posting plan activity to the API
+ *
+ * @function
+ * @name postPlanActivityStart
+ *
+ * @return {Object} - Redux action
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function postPlanActivityStart() {
+  return {
+    type: POST_PLAN_ACTIVITY_START,
+  };
+}
+
+/**
+ * Action dispatched when posting plan activity to the API is successfully
+ *
+ * @function
+ * @name postPlanActivitySuccess
+ *
+ * @return {Object} - Redux action
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function postPlanActivitySuccess() {
+  return {
+    type: POST_PLAN_ACTIVITY_SUCCESS,
+  };
+}
+
+/**
+ * Action dispatched when posting plan activity to the API fails
+ *
+ * @function
+ * @name postPlanActivityError
+ *
+ * @param {Error} error - Error instance
+ * @return {Object} - Redux action
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function postPlanActivityError(error) {
+  return {
+    type: POST_PLAN_ACTIVITY_ERROR,
+    payload: {
+      data: error,
+    },
+    error: true,
+  };
+}
+
+/**
  * Action dispatched when fetching plan activity procedures from API
  *
  * @function
@@ -387,6 +450,28 @@ export function getPlanActivityProceduresSuccess(procedures, page, total) {
 export function getPlanActivityProceduresError(error) {
   return {
     type: GET_PLAN_ACTIVITY_PROCEDURES_ERROR,
+    payload: {
+      data: error,
+    },
+    error: true,
+  };
+}
+
+export function postPlanActivityProcedureStart() {
+  return {
+    type: POST_PLAN_ACTIVITY_PROCEDURES_START,
+  };
+}
+
+export function postPlanActivityProcedureSuccess() {
+  return {
+    type: POST_PLAN_ACTIVITY_PROCEDURES_SUCCESS,
+  };
+}
+
+export function postPlanActivityProcedureError(error) {
+  return {
+    type: POST_PLAN_ACTIVITY_PROCEDURES_ERROR,
     payload: {
       data: error,
     },
@@ -458,6 +543,37 @@ export function getPlanActivities() {
 }
 
 /**
+ * A thunk function which perform asynchronous posting of plan activities to the API
+ *
+ * @function
+ * @name postPlanActivity
+ *
+ * @param {Object} activity - Activity object to from the activity form
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function postPlanActivity(activity) {
+  return (dispatch, getState, API) => {
+    dispatch(postPlanActivityStart());
+
+    const plan = getState().selectedPlan._id; //eslint-disable-line
+    const incidentType = getState().selectedPlan.incidentType._id; // eslint-disable-line
+
+    const data = Object.assign({}, activity, { plan, incidentType });
+
+    return API.postPlanActivity(data)
+      .then(() => {
+        dispatch(postPlanActivitySuccess());
+        dispatch(getPlanActivities());
+      })
+      .catch(error => {
+        dispatch(postPlanActivityError(error));
+      });
+  };
+}
+
+/**
  * A thunk function which perform asynchronous fetching of plan activity
  * procedures from API
  *
@@ -485,6 +601,38 @@ export function getPlanActivityProcedures() {
       })
       .catch(error => {
         dispatch(getPlanActivityProceduresError(error));
+      });
+  };
+}
+
+/**
+ * A thunk function which perform asynchronous posting of plan activity
+ * procedures from API
+ *
+ * @function
+ * @name postPlanActivityProcedure
+ *
+ * @param {Object} procedure - Procedure data from procedure(SOP) form
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function postPlanActivityProcedure(procedure) {
+  return (dispatch, getState, API) => {
+    dispatch(postPlanActivityProcedureStart());
+
+    const activity = getState().selectedPlanActivity._id; // eslint-disable-line
+    const plan = getState().selectedPlanActivity.plan._id; // eslint-disable-line
+    const incidentType = getState().selectedPlanActivity.incidentType._id; // eslint-disable-line
+    const data = Object.assign({}, { activity, plan, incidentType }, procedure);
+
+    return API.postPlanActivityProcedure(data)
+      .then(() => {
+        dispatch(postPlanActivityProcedureSuccess());
+        dispatch(getPlanActivityProcedures());
+      })
+      .catch(error => {
+        dispatch(postPlanActivityProcedureError(error));
       });
   };
 }

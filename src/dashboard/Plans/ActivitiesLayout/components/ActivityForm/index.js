@@ -1,6 +1,9 @@
 import { Button, Col, Form, Input, Radio, Row } from 'antd';
+import flow from 'lodash/flow';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { postPlanActivity } from '../../../actions';
 
 /* local constants */
 const FormItem = Form.Item;
@@ -28,16 +31,22 @@ class ActivityForm extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
+
     const {
-      onCancel,
+      initialSelectedPhase,
       form: { validateFields, resetFields },
+      postActivity,
     } = this.props;
 
-    validateFields((err, values) => {
-      if (!err) {
-        console.log('Received values of form: ', values);
+    validateFields((error, values) => {
+      if (!error) {
+        let activity = values;
+        if (initialSelectedPhase) {
+          activity = Object.assign({}, values, { phase: initialSelectedPhase });
+        }
+        postActivity(activity);
+
         resetFields();
-        onCancel();
       }
     });
   };
@@ -70,13 +79,22 @@ class ActivityForm extends Component {
 
     return (
       <Form onSubmit={this.handleSubmit}>
+        {/* activity name */}
+        <FormItem {...formItemLayout} label="Activity Name">
+          {getFieldDecorator('name', {
+            rules: [{ required: true, message: 'Activity Name is Required' }],
+          })(
+            <TextArea
+              autosize={{ minRows: 3, maxRows: 6 }}
+              placeholder="Enter Activity Name"
+            />
+          )}
+        </FormItem>
+        {/* end activity name */}
+
         {/* activity description */}
         <FormItem {...formItemLayout} label="Activity Description">
-          {getFieldDecorator('description', {
-            rules: [
-              { required: true, message: 'Activity Description is Required' },
-            ],
-          })(
+          {getFieldDecorator('description')(
             <TextArea
               autosize={{ minRows: 3, maxRows: 6 }}
               placeholder="Enter Activity Description"
@@ -122,4 +140,20 @@ class ActivityForm extends Component {
   }
 }
 
-export default Form.create()(ActivityForm);
+const mapStateToProps = state => ({
+  posting: state.planActivities.posting,
+});
+
+const mapDispatchToProps = dispatch => ({
+  postActivity(activity) {
+    dispatch(postPlanActivity(activity));
+  },
+});
+
+export default flow(
+  Form.create(),
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )
+)(ActivityForm);

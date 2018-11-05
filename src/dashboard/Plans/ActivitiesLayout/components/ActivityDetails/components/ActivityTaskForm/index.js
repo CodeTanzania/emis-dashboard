@@ -1,5 +1,8 @@
 import { Button, Col, Form, Input, Row } from 'antd';
 import React, { Component } from 'react';
+import flow from 'lodash/flow';
+import { connect } from 'react-redux';
+import { postPlanActivityProcedure } from '../../../../../actions';
 
 /* local constants */
 const FormItem = Form.Item;
@@ -9,22 +12,23 @@ const { TextArea } = Input;
  * Activity Form component
  *
  * @class
- * @name ActivityTaskForm
+ * @name ActivityProcedureForm
  *
  * @version 0.1.0
  * @since 0.1.0
  */
-class ActivityTaskForm extends Component {
+class ActivityProcedureForm extends Component {
   handleSubmit = e => {
     e.preventDefault();
     const {
       onCancel,
+      postProcedure,
       form: { validateFields },
     } = this.props;
 
     validateFields((error, values) => {
       if (!error) {
-        console.log('Received values of form: ', values);
+        postProcedure(values);
         onCancel();
       }
     });
@@ -57,18 +61,30 @@ class ActivityTaskForm extends Component {
 
     return (
       <Form onSubmit={this.handleSubmit}>
-        <FormItem {...formItemLayout} label="SOP Description">
-          {getFieldDecorator('description', {
-            rules: [
-              { required: true, message: 'Procedure Description is Required' },
-            ],
+        {/* procedure name */}
+        <FormItem {...formItemLayout} label="SOP Name">
+          {getFieldDecorator('name', {
+            rules: [{ required: true, message: 'Procedure name is Required' }],
           })(
             <TextArea
-              autosize={{ minRows: 3, maxRows: 6 }}
+              autosize={{ minRows: 2, maxRows: 6 }}
+              placeholder="Enter Procedure Name"
+            />
+          )}
+        </FormItem>
+        {/* end procedure name */}
+
+        {/* procedure description */}
+        <FormItem {...formItemLayout} label="SOP Description">
+          {getFieldDecorator('description')(
+            <TextArea
+              autosize={{ minRows: 2, maxRows: 6 }}
               placeholder="Enter Procedure Description"
             />
           )}
         </FormItem>
+        {/* end procedure description */}
+
         <Row>
           <Col span={24} style={{ textAlign: 'right' }}>
             <Button type="primary" htmlType="submit">
@@ -84,4 +100,16 @@ class ActivityTaskForm extends Component {
   }
 }
 
-export default Form.create()(ActivityTaskForm);
+const mapDispatchToProps = dispatch => ({
+  postProcedure(procedure) {
+    dispatch(postPlanActivityProcedure(procedure));
+  },
+});
+
+export default flow(
+  Form.create(),
+  connect(
+    null,
+    mapDispatchToProps
+  )
+)(ActivityProcedureForm);
