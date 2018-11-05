@@ -5,22 +5,22 @@ import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { connect } from 'react-redux';
 import shuffleList from '../../../../../../../common/lib/util';
-import ActivityTaskForm from '../ActivityTaskForm';
-import ActivityTaskItem from '../ActivityTaskItem';
+import ActivityTaskForm from '../ActivityProcedureForm';
+import ActivityTaskItem from '../ActivityProcedureItem';
 import './styles.css';
 
 /**
- * ActivityTaskList
+ * ActivityProcedureList
  *
  * @class
- * @name ActivityTaskList
+ * @name ActivityProcedureList
  *
  * @returns {ReactComponent}
  *
  * @version 0.1.0
  * @since 0.1.0
  */
-class ActivityTaskList extends Component {
+class ActivityProcedureList extends Component {
   state = {
     procedures: [],
     showActivityTaskForm: false,
@@ -89,7 +89,7 @@ class ActivityTaskList extends Component {
   render() {
     const { procedures, showActivityTaskForm } = this.state;
     return (
-      <div className="ActivityTaskList">
+      <div className="ActivityProcedureList">
         {/* Activity procedures section header */}
         <h4 className="header">
           Standard Operating Procedures (SOP)
@@ -137,4 +137,4 @@ const mapStateToProps = state => ({
 export default flow(
   DragDropContext(HTML5Backend),
   connect(mapStateToProps)
-)(ActivityTaskList);
+)(ActivityProcedureList);

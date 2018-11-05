@@ -16,7 +16,7 @@ const ITEM_TYPE = 'ACTIVITY_TASK';
  * @version 0.1.0
  * @since 0.1.0
  */
-const ActivityTaskItemSource = {
+const ActivityProcedureItemSource = {
   /**
    * Specify props to be injected to the dragged component
    * when dragging it
@@ -49,19 +49,19 @@ const ActivityTaskItemSource = {
  * @version 0.1.0
  * @since 0.1.0
  */
-const ActivityTaskItemTarget = {
+const ActivityProcedureItemTarget = {
   drop(props, monitor) {
-    // Obtain the dragged taskItem
-    const taskItem = monitor.getItem();
+    // Obtain the dragged procedureItem
+    const procedureItem = monitor.getItem();
 
-    const fromIndex = taskItem.index;
+    const fromIndex = procedureItem.index;
     const toIndex = props.index;
 
     if (fromIndex === toIndex) {
       return;
     }
 
-    props.shuffleTaskItem(taskItem.index, props.index);
+    props.shuffleTaskItem(procedureItem.index, props.index);
   },
 };
 
@@ -110,12 +110,12 @@ function collectTarget(connect, monitor) {
 }
 
 /**
- * ActivityTaskItem
+ * ActivityProcedureItem
  * This item is both drag source and drop target.Allow dragging this item and drop
  * it on another item of the same nature(type)
  *
  * @function
- * @name ActivityTaskItem
+ * @name ActivityProcedureItem
  *
  * @returns {ReactComponent}
  *
@@ -124,7 +124,7 @@ function collectTarget(connect, monitor) {
  * @version 0.1.0
  * @since 0.1.0
  */
-function ActivityTaskItem({
+function ActivityProcedureItem({
   index,
   name,
   isDragging,
@@ -134,7 +134,7 @@ function ActivityTaskItem({
   return connectDragSource(
     connectDropTarget(
       <div
-        className="ActivityTaskItem"
+        className="ActivityProcedureItem"
         style={{ opacity: isDragging ? 0.5 : 1 }}
       >
         <Row>
@@ -152,7 +152,7 @@ function ActivityTaskItem({
 }
 
 /* Props validation */
-ActivityTaskItem.propTypes = {
+ActivityProcedureItem.propTypes = {
   name: PropTypes.string.isRequired,
   number: PropTypes.number.isRequired,
   isDragging: PropTypes.bool.isRequired,
@@ -161,6 +161,6 @@ ActivityTaskItem.propTypes = {
 };
 
 export default flow(
-  DragSource(ITEM_TYPE, ActivityTaskItemSource, collectSource),
-  DropTarget(ITEM_TYPE, ActivityTaskItemTarget, collectTarget)
-)(ActivityTaskItem);
+  DragSource(ITEM_TYPE, ActivityProcedureItemSource, collectSource),
+  DropTarget(ITEM_TYPE, ActivityProcedureItemTarget, collectTarget)
+)(ActivityProcedureItem);

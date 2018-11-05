@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import ActivityDescription from './components/ActivityDescription';
+import ActivityTaskList from './components/ActivityProcedureList';
 import ActivityStakeholders from './components/ActivityStakeholders';
-import ActivityTaskList from './components/ActivityTaskList';
 
 /* local constants */
 const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
