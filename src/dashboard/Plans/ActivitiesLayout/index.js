@@ -1,4 +1,15 @@
-import { Button, Col, Drawer, Dropdown, Icon, Layout, Menu, Modal, Row, Spin } from 'antd';
+import {
+  Button,
+  Col,
+  Drawer,
+  Dropdown,
+  Icon,
+  Layout,
+  Menu,
+  Modal,
+  Row,
+  Spin,
+} from 'antd';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
