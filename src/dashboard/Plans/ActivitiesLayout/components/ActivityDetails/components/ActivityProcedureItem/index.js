@@ -6,7 +6,7 @@ import { DragSource, DropTarget } from 'react-dnd';
 import './styles.css';
 
 /* local constants */
-const ITEM_TYPE = 'ACTIVITY_TASK';
+const ITEM_TYPE = 'ACTIVITY_PROCEDURE';
 
 /**
  * Specify the Drag and Drop spec object for the dragged item
@@ -61,7 +61,7 @@ const ActivityProcedureItemTarget = {
       return;
     }
 
-    props.shuffleTaskItem(procedureItem.index, props.index);
+    props.shuffleProcedureItem(procedureItem.index, props.index);
   },
 };
 
@@ -142,9 +142,9 @@ function ActivityProcedureItem({
           <Col xs={1} md={1} xxl={1} className="checkboxContainer">
             <Checkbox />
           </Col>
-          <Col xs={20} md={21} xxl={22} title={description}>{`${index +
+          <Col xs={17} md={21} xxl={22} title={description}>{`${index +
             1} : ${name}`}</Col>
-          <Col xs={3} md={2} xxl={1}>
+          <Col xs={6} md={2} xxl={1}>
             <Button
               icon="edit"
               title="Edit SOP"

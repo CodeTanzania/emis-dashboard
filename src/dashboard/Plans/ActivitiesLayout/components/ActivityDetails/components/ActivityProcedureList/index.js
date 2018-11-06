@@ -41,11 +41,11 @@ class ActivityProcedureList extends Component {
   }
 
   /**
-   * Shuffle the activity task items in a list after based on preferred order
+   * Shuffle the activity procedure items in a list after based on preferred order
    * by the user using drag and drop feature
    *
    * @function
-   * @name shuffleTaskItem
+   * @name shuffleProcedureItem
    *
    * @param {number} fromIndex - Task Item initial(source) index when dragged
    * @param {number} toIndex - Task Item destination(drop) index after being dropped
@@ -54,13 +54,13 @@ class ActivityProcedureList extends Component {
    * @version 0.1.0
    * @since 0.1.0
    */
-  shuffleTaskItem = (fromIndex, toIndex) => {
+  shuffleProcedureItem = (fromIndex, toIndex) => {
     const { procedures } = this.state;
     this.setState({ procedures: shuffleList(procedures, fromIndex, toIndex) });
   };
 
   /**
-   * Handle click action to open activity task form modal window
+   * Handle click action to open activity procedure form modal window
    *
    * @function
    * @name handleOpenActivityTaskForm
@@ -73,7 +73,7 @@ class ActivityProcedureList extends Component {
   };
 
   /**
-   * Handle click action to close activity task form modal window
+   * Handle click action to close activity procedure form modal window
    *
    * @function
    * @name handleCloseActivityTaskForm
@@ -107,18 +107,18 @@ class ActivityProcedureList extends Component {
           </Col>
         </Row>
         {/* end Activity procedures section header */}
-        {/* start activity task draggable list */}
+        {/* start activity procedure draggable list */}
         <List
           dataSource={procedures}
-          renderItem={(task, index) => (
+          renderItem={(procedure, index) => (
             <ActivityTaskItem
               index={index}
-              {...task}
-              shuffleTaskItem={this.shuffleTaskItem}
+              {...procedure}
+              shuffleProcedureItem={this.shuffleProcedureItem}
             />
           )}
         />
-        {/* end activity task draggable list */}
+        {/* end activity procedure draggable list */}
         {/* Activity form modal */}
         <Modal
           visible={showActivityTaskForm}
