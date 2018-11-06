@@ -156,7 +156,7 @@ function ActivityProcedureItem({
 ActivityProcedureItem.propTypes = {
   name: PropTypes.string.isRequired,
   description: PropTypes.string,
-  number: PropTypes.number.isRequired,
+  number: PropTypes.number,
   isDragging: PropTypes.bool.isRequired,
   connectDragSource: PropTypes.func.isRequired,
   connectDropTarget: PropTypes.func.isRequired,
@@ -164,6 +164,7 @@ ActivityProcedureItem.propTypes = {
 
 ActivityProcedureItem.defaultProps = {
   description: 'N/A',
+  number: 0,
 };
 export default flow(
   DragSource(ITEM_TYPE, ActivityProcedureItemSource, collectSource),

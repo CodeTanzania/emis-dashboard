@@ -95,6 +95,6 @@ PlanCard.propTypes = {
   family: PropTypes.string,
   activityCount: PropTypes.number,
   color: PropTypes.string,
-  updatedAt: PropTypes.instanceOf(Date).isRequired,
+  updatedAt: PropTypes.string.isRequired,
   onClickPlan: PropTypes.func.isRequired,
 };

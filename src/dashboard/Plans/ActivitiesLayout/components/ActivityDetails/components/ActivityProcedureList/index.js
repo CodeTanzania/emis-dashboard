@@ -26,8 +26,7 @@ class ActivityProcedureList extends Component {
     showActivityTaskForm: false,
   };
 
-  constructor(props) {
-    super(props);
+  componentDidMount() {
     const { procedures } = this.props;
     this.setState({ procedures });
   }

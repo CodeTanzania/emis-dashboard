@@ -94,9 +94,7 @@ class PlansLayout extends Component {
               <Row>
                 <Col span={4}>
                   <SelectSearchBox
-                    onChange={value => {
-                      console.log(value);
-                    }}
+                    onChange={() => {}}
                     onSearch={getIncidentTypes}
                     placeholder="Select Incident type"
                     style={{ width: '250px' }}
