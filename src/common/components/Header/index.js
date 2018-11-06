@@ -1,15 +1,17 @@
 import React from 'react';
-import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
-import styles from './index.module.css';
-
-/* local constants */
-const cx = classNames.bind(styles);
 
 export default function Header({ title }) {
+  const containerStyle = {
+    background: '#fafafa',
+    height: '60px',
+    display: 'flex',
+    alignItems: 'flex-end',
+    paddingLeft: '10px',
+  };
   return (
-    <div className={cx('container')}>
-      <span className={cx('title')}>{title}</span>
+    <div style={containerStyle}>
+      <h3>{title}</h3>
     </div>
   );
 }

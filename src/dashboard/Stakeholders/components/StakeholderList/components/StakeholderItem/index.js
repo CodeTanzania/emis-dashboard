@@ -1,11 +1,11 @@
 /* eslint no-underscore-dangle: "off" */
 import { Button, Checkbox, Col, Icon, List, Popover, Row } from 'antd';
-import classNames from 'classnames/bind';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { selectStakeholder } from '../../../../actions';
-import styles from './styles.module.css';
+import styles from './styles.css';
 
 const cx = classNames.bind(styles);
 
@@ -68,14 +68,14 @@ class StakeholderItem extends Component {
       ? selectedStakeholder._id === _id
       : false;
     return (
-      <List.Item className={cx('p-l-20', { isSelected })}>
+      <List.Item className={cx('StakeholderItem', { isSelected })}>
         <List.Item.Meta
           avatar={<Checkbox />}
           title={
             <Row>
               <Col xs={21}>
-                <span
-                  className={cx('f-600 f-15', 'name')}
+                <strong
+                  style={{ cursor: 'pointer' }}
                   role="link"
                   onClick={this.onClick}
                   onKeyDown={this.onClick}
@@ -83,13 +83,13 @@ class StakeholderItem extends Component {
                   title="Click to view more"
                 >
                   {name}
-                </span>
+                </strong>
               </Col>
               <Col xs={3}>
                 <Popover placement="bottom" trigger="click" content={actions}>
                   <Button
                     icon="ellipsis"
-                    className={cx('f-20 b-0', { isSelected })}
+                    className={cx('actionBtn', { isSelected })}
                   />
                 </Popover>
               </Col>
@@ -99,18 +99,22 @@ class StakeholderItem extends Component {
             <div>
               <Row>
                 <Col span={24}>
-                  <span icon="mobile" className={cx('b-0', { isSelected })}>
-                    <Icon type="mobile" style={{ marginRight: '5px' }} />
-                    {phone}
-                  </span>
+                  <div>
+                    <Icon type="mobile" />
+                    <span className={cx('infoItem', { isSelected })}>
+                      {phone}
+                    </span>
+                  </div>
                 </Col>
               </Row>
               <Row>
                 <Col span={24}>
-                  <span icon="mail" className={cx('b-0', { isSelected })}>
-                    <Icon type="mail" style={{ marginRight: '5px' }} />
-                    {email}
-                  </span>
+                  <div>
+                    <Icon type="mail" />
+                    <span className={cx('infoItem', { isSelected })}>
+                      {email}
+                    </span>
+                  </div>
                 </Col>
               </Row>
             </div>
