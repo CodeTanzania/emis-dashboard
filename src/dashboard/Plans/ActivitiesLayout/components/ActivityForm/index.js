@@ -85,7 +85,7 @@ class ActivityForm extends Component {
             rules: [{ required: true, message: 'Activity Name is Required' }],
           })(
             <TextArea
-              autosize={{ minRows: 3, maxRows: 6 }}
+              autosize={{ minRows: 2, maxRows: 6 }}
               placeholder="Enter Activity Name"
             />
           )}
