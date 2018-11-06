@@ -18,7 +18,7 @@ import {
   updateIncidentType,
   selectColorAutofill,
 } from '../../../../../../actions';
-import '../../SystemSettings.css';
+import '../../styles.css';
 
 const FormItem = Form.Item;
 const { TextArea } = Input;

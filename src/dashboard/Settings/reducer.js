@@ -2,7 +2,7 @@ import {
   STORE_INCIDENTS_TYPE_SUCCESS,
   SELECT_INCIDENT_TYPE,
   GET_INCIDENTS_TYPE,
-  ADD_INCIDENT_TYPE,
+  CREATE_INCIDENT_TYPE,
   UPDATE_INCIDENT_TYPE,
   SELECT_COLOR_AUTOFILL,
   FETCH_INCIDENT_TYPE_FAILURE,
@@ -30,7 +30,7 @@ const initialState = {
   error: null,
 };
 
-export default function incidentsTypeSettings(state = initialState, action) {
+export default function incidentsTypes(state = initialState, action) {
   switch (action.type) {
     case GET_INCIDENTS_TYPE:
       return {
@@ -61,7 +61,7 @@ export default function incidentsTypeSettings(state = initialState, action) {
         incidentType: action.payload.incidentSelected,
       };
 
-    case ADD_INCIDENT_TYPE:
+    case CREATE_INCIDENT_TYPE:
       return {
         ...state,
         data: [action.payload.incidentType, ...state.data],
@@ -70,7 +70,7 @@ export default function incidentsTypeSettings(state = initialState, action) {
     case UPDATE_INCIDENT_TYPE: {
       const data = [...state.data];
       const { incidentType } = action;
-      const { _id: id } = incidentsTypeSettings;
+      const { _id: id } = incidentsTypes;
       const index = data.findIndex(({ _id }) => _id === id);
       data[index] = incidentType;
       return {

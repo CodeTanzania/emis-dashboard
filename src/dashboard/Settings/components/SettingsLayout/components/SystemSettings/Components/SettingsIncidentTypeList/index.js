@@ -19,6 +19,28 @@ import IncidentTypeItem from './components/IncidentTypeItemList';
  */
 
 class IncidentType extends React.Component {
+
+  static propTypes = {
+    getIncidentstypeTrigger: PropTypes.func,
+    incidentsType: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string,
+        nature: PropTypes.string.isRequired,
+        family: PropTypes.string.isRequired,
+        code: PropTypes.string.isRequired,
+          cap: PropTypes.string.isRequired,
+        description: PropTypes.string,
+        color: PropTypes.string,
+        _id: PropTypes.string,
+      }).isRequired
+    ),
+  };
+
+  static defaultProps = {
+    getIncidentstypeTrigger: () => {},
+    incidentsType: [],
+  };
+
   componentDidMount() {
     const { getIncidentstypeTrigger } = this.props;
     getIncidentstypeTrigger();
@@ -54,26 +76,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(IncidentType);
-
-const incidentsTypePropTypes = PropTypes.shape({
-  name: PropTypes.string,
-  nature: PropTypes.string.isRequired,
-  family: PropTypes.string.isRequired,
-  code: PropTypes.shape({
-    given: PropTypes.string,
-    cap: PropTypes.string.isRequired,
-  }).isRequired,
-  description: PropTypes.string,
-  color: PropTypes.string,
-  _id: PropTypes.string,
-}).isRequired;
-
-IncidentType.propTypes = {
-  getIncidentstypeTrigger: PropTypes.func,
-  incidentsType: PropTypes.arrayOf(incidentsTypePropTypes),
-};
-
-IncidentType.defaultProps = {
-  getIncidentstypeTrigger: () => {},
-  incidentsType: [],
-};

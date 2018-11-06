@@ -19,13 +19,13 @@ import {
   selectColorAutofill,
 } from '../../../../../../actions';
 
-import '../../SystemSettings.css';
+import '../../styles.css';
 
 const FormItem = Form.Item;
 const { TextArea } = Input;
 const { Option } = Select;
 
-class AddIncidentTypeForm extends Component {
+class IncidentTypeForm extends Component {
   state = {
     submitting: false,
     background: '#fff',
@@ -129,7 +129,7 @@ class AddIncidentTypeForm extends Component {
     };
 
     return (
-      <div className="AddNewIncidentType">
+      <div className="newIncidentType">
         <Icon
           style={{ cursor: 'pointer' }}
           type="plus"
@@ -273,4 +273,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Form.create()(AddIncidentTypeForm));
+)(Form.create()(IncidentTypeForm));

@@ -4,7 +4,7 @@ import { switchMap, catchError } from 'rxjs/operators';
 
 import {
   GET_INCIDENTS_TYPE,
-  ADD_INCIDENT_TYPE,
+  CREATE_INCIDENT_TYPE,
   storeIncidents,
   fetchIncidentsTypeFailure,
   UPDATE_INCIDENT_TYPE,
@@ -23,7 +23,7 @@ export const getIncidentsTypeEpic = action$ =>
 
 export const addIncidentTypeEpic = action$ =>
   action$.pipe(
-    ofType(ADD_INCIDENT_TYPE),
+    ofType(CREATE_INCIDENT_TYPE),
     switchMap(data => from(API.createIncidentType(data.payload.incidentType))),
     switchMap(() => of(getIncidentstype()))
   );
