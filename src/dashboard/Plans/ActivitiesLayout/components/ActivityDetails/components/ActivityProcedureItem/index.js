@@ -127,6 +127,7 @@ function collectTarget(connect, monitor) {
 function ActivityProcedureItem({
   index,
   name,
+  description,
   isDragging,
   connectDragSource,
   connectDropTarget,
@@ -137,7 +138,7 @@ function ActivityProcedureItem({
         className="ActivityProcedureItem"
         style={{ opacity: isDragging ? 0.5 : 1 }}
       >
-        <Row>
+        <Row title={description}>
           <Col span={1} className="checkboxContainer">
             <Checkbox />
           </Col>
@@ -154,12 +155,16 @@ function ActivityProcedureItem({
 /* Props validation */
 ActivityProcedureItem.propTypes = {
   name: PropTypes.string.isRequired,
+  description: PropTypes.string,
   number: PropTypes.number.isRequired,
   isDragging: PropTypes.bool.isRequired,
   connectDragSource: PropTypes.func.isRequired,
   connectDropTarget: PropTypes.func.isRequired,
 };
 
+ActivityProcedureItem.defaultProps = {
+  description: 'N/A',
+};
 export default flow(
   DragSource(ITEM_TYPE, ActivityProcedureItemSource, collectSource),
   DropTarget(ITEM_TYPE, ActivityProcedureItemTarget, collectTarget)

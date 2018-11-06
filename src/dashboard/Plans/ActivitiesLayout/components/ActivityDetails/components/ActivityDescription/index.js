@@ -1,6 +1,7 @@
-import { Button } from 'antd';
+import { Button, Col, Row } from 'antd';
 import PropTypes from 'prop-types';
 import React from 'react';
+import './styles.css';
 
 /**
  * ActivityDescription
@@ -15,16 +16,22 @@ import React from 'react';
  */
 export default function ActivityDescription({ description }) {
   return (
-    <div style={{ marginTop: 20 }}>
-      <h4 style={{ borderBottom: '1px solid #e0e0e0', paddingBottom: 10 }}>
-        Description{' '}
-        <Button
-          title="Edit Description"
-          type="default"
-          icon="edit"
-          style={{ border: 0 }}
-        />
-      </h4>
+    <div className="ActivityDescription">
+      <Row className="header">
+        <Col span={22}>
+          <h4>Description</h4>
+        </Col>
+        <Col span={2}>
+          <Button
+            title="Edit Activity Description"
+            type="default"
+            icon="edit"
+            style={{ border: 0 }}
+          >
+            Edit Description
+          </Button>
+        </Col>
+      </Row>
       <p>{description}</p>
     </div>
   );

@@ -1,4 +1,4 @@
-import { Button, List, Modal } from 'antd';
+import { Button, List, Modal, Row, Col } from 'antd';
 import flow from 'lodash/flow';
 import React, { Component } from 'react';
 import { DragDropContext } from 'react-dnd';
@@ -91,16 +91,22 @@ class ActivityProcedureList extends Component {
     return (
       <div className="ActivityProcedureList">
         {/* Activity procedures section header */}
-        <h4 className="header">
-          Standard Operating Procedures (SOP)
-          <Button
-            title="Add new Task"
-            type="default"
-            icon="plus"
-            style={{ border: 0 }}
-            onClick={this.handleOpenActivityTaskForm}
-          />
-        </h4>
+        <Row className="header">
+          <Col span={22}>
+            <h4>Standard Operating Procedures (SOP)</h4>
+          </Col>
+          <Col span={2}>
+            <Button
+              title="Add new SOP"
+              type="default"
+              icon="plus"
+              style={{ border: 0 }}
+              onClick={this.handleOpenActivityTaskForm}
+            >
+              New SOP
+            </Button>
+          </Col>
+        </Row>
         {/* end Activity procedures section header */}
         {/* start activity task draggable list */}
         <List
