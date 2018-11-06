@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getIncidentstype } from '../../../../../../actions';
+import { fetchIncidentstype } from '../../../../../../actions';
 /* import component */
 import IncidentTypeListFooter from './components/IncidentTypeListFooter';
 import IncidentTypeItem from './components/IncidentTypeItemList';
@@ -19,7 +19,6 @@ import IncidentTypeItem from './components/IncidentTypeItemList';
  */
 
 class IncidentType extends React.Component {
-
   static propTypes = {
     getIncidentstypeTrigger: PropTypes.func,
     incidentsType: PropTypes.arrayOf(
@@ -28,7 +27,7 @@ class IncidentType extends React.Component {
         nature: PropTypes.string.isRequired,
         family: PropTypes.string.isRequired,
         code: PropTypes.string.isRequired,
-          cap: PropTypes.string.isRequired,
+        cap: PropTypes.string.isRequired,
         description: PropTypes.string,
         color: PropTypes.string,
         _id: PropTypes.string,
@@ -69,7 +68,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getIncidentstypeTrigger: bindActionCreators(getIncidentstype, dispatch),
+  getIncidentstypeTrigger: bindActionCreators(fetchIncidentstype, dispatch),
 });
 
 export default connect(

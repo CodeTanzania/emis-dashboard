@@ -3,29 +3,29 @@ import { from, of } from 'rxjs';
 import { switchMap, catchError } from 'rxjs/operators';
 
 import {
-  GET_INCIDENTS_TYPE,
-  CREATE_INCIDENT_TYPE,
-  storeIncidents,
+  FETCH_INCIDENTS_TYPE_START,
+  CREATE_INCIDENT_TYPE_SUCCESS,
+  fetchIncidentsTypeSuccess,
   fetchIncidentsTypeFailure,
   UPDATE_INCIDENT_TYPE,
   SEARCH_INCIDENT_TYPE,
-  getIncidentstype,
+  fetchIncidentstype,
 } from './actions';
 import API from '../../common/API';
 
 export const getIncidentsTypeEpic = action$ =>
   action$.pipe(
-    ofType(GET_INCIDENTS_TYPE),
+    ofType(FETCH_INCIDENTS_TYPE_START),
     switchMap(() => from(API.getIncidentType().then(data => data))),
-    switchMap(data => of(storeIncidents(data))),
+    switchMap(data => of(fetchIncidentsTypeSuccess(data))),
     catchError(error => fetchIncidentsTypeFailure(error.message))
   );
 
 export const addIncidentTypeEpic = action$ =>
   action$.pipe(
-    ofType(CREATE_INCIDENT_TYPE),
+    ofType(CREATE_INCIDENT_TYPE_SUCCESS),
     switchMap(data => from(API.createIncidentType(data.payload.incidentType))),
-    switchMap(() => of(getIncidentstype()))
+    switchMap(() => of(fetchIncidentstype()))
   );
 
 export const updateIncidentTypeEpic = action$ =>
@@ -36,7 +36,7 @@ export const updateIncidentTypeEpic = action$ =>
         API.updateIncidentType(data.payload.incidentTypeId, data.payload.update)
       )
     ),
-    switchMap(() => of(getIncidentstype()))
+    switchMap(() => of(fetchIncidentstype()))
   );
 
 export const searchIncidentTypeEpic = action$ =>
@@ -45,6 +45,6 @@ export const searchIncidentTypeEpic = action$ =>
     switchMap(action =>
       from(API.searchIncidentsType(action.payload.searchValue))
     ),
-    switchMap(data => of(storeIncidents(data))),
+    switchMap(data => of(fetchIncidentsTypeSuccess(data))),
     catchError(error => fetchIncidentsTypeFailure(error.message))
   );

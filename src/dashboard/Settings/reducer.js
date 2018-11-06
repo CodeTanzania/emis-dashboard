@@ -1,8 +1,8 @@
 import {
-  STORE_INCIDENTS_TYPE_SUCCESS,
+  FETCH_INCIDENTS_TYPE_SUCCESS,
   SELECT_INCIDENT_TYPE,
-  GET_INCIDENTS_TYPE,
-  CREATE_INCIDENT_TYPE,
+  FETCH_INCIDENTS_TYPE_START,
+  CREATE_INCIDENT_TYPE_SUCCESS,
   UPDATE_INCIDENT_TYPE,
   SELECT_COLOR_AUTOFILL,
   FETCH_INCIDENT_TYPE_FAILURE,
@@ -32,7 +32,7 @@ const initialState = {
 
 export default function incidentsTypes(state = initialState, action) {
   switch (action.type) {
-    case GET_INCIDENTS_TYPE:
+    case FETCH_INCIDENTS_TYPE_START:
       return {
         state,
         isLoading: true,
@@ -40,7 +40,7 @@ export default function incidentsTypes(state = initialState, action) {
         total: 0,
       };
 
-    case STORE_INCIDENTS_TYPE_SUCCESS:
+    case FETCH_INCIDENTS_TYPE_SUCCESS:
       return {
         data: action.payload.incidentsType.data,
         total: action.payload.incidentsType.total,
@@ -61,7 +61,7 @@ export default function incidentsTypes(state = initialState, action) {
         incidentType: action.payload.incidentSelected,
       };
 
-    case CREATE_INCIDENT_TYPE:
+    case CREATE_INCIDENT_TYPE_SUCCESS:
       return {
         ...state,
         data: [action.payload.incidentType, ...state.data],

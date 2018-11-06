@@ -20,17 +20,18 @@ import styles from '../../../styles.css';
 const cx = classNames.bind(styles);
 
 class IncidentTypeItem extends React.Component {
-
   static propTypes = {
-    selected: PropTypes.arrayOf(PropTypes.shape({
-      name: PropTypes.string,
-      nature: PropTypes.string.isRequired,
-      family: PropTypes.string.isRequired,
-      code: PropTypes.string,
-      cap: PropTypes.string.isRequired,
-      color: PropTypes.string,
-      _id: PropTypes.string,
-    }).isRequired),
+    selected: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string,
+        nature: PropTypes.string.isRequired,
+        family: PropTypes.string.isRequired,
+        code: PropTypes.string,
+        cap: PropTypes.string.isRequired,
+        color: PropTypes.string,
+        _id: PropTypes.string,
+      }).isRequired
+    ),
     incidentSelected: PropTypes.shape({
       name: PropTypes.string,
       nature: PropTypes.string.isRequired,
@@ -39,7 +40,7 @@ class IncidentTypeItem extends React.Component {
       cap: PropTypes.string.isRequired,
       color: PropTypes.string,
       _id: PropTypes.string,
-    }).isRequired,
+    }),
     handleselectedIncidentType: PropTypes.func,
   };
 
