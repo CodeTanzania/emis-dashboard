@@ -33,7 +33,7 @@ export default function ActivityCard({ name, taskCount, onClick }) {
               boxShadow: '0 0 0 1px #d9d9d9 inset',
             }}
           />
-          <p className="tasksBadgeTitle">Tasks</p>
+          <p className="tasksBadgeTitle">SOP(s)</p>
         </Col>
       </Row>
     </Card>
