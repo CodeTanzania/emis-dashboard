@@ -1,4 +1,4 @@
-import { Checkbox, Col, Icon, Row } from 'antd';
+import { Checkbox, Col, Row, Button } from 'antd';
 import flow from 'lodash/flow';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -138,13 +138,25 @@ function ActivityProcedureItem({
         className="ActivityProcedureItem"
         style={{ opacity: isDragging ? 0.5 : 1 }}
       >
-        <Row title={description}>
-          <Col span={1} className="checkboxContainer">
+        <Row>
+          <Col xs={1} md={1} xxl={1} className="checkboxContainer">
             <Checkbox />
           </Col>
-          <Col span={22}>{`${index + 1} : ${name}`}</Col>
-          <Col span={1}>
-            <Icon type="close" title="Remove procedure" theme="outlined" />
+          <Col xs={20} md={21} xxl={22} title={description}>{`${index +
+            1} : ${name}`}</Col>
+          <Col xs={3} md={2} xxl={1}>
+            <Button
+              icon="edit"
+              title="Edit SOP"
+              style={{ border: 0 }}
+              theme="outlined"
+            />
+            <Button
+              icon="delete"
+              title="Delete SOP"
+              style={{ border: 0 }}
+              theme="outlined"
+            />
           </Col>
         </Row>
       </div>
