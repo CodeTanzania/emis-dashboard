@@ -91,10 +91,10 @@ class ActivityProcedureList extends Component {
       <div className="ActivityProcedureList">
         {/* Activity procedures section header */}
         <Row className="header">
-          <Col span={22}>
+          <Col xs={16} md={18} xl={21} xxl={22}>
             <h4>Standard Operating Procedures (SOP)</h4>
           </Col>
-          <Col span={2}>
+          <Col xs={18} md={6} xl={3} xxl={2}>
             <Button
               title="Add new SOP"
               type="default"

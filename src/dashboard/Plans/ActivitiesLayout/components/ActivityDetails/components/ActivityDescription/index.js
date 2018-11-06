@@ -18,10 +18,10 @@ export default function ActivityDescription({ description }) {
   return (
     <div className="ActivityDescription">
       <Row className="header">
-        <Col span={22}>
+        <Col xs={15} md={18} xl={21} xxl={22}>
           <h4>Description</h4>
         </Col>
-        <Col span={2}>
+        <Col xs={7} md={6} xl={3} xxl={2}>
           <Button
             title="Edit Activity Description"
             type="default"
