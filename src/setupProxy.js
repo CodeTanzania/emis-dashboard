@@ -1,6 +1,6 @@
 const proxy = require('http-proxy-middleware');
 
-module.exports = function(app) {
+function apiProxy(app) {
   app.use(
     proxy('/api', {
       target: 'https://emis-stakeholders-api-v1.herokuapp.com/v1/',
@@ -8,4 +8,6 @@ module.exports = function(app) {
       pathRewrite: { '^/api': '' },
     })
   );
-};
+}
+
+module.exports = apiProxy;

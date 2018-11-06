@@ -63,7 +63,7 @@ class StakeholderItem extends Component {
 
   render() {
     const { stakeholder, selectedStakeholder } = this.props;
-    const { name, phone, email, _id } = stakeholder;
+    const { name, mobile, email, _id } = stakeholder;
     const isSelected = selectedStakeholder
       ? selectedStakeholder._id === _id
       : false;
@@ -102,7 +102,7 @@ class StakeholderItem extends Component {
                   <div>
                     <Icon type="mobile" />
                     <span className={cx('infoItem', { isSelected })}>
-                      {phone}
+                      {mobile}
                     </span>
                   </div>
                 </Col>

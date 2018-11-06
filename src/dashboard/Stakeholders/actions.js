@@ -36,26 +36,33 @@ export const TOGGLE_STAKEHOLDER_FILTER = 'TOGGLE_STAKEHOLDER_FILTER';
 // Reset stakeholder filters
 export const RESET_STAKEHOLDER_FILTERS = 'RESET_STAKEHOLDER_FILTERS';
 
+export const SHOW_STAKEHOLDER_FORM = 'SHOW_STAKEHOLDER_FORM';
+
 /**
  * Initialize stakeholders
  */
-export const initStakeholders = () => async (dispatch, getState, { API }) => {
+export const initStakeholders = () => (dispatch, getState, { API }) => {
   dispatch({ type: INIT_STAKEHOLDERS_START });
-  try {
-    const stakeholders = await API.findStakeholders();
-    const schema = await API.loadStakeholdersSchema();
-    const { phases, type } = schema.properties;
-    const filters = [
-      { group: 'phases', data: phases.enum },
-      { group: 'type', data: type.enum },
-    ];
-    dispatch({
-      type: INIT_STAKEHOLDERS_SUCCESS,
-      payload: { data: { ...stakeholders, filters } },
+  Promise.all([
+    API.findStakeholders(),
+    API.loadStakeholdersSchema(),
+    API.getStakeholderPredRoles(),
+  ])
+    .then(result => {
+      const [stakeholders, schema, predRoles] = result;
+      const { phases, type } = schema.properties;
+      const filters = [
+        { group: 'phases', data: phases.enum },
+        { group: 'type', data: type.enum },
+      ];
+      dispatch({
+        type: INIT_STAKEHOLDERS_SUCCESS,
+        payload: { data: { ...stakeholders, filters, schema, predRoles } },
+      });
+    })
+    .catch(error => {
+      dispatch({ type: INIT_STAKEHOLDERS_ERROR, payload: { data: error } });
     });
-  } catch (error) {
-    dispatch({ type: INIT_STAKEHOLDERS_ERROR, payload: { data: error } });
-  }
 };
 
 /**
@@ -148,5 +155,16 @@ export const updateStakeholderSuccess = stakeholder => ({
   type: UPDATE_STAKEHOLDER,
   payload: {
     data: stakeholder,
+  },
+});
+
+/**
+ * Called to display stakeholder form
+ * @param {Object} drawerOptions - antd drawer options to customize form
+ */
+export const showStakeholderForm = (drawerOptions, stakeholder) => ({
+  type: SHOW_STAKEHOLDER_FORM,
+  payload: {
+    data: { drawerOptions, stakeholder },
   },
 });

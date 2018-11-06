@@ -20,7 +20,7 @@ export default function BasicInfo({ stakeholder, onClickEdit }) {
     email,
     fax,
     phases,
-    ownership,
+    role,
     physicalAddress,
     postalAddress,
     website,
@@ -33,7 +33,7 @@ export default function BasicInfo({ stakeholder, onClickEdit }) {
         </div>
         <div style={{ flex: '1' }}>
           <h3 style={{ marginBottom: '7px' }}>{name}</h3>
-          <InfoLineItem label="Ownership" value={ownership} />
+          <InfoLineItem label="Role" value={role.name} />
           <InfoLineItem label="Phases" value={phases} />
         </div>
         <div>

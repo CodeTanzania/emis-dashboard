@@ -6,56 +6,40 @@
  */
 
 import React, { Component, Fragment } from 'react';
-import { Layout, Button, Drawer, Spin } from 'antd';
+import { Layout, Button, Spin } from 'antd';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { initStakeholders } from './actions';
+import { initStakeholders, showStakeholderForm } from './actions';
 import StakeholderFilter from './components/StakeholderFilter';
 import StakeholderList from './components/StakeholderList';
 import StakeholderProfile from './components/StakeholderProfile';
-import StakeholderForm from './components/StakeholderForm';
+import StakeholderForm from './components/StakeholderFormWrapper';
 import styles from './styles.css';
 
 const cx = classNames.bind(styles);
 
 const { Header } = Layout;
 class Stakeholders extends Component {
-  state = { visible: false };
-
   static propTypes = {
     initStakeholders: PropTypes.func.isRequired,
     loading: PropTypes.bool.isRequired,
+    showStakeholderForm: PropTypes.func.isRequired,
   };
 
   componentDidMount() {
     this.props.initStakeholders(); // eslint-disable-line react/destructuring-assignment
   }
 
-  handleCancelEdit = () => {
-    this.setState({ visible: false });
-  };
-
-  handleOnClickAddPersonnel = () => {
-    this.setState({ visible: true });
+  addNewStakeholder = () => {
+    this.props.showStakeholderForm({ title: 'Create Stakeholder' });
   };
 
   render() {
     const { loading } = this.props;
-    const { visible } = this.state;
 
     return (
       <Fragment>
-        <Drawer
-          title="Create Stakeholder"
-          width="50%"
-          placement="right"
-          visible={visible}
-          onClose={this.handleCancelEdit}
-          maskClosable={false}
-        >
-          <StakeholderForm handleCancelClick={this.handleCancelEdit} />
-        </Drawer>
         <Layout className={cx('Stakeholders')}>
           <Header className={cx('header')}>
             <h3>Stakeholders</h3>
@@ -65,7 +49,7 @@ class Stakeholders extends Component {
               <Button
                 icon="plus"
                 type="primary"
-                onClick={this.handleOnClickAddPersonnel}
+                onClick={this.addNewStakeholder}
               >
                 New Stakeholder
               </Button>
@@ -78,19 +62,20 @@ class Stakeholders extends Component {
               </div>
             ) : (
               <Fragment>
-                <div className={cx('stakeholderFilters')}>
+                <div className={cx('filters')}>
                   <StakeholderFilter />
                 </div>
-                <div className={cx('stakeholderList')}>
+                <div className={cx('list')}>
                   <StakeholderList />
                 </div>
-                <div className={cx('stakeholderProfile')}>
+                <div className={cx('profile')}>
                   <StakeholderProfile />
                 </div>
               </Fragment>
             )}
           </Layout>
         </Layout>
+        <StakeholderForm />
       </Fragment>
     );
   }
@@ -104,5 +89,6 @@ export default connect(
   mapStateToProps,
   {
     initStakeholders,
+    showStakeholderForm,
   }
 )(Stakeholders);

@@ -26,17 +26,17 @@
   flex: 1;
 }
 
-.Stakeholders .stakeholderFilters {
+.Stakeholders .filters {
   width: 20%;
   border-right: 1px solid #E0E0E0;
 }
 
-.Stakeholders .stakeholderList {
+.Stakeholders .list {
   width: 25%;
   border-right: 1px solid #E0E0E0;
 }
 
-.Stakeholders .stakeholderProfile {
+.Stakeholders .profile {
   width: 55%;
 }
 

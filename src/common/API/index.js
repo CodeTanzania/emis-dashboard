@@ -1,7 +1,5 @@
 import axios from 'axios';
 
-const API_END_POINT = 'https://emis-asat.herokuapp.com/v1';
-
 /**
  * Initialize axios library
  *
@@ -36,6 +34,11 @@ const API = {
    */
   loadStakeholdersSchema: () =>
     Axios.get('/parties/schema').then(response => response.data),
+  /**
+   * Retrieve stakeholder predefined roles
+   */
+  getStakeholderPredRoles: () =>
+    Axios.get('/roles').then(response => response.data),
 
   /**
    * Search stakeholder using query string
@@ -54,34 +57,15 @@ const API = {
    * Create new stakeholder
    * @param {Object} data stakeholder data to create
    */
-  createStakeholder: data => {
-    const url = `${API_END_POINT}/parties`;
-    const config = {
-      method: 'POST',
-      body: JSON.stringify(data),
-      headers: {
-        'content-type': 'application/json',
-      },
-    };
-    return fetch(url, config).then(res => res.json());
-  },
+  createStakeholder: data => Axios.post('/parties', data).then(res => res.data),
 
   /**
    * It update stakeholder information
    * @param {String} stakeholder stakeholder Identifier to update
    * @param {Object} updates stakeholder update data
    */
-  updateStakeholder: (stakeholderId, updates) => {
-    const url = `${API_END_POINT}/parties/${stakeholderId}`;
-    const config = {
-      method: 'PATCH',
-      body: JSON.stringify(updates),
-      headers: {
-        'content-type': 'application/json',
-      },
-    };
-    return fetch(url, config).then(res => res.json());
-  },
+  updateStakeholder: (stakeholderId, updates) =>
+    Axios.patch(`/parties/${stakeholderId}`, updates).then(res => res.data),
 };
 
 export default API;
