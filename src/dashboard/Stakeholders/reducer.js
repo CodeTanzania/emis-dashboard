@@ -128,6 +128,7 @@ export default function stakeholders(state = initialState, action) {
       return {
         ...state,
         data: [action.payload.data, ...state.data],
+        selected: action.payload.data,
       };
     case UPDATE_STAKEHOLDER: {
       const data = [...state.data]; // grab stakeholder array

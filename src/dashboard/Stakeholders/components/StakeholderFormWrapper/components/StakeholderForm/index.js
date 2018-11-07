@@ -4,10 +4,7 @@ import { Button, Checkbox, Form, Input, Select, message } from 'antd';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import API from '../../../../../../common/API';
-import {
-  addNewStakeholderSuccess,
-  updateStakeholderSuccess,
-} from '../../../../actions';
+import { addStakeholder, updateStakeholder } from '../../../../actions';
 // import styles from './styles.css';
 
 // const cx = classNames.bind(styles);
@@ -42,7 +39,7 @@ class StakeholderForm extends Component {
       if (!err) {
         const { stakeholder } = this.props;
         if (stakeholder) {
-          this.updateStakeholder(stakeholder._id, data);
+          this.patchStakeholder(stakeholder._id, data);
         } else {
           this.createStakeholder(data);
         }
@@ -59,7 +56,7 @@ class StakeholderForm extends Component {
     API.createStakeholder(data)
       .then(result => {
         // submitted successfully
-        addNewStakeholderSuccess(result);
+        this.props.addStakeholder(result);
         this.setState({ submitting: false });
         message.success('New stakeholder successfully added');
         onCancel();
@@ -71,13 +68,13 @@ class StakeholderForm extends Component {
       });
   };
 
-  updateStakeholder = (stakeholderId, updates) => {
+  patchStakeholder = (stakeholderId, updates) => {
     const { onCancel } = this.props;
     this.setState({ submitting: true });
     API.updateStakeholder(stakeholderId, updates)
       .then(result => {
         // patch submitted successfully
-        updateStakeholderSuccess(result);
+        this.props.updateStakeholder(result);
         this.setState({ submitting: false });
         message.success('Stakeholder updated successfully');
         onCancel();
@@ -240,7 +237,7 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   {
-    addNewStakeholderSuccess,
-    updateStakeholderSuccess,
+    addStakeholder,
+    updateStakeholder,
   }
 )(Form.create()(StakeholderForm));

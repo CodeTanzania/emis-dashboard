@@ -140,7 +140,7 @@ export const searchStakeholders = searchText => (
  * action fired on add new stakeholder success
  * @param {Object} - Stakeholder data
  */
-export const addNewStakeholderSuccess = stakeholder => ({
+export const addStakeholder = stakeholder => ({
   type: CREATE_STAKEHOLDER,
   payload: {
     data: stakeholder,
@@ -151,7 +151,7 @@ export const addNewStakeholderSuccess = stakeholder => ({
  * action fired on update stakeholder successfully
  * @param {Object} - Stakeholder object
  */
-export const updateStakeholderSuccess = stakeholder => ({
+export const updateStakeholder = stakeholder => ({
   type: UPDATE_STAKEHOLDER,
   payload: {
     data: stakeholder,
