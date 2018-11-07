@@ -1,13 +1,10 @@
 import React, { Component, Fragment } from 'react';
-import { Button, Row, Col } from 'antd';
+import { Row, Col, Divider } from 'antd';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { connect } from 'react-redux';
 import BasicInfo from './components/BasicInfo';
-import PersonnelList from './components/PersonnelList';
-import ProfileItemContent from './components/ProfileItemContent';
-// import Responsibilities from './components/Responsibilities';
-import ProfileItemHeader from './components/ProfileItemHeader';
+import Members from './components/Members';
 import { showStakeholderForm } from '../../actions';
 import styles from './styles.css';
 
@@ -60,21 +57,15 @@ class StakeholderProfile extends Component {
                 />
               </Col>
             </Row>
-            <Row>
-              <ProfileItemHeader
-                title="Key Personnel"
-                actions={
-                  <Button
-                    icon="plus"
-                    onClick={this.handleOnClickAddPersonnel}
-                    className="addMember"
-                  />
-                }
-              />
-              <ProfileItemContent>
-                <PersonnelList />
-              </ProfileItemContent>
+            <Row style={{ paddingTop: '20px' }}>
+              <Col span={23}>
+                <h3 style={{ paddingLeft: '20px', paddingRight: '20px' }}>
+                  Members
+                </h3>
+              </Col>
+              <Divider type="horizontal" />
             </Row>
+            <Members />
           </div>
         </div>
       </Fragment>

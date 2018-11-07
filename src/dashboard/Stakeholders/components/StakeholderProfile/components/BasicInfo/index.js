@@ -40,7 +40,9 @@ export default function BasicInfo({ stakeholder, onClickEdit }) {
           <InfoLineItem label="Phases" value={phases} />
         </div>
         <div>
-          <Button icon="edit" onClick={() => onClickEdit()} />
+          <Button icon="edit" onClick={() => onClickEdit()}>
+            Edit Profile
+          </Button>
         </div>
       </div>
       <InfoLineItem label="Phone" value={mobile} block />

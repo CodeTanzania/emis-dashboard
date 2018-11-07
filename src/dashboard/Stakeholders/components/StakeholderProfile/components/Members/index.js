@@ -1,8 +1,12 @@
 /* eslint no-underscore-dangle: "off" */
-import { Col, Row } from 'antd';
 import React from 'react';
+import { Col, Row, Button } from 'antd';
+import classNames from 'classnames';
 // import component
 import PersonnelCard from './components/PersonnelCard';
+import styles from './styles.css';
+
+const cx = classNames.bind(styles);
 
 // fake data
 const personnelList = [
@@ -54,19 +58,26 @@ const personnelList = [
  * Renders a grid view list of key personnel
  *
  * @function
- * @name PersonnelList
+ * @name Members
  *
  * @version 0.1.0
  * @since 0.1.0
  */
-export default function PersonnelList() {
+export default function Members() {
   return (
-    <Row type="flex" justify="space-around">
-      {personnelList.map(personnel => (
-        <Col key={personnel._id} span={10}>
-          <PersonnelCard {...personnel} />
-        </Col>
-      ))}
-    </Row>
+    <div className={cx('StakeholderMembers')}>
+      <div className={cx('addMemberBtn')}>
+        <Row type="flex" justify="end">
+          <Button icon="plus">Add Members</Button>
+        </Row>
+      </div>
+      <Row type="flex" justify="space-between">
+        {personnelList.map(personnel => (
+          <Col key={personnel._id} span={10}>
+            <PersonnelCard {...personnel} />
+          </Col>
+        ))}
+      </Row>
+    </div>
   );
 }

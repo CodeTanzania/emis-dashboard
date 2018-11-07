@@ -1,7 +1,8 @@
 .stakeholderProfile {
   background: #fff;
   height: 100%;
-  overflowY: auto
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .stakeholderProfile .header {
