@@ -9,6 +9,10 @@
   cursor: pointer;
 }
 
+.ActivityCard .name {
+  word-wrap: break-word;
+}
+
 .ActivityCard .subtitle {
   font-size: 12px;
   line-height: 20px;

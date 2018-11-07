@@ -1,4 +1,4 @@
-import { Badge, Card, Col, Row } from 'antd';
+import { Badge, Card, Col, Row, Icon } from 'antd';
 import PropTypes from 'prop-types';
 import React from 'react';
 import './styles.css';
@@ -22,9 +22,19 @@ export default function ActivityCard({ name, taskCount, onClick }) {
     <Card className="ActivityCard" onClick={onClick}>
       <Row type="flex" justify="space-around">
         <Col span={20}>
-          <h4 title={name}>{name}</h4>
+          <h4 title={name} className="name">
+            {name}
+          </h4>
+          <Row>
+            <Col span={8} title="Participant Stakeholders">
+              <Icon type="team" /> {` : 10`}
+            </Col>
+            <Col span={8} title="Resource Count">
+              <Icon type="gold" /> {` : 10`}
+            </Col>
+          </Row>
         </Col>
-        <Col span={2} className="tasksBadge">
+        <Col title="SOP count" span={2} className="tasksBadge">
           <Badge
             count={taskCount}
             style={{

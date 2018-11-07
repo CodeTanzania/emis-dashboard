@@ -198,6 +198,7 @@ class PlanActivitiesLayout extends Component {
               <Row type="flex" justify="end">
                 <Col span={10}>
                   <Button
+                    title="Create New Activity"
                     icon="plus"
                     type="primary"
                     onClick={() => {
@@ -209,7 +210,11 @@ class PlanActivitiesLayout extends Component {
                 </Col>
                 <Col span={10}>
                   <Dropdown overlay={menu}>
-                    <Button className="exportButton" type="primary">
+                    <Button
+                      title="Export Selected Plan"
+                      className="exportButton"
+                      type="primary"
+                    >
                       <Icon type="export" />
                       Export
                       <Icon type="down" />

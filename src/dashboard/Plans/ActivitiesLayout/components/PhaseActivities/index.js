@@ -1,6 +1,6 @@
 import { Badge, Button, Col, Layout, List, Popover, Row } from 'antd';
 import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import ActivityCard from '../ActivityCard';
 import './style.css';
 
@@ -9,7 +9,7 @@ const { Header, Content } = Layout;
 
 function PhaseOptions({ onClickAddActivity }) {
   return (
-    <div>
+    <Fragment>
       <div>
         <Button icon="plus" className="b-0" onClick={onClickAddActivity}>
           Add new action
@@ -25,7 +25,7 @@ function PhaseOptions({ onClickAddActivity }) {
           Archive selected
         </Button>
       </div>
-    </div>
+    </Fragment>
   );
 }
 
@@ -143,7 +143,11 @@ export default class PhaseActivities extends Component {
                 visible={showPopover}
                 onVisibleChange={this.handlePopoverVisibleChange}
               >
-                <Button icon="ellipsis" className="f-20 b-0" />
+                <Button
+                  title={`${title} Phase Actions`}
+                  icon="ellipsis"
+                  className="f-20 b-0"
+                />
               </Popover>
             </Col>
           </Row>

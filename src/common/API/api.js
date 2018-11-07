@@ -118,7 +118,6 @@ export function postPlanActivity(activity) {
  *
  * @param {string} activityId - Activity Id
  * @param {number} page=1 - Page to retrieve results from
- *
  * @returns {Promise}
  *
  * @version 0.1.0
