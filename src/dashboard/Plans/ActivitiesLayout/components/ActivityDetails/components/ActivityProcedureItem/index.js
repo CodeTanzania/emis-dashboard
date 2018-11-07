@@ -142,22 +142,54 @@ function ActivityProcedureItem({
           <Col xs={1} md={1} xxl={1} className="checkboxContainer">
             <Checkbox />
           </Col>
-          <Col xs={17} md={21} xxl={22} title={description}>{`${index +
+          <Col xs={17} md={21} xxl={20} title={description}>{`${index +
             1} : ${name}`}</Col>
-          <Col xs={6} md={2} xxl={1}>
+          {/* SOP actions */}
+          <Col xs={6} md={2} xxl={3}>
+            <Button
+              icon="eye"
+              title="View SOP Details"
+              style={{ border: 0 }}
+              theme="outlined"
+              size="large"
+            />
+            <Button
+              icon="file-text"
+              title="Attach Assessment to the SOP"
+              style={{ border: 0 }}
+              theme="outlined"
+              size="large"
+            />
+            <Button
+              icon="user-add"
+              title="Attach Stakeholder Role"
+              style={{ border: 0 }}
+              theme="outlined"
+              size="large"
+            />
+            <Button
+              icon="gold"
+              title="Add SOP Resource"
+              style={{ border: 0 }}
+              theme="outlined"
+              size="large"
+            />
             <Button
               icon="edit"
               title="Edit SOP"
               style={{ border: 0 }}
               theme="outlined"
+              size="large"
             />
             <Button
               icon="delete"
               title="Delete SOP"
               style={{ border: 0 }}
               theme="outlined"
+              size="large"
             />
           </Col>
+          {/* end SOP actions */}
         </Row>
       </div>
     )
