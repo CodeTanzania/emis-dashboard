@@ -41,13 +41,13 @@ export default function incidentsTypes(state = initialState, action) {
       };
 
     case FETCH_INCIDENTS_TYPE_SUCCESS:
-      return {
-        data: action.payload.incidentsType.data,
-        total: action.payload.incidentsType.total,
-        isLoading: false,
-        error: null,
-        incidentType: action.payload.incidentsType.data[0],
-      };
+    return {
+      data: action.payload.data.data,
+      total: action.payload.data.total,
+      isLoading: false,
+      error: null,
+      incidentType: action.payload.data.data[0],
+    };
     case FETCH_INCIDENT_TYPE_FAILURE:
       return {
         data: [],

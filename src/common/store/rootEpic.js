@@ -3,7 +3,6 @@
  */
 import { combineEpics } from 'redux-observable';
 import {
-  getIncidentsTypeEpic,
   addIncidentTypeEpic,
   searchIncidentTypeEpic,
   updateIncidentTypeEpic,
@@ -11,7 +10,6 @@ import {
 
 export default combineEpics(
   addIncidentTypeEpic,
-  getIncidentsTypeEpic,
   searchIncidentTypeEpic,
   updateIncidentTypeEpic
 );

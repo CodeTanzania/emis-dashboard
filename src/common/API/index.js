@@ -83,13 +83,16 @@ const API = {
     };
     return fetch(url, config).then(res => res.json());
   },
-  getIncidentType: () =>
-    fetch(`${INCIDENTS_API}/incidenttypes`)
-      .then(res => res.json())
-      .then(response => {
-        const { data, total } = response;
-        return { data, total };
-      }),
+
+  /**
+   * Find incidents-ype
+   */
+  getIncidentType: ({ page }) => {
+    const params = { page: page || 1 };
+    return Axios.get(`${INCIDENTS_API}/incidenttypes`, {
+      params,
+    }).then(response => response.data);
+  },
 
   createIncidentType: data => {
     const url = `${INCIDENTS_API}/incidenttypes`;
