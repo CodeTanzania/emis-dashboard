@@ -2,6 +2,7 @@ import { Icon, Select, Spin } from 'antd';
 import isEmpty from 'lodash/isEmpty';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import isFunction from 'lodash/isFunction';
 
 /* local constants */
 const { Option } = Select;
@@ -24,6 +25,10 @@ export default class SelectSearchBox extends Component {
     onFocus: PropTypes.func,
     onBlur: PropTypes.func,
     style: PropTypes.objectOf(PropTypes.string),
+    optionLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.func])
+      .isRequired,
+    optionValue: PropTypes.oneOfType([PropTypes.string, PropTypes.func])
+      .isRequired,
   };
 
   static defaultProps = {
@@ -55,18 +60,40 @@ export default class SelectSearchBox extends Component {
 
     if (open && isEmpty(data)) {
       this.setState({ loading: true });
-      onSearch().then(response => {
-        this.setState({ data: response.data.data, loading: false });
-      });
+      onSearch()
+        .then(response => {
+          console.log(response);
+          this.setState({ data: [...response.data.data], loading: false });
+        })
+        .catch(error => {
+          console.log(error);
+          this.setState({ loading: false });
+        });
     }
   };
 
   render() {
     const { data, loading } = this.state;
-    const { placeholder, onFocus, onBlur, style } = this.props;
+    const {
+      optionValue,
+      optionLabel,
+      placeholder,
+      onFocus,
+      onBlur,
+      style,
+    } = this.props;
+
+    const setOption = (prop, option) => {
+      if (isFunction(prop)) {
+        return prop(option);
+      }
+      return option[prop];
+    };
 
     const options = data.map(option => (
-      <Option key={option._id}>{option.name}</Option> //eslint-disable-line
+      <Option key={setOption(optionValue, option)}>
+        {setOption(optionLabel, option)}
+      </Option> //eslint-disable-line
     ));
 
     return (

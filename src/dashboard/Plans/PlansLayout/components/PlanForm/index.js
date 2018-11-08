@@ -90,6 +90,8 @@ class PlanForm extends Component {
               placeholder="Select Incident Type ..."
               onSearch={getIncidentTypes}
               onChange={() => {}}
+              optionLabel="name"
+              optionValue="_id"
             />
           )}
         </FormItem>

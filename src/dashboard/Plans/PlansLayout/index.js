@@ -98,6 +98,8 @@ class PlansLayout extends Component {
                     onSearch={getIncidentTypes}
                     placeholder="Select Incident type"
                     style={{ width: '250px' }}
+                    optionLabel="name"
+                    optionValue="_id"
                   />
                 </Col>
               </Row>
