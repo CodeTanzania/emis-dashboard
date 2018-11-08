@@ -139,14 +139,19 @@ function ActivityProcedureItem({
         style={{ opacity: isDragging ? 0.5 : 1 }}
       >
         <Row>
-          <Col xs={1} md={1} xxl={1} className="checkboxContainer">
+          <Col xs={1} md={1} xl={1} xxl={1} className="checkboxContainer">
             <Checkbox />
           </Col>
-          <Col xs={17} md={21} xxl={20} title={description}>
+          <Col xs={17} md={21} xl={18} xxl={19} title={description}>
             <span className="name">{`${index + 1} : ${name}`}</span>
           </Col>
           {/* SOP actions */}
-          <Col xs={6} md={2} xxl={3}>
+          <Col
+            xs={6}
+            md={2}
+            xl={{ span: 4, offset: 1 }}
+            xxl={{ span: 3, offset: 1 }}
+          >
             <Button
               icon="eye"
               title="View SOP Details"
