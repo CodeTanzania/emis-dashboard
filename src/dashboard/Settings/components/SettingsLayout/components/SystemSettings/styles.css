@@ -15,7 +15,9 @@
 .name {
     cursor: pointer;
 }
-
+.section{
+    border-right: 1px solid #cccccc
+}
 .IncidentTypeItemDescription {
     overflow: hidden;
     text-overflow: ellipsis;

@@ -10,17 +10,16 @@ function IncidentTypeListFooter({ total }) {
   return (
     <div className="footer p-10">
       <Row type="flex" justify="space-between">
-        <Col span={8}>
+        <Col span={10}>
           <h3>
             Total : &nbsp;
             <span className="f-15">{total}</span>
           </h3>
         </Col>
-        <Col span={10}>
+        <Col span={8}>
           <ButtonGroup>
             <Button icon="left" title="Previous" />
             <Button icon="right" title="Next" />
-            <Button icon="reload" title="Refresh incidents-type" />
           </ButtonGroup>
         </Col>
       </Row>

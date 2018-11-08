@@ -116,14 +116,19 @@ const API = {
     };
     return fetch(url, config).then(res => res.json());
   },
-
-  searchIncidentsType: searchValue =>
-    fetch(`${INCIDENTS_API}/incidenttypes?q=${searchValue}`)
-      .then(res => res.json())
-      .then(response => {
-        const { data, total } = response;
-        return { data, total };
-      }),
+      /**
+   * Search incidentType using query string
+   * @param {string} searchValue - Search query string
+   */
+  searchIncidentsType: searchValue => {
+    const config = {
+      params: {
+        q: searchValue,
+      },
+    };
+    return Axios.get(`${INCIDENTS_API}/incidenttypes`, config).then(response => response.data);
+  },
 };
 
+ 
 export default API;

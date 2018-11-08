@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import React from 'react';
 import { connect } from 'react-redux';
-import { Button, Col, Input, Row, Layout, Checkbox } from 'antd';
+import { Button, Col, Input, Row, Layout, } from 'antd';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 
@@ -80,9 +80,6 @@ class SettingsLayout extends React.Component {
           <Col span={6} className={cx('section')}>
             <ColHeader className={cx('SettingLayoutContentHeader')}>
               <Row type="flex" justify="space-around">
-                <Col span={1}>
-                  <Checkbox />
-                </Col>
                 <Col span={19}>
                   <Search
                     placeholder="Search here"
