@@ -62,11 +62,10 @@ export default class SelectSearchBox extends Component {
       this.setState({ loading: true });
       onSearch()
         .then(response => {
-          console.log(response);
           this.setState({ data: [...response.data.data], loading: false });
         })
-        .catch(error => {
-          console.log(error);
+        .catch(() => {
+          // TODO handle error here
           this.setState({ loading: false });
         });
     }
@@ -83,7 +82,21 @@ export default class SelectSearchBox extends Component {
       style,
     } = this.props;
 
-    const setOption = (prop, option) => {
+    /**
+     * Extract Option property based on provided prop
+     *
+     * @function
+     * @name getOptionProp
+     *
+     * @param {string | function} prop - The property name or value return from
+     * a provided function
+     * @param {Object} option - A single data item for select options
+     * @returns {String} - Value of the extracted property
+     *
+     * @version 0.1.0
+     * @since 0.1.0
+     */
+    const getOptionProp = (prop, option) => {
       if (isFunction(prop)) {
         return prop(option);
       }
@@ -91,8 +104,8 @@ export default class SelectSearchBox extends Component {
     };
 
     const options = data.map(option => (
-      <Option key={setOption(optionValue, option)}>
-        {setOption(optionLabel, option)}
+      <Option key={getOptionProp(optionValue, option)}>
+        {getOptionProp(optionLabel, option)}
       </Option> //eslint-disable-line
     ));
 
