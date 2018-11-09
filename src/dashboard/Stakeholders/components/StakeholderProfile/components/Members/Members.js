@@ -147,11 +147,12 @@ class Members extends Component {
         </div>
         <div className={cx('members', { hidden: addMemberFormVisible })}>
           <Row type="flex" justify="space-between">
-            {members.map(personnel => (
-              <Col key={personnel._id} span={10}>
-                <PersonnelCard {...personnel} />
-              </Col>
-            ))}
+            {members &&
+              members.map(personnel => (
+                <Col key={personnel._id} span={10}>
+                  <PersonnelCard {...personnel} />
+                </Col>
+              ))}
           </Row>
         </div>
         <div className={cx('searchPanel', { hidden: !addMemberFormVisible })}>
