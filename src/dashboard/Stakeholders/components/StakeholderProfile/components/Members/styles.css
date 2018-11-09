@@ -1,7 +1,38 @@
 .StakeholderMembers {
+  position: relative;
   padding: 0 20px;
 }
 
-.StakeholderMembers .addMemberBtn {
+.StakeholderMembers .topSection {
   margin-bottom: 10px;
+}
+
+.StakeholderMembers .searchInput {
+  width: 100%;
+  opacity: 1;
+  height: auto;
+}
+
+.StakeholderMembers .searchInput.hidden,
+.addMemberBtn.hidden,
+.members.hidden,
+.searchPanel.hidden {
+  opacity: 0;
+  height: 0px;
+  width: 0px;
+}
+
+.StakeholderMembers .searchResult {
+  height: 450px;
+  overflow-y: auto;
+}
+
+.StakeholderMembers .actions {
+  background: #eceff1;
+  padding: 10px 10px 20px;
+  text-align: center;
+}
+
+.searchPanel {
+  position: relative;
 }

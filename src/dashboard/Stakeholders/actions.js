@@ -127,7 +127,7 @@ export const searchStakeholders = searchText => (
   dispatch({ type: RESET_STAKEHOLDER_FILTERS });
   // init search
   dispatch({ type: GET_STAKEHOLDERS_START });
-  API.searchStakeholder(searchText)
+  API.findStakeholders({ q: searchText })
     .then(result =>
       dispatch({ type: GET_STAKEHOLDERS_SUCCESS, payload: { data: result } })
     )

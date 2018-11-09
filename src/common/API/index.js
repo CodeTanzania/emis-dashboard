@@ -20,11 +20,14 @@ const API = {
   /**
    * Find stakeholders
    */
-  findStakeholders: ({ filters = [], page } = {}) => {
+  findStakeholders: ({ filters = [], page, q } = {}) => {
     const params = { page: page || 1 };
     filters.forEach(filter => {
       params[`filter[${filter.group}][$in]`] = JSON.stringify(filter.selected);
     });
+    if (q) {
+      params.q = q;
+    }
     return Axios.get('/parties', {
       params,
     }).then(response => response.data);

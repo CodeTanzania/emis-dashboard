@@ -39,7 +39,7 @@ const actions = (
  * @param {string} props.phone - contact phone number
  * @param {string} props.address  - contact physical address
  */
-export default function PersonnelCard({ name, title, phone, address }) {
+export default function PersonnelCard({ name, title }) {
   return (
     <Row className={cx('personnel-card')}>
       <Col xs={20} sm={20} md={20} lg={20} xl={22} xxl={22}>
@@ -52,14 +52,8 @@ export default function PersonnelCard({ name, title, phone, address }) {
               <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={14}>
                 <h3>{name}</h3>
               </Col>
-              <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={10}>
-                {phone}
-              </Col>
               <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                 {title}
-              </Col>
-              <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
-                {address}
               </Col>
             </Row>
           </Col>
@@ -78,6 +72,4 @@ export default function PersonnelCard({ name, title, phone, address }) {
 PersonnelCard.propTypes = {
   name: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  phone: PropTypes.string.isRequired,
-  address: PropTypes.string.isRequired,
 };

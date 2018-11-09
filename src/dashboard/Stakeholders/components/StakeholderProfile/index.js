@@ -48,25 +48,27 @@ class StakeholderProfile extends Component {
           <div className={cx('header')}>
             <h3>Basic Information</h3>
           </div>
-          <div>
-            <Row>
-              <Col span={24}>
-                <BasicInfo
-                  stakeholder={stakeholder}
-                  onClickEdit={this.editStakeholder}
-                />
-              </Col>
-            </Row>
-            <Row style={{ paddingTop: '20px' }}>
-              <Col span={23}>
-                <h3 style={{ paddingLeft: '20px', paddingRight: '20px' }}>
-                  Members
-                </h3>
-              </Col>
-              <Divider type="horizontal" />
-            </Row>
-            <Members />
-          </div>
+          <Row>
+            <Col span={24}>
+              <BasicInfo
+                stakeholder={stakeholder}
+                onClickEdit={this.editStakeholder}
+              />
+            </Col>
+          </Row>
+          {stakeholder.type !== 'Individual' && (
+            <Fragment>
+              <Row style={{ paddingTop: '20px' }}>
+                <Col span={23}>
+                  <h3 style={{ paddingLeft: '20px', paddingRight: '20px' }}>
+                    Members
+                  </h3>
+                </Col>
+                <Divider type="horizontal" />
+              </Row>
+              <Members />
+            </Fragment>
+          )}
         </div>
       </Fragment>
     ) : (
