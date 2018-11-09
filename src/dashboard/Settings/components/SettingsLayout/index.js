@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import React from 'react';
 import { connect } from 'react-redux';
-import { Button, Col, Input, Row, Layout, } from 'antd';
+import { Button, Col, Input, Row, Layout } from 'antd';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 

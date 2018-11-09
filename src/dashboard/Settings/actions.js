@@ -14,7 +14,6 @@ export const SEARCH_INCIDENT_TYPE = 'INCIDENTS_TYPE :SEARCH_INCIDENT_TYPE';
 
 /* Actions creater */
 
-
 export const fetchIncidentsType = () => ({
   // type: FETCH_INCIDENTS_TYPE_START,
 });
@@ -63,7 +62,6 @@ export const updateIncidentType = (incidentTypeId, update) => ({
   },
 });
 
-
 export const searchIncidentType = searchValue => (
   dispatch,
   getState,
@@ -73,13 +71,15 @@ export const searchIncidentType = searchValue => (
   dispatch({ type: FETCH_INCIDENTS_TYPE_START });
   API.searchIncidentsType(searchValue)
     .then(result =>
-      dispatch({ type: FETCH_INCIDENTS_TYPE_SUCCESS, payload: { data: result } })
+      dispatch({
+        type: FETCH_INCIDENTS_TYPE_SUCCESS,
+        payload: { data: result },
+      })
     )
     .catch(error =>
       dispatch({ type: FETCH_INCIDENT_TYPE_FAILURE, payload: { data: error } })
     );
 };
-
 
 export const selectColorAutofill = colorSelected => ({
   type: SELECT_COLOR_AUTOFILL,

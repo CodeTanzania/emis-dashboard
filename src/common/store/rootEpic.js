@@ -7,7 +7,4 @@ import {
   updateIncidentTypeEpic,
 } from '../../dashboard/Settings/epic';
 
-export default combineEpics(
-  addIncidentTypeEpic,
-  updateIncidentTypeEpic
-);
+export default combineEpics(addIncidentTypeEpic, updateIncidentTypeEpic);

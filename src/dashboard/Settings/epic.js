@@ -1,6 +1,6 @@
 import { ofType } from 'redux-observable';
 import { from, of } from 'rxjs';
-import { switchMap, } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 
 import {
   CREATE_INCIDENT_TYPE_SUCCESS,

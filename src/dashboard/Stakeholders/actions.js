@@ -129,7 +129,6 @@ export const searchStakeholders = searchText => (
     );
 };
 
-
 /**
  * action fired on add new stakeholder success
  * @param {Object} - Stakeholder data
