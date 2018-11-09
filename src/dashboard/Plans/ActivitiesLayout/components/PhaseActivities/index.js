@@ -16,6 +16,11 @@ function PhaseOptions({ onClickAddActivity }) {
         </Button>
       </div>
       <div>
+        <Button icon="reload" className="b-0">
+          Refresh
+        </Button>
+      </div>
+      <div>
         <Button icon="sound" className="b-0">
           Disseminate
         </Button>

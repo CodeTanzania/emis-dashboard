@@ -1,18 +1,28 @@
-import { Button, Col, Drawer, Icon, Layout, List, Row, Spin } from 'antd';
+import {
+  Button,
+  Col,
+  Drawer,
+  Icon,
+  Layout,
+  List,
+  Row,
+  Spin,
+  Pagination,
+} from 'antd';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getIncidentTypes } from '../../../common/API/api';
 import SelectSearchBox from '../../../common/components/SelectSearchBox';
 import Toolbar from '../../../common/components/Toolbar';
-import { getPlanActivities, selectPlan } from '../actions';
+import { getPlans, getPlanActivities, selectPlan } from '../actions';
 import PlanCard from './components/PlanCard';
 import PlanForm from './components/PlanForm';
 import './styles.css';
 
 /* local constants */
 const { Header, Content } = Layout;
-const { Filters, Actions } = Toolbar;
+const { Filters, Actions, Pagination: ToolbarPagination } = Toolbar;
 const spinIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
 
 /**
@@ -36,8 +46,11 @@ class PlansLayout extends Component {
         }),
       })
     ),
+    page: PropTypes.number.isRequired,
+    total: PropTypes.number.isRequired,
     loading: PropTypes.bool.isRequired,
     onSelectPlan: PropTypes.func.isRequired,
+    onPaginate: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -72,7 +85,14 @@ class PlansLayout extends Component {
 
   render() {
     const { showForm } = this.state;
-    const { plans, loading, onSelectPlan } = this.props;
+    const {
+      page,
+      plans,
+      total,
+      loading,
+      onSelectPlan,
+      onPaginate,
+    } = this.props;
 
     return (
       <Spin
@@ -90,7 +110,7 @@ class PlansLayout extends Component {
           {/* end primary header */}
           {/* Toolbar */}
           <Toolbar>
-            <Filters span={21}>
+            <Filters span={17}>
               <Row>
                 <Col span={4}>
                   <SelectSearchBox
@@ -104,6 +124,16 @@ class PlansLayout extends Component {
                 </Col>
               </Row>
             </Filters>
+            <ToolbarPagination span={4}>
+              <Pagination
+                current={page}
+                simple
+                defaultCurrent={1}
+                total={total}
+                className="pagination"
+                onChange={onPaginate}
+              />
+            </ToolbarPagination>
             <Actions span={3}>
               <Row type="flex" justify="center">
                 <Col span={12}>
@@ -174,12 +204,17 @@ class PlansLayout extends Component {
 const mapStateToProps = state => ({
   plans: state.plans.data,
   loading: state.plans.loading,
+  page: state.plans.page,
+  total: state.plans.total,
 });
 
 const mapDispatchToProps = dispatch => ({
   onSelectPlan(plan) {
     dispatch(selectPlan(plan));
     dispatch(getPlanActivities());
+  },
+  onPaginate(page) {
+    dispatch(getPlans({ page }));
   },
 });
 

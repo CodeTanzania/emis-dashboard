@@ -491,14 +491,16 @@ export function postPlanActivityProcedureError(error) {
  * @function
  * @name getPlans
  *
+ * @param {Object} params - Params to pass to the API client
+ *
  * @version 0.1.0
  * @since 0.1.0
  */
-export function getPlans() {
+export function getPlans(params) {
   return (dispatch, getState, API) => {
     dispatch(getPlansStart());
 
-    return API.getPlans()
+    return API.getPlans(params)
       .then(response => {
         dispatch(
           getPlansSuccess(

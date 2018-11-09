@@ -9,7 +9,13 @@ import {
 describe('Plan:Reducers', () => {
   describe('plans', () => {
     it('should return default state when no initial state is provided', () => {
-      const expectedState = {};
+      const expectedState = {
+        data: [],
+        loading: false,
+        page: 1,
+        posting: false,
+        total: 0,
+      };
       expect(plans(undefined, {})).toEqual(expectedState);
     });
 

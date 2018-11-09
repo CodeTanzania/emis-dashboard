@@ -6,17 +6,15 @@ import axios from './axios';
  * @function
  * @name getPlans
  *
- * @param {number} page=1 - Page to retrieve results from
+ * @param {Object} params - URL params to be sent to the API
  * @returns {Promise}
  *
  * @version 0.1.0
  * @since 0.1.0
  */
-export function getPlans(page = 1) {
+export function getPlans(params) {
   return axios.get('/plans', {
-    params: {
-      page,
-    },
+    params,
   });
 }
 
