@@ -40,9 +40,6 @@ export default function IncidentDetails({ incidentType }) {
                   <span className="IncidentTypeDetail">Code:</span> {code}
                   <br />
                   <span className="IncidentTypeDetail">CAP:</span> {cap}
-                  <br />
-                  <span className="IncidentTypeDetail">System: </span>
-                  Version 1.2.0
                   <Divider />
                   <BlockPicker color={color} />
                 </div>

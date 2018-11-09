@@ -1,12 +1,16 @@
-import { List } from 'antd';
+import { List,Spin } from 'antd';
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchIncidentsTypeSuccess } from '../../../../../../actions';
 /* import component */
 import IncidentTypeListFooter from './components/IncidentTypeListFooter';
 import IncidentTypeItem from './components/IncidentTypeItemList';
+import styles from './styles.css';
+
+const cx = classNames.bind(styles);
 
 /**
  * IncidentType list component
@@ -33,6 +37,8 @@ class IncidentType extends React.Component {
         _id: PropTypes.string,
       }).isRequired
     ),
+    loading: PropTypes.bool.isRequired,
+
   };
 
   static defaultProps = {
@@ -47,9 +53,16 @@ class IncidentType extends React.Component {
 
   render() {
     const { incidentsType } = this.props;
+    const { loading } = this.props;
 
     return (
       <div className="content scrollable">
+          {loading ? (
+          <div className={cx('loading')}>
+            <Spin />
+          </div>
+        ) : (
+          <div>
         <List
           itemLayout="horizontal"
           dataSource={incidentsType}
@@ -58,6 +71,8 @@ class IncidentType extends React.Component {
           )}
         />
         <IncidentTypeListFooter />
+        </div>
+        )}
       </div>
     );
   }
@@ -65,6 +80,8 @@ class IncidentType extends React.Component {
 
 const mapStateToProps = state => ({
   incidentsType: state.incidentsType.data,
+  loading: state.incidentsType.isLoading,
+
 });
 
 const mapDispatchToProps = dispatch => ({
