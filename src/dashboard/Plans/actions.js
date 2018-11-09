@@ -89,6 +89,9 @@ export const PUT_PLAN_ACTIVITY_PROCEDURES_SUCCESS =
 export const PUT_PLAN_ACTIVITY_PROCEDURES_ERROR =
   'PUT_PLAN_ACTIVITY_PROCEDURES_ERROR';
 
+/* select action types */
+export const SELECT_PLAN_ACTIVITY_PROCEDURE = 'SELECT_PLAN_ACTIVITY_PROCEDURE';
+
 /*
  *------------------------------------------------------------------------------
  * Plan action creators
@@ -390,6 +393,25 @@ export function postPlanActivityError(error) {
 }
 
 /**
+ * Action dispatched when plan activity procedure is selected
+ *
+ * @function
+ * @name selectPlanActivityProcedure
+ *
+ * @param {Object} procedure - Selected procedure
+ * @returns {Object} - Redux action
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function selectPlanActivityProcedure(procedure) {
+  return {
+    type: SELECT_PLAN_ACTIVITY_PROCEDURE,
+    payload: { data: procedure },
+  };
+}
+
+/**
  * Action dispatched when fetching plan activity procedures from API
  *
  * @function
@@ -457,18 +479,52 @@ export function getPlanActivityProceduresError(error) {
   };
 }
 
+/**
+ * Action dispatched when posting plan activity procedure to the API starts
+ *
+ * @function
+ * @name postPlanActivityProcedureStart
+ *
+ * @returns {Object} - Redux action
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
 export function postPlanActivityProcedureStart() {
   return {
     type: POST_PLAN_ACTIVITY_PROCEDURES_START,
   };
 }
 
+/**
+ * Action dispatched when posting plan activity procedure to the API is successfully
+ *
+ * @function
+ * @name postPlanActivityProcedureSuccess
+ *
+ * @returns {Object} - Redux action
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
 export function postPlanActivityProcedureSuccess() {
   return {
     type: POST_PLAN_ACTIVITY_PROCEDURES_SUCCESS,
   };
 }
 
+/**
+ * Action dispatched when posting plan activity procedure to the API fails
+ *
+ * @function
+ * @name postPlanActivityProcedureError
+ *
+ * @param {Object} error - Error instance
+ * @returns {undefined}
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
 export function postPlanActivityProcedureError(error) {
   return {
     type: POST_PLAN_ACTIVITY_PROCEDURES_ERROR,
