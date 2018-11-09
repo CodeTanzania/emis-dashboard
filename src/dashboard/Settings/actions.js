@@ -47,12 +47,20 @@ export const selectIncidentType = incidentSelected => ({
   },
 });
 
-export const addIncidentType = incidentType => ({
-  type: CREATE_INCIDENT_TYPE_SUCCESS,
-  payload: {
-    incidentType,
-  },
-});
+export const addIncidentType = incidentType => (
+  dispatch,
+  getState,
+  { API }
+) => {
+  dispatch({ type: CREATE_INCIDENT_TYPE_SUCCESS });
+  API.createIncidentType(incidentType)
+    .then(() => {
+      fetchIncidentsTypeSuccess();
+    })
+    .catch(error =>
+      dispatch({ type: FETCH_INCIDENT_TYPE_FAILURE, payload: { data: error } })
+    );
+};
 
 export const updateIncidentType = (incidentTypeId, update) => ({
   type: UPDATE_INCIDENT_TYPE,

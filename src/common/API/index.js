@@ -105,6 +105,7 @@ const API = {
     };
     return fetch(url, config).then(res => res.json());
   },
+
   updateIncidentType: (incidentTypeId, updates) => {
     const url = `${INCIDENTS_API}/incidenttypes/${incidentTypeId}`;
     const config = {

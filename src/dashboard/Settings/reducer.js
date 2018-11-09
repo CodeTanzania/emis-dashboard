@@ -2,7 +2,6 @@ import {
   FETCH_INCIDENTS_TYPE_SUCCESS,
   SELECT_INCIDENT_TYPE,
   FETCH_INCIDENTS_TYPE_START,
-  CREATE_INCIDENT_TYPE_SUCCESS,
   UPDATE_INCIDENT_TYPE,
   SELECT_COLOR_AUTOFILL,
   FETCH_INCIDENT_TYPE_FAILURE,
@@ -59,12 +58,6 @@ export default function incidentsTypes(state = initialState, action) {
       return {
         ...state,
         incidentType: action.payload.incidentSelected,
-      };
-
-    case CREATE_INCIDENT_TYPE_SUCCESS:
-      return {
-        ...state,
-        data: [action.payload.incidentType, ...state.data],
       };
 
     case UPDATE_INCIDENT_TYPE: {
