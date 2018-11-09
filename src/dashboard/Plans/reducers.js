@@ -121,14 +121,21 @@ export function planActivities(state = defaultPlanActivities, action) {
   switch (action.type) {
     case GET_PLAN_ACTIVITIES_START:
       return Object.assign({}, state, {
-        Mitigation: [],
-        Preparedness: [],
-        Response: [],
-        Recovery: [],
         loading: true,
       });
     case GET_PLAN_ACTIVITIES_SUCCESS:
-      return Object.assign({}, state, action.payload.data, { loading: false });
+      return Object.assign(
+        {},
+        state,
+        {
+          Mitigation: [],
+          Preparedness: [],
+          Response: [],
+          Recovery: [],
+        },
+        action.payload.data,
+        { loading: false }
+      );
     case GET_PLAN_ACTIVITIES_ERROR:
       return Object.assign({}, state, {
         error: action.payload.data,
