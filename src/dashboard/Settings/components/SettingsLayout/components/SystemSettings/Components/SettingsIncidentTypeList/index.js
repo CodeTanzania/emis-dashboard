@@ -1,4 +1,4 @@
-import { List,Spin } from 'antd';
+import { List, Spin } from 'antd';
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
@@ -38,7 +38,6 @@ class IncidentType extends React.Component {
       }).isRequired
     ),
     loading: PropTypes.bool.isRequired,
-
   };
 
   static defaultProps = {
@@ -57,21 +56,21 @@ class IncidentType extends React.Component {
 
     return (
       <div className="content scrollable">
-          {loading ? (
+        {loading ? (
           <div className={cx('loading')}>
             <Spin />
           </div>
         ) : (
           <div>
-        <List
-          itemLayout="horizontal"
-          dataSource={incidentsType}
-          renderItem={incidentType => (
-            <IncidentTypeItem incidentSelected={incidentType} />
-          )}
-        />
-        <IncidentTypeListFooter />
-        </div>
+            <List
+              itemLayout="horizontal"
+              dataSource={incidentsType}
+              renderItem={incidentType => (
+                <IncidentTypeItem incidentSelected={incidentType} />
+              )}
+            />
+            <IncidentTypeListFooter />
+          </div>
         )}
       </div>
     );
@@ -81,7 +80,6 @@ class IncidentType extends React.Component {
 const mapStateToProps = state => ({
   incidentsType: state.incidentsType.data,
   loading: state.incidentsType.isLoading,
-
 });
 
 const mapDispatchToProps = dispatch => ({

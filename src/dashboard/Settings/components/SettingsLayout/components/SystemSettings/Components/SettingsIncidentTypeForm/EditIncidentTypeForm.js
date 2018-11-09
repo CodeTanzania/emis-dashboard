@@ -40,8 +40,8 @@ class EditIncidentTypeForm extends Component {
       (err, { name, code, cap, nature, family, color }) => {
         const data = {
           name,
-          code, 
-          cap ,
+          code,
+          cap,
           nature,
           family,
           color,

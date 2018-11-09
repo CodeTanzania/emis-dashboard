@@ -77,7 +77,6 @@ export const updateIncidentType = (incidentTypeId, update) => (
     );
 };
 
-
 export const searchIncidentType = searchValue => (
   dispatch,
   getState,
