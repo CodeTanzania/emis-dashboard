@@ -15,7 +15,7 @@ import {
 } from 'antd';
 import { ChromePicker } from 'react-color';
 import {
-  updateIncidentType,
+  updateIncidentTypeSuccess,
   selectColorAutofill,
 } from '../../../../../../actions';
 import '../../styles.css';
@@ -269,7 +269,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  incidentTypeUpdate: bindActionCreators(updateIncidentType, dispatch),
+  incidentTypeUpdate: bindActionCreators(updateIncidentTypeSuccess, dispatch),
   autoFillColor: bindActionCreators(selectColorAutofill, dispatch),
 });
 

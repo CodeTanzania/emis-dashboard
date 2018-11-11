@@ -60,13 +60,17 @@ export const addIncidentType = incidentType => (
       dispatch({ type: FETCH_INCIDENT_TYPE_FAILURE, payload: { data: error } })
     );
 };
-
-export const updateIncidentType = (incidentTypeId, update) => (
+export const updateIncidentTypeInit = ( incidentTypeId, update ) => ({
+  type: UPDATE_INCIDENT_TYPE,
+    incidentTypeId,
+    update,
+});
+export const updateIncidentTypeSuccess = (incidentTypeId,update) => (
   dispatch,
   getState,
   { API }
 ) => {
-  dispatch({ type: UPDATE_INCIDENT_TYPE });
+  dispatch(updateIncidentTypeInit(incidentTypeId, update));
   API.updateIncidentType(incidentTypeId, update)
     .then(() => {
       fetchIncidentsTypeSuccess();

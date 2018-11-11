@@ -25,12 +25,12 @@ const initialState = {
   filters: [],
   data: [],
   total: 0,
-  page:1,
+  page: 1,
   isLoading: false,
   error: null,
 };
 
-export default function incidentsTypes(state = initialState, action) {
+export default function incidentsType(state = initialState, action) {
   switch (action.type) {
     case FETCH_INCIDENTS_TYPE_START:
       return {
@@ -64,8 +64,8 @@ export default function incidentsTypes(state = initialState, action) {
 
     case UPDATE_INCIDENT_TYPE: {
       const data = [...state.data];
-      const { incidentType } = action;
-      const { _id: id } = incidentsTypes;
+      const incidentType = action.update;
+      const  id  = action.incidentTypeId;
       const index = data.findIndex(({ _id }) => _id === id);
       data[index] = incidentType;
       return {
