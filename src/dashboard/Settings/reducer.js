@@ -25,6 +25,7 @@ const initialState = {
   filters: [],
   data: [],
   total: 0,
+  page:1,
   isLoading: false,
   error: null,
 };
@@ -43,6 +44,7 @@ export default function incidentsTypes(state = initialState, action) {
       return {
         data: action.payload.data.data,
         total: action.payload.data.total,
+        page: action.payload.data.page,
         isLoading: false,
         error: null,
         incidentType: action.payload.data.data[0],
@@ -63,8 +65,6 @@ export default function incidentsTypes(state = initialState, action) {
     case UPDATE_INCIDENT_TYPE: {
       const data = [...state.data];
       const { incidentType } = action;
-      console.log('log data');
-      console.log(action);
       const { _id: id } = incidentsTypes;
       const index = data.findIndex(({ _id }) => _id === id);
       data[index] = incidentType;

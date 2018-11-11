@@ -51,8 +51,7 @@ class IncidentType extends React.Component {
   }
 
   render() {
-    const { incidentsType } = this.props;
-    const { loading } = this.props;
+    const { incidentsType, loading } = this.props;
 
     return (
       <div className="content scrollable">

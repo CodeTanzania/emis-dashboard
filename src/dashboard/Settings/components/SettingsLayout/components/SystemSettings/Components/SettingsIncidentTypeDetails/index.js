@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { BlockPicker, } from 'react-color';
+import { BlockPicker } from 'react-color';
 
 import { List, Avatar, Divider } from 'antd';
 import './styles.css';

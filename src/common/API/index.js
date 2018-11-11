@@ -85,13 +85,14 @@ const API = {
   },
 
   /**
-   * Find incidents-ype
+   * Find incidents-type
    */
   getIncidentType: ({ page }) => {
     const params = { page: page || 1 };
-    return Axios.get(`${INCIDENTS_API}/incidenttypes`, {
+    const url = Axios.get(`${INCIDENTS_API}/incidenttypes`, {
       params,
     }).then(response => response.data);
+    return url;
   },
 
   createIncidentType: data => {
