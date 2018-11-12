@@ -27,8 +27,11 @@ export const SELECT_STAKEHOLDER = 'SELECT_STAKEHOLDER';
 // Create stakeholder
 export const CREATE_STAKEHOLDER = 'CREATE_STAKEHOLDER';
 
-// Update stakeholder list
+// Update stakeholder
 export const UPDATE_STAKEHOLDER = 'UPDATE_STAKEHOLDER';
+export const UPDATE_STAKEHOLDER_START = 'UPDATE_STAKEHOLDER_START';
+export const UPDATE_STAKEHOLDER_SUCCESS = 'UPDATE_STAKEHOLDER_SUCCESS';
+export const UPDATE_STAKEHOLDER_ERROR = 'UPDATE_STAKEHOLDER_ERROR';
 
 // Toggle stakeholder filter
 export const TOGGLE_STAKEHOLDER_FILTER = 'TOGGLE_STAKEHOLDER_FILTER';
@@ -37,6 +40,40 @@ export const TOGGLE_STAKEHOLDER_FILTER = 'TOGGLE_STAKEHOLDER_FILTER';
 export const RESET_STAKEHOLDER_FILTERS = 'RESET_STAKEHOLDER_FILTERS';
 
 export const SHOW_STAKEHOLDER_FORM = 'SHOW_STAKEHOLDER_FORM';
+
+/**
+ *  Action fired when stakeholder is selected
+ * @param {Object} stakeholder - Stakeholder object
+ * @param {string} stakeholder._id - Stakeholder Id
+ */
+export const selectStakeholder = stakeholder => ({
+  type: SELECT_STAKEHOLDER,
+  payload: {
+    data: stakeholder,
+  },
+});
+
+/**
+ * action fired on add new stakeholder success
+ * @param {Object} - Stakeholder data
+ */
+export const addStakeholder = stakeholder => ({
+  type: CREATE_STAKEHOLDER,
+  payload: {
+    data: stakeholder,
+  },
+});
+
+/**
+ * Called to display stakeholder form
+ * @param {Object} drawerOptions - antd drawer options to customize form
+ */
+export const showStakeholderForm = (drawerOptions, stakeholder) => ({
+  type: SHOW_STAKEHOLDER_FORM,
+  payload: {
+    data: { drawerOptions, stakeholder },
+  },
+});
 
 /**
  * Initialize stakeholders
@@ -82,39 +119,6 @@ export const loadStakeholders = () => (dispatch, getState, { API }) => {
 };
 
 /**
- * This is called on toggling stakeholder UI filter
- * @param {string} group - Filter group name
- * @param {string} name - Filter name
- * @param {boolean} selected - Filter selected status
- */
-export const toggleFilter = (group, name, selected) => dispatch => {
-  dispatch({
-    type: TOGGLE_STAKEHOLDER_FILTER,
-    payload: {
-      data: {
-        group,
-        name,
-        selected,
-      },
-    },
-  });
-
-  dispatch(loadStakeholders());
-};
-
-/**
- *  Action fired when stakeholder is selected
- * @param {Object} stakeholder - Stakeholder object
- * @param {string} stakeholder._id - Stakeholder Id
- */
-export const selectStakeholder = stakeholder => ({
-  type: SELECT_STAKEHOLDER,
-  payload: {
-    data: stakeholder,
-  },
-});
-
-/**
  * action fired when search for stakeholder using search box
  * @param {string} searchText - Query search text
  */
@@ -137,34 +141,54 @@ export const searchStakeholders = searchText => (
 };
 
 /**
- * action fired on add new stakeholder success
- * @param {Object} - Stakeholder data
+ * This is called on toggling stakeholder UI filter
+ * @param {string} group - Filter group name
+ * @param {string} name - Filter name
+ * @param {boolean} selected - Filter selected status
  */
-export const addStakeholder = stakeholder => ({
-  type: CREATE_STAKEHOLDER,
-  payload: {
-    data: stakeholder,
-  },
-});
+export const toggleFilter = (group, name, selected) => dispatch => {
+  dispatch({
+    type: TOGGLE_STAKEHOLDER_FILTER,
+    payload: {
+      data: {
+        group,
+        name,
+        selected,
+      },
+    },
+  });
+
+  dispatch(loadStakeholders());
+};
 
 /**
  * action fired on update stakeholder successfully
  * @param {Object} - Stakeholder object
  */
-export const updateStakeholder = stakeholder => ({
-  type: UPDATE_STAKEHOLDER,
-  payload: {
-    data: stakeholder,
-  },
-});
+export const updateStakeholder = (stakeholderId, updates) => (
+  dispatch,
+  getState,
+  { API }
+) => {
+  dispatch({ type: UPDATE_STAKEHOLDER_START });
 
-/**
- * Called to display stakeholder form
- * @param {Object} drawerOptions - antd drawer options to customize form
- */
-export const showStakeholderForm = (drawerOptions, stakeholder) => ({
-  type: SHOW_STAKEHOLDER_FORM,
-  payload: {
-    data: { drawerOptions, stakeholder },
-  },
-});
+  API.updateStakeholder(stakeholderId, updates)
+    .then(() => API.findStakeholderById(stakeholderId))
+    .then(result => {
+      dispatch({
+        type: UPDATE_STAKEHOLDER_SUCCESS,
+        payload: {
+          data: result,
+        },
+      });
+    })
+    .catch(error => {
+      dispatch({
+        type: UPDATE_STAKEHOLDER_ERROR,
+        payload: {
+          data: error,
+        },
+        error: true,
+      });
+    });
+};

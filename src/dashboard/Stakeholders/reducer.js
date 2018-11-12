@@ -8,7 +8,9 @@ import {
   GET_STAKEHOLDERS_ERROR,
   GET_STAKEHOLDERS_SUCCESS,
   SELECT_STAKEHOLDER,
-  UPDATE_STAKEHOLDER,
+  UPDATE_STAKEHOLDER_START,
+  UPDATE_STAKEHOLDER_SUCCESS,
+  UPDATE_STAKEHOLDER_ERROR,
   TOGGLE_STAKEHOLDER_FILTER,
   RESET_STAKEHOLDER_FILTERS,
   SHOW_STAKEHOLDER_FORM,
@@ -30,6 +32,7 @@ import { buildUIFilters, updateFilterItem, resetFilters } from './helpers';
     stakeholders.schema: Object, // stakeholder schema definition,
     stakeholders.predRoles: Object[] // predefined roles
     stakeholders.form: Object // monitor the stakeholder form 
+    updatingStakeholder: boolean
 }
  */
 
@@ -130,7 +133,10 @@ export default function stakeholders(state = initialState, action) {
         data: [action.payload.data, ...state.data],
         selected: action.payload.data,
       };
-    case UPDATE_STAKEHOLDER: {
+
+    case UPDATE_STAKEHOLDER_START:
+      return { ...state, updatingStakeholder: true };
+    case UPDATE_STAKEHOLDER_SUCCESS: {
       const data = [...state.data]; // grab stakeholder array
       const stakeholder = action.payload.data; // grab stakeholder
       const foundIndex = data.findIndex(item => item._id === stakeholder._id);
@@ -139,8 +145,15 @@ export default function stakeholders(state = initialState, action) {
         ...state,
         data,
         selected: stakeholder,
+        updatingStakeholder: false,
       };
     }
+    case UPDATE_STAKEHOLDER_ERROR:
+      return {
+        ...state,
+        error: action.payload.data,
+        updatingStakeholder: false,
+      };
     case RESET_STAKEHOLDER_FILTERS: {
       const filters = resetFilters(state.filters);
       return { ...state, filters };

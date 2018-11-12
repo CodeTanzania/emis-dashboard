@@ -1,7 +1,7 @@
 /* eslint no-underscore-dangle: "off" */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Col, Row, Button, Input, List, Avatar, message } from 'antd';
+import { Col, Row, Button, Input, List, Avatar } from 'antd';
 import classNames from 'classnames';
 import API from '../../../../../../common/API';
 import PersonnelCard from './components/PersonnelCard';
@@ -24,6 +24,13 @@ class Members extends Component {
     stakeholder: PropTypes.shape({
       _id: PropTypes.string,
     }).isRequired,
+    stakeholders: PropTypes.arrayOf(PropTypes.object),
+    updatingStakeholder: PropTypes.bool,
+  };
+
+  static defaultProps = {
+    stakeholders: [],
+    updatingStakeholder: false,
   };
 
   constructor(props) {
@@ -32,12 +39,11 @@ class Members extends Component {
       stakeholders: props.stakeholders,
       cache: props.stakeholders,
       addMemberFormVisible: false,
-      searching: false,
-      addingMember: false,
+      searching: false, // true when searching from existing member on progress
     };
   }
 
-  componentWillReceiveProps = nextProps => {
+  componentWillReceiveProps(nextProps) {
     if (nextProps.stakeholder !== this.props.stakeholder) {
       // It's new stakeholder, reset state
       this.setState(prevState => ({
@@ -46,7 +52,7 @@ class Members extends Component {
         q: '',
       }));
     }
-  };
+  }
 
   handleShowAddMemberFormClick = () => {
     this.setState({ addMemberFormVisible: true });
@@ -81,28 +87,17 @@ class Members extends Component {
 
   handleAddMember = item => {
     const updates = {};
-    const { _id, name, members } = this.props.stakeholder;
+    const { _id, members } = this.props.stakeholder;
     if (members) {
+      // There are existing members
       const memberIds = members.map(member => member._id); // extract member Ids
-      updates.members = [...memberIds, item._id];
+      updates.members = [...memberIds, item._id]; // add new member Id
     } else {
-      updates.members = [item._id];
+      // There are no existing members
+      updates.members = [item._id]; // add new member Id
     }
-    console.log(updates);
-    console.log(_id);
-    message.success(`${name} added successfully`);
 
-    // API.updateStakeholder(_id, updates)
-    //   .then(result => {
-    //     // patch applied successfully
-    //     console.log(result);
-    //     this.props.updateStakeholder(result);
-    //     message.success(`${name} added successfully`);
-    //   })
-    //   .catch(() => {
-    //     // There is an error upon submitting
-    //     message.error(`${name} not added`);
-    //   });
+    this.props.updateStakeholder(_id, updates);
   };
 
   handleAddNewMember = () => {
@@ -112,13 +107,7 @@ class Members extends Component {
   };
 
   render() {
-    const {
-      addMemberFormVisible,
-      stakeholders,
-      searching,
-      q,
-      addingMember,
-    } = this.state;
+    const { addMemberFormVisible, stakeholders, searching, q } = this.state;
     const { stakeholder } = this.props;
     const { members } = stakeholder;
 
@@ -182,10 +171,7 @@ class Members extends Component {
               renderItem={item => (
                 <List.Item
                   actions={[
-                    <Button
-                      loading={addingMember}
-                      onClick={() => this.handleAddMember(item)}
-                    >
+                    <Button onClick={() => this.handleAddMember(item)}>
                       Add
                     </Button>,
                   ]}

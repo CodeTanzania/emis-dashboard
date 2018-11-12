@@ -42,6 +42,7 @@ class StakeholderProfile extends Component {
 
   render() {
     const { stakeholder } = this.props;
+
     return stakeholder ? (
       <Fragment>
         <div className={cx('stakeholderProfile')}>

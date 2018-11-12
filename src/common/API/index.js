@@ -33,6 +33,12 @@ const API = {
     }).then(response => response.data);
   },
   /**
+   * Retrieve stakeholder with the id provided
+   * @param id {string} - Stakeholder Id
+   */
+  findStakeholderById: id =>
+    Axios.get(`/parties/${id}`).then(response => response.data),
+  /**
    * Retrieve stakeholder schema
    */
   loadStakeholdersSchema: () =>

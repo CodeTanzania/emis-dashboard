@@ -24,11 +24,23 @@ class StakeholderForm extends Component {
       // antd warning i.e you cannot set field before registering it.
       const fieldsValues = {};
       formFields.forEach(field => {
-        fieldsValues[field] =
-          field === 'role' ? stakeholder[field]._id : stakeholder[field];
+        if (field === 'role') {
+          fieldsValues[field] = stakeholder[field] && stakeholder[field]._id;
+        } else {
+          fieldsValues[field] = stakeholder[field];
+        }
         return fieldsValues[field];
       });
       form.setFieldsValue(fieldsValues);
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.updatingStakeholder !== this.props.updatingStakeholder) {
+      if (!nextProps.updatingStakeholder) {
+        // stakeholder updating done, close the form
+        this.props.onCancel();
+      }
     }
   }
 
@@ -69,25 +81,19 @@ class StakeholderForm extends Component {
   };
 
   patchStakeholder = (stakeholderId, updates) => {
-    const { onCancel } = this.props;
-    this.setState({ submitting: true });
-    API.updateStakeholder(stakeholderId, updates)
-      .then(result => {
-        // patch submitted successfully
-        this.props.updateStakeholder(result);
-        this.setState({ submitting: false });
-        message.success('Stakeholder updated successfully');
-        onCancel();
-      })
-      .catch(() => {
-        // There is an error upon submitting
-        this.setState({ submitting: false });
-        message.error('Stakeholder update failed');
-      });
+    this.props.updateStakeholder(stakeholderId, updates);
   };
 
   render() {
-    const { onCancel, form, phases, types, predRoles } = this.props;
+    const {
+      onCancel,
+      form,
+      phases,
+      types,
+      predRoles,
+      stakeholder,
+      updatingStakeholder,
+    } = this.props;
     const { submitting } = this.state;
     const { getFieldDecorator } = form;
     const formItemLayout = {
@@ -208,14 +214,25 @@ class StakeholderForm extends Component {
           </FormItem>
           <FormItem {...tailFormItemLayout}>
             <Button onClick={onCancel}>Cancel</Button>
-            <Button
-              type="primary"
-              htmlType="submit"
-              style={{ marginLeft: 8 }}
-              loading={submitting}
-            >
-              Save
-            </Button>
+            {stakeholder ? (
+              <Button
+                type="primary"
+                htmlType="submit"
+                style={{ marginLeft: 8 }}
+                loading={updatingStakeholder}
+              >
+                Update
+              </Button>
+            ) : (
+              <Button
+                type="primary"
+                htmlType="submit"
+                style={{ marginLeft: 8 }}
+                loading={submitting}
+              >
+                Save
+              </Button>
+            )}
           </FormItem>
         </Form>
       </div>
@@ -224,13 +241,14 @@ class StakeholderForm extends Component {
 }
 
 const mapStateToProps = state => {
-  const { schema, predRoles } = state.stakeholders;
+  const { schema, predRoles, updatingStakeholder } = state.stakeholders;
   const { phases, type } = schema.properties;
 
   return {
     phases: phases.enum,
     types: type.enum.reverse(),
     predRoles: predRoles.data,
+    updatingStakeholder,
   };
 };
 

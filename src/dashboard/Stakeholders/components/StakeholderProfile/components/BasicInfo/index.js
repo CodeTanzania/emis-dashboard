@@ -36,7 +36,7 @@ export default function BasicInfo({ stakeholder, onClickEdit }) {
         </div>
         <div className={cx('info')}>
           <h3 className={cx('name')}>{name}</h3>
-          <InfoLineItem label="Role" value={role.name} />
+          <InfoLineItem label="Role" value={role && role.name} />
           <InfoLineItem label="Phases" value={phases} />
         </div>
         <div>
@@ -62,10 +62,6 @@ BasicInfo.propTypes = {
     email: PropTypes.string,
     physicalAddress: PropTypes.string,
     fax: PropTypes.string,
-  }),
+  }).isRequired,
   onClickEdit: PropTypes.func.isRequired,
-};
-
-BasicInfo.defaultProps = {
-  stakeholder: {},
 };
