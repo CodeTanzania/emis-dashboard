@@ -65,7 +65,7 @@ export default function incidentsType(state = initialState, action) {
     case UPDATE_INCIDENT_TYPE: {
       const data = [...state.data];
       const incidentType = action.update;
-      const  id  = action.incidentTypeId;
+      const id = action.incidentTypeId;
       const index = data.findIndex(({ _id }) => _id === id);
       data[index] = incidentType;
       return {
