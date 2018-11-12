@@ -1,8 +1,11 @@
 import { Button, Col, Form, Input, Row } from 'antd';
-import React, { Component } from 'react';
 import flow from 'lodash/flow';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { postPlanActivityProcedure } from '../../../../../actions';
+import {
+  postPlanActivityProcedure,
+  putPlanActivityProcedure,
+} from '../../../../../actions';
 
 /* local constants */
 const FormItem = Form.Item;
@@ -22,13 +25,23 @@ class ActivityProcedureForm extends Component {
     e.preventDefault();
     const {
       onCancel,
+      procedure,
+      isEditForm,
+      form,
       postProcedure,
+      updateProcedure,
       form: { validateFields },
     } = this.props;
 
     validateFields((error, values) => {
       if (!error) {
-        postProcedure(values);
+        if (isEditForm) {
+          const updatedProcedure = Object.assign({}, procedure, values);
+          updateProcedure(updatedProcedure);
+        } else {
+          postProcedure(values);
+        }
+        form.resetFields();
         onCancel();
       }
     });
@@ -36,6 +49,8 @@ class ActivityProcedureForm extends Component {
 
   render() {
     const {
+      isEditForm,
+      procedure,
       onCancel,
       form: { getFieldDecorator },
     } = this.props;
@@ -65,6 +80,7 @@ class ActivityProcedureForm extends Component {
         <FormItem {...formItemLayout} label="SOP Name">
           {getFieldDecorator('name', {
             rules: [{ required: true, message: 'Procedure name is Required' }],
+            initialValue: isEditForm ? procedure.name : undefined,
           })(
             <TextArea
               autosize={{ minRows: 2, maxRows: 6 }}
@@ -76,7 +92,9 @@ class ActivityProcedureForm extends Component {
 
         {/* procedure description */}
         <FormItem {...formItemLayout} label="SOP Description">
-          {getFieldDecorator('description')(
+          {getFieldDecorator('description', {
+            initialValue: isEditForm ? procedure.description : undefined,
+          })(
             <TextArea
               autosize={{ minRows: 2, maxRows: 6 }}
               placeholder="Enter Procedure Description"
@@ -100,16 +118,23 @@ class ActivityProcedureForm extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  procedure: state.selectedPlanActivityProcedure,
+});
+
 const mapDispatchToProps = dispatch => ({
   postProcedure(procedure) {
     dispatch(postPlanActivityProcedure(procedure));
+  },
+  updateProcedure(procedure) {
+    dispatch(putPlanActivityProcedure(procedure));
   },
 });
 
 export default flow(
   Form.create(),
   connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps
   )
 )(ActivityProcedureForm);

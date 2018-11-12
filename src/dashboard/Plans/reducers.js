@@ -16,6 +16,7 @@ import {
   POST_PLAN_ACTIVITY_PROCEDURE_ERROR,
   SELECT_PLAN,
   SELECT_PLAN_ACTIVITY,
+  SELECT_PLAN_ACTIVITY_PROCEDURE,
 } from './actions';
 
 /* initial state */
@@ -196,10 +197,10 @@ export function selectedPlanActivity(state = null, action) {
 export function planActivityProcedures(state = defaultState, action) {
   switch (action.type) {
     case GET_PLAN_ACTIVITY_PROCEDURES_START:
-      return Object.assign({}, state, { data: [], loading: true });
+      return Object.assign({}, state, { loading: true });
     case GET_PLAN_ACTIVITY_PROCEDURES_SUCCESS:
       return Object.assign({}, state, {
-        data: action.payload.data,
+        data: [...action.payload.data],
         page: action.meta.page,
         total: action.meta.total,
         loading: false,
@@ -221,6 +222,27 @@ export function planActivityProcedures(state = defaultState, action) {
       return Object.assign({}, state, {
         posting: false,
       });
+    default:
+      return state;
+  }
+}
+
+/**
+ * selectedPlanActivityProcedure reducer
+ *
+ * @function
+ * @name selectedPlanActivityProcedure
+ *
+ * @param {Object} state=null - Current store value for selectedPlanActivityProcudure
+ * @param {Object} action - Redux action
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function selectedPlanActivityProcedure(state = null, action) {
+  switch (action.type) {
+    case SELECT_PLAN_ACTIVITY_PROCEDURE:
+      return Object.assign({}, state, action.payload.data);
     default:
       return state;
   }

@@ -88,6 +88,12 @@ export const PUT_PLAN_ACTIVITY_PROCEDURES_SUCCESS =
   'PUT_PLAN_ACTIVITY_PROCEDURES_SUCCESS';
 export const PUT_PLAN_ACTIVITY_PROCEDURES_ERROR =
   'PUT_PLAN_ACTIVITY_PROCEDURES_ERROR';
+export const PUT_PLAN_ACTIVITY_PROCEDURE_START =
+  'PUT_PLAN_ACTIVITY_PROCEDURE_START';
+export const PUT_PLAN_ACTIVITY_PROCEDURE_SUCCESS =
+  'PUT_PLAN_ACTIVITY_PROCEDURE_SUCCESS';
+export const PUT_PLAN_ACTIVITY_PROCEDURE_ERROR =
+  'PUT_PLAN_ACTIVITY_PROCEDURE_ERROR';
 
 /* select action types */
 export const SELECT_PLAN_ACTIVITY_PROCEDURE = 'SELECT_PLAN_ACTIVITY_PROCEDURE';
@@ -520,7 +526,7 @@ export function postPlanActivityProcedureSuccess() {
  * @name postPlanActivityProcedureError
  *
  * @param {Object} error - Error instance
- * @returns {undefined}
+ * @returns {Object} - Redux action
  *
  * @version 0.1.0
  * @since 0.1.0
@@ -528,6 +534,62 @@ export function postPlanActivityProcedureSuccess() {
 export function postPlanActivityProcedureError(error) {
   return {
     type: POST_PLAN_ACTIVITY_PROCEDURES_ERROR,
+    payload: {
+      data: error,
+    },
+    error: true,
+  };
+}
+
+/**
+ * Action dispatched when updating plan activity procedure to the API starts
+ *
+ * @function
+ * @name putPlanActivityProcedureStart
+ *
+ * @returns {Object} - Redux action
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function putPlanActivityProcedureStart() {
+  return {
+    type: PUT_PLAN_ACTIVITY_PROCEDURE_START,
+  };
+}
+
+/**
+ * Action dispatched when updating plan activity procedure in the API is successfully
+ *
+ * @function
+ * @name putPlanActivityProcedureSuccess
+ *
+ * @returns {Object} - Redux action
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function putPlanActivityProcedureSuccess() {
+  return {
+    type: PUT_PLAN_ACTIVITY_PROCEDURE_SUCCESS,
+  };
+}
+
+/**
+ * Action dispatched when updating plan activity procedure in the API fails
+ *
+ * @function
+ * @name putPlanActivityProcedureError
+ *
+ * @param {Error} error - Error Instance
+ * @returns {Object} - Redux action
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function putPlanActivityProcedureError(error) {
+  return {
+    type: PUT_PLAN_ACTIVITY_PROCEDURES_ERROR,
     payload: {
       data: error,
     },
@@ -691,6 +753,33 @@ export function postPlanActivityProcedure(procedure) {
       })
       .catch(error => {
         dispatch(postPlanActivityProcedureError(error));
+      });
+  };
+}
+
+/**
+ * A thunk function which performs asynchronous updating of plan activity
+ * procedure to the API
+ *
+ * @function
+ * @name putPlanActivityProcedure
+ *
+ * @param {Object} procedure - Updated procedure object
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function putPlanActivityProcedure(procedure) {
+  return (dispatch, getState, API) => {
+    dispatch(putPlanActivityProcedureStart());
+
+    return API.putPlanActivityProcedure(procedure)
+      .then(() => {
+        dispatch(putPlanActivityProcedureSuccess());
+        dispatch(getPlanActivityProcedures());
+      })
+      .catch(error => {
+        dispatch(putPlanActivityProcedureError(error));
       });
   };
 }

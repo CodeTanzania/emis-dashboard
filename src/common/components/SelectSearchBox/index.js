@@ -89,7 +89,7 @@ export default class SelectSearchBox extends Component {
      * @name getOptionProp
      *
      * @param {string | function} prop - The property name or value return from
-     * a provided function
+     *                                   a provided function
      * @param {Object} option - A single data item for select options
      * @returns {String} - Value of the extracted property
      *
@@ -106,7 +106,7 @@ export default class SelectSearchBox extends Component {
     const options = data.map(option => (
       <Option key={getOptionProp(optionValue, option)}>
         {getOptionProp(optionLabel, option)}
-      </Option> //eslint-disable-line
+      </Option>
     ));
 
     return (

@@ -139,13 +139,29 @@ export function getPlanActivityProcedures(activityId, page = 1) {
  * @name postPlanActivityProcedure
  *
  * @param {Object} procedure - Procedure object to be persisted to the API
- * @returns {undefined}
+ * @returns {Promise}
  *
  * @version 0.1.0
  * @since 0.1.0
  */
 export function postPlanActivityProcedure(procedure) {
   return axios.post(`/procedures`, JSON.stringify(procedure));
+}
+
+/**
+ * Update Standard Operating procedure(SOP) in the API
+ *
+ * @function
+ * @name putPlanActivityProcedure
+ *
+ * @param {Object} procedure - Updated procedure
+ * @returns {Promise}
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function putPlanActivityProcedure(procedure) {
+  return axios.put(`/procedures/${procedure._id}`, JSON.stringify(procedure)); //eslint-disable-line
 }
 
 /**

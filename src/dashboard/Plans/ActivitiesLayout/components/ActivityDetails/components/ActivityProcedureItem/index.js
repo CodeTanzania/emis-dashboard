@@ -36,6 +36,7 @@ const ActivityProcedureItemSource = {
       description: props.description,
       number: props.number,
       index: props.index,
+      onEdit: props.onEdit,
     };
   },
 };
@@ -129,6 +130,7 @@ function ActivityProcedureItem({
   name,
   description,
   isDragging,
+  onEdit,
   connectDragSource,
   connectDropTarget,
 }) {
@@ -186,6 +188,7 @@ function ActivityProcedureItem({
               style={{ border: 0 }}
               theme="outlined"
               size="large"
+              onClick={onEdit}
             />
             <Button
               icon="delete"
@@ -216,6 +219,7 @@ ActivityProcedureItem.defaultProps = {
   description: 'N/A',
   number: 0,
 };
+
 export default flow(
   DragSource(ITEM_TYPE, ActivityProcedureItemSource, collectSource),
   DropTarget(ITEM_TYPE, ActivityProcedureItemTarget, collectTarget)

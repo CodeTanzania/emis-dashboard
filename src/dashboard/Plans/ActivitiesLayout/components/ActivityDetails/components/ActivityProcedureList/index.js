@@ -1,12 +1,13 @@
-import { Button, List, Modal, Row, Col } from 'antd';
+import { Button, Col, List, Modal, Row } from 'antd';
 import flow from 'lodash/flow';
 import React, { Component } from 'react';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { connect } from 'react-redux';
 import shuffleList from '../../../../../../../common/lib/util';
-import ActivityTaskForm from '../ActivityProcedureForm';
-import ActivityTaskItem from '../ActivityProcedureItem';
+import { selectPlanActivityProcedure } from '../../../../../actions';
+import ActivityProcedureForm from '../ActivityProcedureForm';
+import ActivityProcedureItem from '../ActivityProcedureItem';
 import './styles.css';
 
 /**
@@ -23,7 +24,8 @@ import './styles.css';
 class ActivityProcedureList extends Component {
   state = {
     procedures: [],
-    showActivityTaskForm: false,
+    showActivityProcedureForm: false,
+    isEditForm: false,
   };
 
   componentDidMount() {
@@ -63,30 +65,31 @@ class ActivityProcedureList extends Component {
    * Handle click action to open activity procedure form modal window
    *
    * @function
-   * @name handleOpenActivityTaskForm
+   * @name handleOpenActivityProcedureForm
    *
    * @version 0.1.0
    * @since 0.1.0
    */
-  handleOpenActivityTaskForm = () => {
-    this.setState({ showActivityTaskForm: true });
+  handleOpenActivityProcedureForm = (edit = false) => {
+    this.setState({ showActivityProcedureForm: true, isEditForm: edit });
   };
 
   /**
    * Handle click action to close activity procedure form modal window
    *
    * @function
-   * @name handleCloseActivityTaskForm
+   * @name handleCloseActivityProcedureForm
    *
    * @version 0.1.0
    * @since 0.1.0
    */
-  handleCloseActivityTaskForm = () => {
-    this.setState({ showActivityTaskForm: false });
+  handleCloseActivityProcedureForm = () => {
+    this.setState({ showActivityProcedureForm: false });
   };
 
   render() {
-    const { procedures, showActivityTaskForm } = this.state;
+    const { procedures, showActivityProcedureForm, isEditForm } = this.state;
+    const { onSelectProcedure } = this.props;
     return (
       <div className="ActivityProcedureList">
         {/* Activity procedures section header */}
@@ -100,7 +103,9 @@ class ActivityProcedureList extends Component {
               type="default"
               icon="plus"
               style={{ border: 0 }}
-              onClick={this.handleOpenActivityTaskForm}
+              onClick={() => {
+                this.handleOpenActivityProcedureForm();
+              }}
             >
               New SOP
             </Button>
@@ -111,23 +116,34 @@ class ActivityProcedureList extends Component {
         <List
           dataSource={procedures}
           renderItem={(procedure, index) => (
-            <ActivityTaskItem
+            <ActivityProcedureItem
               index={index}
               {...procedure}
               shuffleProcedureItem={this.shuffleProcedureItem}
+              onEdit={() => {
+                onSelectProcedure(procedure);
+                this.handleOpenActivityProcedureForm(true);
+              }}
             />
           )}
         />
         {/* end activity procedure draggable list */}
         {/* Activity form modal */}
         <Modal
-          visible={showActivityTaskForm}
-          title="New Standard Operating Procedure (SOP)"
+          visible={showActivityProcedureForm}
+          title={
+            isEditForm
+              ? 'Edit Standard Operating Procedure (SOP)'
+              : 'New Standard Operating Procedure (SOP)'
+          }
           maskClosable={false}
-          onCancel={this.handleCloseActivityTaskForm}
+          onCancel={this.handleCloseActivityProcedureForm}
           footer={null}
         >
-          <ActivityTaskForm onCancel={this.handleCloseActivityTaskForm} />
+          <ActivityProcedureForm
+            isEditForm={isEditForm}
+            onCancel={this.handleCloseActivityProcedureForm}
+          />
         </Modal>
         {/* End Activity form modal */}
       </div>
@@ -139,7 +155,16 @@ const mapStateToProps = state => ({
   procedures: state.planActivityProcedures.data,
 });
 
+const mapDispatchToProps = dispatch => ({
+  onSelectProcedure(procedure) {
+    dispatch(selectPlanActivityProcedure(procedure));
+  },
+});
+
 export default flow(
   DragDropContext(HTML5Backend),
-  connect(mapStateToProps)
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )
 )(ActivityProcedureList);
