@@ -54,7 +54,7 @@ export const addIncidentType = incidentType => (
   dispatch({ type: CREATE_INCIDENT_TYPE_SUCCESS });
   API.createIncidentType(incidentType)
     .then(() => {
-      fetchIncidentsTypeSuccess();
+      dispatch(fetchIncidentsTypeSuccess())
     })
     .catch(error =>
       dispatch({ type: FETCH_INCIDENT_TYPE_FAILURE, payload: { data: error } })
@@ -73,7 +73,7 @@ export const updateIncidentTypeSuccess = (incidentTypeId, update) => (
   dispatch(updateIncidentTypeInit(incidentTypeId, update));
   API.updateIncidentType(incidentTypeId, update)
     .then(() => {
-      fetchIncidentsTypeSuccess();
+      dispatch(fetchIncidentsTypeSuccess())
     })
     .catch(error =>
       dispatch({ type: FETCH_INCIDENT_TYPE_FAILURE, payload: { data: error } })
