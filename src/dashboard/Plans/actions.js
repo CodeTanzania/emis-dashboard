@@ -1,4 +1,6 @@
 import groupBy from 'lodash/groupBy';
+import isEmpty from 'lodash/isEmpty';
+import merge from 'lodash/merge';
 
 /*
  *------------------------------------------------------------------------------
@@ -29,6 +31,10 @@ export const DELETE_PLAN_ERROR = 'DELETE_PLAN_ERROR';
 /* select action types */
 export const SELECT_PLAN = 'SELECT_PLAN';
 
+/* form handling action types */
+export const OPEN_PLAN_FORM = 'OPEN_PLAN_FORM';
+export const CLOSE_PLAN_FORM = 'CLOSE_PLAN_FORM';
+
 /*
  *------------------------------------------------------------------------------
  * Plan activity action types
@@ -51,6 +57,14 @@ export const PUT_PLAN_ACTIVITY_ERROR = 'PUT_PLAN_ACTIVITY_ERROR';
 
 /* select action types */
 export const SELECT_PLAN_ACTIVITY = 'SELECT_PLAN_ACTIVITY';
+
+/* handling filtering plans */
+export const UPDATE_PLAN_FILTERS = 'UPDATE_PLAN_FILTERS';
+export const RESET_PLAN_FILTERS = 'RESET_PLAN_FILTERS';
+
+/* form handling action types */
+export const OPEN_PLAN_ACTIVITY_FORM = 'OPEN_PLAN_ACTIVITY_FORM';
+export const CLOSE_PLAN_ACTIVITY_FORM = 'CLOSE_PLAN_ACTIVITY_FORM';
 
 /*
  *------------------------------------------------------------------------------
@@ -98,6 +112,12 @@ export const PUT_PLAN_ACTIVITY_PROCEDURE_ERROR =
 /* select action types */
 export const SELECT_PLAN_ACTIVITY_PROCEDURE = 'SELECT_PLAN_ACTIVITY_PROCEDURE';
 
+/* form handling action types */
+export const OPEN_PLAN_ACTIVITY_PROCEDURE_FORM =
+  'OPEN_PLAN_ACTIVITY_PROCEDURE_FORM';
+export const CLOSE_PLAN_ACTIVITY_PROCEDURE_FORM =
+  'CLOSE_PLAN_ACTIVITY_PROCEDURE_FORM';
+
 /*
  *------------------------------------------------------------------------------
  * Plan action creators
@@ -111,6 +131,7 @@ export const SELECT_PLAN_ACTIVITY_PROCEDURE = 'SELECT_PLAN_ACTIVITY_PROCEDURE';
  * @name selectPlan
  *
  * @param {Object} plan - Selected plan object
+ * @returns {Object} - Redux action
  *
  * @version 0.1.0
  * @since 0.1.0
@@ -119,6 +140,79 @@ export function selectPlan(plan) {
   return {
     type: SELECT_PLAN,
     payload: { data: plan },
+  };
+}
+
+/**
+ * Action dispatched when plan filters changes
+ *
+ * @function
+ * @name updatePlanFilters
+ *
+ * @param {Object} filters - Filters applied when fetching plans
+ * @returns {Object} - Redux action
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function updatePlanFilters(filters) {
+  return {
+    type: UPDATE_PLAN_FILTERS,
+    payload: {
+      data: filters,
+    },
+  };
+}
+
+/**
+ * Reset plan filters
+ *
+ * @function
+ * @name resetPlanFilters
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function resetPlanFilters() {
+  return {
+    type: RESET_PLAN_FILTERS,
+    payload: {
+      data: { incidentTypes: null },
+    },
+  };
+}
+
+/**
+ * Action dispatched when plan form is opened
+ *
+ * @function
+ * @name openPlanForm
+ *
+ * @returns {Object} - Redux action
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function openPlanForm() {
+  return {
+    type: OPEN_PLAN_FORM,
+  };
+}
+
+/**
+ * Action dispatched when plan form is closed
+ *
+ * @function
+ * @name closePlanForm
+ *
+ * @returns {Object} - Redux action
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function closePlanForm() {
+  return {
+    type: CLOSE_PLAN_FORM,
   };
 }
 
@@ -275,6 +369,40 @@ export function selectPlanActivity(activity) {
 }
 
 /**
+ * Action dispatched when plan activity is opened
+ *
+ * @function
+ * @name openPlanActivityForm
+ *
+ * @returns {Object} - Redux action
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function openPlanActivityForm() {
+  return {
+    type: OPEN_PLAN_ACTIVITY_FORM,
+  };
+}
+
+/**
+ * Action dispatched when plan activity is closed
+ *
+ * @function
+ * @name openPlanActivityForm
+ *
+ * @returns {Object} - Redux action
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function closePlanActivityForm() {
+  return {
+    type: CLOSE_PLAN_ACTIVITY_FORM,
+  };
+}
+
+/**
  * Action dispatched when fetching plan activities from API
  *
  * @function
@@ -418,6 +546,40 @@ export function selectPlanActivityProcedure(procedure) {
 }
 
 /**
+ * Action dispatched when plan activity procedure(SOP) form is opened
+ *
+ * @function
+ * @name openPlanActivityProcedureForm
+ *
+ * @returns {Object} - Redux action
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function openPlanActivityProcedureForm() {
+  return {
+    type: OPEN_PLAN_ACTIVITY_PROCEDURE_FORM,
+  };
+}
+
+/**
+ * Action dispatched when plan activity procedure(SOP) form is closed
+ *
+ * @function
+ * @name openPlanActivityProcedureForm
+ *
+ * @returns {Object} - Redux action
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function closePlanActivityProcedureForm() {
+  return {
+    type: CLOSE_PLAN_ACTIVITY_PROCEDURE_FORM,
+  };
+}
+
+/**
  * Action dispatched when fetching plan activity procedures from API
  *
  * @function
@@ -498,7 +660,7 @@ export function getPlanActivityProceduresError(error) {
  */
 export function postPlanActivityProcedureStart() {
   return {
-    type: POST_PLAN_ACTIVITY_PROCEDURES_START,
+    type: POST_PLAN_ACTIVITY_PROCEDURE_START,
   };
 }
 
@@ -515,7 +677,7 @@ export function postPlanActivityProcedureStart() {
  */
 export function postPlanActivityProcedureSuccess() {
   return {
-    type: POST_PLAN_ACTIVITY_PROCEDURES_SUCCESS,
+    type: POST_PLAN_ACTIVITY_PROCEDURE_SUCCESS,
   };
 }
 
@@ -533,7 +695,7 @@ export function postPlanActivityProcedureSuccess() {
  */
 export function postPlanActivityProcedureError(error) {
   return {
-    type: POST_PLAN_ACTIVITY_PROCEDURES_ERROR,
+    type: POST_PLAN_ACTIVITY_PROCEDURE_ERROR,
     payload: {
       data: error,
     },
@@ -616,9 +778,18 @@ export function putPlanActivityProcedureError(error) {
  */
 export function getPlans(params) {
   return (dispatch, getState, API) => {
+    const { filters } = getState().plans;
+
+    let allParams = params;
+    if (!isEmpty(filters.incidentTypes)) {
+      allParams = merge({}, params, {
+        filter: { incidentType: { $in: filters.incidentTypes } },
+      });
+    }
+
     dispatch(getPlansStart());
 
-    return API.getPlans(params)
+    return API.getPlans(allParams)
       .then(response => {
         dispatch(
           getPlansSuccess(

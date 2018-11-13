@@ -1,8 +1,8 @@
 import { Icon, Select, Spin } from 'antd';
 import isEmpty from 'lodash/isEmpty';
+import isFunction from 'lodash/isFunction';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import isFunction from 'lodash/isFunction';
 
 /* local constants */
 const { Option } = Select;

@@ -14,7 +14,11 @@ describe('Plan:Reducers', () => {
         loading: false,
         page: 1,
         posting: false,
+        showPlanForm: false,
         total: 0,
+        filters: {
+          incidentTypes: [],
+        },
       };
       expect(plans(undefined, {})).toEqual(expectedState);
     });
@@ -45,6 +49,7 @@ describe('Plan:Reducers', () => {
         Preparedness: [],
         Response: [],
         Recovery: [],
+        showActivityForm: false,
         page: 1,
         total: 0,
         loading: false,
@@ -83,6 +88,7 @@ describe('Plan:Reducers', () => {
         data: [],
         page: 1,
         total: 0,
+        showProcedureForm: false,
         loading: false,
         posting: false,
       };

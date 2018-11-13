@@ -24,7 +24,6 @@ class ActivityProcedureForm extends Component {
   handleSubmit = e => {
     e.preventDefault();
     const {
-      onCancel,
       procedure,
       isEditForm,
       form,
@@ -42,7 +41,6 @@ class ActivityProcedureForm extends Component {
           postProcedure(values);
         }
         form.resetFields();
-        onCancel();
       }
     });
   };
@@ -50,6 +48,7 @@ class ActivityProcedureForm extends Component {
   render() {
     const {
       isEditForm,
+      posting,
       procedure,
       onCancel,
       form: { getFieldDecorator },
@@ -105,7 +104,7 @@ class ActivityProcedureForm extends Component {
 
         <Row>
           <Col span={24} style={{ textAlign: 'right' }}>
-            <Button type="primary" htmlType="submit">
+            <Button type="primary" htmlType="submit" loading={posting}>
               Save
             </Button>
             <Button style={{ marginLeft: 8 }} onClick={onCancel}>
@@ -120,6 +119,7 @@ class ActivityProcedureForm extends Component {
 
 const mapStateToProps = state => ({
   procedure: state.selectedPlanActivityProcedure,
+  posting: state.planActivityProcedures.posting,
 });
 
 const mapDispatchToProps = dispatch => ({

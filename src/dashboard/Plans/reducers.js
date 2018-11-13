@@ -1,4 +1,7 @@
+import merge from 'lodash/merge';
 import {
+  CLOSE_PLAN_ACTIVITY_FORM,
+  CLOSE_PLAN_ACTIVITY_PROCEDURE_FORM,
   GET_PLANS_ERROR,
   GET_PLANS_START,
   GET_PLANS_SUCCESS,
@@ -8,33 +11,54 @@ import {
   GET_PLAN_ACTIVITY_PROCEDURES_ERROR,
   GET_PLAN_ACTIVITY_PROCEDURES_START,
   GET_PLAN_ACTIVITY_PROCEDURES_SUCCESS,
+  OPEN_PLAN_ACTIVITY_FORM,
+  OPEN_PLAN_ACTIVITY_PROCEDURE_FORM,
   POST_PLAN_ACTIVITY_ERROR,
-  POST_PLAN_ACTIVITY_START,
-  POST_PLAN_ACTIVITY_SUCCESS,
+  POST_PLAN_ACTIVITY_PROCEDURE_ERROR,
   POST_PLAN_ACTIVITY_PROCEDURE_START,
   POST_PLAN_ACTIVITY_PROCEDURE_SUCCESS,
-  POST_PLAN_ACTIVITY_PROCEDURE_ERROR,
+  POST_PLAN_ACTIVITY_START,
+  POST_PLAN_ACTIVITY_SUCCESS,
+  PUT_PLAN_ACTIVITY_PROCEDURE_ERROR,
+  PUT_PLAN_ACTIVITY_PROCEDURE_START,
+  PUT_PLAN_ACTIVITY_PROCEDURE_SUCCESS,
+  RESET_PLAN_FILTERS,
   SELECT_PLAN,
   SELECT_PLAN_ACTIVITY,
   SELECT_PLAN_ACTIVITY_PROCEDURE,
+  UPDATE_PLAN_FILTERS,
 } from './actions';
 
 /* initial state */
-const defaultPlanActivities = {
+const defaultPlanActivitiesState = {
   Mitigation: [],
   Preparedness: [],
   Response: [],
   Recovery: [],
   page: 1,
   total: 0,
+  showActivityForm: false,
   loading: false,
   posting: false,
 };
 
-const defaultState = {
+const defaultPlansState = {
   data: [],
   page: 1,
   total: 0,
+  showPlanForm: false,
+  loading: false,
+  posting: false,
+  filters: {
+    incidentTypes: [],
+  },
+};
+
+const defaultProceduresState = {
+  data: [],
+  page: 1,
+  total: 0,
+  showProcedureForm: false,
   loading: false,
   posting: false,
 };
@@ -61,13 +85,13 @@ const defaultState = {
  * @version 0.1.0
  * @since 0.1.0
  */
-export function plans(state = defaultState, action) {
+export function plans(state = defaultPlansState, action) {
   switch (action.type) {
     case GET_PLANS_START:
       return Object.assign({}, state, { loading: true });
     case GET_PLANS_SUCCESS:
       return Object.assign({}, state, {
-        data: action.payload.data,
+        data: [...action.payload.data],
         page: action.meta.page,
         total: action.meta.total,
         loading: false,
@@ -76,6 +100,22 @@ export function plans(state = defaultState, action) {
       return Object.assign({}, state, {
         error: action.payload.data,
         loading: false,
+      });
+    case OPEN_PLAN_ACTIVITY_FORM:
+      return Object.assign({}, state, {
+        showPlanForm: true,
+      });
+    case CLOSE_PLAN_ACTIVITY_FORM:
+      return Object.assign({}, state, {
+        showPlanForm: false,
+      });
+    case UPDATE_PLAN_FILTERS:
+      return merge({}, state, {
+        filters: action.payload.data,
+      });
+    case RESET_PLAN_FILTERS:
+      return Object.assign({}, state, {
+        filters: { incidentTypes: [] },
       });
     default:
       return state;
@@ -118,7 +158,7 @@ export function selectedPlan(state = null, action) {
  * @version 0.1.0
  * @since 0.1.0
  */
-export function planActivities(state = defaultPlanActivities, action) {
+export function planActivities(state = defaultPlanActivitiesState, action) {
   switch (action.type) {
     case GET_PLAN_ACTIVITIES_START:
       return Object.assign({}, state, {
@@ -149,11 +189,20 @@ export function planActivities(state = defaultPlanActivities, action) {
     case POST_PLAN_ACTIVITY_SUCCESS:
       return Object.assign({}, state, {
         posting: false,
+        showActivityForm: false,
       });
     case POST_PLAN_ACTIVITY_ERROR:
       return Object.assign({}, state, {
         error: action.payload.data,
         posting: false,
+      });
+    case OPEN_PLAN_ACTIVITY_FORM:
+      return Object.assign({}, state, {
+        showActivityForm: true,
+      });
+    case CLOSE_PLAN_ACTIVITY_FORM:
+      return Object.assign({}, state, {
+        showActivityForm: false,
       });
     default:
       return state;
@@ -194,7 +243,7 @@ export function selectedPlanActivity(state = null, action) {
  * @version 0.1.0
  * @since 0.1.0
  */
-export function planActivityProcedures(state = defaultState, action) {
+export function planActivityProcedures(state = defaultProceduresState, action) {
   switch (action.type) {
     case GET_PLAN_ACTIVITY_PROCEDURES_START:
       return Object.assign({}, state, { loading: true });
@@ -217,10 +266,32 @@ export function planActivityProcedures(state = defaultState, action) {
     case POST_PLAN_ACTIVITY_PROCEDURE_SUCCESS:
       return Object.assign({}, state, {
         posting: false,
+        showProcedureForm: false,
       });
     case POST_PLAN_ACTIVITY_PROCEDURE_ERROR:
       return Object.assign({}, state, {
         posting: false,
+      });
+    case PUT_PLAN_ACTIVITY_PROCEDURE_START:
+      return Object.assign({}, state, {
+        posting: true,
+      });
+    case PUT_PLAN_ACTIVITY_PROCEDURE_SUCCESS:
+      return Object.assign({}, state, {
+        posting: false,
+        showProcedureForm: false,
+      });
+    case PUT_PLAN_ACTIVITY_PROCEDURE_ERROR:
+      return Object.assign({}, state, {
+        posting: false,
+      });
+    case OPEN_PLAN_ACTIVITY_PROCEDURE_FORM:
+      return Object.assign({}, state, {
+        showProcedureForm: true,
+      });
+    case CLOSE_PLAN_ACTIVITY_PROCEDURE_FORM:
+      return Object.assign({}, state, {
+        showProcedureForm: false,
       });
     default:
       return state;

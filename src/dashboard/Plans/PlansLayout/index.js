@@ -5,9 +5,9 @@ import {
   Icon,
   Layout,
   List,
+  Pagination,
   Row,
   Spin,
-  Pagination,
 } from 'antd';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
@@ -15,7 +15,13 @@ import { connect } from 'react-redux';
 import { getIncidentTypes } from '../../../common/API/api';
 import SelectSearchBox from '../../../common/components/SelectSearchBox';
 import Toolbar from '../../../common/components/Toolbar';
-import { getPlans, getPlanActivities, selectPlan } from '../actions';
+import {
+  getPlanActivities,
+  getPlans,
+  resetPlanFilters,
+  selectPlan,
+  updatePlanFilters,
+} from '../actions';
 import PlanCard from './components/PlanCard';
 import PlanForm from './components/PlanForm';
 import './styles.css';
@@ -51,6 +57,7 @@ class PlansLayout extends Component {
     loading: PropTypes.bool.isRequired,
     onSelectPlan: PropTypes.func.isRequired,
     onPaginate: PropTypes.func.isRequired,
+    onFilterByIncidentType: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -92,6 +99,7 @@ class PlansLayout extends Component {
       loading,
       onSelectPlan,
       onPaginate,
+      onFilterByIncidentType,
     } = this.props;
 
     return (
@@ -112,11 +120,31 @@ class PlansLayout extends Component {
           <Toolbar>
             <Filters span={17}>
               <Row>
-                <Col span={4}>
+                <Col span={5}>
+                  <SelectSearchBox
+                    onChange={onFilterByIncidentType}
+                    onSearch={getIncidentTypes}
+                    placeholder="Filter by Incident Type"
+                    style={{ width: '250px' }}
+                    optionLabel="name"
+                    optionValue="_id"
+                  />
+                </Col>
+                <Col span={5}>
                   <SelectSearchBox
                     onChange={() => {}}
                     onSearch={getIncidentTypes}
-                    placeholder="Select Incident type"
+                    placeholder="Filter by Plan Location"
+                    style={{ width: '250px' }}
+                    optionLabel="name"
+                    optionValue="_id"
+                  />
+                </Col>
+                <Col span={5}>
+                  <SelectSearchBox
+                    onChange={() => {}}
+                    onSearch={getIncidentTypes}
+                    placeholder="Filter by Plan Owner"
                     style={{ width: '250px' }}
                     optionLabel="name"
                     optionValue="_id"
@@ -215,6 +243,15 @@ const mapDispatchToProps = dispatch => ({
   },
   onPaginate(page) {
     dispatch(getPlans({ page }));
+  },
+  onFilterByIncidentType(incidentType) {
+    if (incidentType) {
+      dispatch(updatePlanFilters({ incidentTypes: [incidentType] }));
+      dispatch(getPlans());
+    } else {
+      dispatch(resetPlanFilters());
+      dispatch(getPlans());
+    }
   },
 });
 

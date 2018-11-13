@@ -4,6 +4,7 @@ import {
   Drawer,
   Dropdown,
   Icon,
+  Input,
   Layout,
   Menu,
   Modal,
@@ -14,7 +15,12 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Toolbar from '../../../common/components/Toolbar';
-import { getPlanActivityProcedures, selectPlanActivity } from '../actions';
+import {
+  closePlanActivityForm,
+  getPlanActivityProcedures,
+  openPlanActivityForm,
+  selectPlanActivity,
+} from '../actions';
 import ActivityDetailsBody from './components/ActivityDetails';
 import ActivityDetailsHeader from './components/ActivityDetails/components/ActivityDetailsHeader';
 import ActivityForm from './components/ActivityForm';
@@ -24,6 +30,7 @@ import './styles.css';
 /* local constants */
 const { Header, Content } = Layout;
 const { Filters, Actions } = Toolbar;
+const { Search } = Input;
 const spinIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
 
 const menu = (
@@ -55,7 +62,6 @@ const menu = (
  */
 class PlanActivitiesLayout extends Component {
   state = {
-    showActivityForm: false,
     showActivityDetails: false,
     initialSelectedPhase: undefined,
   };
@@ -98,6 +104,9 @@ class PlanActivitiesLayout extends Component {
       })
     ).isRequired,
     loading: PropTypes.bool.isRequired,
+    showActivityForm: PropTypes.bool.isRequired,
+    onOpenActivityForm: PropTypes.func.isRequired,
+    onCloseActivityForm: PropTypes.func.isRequired,
     onSelectActivity: PropTypes.func.isRequired,
     getActivityProcedures: PropTypes.func.isRequired,
   };
@@ -112,10 +121,11 @@ class PlanActivitiesLayout extends Component {
    * @since 0.1.0
    */
   handleOpenActivityForm = (initialPhase = undefined) => {
+    const { onOpenActivityForm } = this.props;
     this.setState({
-      showActivityForm: true,
       initialSelectedPhase: initialPhase,
     });
+    onOpenActivityForm();
   };
 
   /**
@@ -128,9 +138,8 @@ class PlanActivitiesLayout extends Component {
    * @since 0.1.0
    */
   handleCloseActivityForm = () => {
-    this.setState({
-      showActivityForm: false,
-    });
+    const { onCloseActivityForm } = this.props;
+    onCloseActivityForm();
   };
 
   /**
@@ -163,17 +172,14 @@ class PlanActivitiesLayout extends Component {
   };
 
   render() {
-    const {
-      showActivityForm,
-      showActivityDetails,
-      initialSelectedPhase,
-    } = this.state;
+    const { showActivityDetails, initialSelectedPhase } = this.state;
 
     const {
       mitigationActivities,
       preparednessActivities,
       responseActivities,
       recoveryActivities,
+      showActivityForm,
       loading,
     } = this.props;
 
@@ -193,7 +199,13 @@ class PlanActivitiesLayout extends Component {
           {/* end primary header */}
           {/* Toolbar */}
           <Toolbar>
-            <Filters span={18} />
+            <Filters span={18}>
+              <Search
+                placeholder="Search for Activity here"
+                onSearch={value => console.log(value)}
+                style={{ width: 400 }}
+              />
+            </Filters>
             <Actions span={6}>
               <Row type="flex" justify="end">
                 <Col span={10}>
@@ -307,6 +319,7 @@ const mapStateToProps = state => ({
   preparednessActivities: state.planActivities.Preparedness,
   responseActivities: state.planActivities.Response,
   recoveryActivities: state.planActivities.Recovery,
+  showActivityForm: state.planActivities.showActivityForm,
   loading: state.planActivities.loading,
 });
 
@@ -316,6 +329,12 @@ const mapDispatchToProps = dispatch => ({
   },
   getActivityProcedures() {
     dispatch(getPlanActivityProcedures());
+  },
+  onOpenActivityForm() {
+    dispatch(openPlanActivityForm());
+  },
+  onCloseActivityForm() {
+    dispatch(closePlanActivityForm());
   },
 });
 

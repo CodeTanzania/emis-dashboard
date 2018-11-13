@@ -36,7 +36,6 @@ class ActivityForm extends Component {
       initialSelectedPhase,
       form: { validateFields, resetFields },
       postActivity,
-      onCancel,
     } = this.props;
 
     validateFields((error, values) => {
@@ -46,7 +45,7 @@ class ActivityForm extends Component {
           activity = Object.assign({}, values, { phase: initialSelectedPhase });
         }
         postActivity(activity);
-        onCancel();
+        // onCancel();
         resetFields();
       }
     });
@@ -56,6 +55,7 @@ class ActivityForm extends Component {
     const {
       initialSelectedPhase,
       onCancel,
+      posting,
       form: { getFieldDecorator },
     } = this.props;
 
@@ -127,7 +127,7 @@ class ActivityForm extends Component {
         {/* form actions */}
         <Row>
           <Col span={24} style={{ textAlign: 'right' }}>
-            <Button type="primary" htmlType="submit">
+            <Button type="primary" htmlType="submit" loading={posting}>
               Save
             </Button>
             <Button style={{ marginLeft: 8 }} onClick={onCancel}>

@@ -5,7 +5,11 @@ import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { connect } from 'react-redux';
 import shuffleList from '../../../../../../../common/lib/util';
-import { selectPlanActivityProcedure } from '../../../../../actions';
+import {
+  closePlanActivityProcedureForm,
+  openPlanActivityProcedureForm,
+  selectPlanActivityProcedure,
+} from '../../../../../actions';
 import ActivityProcedureForm from '../ActivityProcedureForm';
 import ActivityProcedureItem from '../ActivityProcedureItem';
 import './styles.css';
@@ -24,7 +28,6 @@ import './styles.css';
 class ActivityProcedureList extends Component {
   state = {
     procedures: [],
-    showActivityProcedureForm: false,
     isEditForm: false,
   };
 
@@ -71,7 +74,11 @@ class ActivityProcedureList extends Component {
    * @since 0.1.0
    */
   handleOpenActivityProcedureForm = (edit = false) => {
-    this.setState({ showActivityProcedureForm: true, isEditForm: edit });
+    const { onOpenProcedureForm } = this.props;
+    this.setState({
+      isEditForm: edit,
+    });
+    onOpenProcedureForm();
   };
 
   /**
@@ -84,12 +91,13 @@ class ActivityProcedureList extends Component {
    * @since 0.1.0
    */
   handleCloseActivityProcedureForm = () => {
-    this.setState({ showActivityProcedureForm: false });
+    const { onCloseProcedureForm } = this.props;
+    onCloseProcedureForm();
   };
 
   render() {
-    const { procedures, showActivityProcedureForm, isEditForm } = this.state;
-    const { onSelectProcedure } = this.props;
+    const { procedures, isEditForm } = this.state;
+    const { onSelectProcedure, showActivityProcedureForm } = this.props;
     return (
       <div className="ActivityProcedureList">
         {/* Activity procedures section header */}
@@ -153,11 +161,18 @@ class ActivityProcedureList extends Component {
 
 const mapStateToProps = state => ({
   procedures: state.planActivityProcedures.data,
+  showActivityProcedureForm: state.planActivityProcedures.showProcedureForm,
 });
 
 const mapDispatchToProps = dispatch => ({
   onSelectProcedure(procedure) {
     dispatch(selectPlanActivityProcedure(procedure));
+  },
+  onOpenProcedureForm() {
+    dispatch(openPlanActivityProcedureForm());
+  },
+  onCloseProcedureForm() {
+    dispatch(closePlanActivityProcedureForm());
   },
 });
 
