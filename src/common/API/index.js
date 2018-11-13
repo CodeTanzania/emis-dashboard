@@ -75,6 +75,13 @@ const API = {
    */
   updateStakeholder: (stakeholderId, updates) =>
     Axios.patch(`/parties/${stakeholderId}`, updates).then(res => res.data),
+
+  /**
+   * Create and send new notification
+   * @param {Object} data - notification data
+   */
+  sendNotification: data =>
+    Axios.post('/notifications', data).then(res => res.data),
 };
 
 export default API;
