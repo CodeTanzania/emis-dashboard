@@ -29,6 +29,17 @@ import {
   UPDATE_PLAN_FILTERS,
 } from './actions';
 
+/**
+ * Store keys added by the reducers in this file
+ *
+ * plans: Object
+ * selectPlan: Object
+ * planActivities: Object
+ * selectedPlanActivity: Object
+ * planActivityProcedures: Object
+ * selectedPlanActivityProcedure: Object
+ */
+
 /* initial state */
 const defaultPlanActivitiesState = {
   Mitigation: [],
@@ -88,7 +99,9 @@ const defaultProceduresState = {
 export function plans(state = defaultPlansState, action) {
   switch (action.type) {
     case GET_PLANS_START:
-      return Object.assign({}, state, { loading: true });
+      return Object.assign({}, state, {
+        loading: true,
+      });
     case GET_PLANS_SUCCESS:
       return Object.assign({}, state, {
         data: [...action.payload.data],
@@ -115,7 +128,9 @@ export function plans(state = defaultPlansState, action) {
       });
     case RESET_PLAN_FILTERS:
       return Object.assign({}, state, {
-        filters: { incidentTypes: [] },
+        filters: {
+          incidentTypes: [],
+        },
       });
     default:
       return state;
@@ -175,7 +190,9 @@ export function planActivities(state = defaultPlanActivitiesState, action) {
           Recovery: [],
         },
         action.payload.data,
-        { loading: false }
+        {
+          loading: false,
+        }
       );
     case GET_PLAN_ACTIVITIES_ERROR:
       return Object.assign({}, state, {
@@ -246,7 +263,9 @@ export function selectedPlanActivity(state = null, action) {
 export function planActivityProcedures(state = defaultProceduresState, action) {
   switch (action.type) {
     case GET_PLAN_ACTIVITY_PROCEDURES_START:
-      return Object.assign({}, state, { loading: true });
+      return Object.assign({}, state, {
+        loading: true,
+      });
     case GET_PLAN_ACTIVITY_PROCEDURES_SUCCESS:
       return Object.assign({}, state, {
         data: [...action.payload.data],
@@ -304,7 +323,7 @@ export function planActivityProcedures(state = defaultProceduresState, action) {
  * @function
  * @name selectedPlanActivityProcedure
  *
- * @param {Object} state=null - Current store value for selectedPlanActivityProcudure
+ * @param {Object} state=null - Current store value for selected Plan Activity Procedure
  * @param {Object} action - Redux action
  *
  * @version 0.1.0

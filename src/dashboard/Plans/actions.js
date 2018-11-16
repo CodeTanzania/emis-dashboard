@@ -342,7 +342,7 @@ export function postPlanSuccess(plans, page = 1, total = 0) {
  */
 export function postPlanError(error) {
   return {
-    type: POST_PLAN_SUCCESS,
+    type: POST_PLAN_ERROR,
     payload: {
       data: error,
     },
@@ -751,7 +751,7 @@ export function putPlanActivityProcedureSuccess() {
  */
 export function putPlanActivityProcedureError(error) {
   return {
-    type: PUT_PLAN_ACTIVITY_PROCEDURES_ERROR,
+    type: PUT_PLAN_ACTIVITY_PROCEDURE_ERROR,
     payload: {
       data: error,
     },
@@ -823,9 +823,13 @@ export function getPlanActivities() {
     return API.getPlanActivities(planId)
       .then(response => {
         const data = groupBy(response.data.data, 'phase');
-        data.page = response.data.page;
-        data.total = response.data.total;
-        dispatch(getPlanActivitiesSuccess(data));
+        dispatch(
+          getPlanActivitiesSuccess(
+            data,
+            response.data.page,
+            response.data.total
+          )
+        );
       })
       .catch(error => {
         dispatch(getPlanActivitiesError(error));

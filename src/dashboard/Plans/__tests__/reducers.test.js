@@ -25,8 +25,18 @@ describe('Plan:Reducers', () => {
 
     it('should return previous state when given invalid action type', () => {
       const previousState = {};
-      expect(plans(previousState, { type: null })).toEqual(previousState);
+      expect(
+        plans(previousState, {
+          type: null,
+        })
+      ).toEqual(previousState);
     });
+
+    it('should handle GET_PLAN_START', () => {});
+
+    it('should handle GET_PLAN_SUCCESS', () => {});
+
+    it('should handle GET_PLAN_ERROR', () => {});
   });
 
   describe('selectedPlan', () => {
@@ -35,11 +45,17 @@ describe('Plan:Reducers', () => {
     });
 
     it('should return previous state when given invalid action type', () => {
-      const previousState = { name: 'test' };
-      expect(selectedPlan(previousState, { type: null })).toEqual(
-        previousState
-      );
+      const previousState = {
+        name: 'test',
+      };
+      expect(
+        selectedPlan(previousState, {
+          type: null,
+        })
+      ).toEqual(previousState);
     });
+
+    it('should handle SELECT_PLAN', () => {});
   });
 
   describe('planActivities', () => {
@@ -69,6 +85,12 @@ describe('Plan:Reducers', () => {
       };
       expect(planActivities(previousState, {})).toEqual(previousState);
     });
+
+    it('should handle GET_PLAN_ACTIVITIES_START', () => {});
+
+    it('should handle GET_PLAN_ACTIVITIES_SUCCESS', () => {});
+
+    it('should handle GET_PLAN_ACTIVITIES_ERROR', () => {});
   });
 
   describe('selectedPlanActivity', () => {
@@ -77,9 +99,13 @@ describe('Plan:Reducers', () => {
     });
 
     it('should return previous state when provided action is invalid', () => {
-      const previousState = { test: 'test' };
+      const previousState = {
+        test: 'test',
+      };
       expect(selectedPlanActivity(previousState, {})).toEqual(previousState);
     });
+
+    it('should handle SELECT_PLAN_ACTIVITY', () => {});
   });
 
   describe('planActivityProcedures', () => {
@@ -104,5 +130,15 @@ describe('Plan:Reducers', () => {
       };
       expect(planActivityProcedures(previousState, {})).toEqual(previousState);
     });
+
+    it('should handle GET_PLAN_ACTIVITY_PROCEDURES_START', () => {});
+
+    it('should handle GET_PLAN_ACTIVITY_PROCEDURES_SUCCESS', () => {});
+
+    it('should handle GET_PLAN_ACTIVITY_PROCEDURES_ERROR', () => {});
+  });
+
+  describe('selectedPlanActivityProcedure', () => {
+    it('should handle SELECT_PLAN_ACTIVITY_PROCEDURE', () => {});
   });
 });
