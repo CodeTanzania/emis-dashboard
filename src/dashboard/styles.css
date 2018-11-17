@@ -19,3 +19,7 @@
   height: 40px;
   width: 40px;
 }
+.leaflet-container {
+  height: 100vh;
+  width: 100%;
+}
