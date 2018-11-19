@@ -2,6 +2,7 @@ import merge from 'lodash/merge';
 import {
   CLOSE_PLAN_ACTIVITY_FORM,
   CLOSE_PLAN_ACTIVITY_PROCEDURE_FORM,
+  CLOSE_PLAN_FORM,
   GET_PLANS_ERROR,
   GET_PLANS_START,
   GET_PLANS_SUCCESS,
@@ -13,6 +14,7 @@ import {
   GET_PLAN_ACTIVITY_PROCEDURES_SUCCESS,
   OPEN_PLAN_ACTIVITY_FORM,
   OPEN_PLAN_ACTIVITY_PROCEDURE_FORM,
+  OPEN_PLAN_FORM,
   POST_PLAN_ACTIVITY_ERROR,
   POST_PLAN_ACTIVITY_PROCEDURE_ERROR,
   POST_PLAN_ACTIVITY_PROCEDURE_START,
@@ -33,7 +35,7 @@ import {
  * Store keys added by the reducers in this file
  *
  * plans: Object
- * selectPlan: Object
+ * selectedPlan: Object
  * planActivities: Object
  * selectedPlanActivity: Object
  * planActivityProcedures: Object
@@ -114,11 +116,11 @@ export function plans(state = defaultPlansState, action) {
         error: action.payload.data,
         loading: false,
       });
-    case OPEN_PLAN_ACTIVITY_FORM:
+    case OPEN_PLAN_FORM:
       return Object.assign({}, state, {
         showPlanForm: true,
       });
-    case CLOSE_PLAN_ACTIVITY_FORM:
+    case CLOSE_PLAN_FORM:
       return Object.assign({}, state, {
         showPlanForm: false,
       });
@@ -289,6 +291,7 @@ export function planActivityProcedures(state = defaultProceduresState, action) {
       });
     case POST_PLAN_ACTIVITY_PROCEDURE_ERROR:
       return Object.assign({}, state, {
+        error: action.payload.data,
         posting: false,
       });
     case PUT_PLAN_ACTIVITY_PROCEDURE_START:
