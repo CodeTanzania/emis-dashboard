@@ -41,7 +41,7 @@ export default function Dashboard() {
           </Menu.Item>
           {/* end plan menu */}
           {/* incident menu */}
-          <Menu.Item key="1">
+          <Menu.Item key="2">
             <NavLink to="/incidents">
               <Icon type="heat-map" theme="outlined" className="f-25" />
               <span>Incidents</span>
@@ -49,7 +49,7 @@ export default function Dashboard() {
           </Menu.Item>
           {/* end incident menu */}
           {/* contact menu */}
-          <Menu.Item key="2">
+          <Menu.Item key="3">
             <NavLink to="/stakeholders">
               <Icon type="idcard" className="f-25" />
               <span>Stakeholders</span>
@@ -57,7 +57,7 @@ export default function Dashboard() {
           </Menu.Item>
           {/* end contact menu */}
           {/* setting menu */}
-          <Menu.Item key="3">
+          <Menu.Item key="4">
             <NavLink to="/settings/incidentType">
               <Icon type="setting" className="f-25" />
               <span>Settings</span>

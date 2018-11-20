@@ -1,4 +1,5 @@
 import React from 'react';
+import { get } from 'lodash';
 import L from 'leaflet';
 import * as ReactLeaflet from 'react-leaflet';
 import 'leaflet-draw';
@@ -25,14 +26,14 @@ export default class Incidents extends React.Component {
     super();
     this.state = {
       position: [-6.8161, 39.2804],
+      area: {},
       zoom: 13,
     };
 
     this.mapRef = React.createRef();
   }
 
-  componentDidMount() {
-    this.map = this.mapRef.current.leafletElement;
+  initDrawControls = () => {
     this.drawnItems = new L.FeatureGroup();
     this.map.addLayer(this.drawnItems);
     this.drawControl = new L.Control.Draw({
@@ -48,6 +49,23 @@ export default class Incidents extends React.Component {
       },
     });
   this.map.addControl(this.drawControl);
+  }
+
+  showDrawnItems = (e) => {
+    const { layer } = e;
+    this.drawnItems.addLayer(layer);
+    console.log('drwan area');
+    console.log(layer.toGeoJSON());
+    const type = get(layer.toGeoJSON(), 'geometry.type')
+    this.setState({ position: type === 'Point' ? layer.getLatLng() :  layer.getBounds().getCenter(), area: layer.toGeoJSON() });
+  }
+
+  componentDidMount() {
+    this.map = this.mapRef.current.leafletElement;
+    this.initDrawControls();
+    this.map.on('draw:created', e => this.showDrawnItems(e));
+  
+
   }
 
   render() {
