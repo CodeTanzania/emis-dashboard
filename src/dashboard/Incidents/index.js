@@ -1,37 +1,72 @@
 import React from 'react';
+import L from 'leaflet';
 import * as ReactLeaflet from 'react-leaflet';
+import 'leaflet-draw';
+import MapNav from './components/MapNav';
 
-import  '../styles.css'
+import '../styles.css';
+import 'leaflet-draw/dist/leaflet.draw.css';
 
-const { Map: LeafletMap, TileLayer, Marker, Popup } = ReactLeaflet
+const { Map: LeafletMap, TileLayer } = ReactLeaflet;
 
+/**
+ * Incidents component
+ * this component will show incident contents 
+ * on Openstreet map
+ *
+ * @class
+ * @name Incidents
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
 export default class Incidents extends React.Component {
   constructor() {
-    super()
+    super();
     this.state = {
-      lat: -6.8161,
-      lng: 39.2804,
-      zoom: 13
-    }
+      position: [-6.8161, 39.2804],
+      zoom: 13,
+    };
+
+    this.mapRef = React.createRef();
+  }
+
+  componentDidMount() {
+    this.map = this.mapRef.current.leafletElement;
+    this.drawnItems = new L.FeatureGroup();
+    this.map.addLayer(this.drawnItems);
+    this.drawControl = new L.Control.Draw({
+      position: 'topleft',
+      draw: {
+        polyline: false,
+        circlemarker: false, // Turns off this drawing tool
+        rectangle: false,
+        marker: true,
+      },
+      edit: {
+        featureGroup: this.drawnItems,
+      },
+    });
+  this.map.addControl(this.drawControl);
   }
 
   render() {
-    const position = [this.state.lat, this.state.lng];
+    const { position, zoom } = this.state;
     return (
-      <LeafletMap center={position} zoom={this.state.zoom}>
-        <TileLayer
+      <div>
+        <MapNav />
+        <LeafletMap
+         center={position}
+          zoom={zoom}
+          ref={this.mapRef}
+          >
+          <TileLayer
             attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
             id="mapbox.light"
             url="https://api.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoid29ybGRiYW5rLWVkdWNhdGlvbiIsImEiOiJIZ2VvODFjIn0.TDw5VdwGavwEsch53sAVxA#1.6/23.725906/-39.714135/0"
           />
-        <Marker position={position}>
-          <Popup>
-            A pretty CSS3 popup. <br/> Easily customizable.
-          </Popup>
-        </Marker>
-      </LeafletMap>
+        </LeafletMap>
+      </div>
     );
   }
 }
-
-
