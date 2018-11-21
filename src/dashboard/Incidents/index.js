@@ -30,6 +30,7 @@ export default class Incidents extends React.Component {
       // area: {},
       zoom: 13,
       showPopup: false,
+      hideButton: false,
     };
 
     this.mapRef = React.createRef();
@@ -72,16 +73,43 @@ export default class Incidents extends React.Component {
     });
   };
 
+  contentPopup = () => {
+    const { position } = this.state;
+    const contents =  `<div>
+      <div class="ant-modal-body">
+        <h3>To create new incident, draw or put marker to the specific area involved</h3>
+      </div>
+      <div class="ant-modal-footer">
+        <div>
+          <button type="button" id="ok-button" class="ant-btn ant-btn-primary"><span>OK</span></button>
+        </div>
+      </div>
+    </div> `
+  
+    this.popup = L.popup({minWidth:400})
+    .setLatLng(position)
+    .setContent(contents)
+    .openOn(this.map)
+    this.setState({hideButton:true })
+
+    document.querySelector('#ok-button').addEventListener('click', e => {
+      e.preventDefault();
+      this.map.closePopup();
+    });
+  }
+
   onclickNewIncidentButton = () => {
+    this.contentPopup();
     this.initDrawControls();
     this.map.on('draw:created', e => this.showDrawnItems(e));
-    console.log('button clicked');
+  
   }
+
   render() {
-    const { position, zoom, showPopup } = this.state;
+    const { position, zoom, showPopup, hideButton } = this.state;
     return (
       <div>
-        <MapNav newIncidentButton={this.onclickNewIncidentButton}/>
+        {!hideButton ? <MapNav newIncidentButton={this.onclickNewIncidentButton} id="mapNav"/> : null}
         <LeafletMap center={position} zoom={zoom} ref={this.mapRef}>
           <TileLayer
             attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
