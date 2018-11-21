@@ -11,11 +11,6 @@ import React from 'react';
  * @version 0.1.0
  * @since 0.1.0
  */
-export default function IncidentForm () {
-
-    return (
-        <div>
-            Incident Form works
-        </div>
-    );
+export default function IncidentForm() {
+  return <div>Incident Form works</div>;
 }

@@ -13,7 +13,7 @@ const { Map: LeafletMap, TileLayer, Popup } = ReactLeaflet;
 
 /**
  * Incidents component
- * this component will show incident contents 
+ * this component will show incident contents
  * on Openstreet map
  *
  * @class
@@ -27,12 +27,19 @@ export default class Incidents extends React.Component {
     super();
     this.state = {
       position: [-6.8161, 39.2804],
-      area: {},
+      // area: {},
       zoom: 13,
-      showPopup: false
+      showPopup: false,
     };
 
     this.mapRef = React.createRef();
+    this.onclickNewIncidentButton = this.onclickNewIncidentButton.bind(this);
+
+  }
+
+  componentDidMount() {
+    this.map = this.mapRef.current.leafletElement;
+
   }
 
   initDrawControls = () => {
@@ -51,49 +58,42 @@ export default class Incidents extends React.Component {
       },
     });
     this.map.addControl(this.drawControl);
-  }
+  };
 
-  showDrawnItems = (e) => {
+  showDrawnItems = e => {
     const { layer } = e;
     this.drawnItems.addLayer(layer);
-    console.log('drwan area');
-    console.log(layer.toGeoJSON());
-    const type = get(layer.toGeoJSON(), 'geometry.type')
+    const type = get(layer.toGeoJSON(), 'geometry.type');
     this.setState({
-      position: type === 'Point' ? layer.getLatLng() : layer.getBounds().
-        getCenter(), area: layer.toGeoJSON(),
-      showPopup: true
+      position:
+        type === 'Point' ? layer.getLatLng() : layer.getBounds().getCenter(),
+      // area: layer.toGeoJSON(),
+      showPopup: true,
     });
-  }
+  };
 
-  componentDidMount() {
-    this.map = this.mapRef.current.leafletElement;
+  onclickNewIncidentButton = () => {
     this.initDrawControls();
     this.map.on('draw:created', e => this.showDrawnItems(e));
-
-
+    console.log('button clicked');
   }
-
   render() {
     const { position, zoom, showPopup } = this.state;
     return (
       <div>
-        <MapNav />
-        <LeafletMap
-          center={position}
-          zoom={zoom}
-          ref={this.mapRef}
-        >
+        <MapNav newIncidentButton={this.onclickNewIncidentButton}/>
+        <LeafletMap center={position} zoom={zoom} ref={this.mapRef}>
           <TileLayer
             attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
             id="mapbox.light"
             url="https://api.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoid29ybGRiYW5rLWVkdWNhdGlvbiIsImEiOiJIZ2VvODFjIn0.TDw5VdwGavwEsch53sAVxA#1.6/23.725906/-39.714135/0"
           />
-          {showPopup ? <Popup position={position} minWidth={400}>
-            <IncidentForm />
-          </Popup> : null}
+          {showPopup ? (
+            <Popup position={position} minWidth={400}>
+              <IncidentForm />
+            </Popup>
+          ) : null}
         </LeafletMap>
-
       </div>
     );
   }
