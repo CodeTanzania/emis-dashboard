@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Button } from 'antd';
 import './styles.css';
 
@@ -13,8 +14,7 @@ import './styles.css';
  * @version 0.1.0
  * @since 0.1.0
  */
-export default function MapNav({newIncidentButton}) {
-
+export default function MapNav({ newIncidentButton }) {
   return (
     <div className="MapNav">
       <Button type="primary" onClick={newIncidentButton}>
@@ -23,3 +23,7 @@ export default function MapNav({newIncidentButton}) {
     </div>
   );
 }
+
+MapNav.propTypes = {
+  newIncidentButton: PropTypes.func.isRequired,
+};
