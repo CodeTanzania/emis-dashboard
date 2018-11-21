@@ -1,0 +1,13 @@
+.IncidentForm #date-picker{
+    width: 100%;
+}
+
+.leaflet-popup-content {
+    margin: 13px 25px;
+    line-height: 1.4;
+}
+.FormHeader{
+    text-align: center;
+    text-transform: uppercase;
+    padding-top: 2%;
+}

@@ -35,6 +35,8 @@ export default class Incidents extends React.Component {
 
     this.mapRef = React.createRef();
     this.onclickNewIncidentButton = this.onclickNewIncidentButton.bind(this);
+    this.onCancelButton = this.onCancel.bind(this);
+
   }
 
   componentDidMount() {
@@ -102,6 +104,13 @@ export default class Incidents extends React.Component {
     this.map.on('draw:created', e => this.showDrawnItems(e));
   };
 
+  onCancel = () => {
+    this.map.removeControl(this.drawControl);
+    this.map.removeLayer(this.drawnItems);
+    this.setState({ hideButton: false });
+    this.map.closePopup();
+  }
+
   render() {
     const { position, zoom, showPopup, hideButton } = this.state;
     return (
@@ -119,8 +128,8 @@ export default class Incidents extends React.Component {
             url="https://api.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoid29ybGRiYW5rLWVkdWNhdGlvbiIsImEiOiJIZ2VvODFjIn0.TDw5VdwGavwEsch53sAVxA#1.6/23.725906/-39.714135/0"
           />
           {showPopup ? (
-            <Popup position={position} minWidth={400}>
-              <IncidentForm />
+            <Popup position={position} minWidth={450}>
+              <IncidentForm onCancelButton={this.onCancel}/>
             </Popup>
           ) : null}
         </LeafletMap>
