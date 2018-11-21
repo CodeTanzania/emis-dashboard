@@ -1,5 +1,14 @@
 import React from 'react';
-import { Form, Input, DatePicker, Button, AutoComplete, Row, Col, Divider } from 'antd';
+import {
+  Form,
+  Input,
+  DatePicker,
+  Button,
+  AutoComplete,
+  Row,
+  Col,
+  Divider,
+} from 'antd';
 import { connect } from 'react-redux';
 import './styles.css';
 /**
@@ -47,7 +56,7 @@ class IncidentForm extends React.Component {
   render() {
     const { getFieldDecorator } = this.props.form;
     const { autoCompleteResult } = this.state;
-    const {onCancelButton} = this.props;
+    const { onCancelButton } = this.props;
 
     const formItemLayout = {
       labelCol: {
@@ -84,10 +93,10 @@ class IncidentForm extends React.Component {
 
     return (
       <Form onSubmit={this.handleSubmit} className="IncidentForm">
-      <div className='FormHeader'>
-        <h3>Record new incident</h3>
-      </div>
-      <Divider />
+        <div className="FormHeader">
+          <h3>Record new incident</h3>
+        </div>
+        <Divider />
         <FormItem {...formItemLayout} label="Incident name">
           {getFieldDecorator('name', {
             rules: [
@@ -117,9 +126,7 @@ class IncidentForm extends React.Component {
           })(<Input />)}
         </FormItem>
         <FormItem {...formItemLayout} label="Date/Time initiated:">
-          {getFieldDecorator('date-picker', config)(
-            <DatePicker />
-          )}
+          {getFieldDecorator('date-picker', config)(<DatePicker />)}
         </FormItem>
         <FormItem {...formItemLayout} label="Location">
           {getFieldDecorator('location', {
@@ -147,10 +154,7 @@ class IncidentForm extends React.Component {
             </AutoComplete>
           )}
         </FormItem>
-        <FormItem
-          {...formItemLayout}
-          label="Incident Summary"
-        >
+        <FormItem {...formItemLayout} label="Incident Summary">
           {getFieldDecorator('summary', {
             rules: [
               { required: true, message: 'Please input the summary you got!' },
@@ -158,17 +162,18 @@ class IncidentForm extends React.Component {
           })(<TextArea rows={4} />)}
         </FormItem>
         <FormItem {...tailFormItemLayout}>
-        <Row>
-          <Col span={12}>
-              <Button type="danger" onClick={onCancelButton}>Cancel</Button>
-          </Col>
-          <Col span={12}>
-          <Button type="primary" htmlType="submit">
-            Create
-          </Button>
-          </Col>
-        </Row>
-         
+          <Row>
+            <Col span={12}>
+              <Button type="danger" onClick={onCancelButton}>
+                Cancel
+              </Button>
+            </Col>
+            <Col span={12}>
+              <Button type="primary" htmlType="submit">
+                Create
+              </Button>
+            </Col>
+          </Row>
         </FormItem>
       </Form>
     );

@@ -1,5 +1,17 @@
+<<<<<<< HEAD
 
   .sample{
       background: black;
       
+=======
+#sidebar {
+    position: absolute;
+    right: 5%;
+    top: 10px;
+    z-index: 1000;
+    height: auto;
+    overflow: hidden;
+    float: right;
+    font-size: 12px;
+>>>>>>> feature/settings
   }

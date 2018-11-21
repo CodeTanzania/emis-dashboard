@@ -19,13 +19,12 @@ import {
   selectColorAutofill,
 } from '../../../../../../actions';
 
-import '../../SystemSettings.css';
+import '../../styles.css';
 
 const FormItem = Form.Item;
-const { TextArea } = Input;
 const { Option } = Select;
 
-class AddIncidentTypeForm extends Component {
+class IncidentTypeForm extends Component {
   state = {
     submitting: false,
     background: '#fff',
@@ -45,13 +44,13 @@ class AddIncidentTypeForm extends Component {
     e.preventDefault();
     const { form } = this.props;
     form.validateFieldsAndScroll(
-      (err, { name, given, cap, nature, family, description, color }) => {
+      (err, { name, code, cap, nature, family, color }) => {
         const data = {
           name,
-          code: { given, cap },
+          code,
+          cap,
           nature,
           family,
-          description,
           color,
         };
         if (!err) {
@@ -129,7 +128,7 @@ class AddIncidentTypeForm extends Component {
     };
 
     return (
-      <div className="AddNewIncidentType">
+      <div className="newIncidentType">
         <Icon
           style={{ cursor: 'pointer' }}
           type="plus"
@@ -191,8 +190,8 @@ class AddIncidentTypeForm extends Component {
               )}
             </FormItem>
             <Divider />
-            <FormItem label="Given" {...formItemLayout}>
-              {getFieldDecorator('given')(<Input placeholder="Given" />)}
+            <FormItem label="Code" {...formItemLayout}>
+              {getFieldDecorator('code')(<Input placeholder="Code" />)}
             </FormItem>
             <FormItem label="CAP" {...formItemLayout}>
               {getFieldDecorator('cap', {
@@ -216,12 +215,6 @@ class AddIncidentTypeForm extends Component {
                   <Option value="CBRNE">CBRNE</Option>
                   <Option value="Other">Other</Option>
                 </Select>
-              )}
-            </FormItem>
-            <Divider />
-            <FormItem {...formItemLayout} label="Description">
-              {getFieldDecorator('description')(
-                <TextArea rows={4} placeholder="Description" />
               )}
             </FormItem>
             <Divider />
@@ -273,4 +266,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Form.create()(AddIncidentTypeForm));
+)(Form.create()(IncidentTypeForm));

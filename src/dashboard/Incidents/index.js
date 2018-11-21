@@ -36,7 +36,6 @@ export default class Incidents extends React.Component {
     this.mapRef = React.createRef();
     this.onclickNewIncidentButton = this.onclickNewIncidentButton.bind(this);
     this.onCancelButton = this.onCancel.bind(this);
-
   }
 
   componentDidMount() {
@@ -109,7 +108,7 @@ export default class Incidents extends React.Component {
     this.map.removeLayer(this.drawnItems);
     this.setState({ hideButton: false });
     this.map.closePopup();
-  }
+  };
 
   render() {
     const { position, zoom, showPopup, hideButton } = this.state;
@@ -129,7 +128,7 @@ export default class Incidents extends React.Component {
           />
           {showPopup ? (
             <Popup position={position} minWidth={450}>
-              <IncidentForm onCancelButton={this.onCancel}/>
+              <IncidentForm onCancelButton={this.onCancel} />
             </Popup>
           ) : null}
         </LeafletMap>

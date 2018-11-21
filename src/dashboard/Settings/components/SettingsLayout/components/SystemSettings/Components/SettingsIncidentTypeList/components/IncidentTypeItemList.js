@@ -6,7 +6,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { selectIncidentType } from '../../../../../../../actions';
-import styles from '../../../SystemSettings.css';
+import styles from '../../../styles.css';
 
 /**
  * Render a single contact item component for contacts list
@@ -20,6 +20,36 @@ import styles from '../../../SystemSettings.css';
 const cx = classNames.bind(styles);
 
 class IncidentTypeItem extends React.Component {
+  static propTypes = {
+    selected: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string,
+        nature: PropTypes.string.isRequired,
+        family: PropTypes.string.isRequired,
+        code: PropTypes.string,
+        cap: PropTypes.string.isRequired,
+        color: PropTypes.string,
+        _id: PropTypes.string,
+      }).isRequired
+    ),
+    incidentSelected: PropTypes.shape({
+      name: PropTypes.string,
+      nature: PropTypes.string.isRequired,
+      family: PropTypes.string.isRequired,
+      code: PropTypes.string.isRequired,
+      cap: PropTypes.string.isRequired,
+      color: PropTypes.string,
+      _id: PropTypes.string,
+    }),
+    handleselectedIncidentType: PropTypes.func,
+  };
+
+  static defaultProps = {
+    selected: null,
+    incidentSelected: null,
+    handleselectedIncidentType: () => {},
+  };
+
   onClick = () => {
     const { incidentSelected, handleselectedIncidentType } = this.props;
     handleselectedIncidentType(incidentSelected);
@@ -29,15 +59,7 @@ class IncidentTypeItem extends React.Component {
     const { incidentSelected, selected } = this.props;
     const { _id: id } = selected;
 
-    const {
-      name,
-      nature,
-      family,
-      code,
-      description,
-      color,
-      _id,
-    } = incidentSelected;
+    const { name, nature, family, code, cap, color, _id } = incidentSelected;
     const isSelected = selected ? id === _id : false;
 
     return (
@@ -67,18 +89,15 @@ class IncidentTypeItem extends React.Component {
                 </span>
               </Col>
               <Col xs={6}>
-                <p>{code.cap}</p>
+                <p>{code}</p>
               </Col>
             </Row>
           }
           description={
-            <div>
+            <div className="IncidentTypeDescription">
+              <p>{cap}</p>
               <p>
                 {nature}-{family}
-              </p>
-              <p className={cx('IncidentTypeItemDescription', { isSelected })}>
-                {description}
-                ...
               </p>
             </div>
           }
@@ -100,28 +119,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(IncidentTypeItem);
-
-const incidentsTypePropTypes = PropTypes.shape({
-  name: PropTypes.string,
-  nature: PropTypes.string.isRequired,
-  family: PropTypes.string.isRequired,
-  code: PropTypes.shape({
-    given: PropTypes.string,
-    cap: PropTypes.string.isRequired,
-  }).isRequired,
-  description: PropTypes.string,
-  color: PropTypes.string,
-  _id: PropTypes.string,
-}).isRequired;
-
-IncidentTypeItem.propTypes = {
-  selected: PropTypes.arrayOf(incidentsTypePropTypes),
-  incidentSelected: incidentsTypePropTypes,
-  handleselectedIncidentType: PropTypes.func,
-};
-
-IncidentTypeItem.defaultProps = {
-  selected: null,
-  incidentSelected: null,
-  handleselectedIncidentType: () => {},
-};

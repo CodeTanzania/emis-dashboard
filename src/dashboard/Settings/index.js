@@ -1,4 +1,5 @@
-import React, { Fragment } from 'react';
+import React from 'react';
+import { Layout } from 'antd';
 import Header from '../../common/components/Header';
 
 import SettingsLayout from './components/SettingsLayout';
@@ -15,9 +16,9 @@ import SettingsLayout from './components/SettingsLayout';
  */
 export default function Settings() {
   return (
-    <Fragment>
+    <Layout>
       <Header title="Settings" />
       <SettingsLayout />
-    </Fragment>
+    </Layout>
   );
 }

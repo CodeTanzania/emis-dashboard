@@ -1,8 +1,7 @@
 import {
-  STORE_INCIDENTS_TYPE_SUCCESS,
+  FETCH_INCIDENTS_TYPE_SUCCESS,
   SELECT_INCIDENT_TYPE,
-  GET_INCIDENTS_TYPE,
-  ADD_INCIDENT_TYPE,
+  FETCH_INCIDENTS_TYPE_START,
   UPDATE_INCIDENT_TYPE,
   SELECT_COLOR_AUTOFILL,
   FETCH_INCIDENT_TYPE_FAILURE,
@@ -26,13 +25,14 @@ const initialState = {
   filters: [],
   data: [],
   total: 0,
+  page: 1,
   isLoading: false,
   error: null,
 };
 
-export default function incidentsTypeSettings(state = initialState, action) {
+export default function incidentsType(state = initialState, action) {
   switch (action.type) {
-    case GET_INCIDENTS_TYPE:
+    case FETCH_INCIDENTS_TYPE_START:
       return {
         state,
         isLoading: true,
@@ -40,13 +40,14 @@ export default function incidentsTypeSettings(state = initialState, action) {
         total: 0,
       };
 
-    case STORE_INCIDENTS_TYPE_SUCCESS:
+    case FETCH_INCIDENTS_TYPE_SUCCESS:
       return {
-        data: action.payload.incidentsType.data,
-        total: action.payload.incidentsType.total,
+        data: action.payload.data.data,
+        total: action.payload.data.total,
+        page: action.payload.data.page,
         isLoading: false,
         error: null,
-        incidentType: action.payload.incidentsType.data[0],
+        incidentType: action.payload.data.data[0],
       };
     case FETCH_INCIDENT_TYPE_FAILURE:
       return {
@@ -61,16 +62,10 @@ export default function incidentsTypeSettings(state = initialState, action) {
         incidentType: action.payload.incidentSelected,
       };
 
-    case ADD_INCIDENT_TYPE:
-      return {
-        ...state,
-        data: [action.payload.incidentType, ...state.data],
-      };
-
     case UPDATE_INCIDENT_TYPE: {
       const data = [...state.data];
-      const { incidentType } = action;
-      const { _id: id } = incidentsTypeSettings;
+      const incidentType = action.update;
+      const id = action.incidentTypeId;
       const index = data.findIndex(({ _id }) => _id === id);
       data[index] = incidentType;
       return {

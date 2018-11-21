@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { BlockPicker } from 'react-color';
 
 import { List, Avatar, Divider } from 'antd';
-import './IncidentTypeDetails.css';
+import './styles.css';
 
 export default function IncidentDetails({ incidentType }) {
   return incidentType ? (
@@ -11,7 +11,7 @@ export default function IncidentDetails({ incidentType }) {
       <List
         itemLayout="horizontal"
         dataSource={incidentType}
-        renderItem={({ name, code, family, description, color, nature }) => (
+        renderItem={({ name, code, family, cap, color, nature }) => (
           <List.Item className="p-20">
             <List.Item.Meta
               avatar={
@@ -37,19 +37,12 @@ export default function IncidentDetails({ incidentType }) {
                   <br />
                   <span className="IncidentTypeDetail">Family:</span> {family}{' '}
                   <Divider />
-                  <span className="IncidentTypeDetail">Code-Given:</span>{' '}
-                  {code.given}
+                  <span className="IncidentTypeDetail">Code:</span> {code}
                   <br />
-                  <span className="IncidentTypeDetail">Code-CAP:</span>{' '}
-                  {code.cap}
-                  <br />
-                  <span className="IncidentTypeDetail">System: </span>
-                  Version 1.2.0
-                  <Divider />
-                  <span className="IncidentTypeDetail">Description</span>
-                  <p className="IncidentTypeDiscription">{description}</p>
+                  <span className="IncidentTypeDetail">CAP:</span> {cap}
                   <Divider />
                   <BlockPicker color={color} />
+                  {/* <CirclePicker color={color} /> */}
                 </div>
               }
             />
@@ -66,11 +59,8 @@ const incidentDetailPropTypes = PropTypes.shape({
   name: PropTypes.string,
   nature: PropTypes.string.isRequired,
   family: PropTypes.string.isRequired,
-  code: PropTypes.shape({
-    given: PropTypes.string,
-    cap: PropTypes.string.isRequired,
-  }).isRequired,
-  description: PropTypes.string,
+  code: PropTypes.string.isRequired,
+  cap: PropTypes.string.isRequired,
   color: PropTypes.string,
   _id: PropTypes.string,
 }).isRequired;

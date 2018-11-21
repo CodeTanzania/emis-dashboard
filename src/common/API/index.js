@@ -83,13 +83,17 @@ const API = {
     };
     return fetch(url, config).then(res => res.json());
   },
-  getIncidentType: () =>
-    fetch(`${INCIDENTS_API}/incidenttypes`)
-      .then(res => res.json())
-      .then(response => {
-        const { data, total } = response;
-        return { data, total };
-      }),
+
+  /**
+   * Find incidents-type
+   */
+  getIncidentType: ({ page }) => {
+    const params = { page: page || 1 };
+    const url = Axios.get(`${INCIDENTS_API}/incidenttypes`, {
+      params,
+    }).then(response => response.data);
+    return url;
+  },
 
   createIncidentType: data => {
     const url = `${INCIDENTS_API}/incidenttypes`;
@@ -102,6 +106,7 @@ const API = {
     };
     return fetch(url, config).then(res => res.json());
   },
+
   updateIncidentType: (incidentTypeId, updates) => {
     const url = `${INCIDENTS_API}/incidenttypes/${incidentTypeId}`;
     const config = {
@@ -113,14 +118,20 @@ const API = {
     };
     return fetch(url, config).then(res => res.json());
   },
-
-  searchIncidentsType: searchValue =>
-    fetch(`${INCIDENTS_API}/incidenttypes?q=${searchValue}`)
-      .then(res => res.json())
-      .then(response => {
-        const { data, total } = response;
-        return { data, total };
-      }),
+  /**
+   * Search incidentType using query string
+   * @param {string} searchValue - Search query string
+   */
+  searchIncidentsType: searchValue => {
+    const config = {
+      params: {
+        q: searchValue,
+      },
+    };
+    return Axios.get(`${INCIDENTS_API}/incidenttypes`, config).then(
+      response => response.data
+    );
+  },
 };
 
 export default API;
