@@ -103,6 +103,11 @@ class PlanActivitiesLayout extends Component {
         taskCount: PropTypes.number,
       })
     ).isRequired,
+    plan: PropTypes.shape({
+      incidentType: PropTypes.shape({
+        name: PropTypes.string,
+      }),
+    }).isRequired,
     loading: PropTypes.bool.isRequired,
     showActivityForm: PropTypes.bool.isRequired,
     onOpenActivityForm: PropTypes.func.isRequired,
@@ -175,6 +180,7 @@ class PlanActivitiesLayout extends Component {
     const { showActivityDetails, initialSelectedPhase } = this.state;
 
     const {
+      plan,
       mitigationActivities,
       preparednessActivities,
       responseActivities,
@@ -194,7 +200,10 @@ class PlanActivitiesLayout extends Component {
         <Layout className="PlanActivitiesLayout">
           {/* start primary header */}
           <Header className="header">
-            <h3>Plans</h3>
+            <h3>
+              {plan ? plan.incidentType.name : 'N/A'}{' '}
+              <span className="muted">( Dar es Salaam )</span>
+            </h3>
           </Header>
           {/* end primary header */}
           {/* Toolbar */}
@@ -315,6 +324,7 @@ class PlanActivitiesLayout extends Component {
 }
 
 const mapStateToProps = state => ({
+  plan: state.selectedPlan,
   mitigationActivities: state.planActivities.Mitigation,
   preparednessActivities: state.planActivities.Preparedness,
   responseActivities: state.planActivities.Response,
