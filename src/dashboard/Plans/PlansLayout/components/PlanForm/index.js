@@ -1,21 +1,17 @@
-import { Button, Col, Form, Row, Select } from 'antd';
+import { Button, Col, Form, Row } from 'antd';
+import flow from 'lodash/flow';
 import React, { Component } from 'react';
-import { getIncidentTypes } from '../../../../../common/API/api';
+import { connect } from 'react-redux';
+import {
+  getIncidentTypes,
+  getStakeholders,
+} from '../../../../../common/API/api';
 import SelectSearchBox from '../../../../../common/components/SelectSearchBox';
+import { postPlan } from '../../../actions';
 import './styles.css';
 
 /* local constants */
 const FormItem = Form.Item;
-const { Option } = Select;
-
-// fake data
-const locations = [
-  { label: 'Dar es salaam', value: 'dar es salaam' },
-  { label: 'Mwanza', value: 'mwanza' },
-  { label: 'Iringa', value: 'iringa' },
-  { label: 'Temeke', value: 'temeke' },
-  { label: 'Arusha', value: 'arusha' },
-];
 
 /**
  * Form for creating and editing plan
@@ -32,11 +28,12 @@ class PlanForm extends Component {
     // todo handle form submission
     const {
       form: { validateFieldsAndScroll },
+      onPostPlan,
     } = this.props;
 
     validateFieldsAndScroll((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        onPostPlan(values);
       }
     });
   };
@@ -46,11 +43,19 @@ class PlanForm extends Component {
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
-        sm: { span: 8 },
+        sm: { span: 24 },
+        md: { span: 24 },
+        lg: { span: 24 },
+        xl: { span: 24 },
+        xxl: { span: 24 },
       },
       wrapperCol: {
         xs: { span: 24 },
-        sm: { span: 16 },
+        sm: { span: 24 },
+        md: { span: 24 },
+        lg: { span: 24 },
+        xl: { span: 24 },
+        xxl: { span: 24 },
       },
     };
 
@@ -72,6 +77,7 @@ class PlanForm extends Component {
     const {
       onCancel,
       form: { getFieldDecorator },
+      posting,
     } = this.props;
 
     return (
@@ -89,40 +95,42 @@ class PlanForm extends Component {
             <SelectSearchBox
               placeholder="Select Incident Type ..."
               onSearch={getIncidentTypes}
-              onChange={() => {}}
               optionLabel="name"
               optionValue="_id"
             />
           )}
         </FormItem>
         {/* end incident type select input */}
-        {/* location select input */}
-        <FormItem label="Location" {...formItemLayout}>
-          {getFieldDecorator('location', {
+
+        {/* plan owner select input */}
+        <FormItem label="Owner" {...formItemLayout}>
+          {getFieldDecorator('owner', {
             rules: [
               {
                 required: true,
-                message: 'Please Select Applicable Plan Location',
+                message: 'Please Select the Plan Owner',
               },
             ],
           })(
-            <Select placeholder="Select Location ...">
-              {locations.map(location => (
-                <Option key={location.value}>{location.label}</Option>
-              ))}
-            </Select>
+            <SelectSearchBox
+              placeholder="Select Plan Owner ..."
+              onSearch={getStakeholders}
+              optionLabel="name"
+              optionValue="_id"
+            />
           )}
         </FormItem>
-        {/* end location select input */}
+        {/* end plan owner select input */}
+
         {/* form action buttons */}
         <FormItem {...tailFormItemLayout}>
-          <Row justify="space-between">
-            <Col span={10}>
-              <Button onClick={onCancel}>Cancel</Button>
-            </Col>
-            <Col span={10}>
-              <Button type="primary" onClick={this.handleSubmit}>
+          <Row>
+            <Col span={24} style={{ textAlign: 'right' }}>
+              <Button type="primary" htmlType="submit" loading={posting}>
                 Save
+              </Button>
+              <Button style={{ marginLeft: 8 }} onClick={onCancel}>
+                Cancel
               </Button>
             </Col>
           </Row>
@@ -133,4 +141,21 @@ class PlanForm extends Component {
   }
 }
 
-export default Form.create()(PlanForm);
+const mapStateToProps = state => ({
+  plan: state.selectedPlan,
+  posting: state.plans.posting,
+});
+
+const mapDispatchToProps = dispatch => ({
+  onPostPlan(plan) {
+    dispatch(postPlan(plan));
+  },
+});
+
+export default flow(
+  Form.create(),
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )
+)(PlanForm);

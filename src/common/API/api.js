@@ -199,3 +199,37 @@ export function getRoles(params = {}) {
     params,
   });
 }
+
+/**
+ * Get resource items from the API
+ *
+ * @function
+ * @name getResourceItems
+ *
+ * @param {Object} params - params object
+ * @returns {Promise}
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function getResourceItems(params = {}) {
+  return axios.get(`/items`, {
+    params,
+  });
+}
+
+/**
+ * Get Stakeholders from the API
+ *
+ * @name function
+ * @name getResourceItems
+ *
+ * @param {Object} params - params object
+ * @returns {Promise}
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function getStakeholders(params = {}) {
+  return axios.get(`/parties`, { params });
+}

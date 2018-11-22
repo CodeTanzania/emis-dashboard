@@ -21,6 +21,9 @@ import {
   POST_PLAN_ACTIVITY_PROCEDURE_SUCCESS,
   POST_PLAN_ACTIVITY_START,
   POST_PLAN_ACTIVITY_SUCCESS,
+  POST_PLAN_ERROR,
+  POST_PLAN_START,
+  POST_PLAN_SUCCESS,
   PUT_PLAN_ACTIVITY_PROCEDURE_ERROR,
   PUT_PLAN_ACTIVITY_PROCEDURE_START,
   PUT_PLAN_ACTIVITY_PROCEDURE_SUCCESS,
@@ -116,6 +119,14 @@ export function plans(state = defaultPlansState, action) {
         error: action.payload.data,
         loading: false,
       });
+    case POST_PLAN_START:
+      return Object.assign({}, state, {
+        posting: true,
+      });
+    case POST_PLAN_SUCCESS:
+      return Object.assign({}, state, { posting: false, showPlanForm: false });
+    case POST_PLAN_ERROR:
+      return Object.assign({}, state, { error: action.payload.data });
     case OPEN_PLAN_FORM:
       return Object.assign({}, state, {
         showPlanForm: true,

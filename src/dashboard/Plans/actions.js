@@ -307,24 +307,14 @@ export function postPlanStart() {
  * @function
  * @name postPlanSuccess
  *
- * @param {Object[]} plans - updated list of plans from the API after post action
- * @param {number} page=1 - current plan page
- * @param {number} total=0 - total number of plans in the API
  * @returns {Object} - Redux action
  *
  * @version 0.1.0
  * @since 0.1.0
  */
-export function postPlanSuccess(plans, page = 1, total = 0) {
+export function postPlanSuccess() {
   return {
     type: POST_PLAN_SUCCESS,
-    payload: {
-      data: plans,
-    },
-    meta: {
-      page,
-      total,
-    },
   };
 }
 
@@ -801,6 +791,20 @@ export function getPlans(params) {
       })
       .catch(error => {
         dispatch(getPlansError(error));
+      });
+  };
+}
+
+export function postPlan(plan) {
+  return (dispatch, getState, API) => {
+    dispatch(postPlanStart());
+    return API.postPlan(plan)
+      .then(() => {
+        dispatch(postPlanSuccess());
+        dispatch(getPlans());
+      })
+      .catch(error => {
+        dispatch(postPlanError(error));
       });
   };
 }

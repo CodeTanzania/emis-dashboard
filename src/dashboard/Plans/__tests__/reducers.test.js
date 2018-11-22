@@ -127,6 +127,49 @@ describe('Plan:Reducers', () => {
       expect(plans(previousState, action)).toEqual(expectedState);
     });
 
+    it(`should handle ${Actions.POST_PLAN_START}`, () => {
+      const action = { type: Actions.POST_PLAN_START };
+      const expectedState = { ...previousState, posting: true };
+
+      expect(plans(previousState, action)).toEqual(expectedState);
+    });
+
+    it(`should handle ${Actions.POST_PLAN_SUCCESS}`, () => {
+      const action = { type: Actions.POST_PLAN_SUCCESS };
+      const expectedState = {
+        ...previousState,
+        posting: false,
+        showPlanForm: false,
+      };
+
+      expect(plans(previousState, action)).toEqual(expectedState);
+    });
+
+    it(`should handle ${Actions.POST_PLAN_ERROR}`, () => {
+      const error = {
+        status: 404,
+        code: 404,
+        name: 'Error',
+        message: 'Not Found',
+        developerMessage: 'Not Found',
+        userMessage: 'Not Found',
+        error: 'Error',
+        error_description: 'Not Found',
+      };
+
+      const action = {
+        type: Actions.POST_PLAN_ERROR,
+        payload: { data: error },
+      };
+      const expectedState = {
+        ...previousState,
+        posting: false,
+        error: action.payload.data,
+      };
+
+      expect(plans(previousState, action)).toEqual(expectedState);
+    });
+
     it(`should handle ${Actions.CLOSE_PLAN_FORM}`, () => {
       const action = { type: Actions.CLOSE_PLAN_FORM };
       previousState = { ...previousState, showPlanForm: true };

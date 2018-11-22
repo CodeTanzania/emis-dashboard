@@ -98,22 +98,12 @@ describe('Plans:Module', () => {
     });
 
     it(`should create an action of type ${Actions.POST_PLAN_SUCCESS}`, () => {
-      expect(Actions.postPlanSuccess([], 1, 20)).toEqual({
+      expect(Actions.postPlanSuccess()).toEqual({
         type: Actions.POST_PLAN_SUCCESS,
-        payload: { data: [] },
-        meta: {
-          page: 1,
-          total: 20,
-        },
       });
 
-      expect(Actions.postPlanSuccess([])).toEqual({
+      expect(Actions.postPlanSuccess()).toEqual({
         type: Actions.POST_PLAN_SUCCESS,
-        payload: { data: [] },
-        meta: {
-          page: 1,
-          total: 0,
-        },
       });
     });
 
@@ -469,6 +459,91 @@ describe('Plans:Module', () => {
       API.getPlans.mockRejectedValueOnce(error);
 
       return store.dispatch(Actions.getPlans()).then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+    });
+
+    it(`should dispatch an action of type ${
+      Actions.POST_PLAN_SUCCESS
+    } when updating activity is successfully`, () => {
+      // mock API call
+      API.postPlan.mockResolvedValueOnce({});
+      API.getPlans.mockResolvedValueOnce({
+        data: {
+          data: [],
+          pages: 2,
+          total: 200,
+          page: 1,
+        },
+      });
+      const store = mockStore({
+        plans: {
+          data: [],
+          filters: {
+            incidentTypes: null,
+          },
+        },
+        selectedPlan: { _id: '02910de1212', incidentType: { _id: 'e29302' } },
+      });
+
+      const expectedActions = [
+        { type: Actions.POST_PLAN_START },
+        { type: Actions.POST_PLAN_SUCCESS },
+        { type: Actions.GET_PLANS_START },
+        {
+          type: Actions.GET_PLANS_SUCCESS,
+          payload: {
+            data: [],
+          },
+          meta: {
+            page: 1,
+            total: 200,
+          },
+        },
+      ];
+
+      return store.dispatch(Actions.postPlan({})).then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+    });
+
+    it(`should dispatch an action of type ${
+      Actions.POST_PLAN_ERROR
+    } when updating activity fails`, () => {
+      const error = {
+        status: 404,
+        code: 404,
+        name: 'Error',
+        message: 'Not Found',
+        developerMessage: 'Not Found',
+        userMessage: 'Not Found',
+        error: 'Error',
+        error_description: 'Not Found',
+      };
+
+      const store = mockStore({
+        plans: {
+          data: [],
+          filters: {
+            incidentTypes: null,
+          },
+        },
+        selectedPlan: { _id: '02910de1212', incidentType: { _id: 'e29302' } },
+      });
+
+      const expectedActions = [
+        { type: Actions.POST_PLAN_START },
+        {
+          type: Actions.POST_PLAN_ERROR,
+          payload: { data: error },
+          error: true,
+        },
+      ];
+
+      // mock API calls
+      API.postPlan.mockRejectedValueOnce(error);
+
+      return store.dispatch(Actions.postPlan({})).then(() => {
         expect(store.getActions()).toEqual(expectedActions);
       });
     });

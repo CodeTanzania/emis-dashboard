@@ -19,7 +19,7 @@ const spinIcon = <Icon type="loading" spin />;
  */
 export default class SelectSearchBox extends Component {
   static propTypes = {
-    onChange: PropTypes.func.isRequired,
+    onChange: PropTypes.func,
     onSearch: PropTypes.func.isRequired,
     placeholder: PropTypes.string.isRequired,
     onFocus: PropTypes.func,
@@ -29,11 +29,14 @@ export default class SelectSearchBox extends Component {
       .isRequired,
     optionValue: PropTypes.oneOfType([PropTypes.string, PropTypes.func])
       .isRequired,
+    mode: PropTypes.string,
   };
 
   static defaultProps = {
+    onChange: null,
     onFocus: null,
     onBlur: null,
+    mode: 'default',
     style: {},
   };
 
@@ -42,6 +45,15 @@ export default class SelectSearchBox extends Component {
     loading: false,
   };
 
+  /**
+   * Function called when searching in select box
+   *
+   * @function
+   * @name handleSearch
+   *
+   * @version 0.1.0
+   * @since 0.1.0
+   */
   handleSearch = value => {
     const { onSearch } = this.props;
     onSearch({ q: value }).then(response => {
@@ -49,11 +61,29 @@ export default class SelectSearchBox extends Component {
     });
   };
 
+  /**
+   * Function called when value of selectbox changes
+   *
+   * @function
+   * @name handleChange
+   *
+   * @version 0.1.0
+   * @since 0.1.0
+   */
   handleChange = value => {
     const { onChange } = this.props;
     onChange(value);
   };
 
+  /**
+   * Function called when the selectbox is opened
+   *
+   * @function
+   * @name handleOnDropdownVisibleChange
+   *
+   * @version 0.1.0
+   * @since 0.1.0
+   */
   handleOnDropdownVisibleChange = open => {
     const { onSearch } = this.props;
     const { data } = this.state;
@@ -79,6 +109,7 @@ export default class SelectSearchBox extends Component {
       placeholder,
       onFocus,
       onBlur,
+      mode,
       style,
     } = this.props;
 
@@ -111,6 +142,7 @@ export default class SelectSearchBox extends Component {
 
     return (
       <Select
+        mode={mode}
         showSearch
         onSearch={this.handleSearch}
         onChange={this.handleChange}
