@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import ActivityDescription from './components/ActivityDescription';
-import ActivityTaskList from './components/ActivityProcedureList';
+import ActivityProcedureList from './components/ActivityProcedureList';
 import ActivityStakeholders from './components/ActivityStakeholders';
 
 /* local constants */
@@ -31,7 +31,7 @@ function ActivityDetailsBody({ description, loading }) {
     >
       <ActivityStakeholders />
       <ActivityDescription description={description} />
-      <ActivityTaskList />
+      <ActivityProcedureList />
     </Spin>
   );
 }

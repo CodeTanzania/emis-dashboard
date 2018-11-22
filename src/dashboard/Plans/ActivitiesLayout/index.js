@@ -200,10 +200,16 @@ class PlanActivitiesLayout extends Component {
         <Layout className="PlanActivitiesLayout">
           {/* start primary header */}
           <Header className="header">
-            <h3>
-              {plan ? plan.incidentType.name : 'N/A'}{' '}
-              <span className="muted">( Dar es Salaam )</span>
-            </h3>
+            {plan ? (
+              <h3>
+                {plan ? plan.incidentType.name : 'N/A'}{' '}
+                <span className="muted">{`( Dar es Salaam ) by ${
+                  plan.owner.name
+                }`}</span>
+              </h3>
+            ) : (
+              <h3>Plan</h3>
+            )}
           </Header>
           {/* end primary header */}
           {/* Toolbar */}
