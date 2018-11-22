@@ -1,7 +1,6 @@
-.IncidentForm #date-picker{
+span#date-time-pickerr{
     width: 100%;
 }
-
 .leaflet-popup-content {
     margin: 13px 25px;
     line-height: 1.4;

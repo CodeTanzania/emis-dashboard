@@ -5,9 +5,14 @@ import * as ReactLeaflet from 'react-leaflet';
 import 'leaflet-draw';
 import IncidentForm from './components/IncidentForm';
 import MapNav from './components/MapNav';
+import { fetchIncidentsTypeSuccess } from './actions';
+
 
 import '../styles.css';
 import 'leaflet-draw/dist/leaflet.draw.css';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
 
 const { Map: LeafletMap, TileLayer, Popup } = ReactLeaflet;
 
@@ -22,7 +27,7 @@ const { Map: LeafletMap, TileLayer, Popup } = ReactLeaflet;
  * @version 0.1.0
  * @since 0.1.0
  */
-export default class Incidents extends React.Component {
+ class Incidents extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -36,10 +41,14 @@ export default class Incidents extends React.Component {
     this.mapRef = React.createRef();
     this.onclickNewIncidentButton = this.onclickNewIncidentButton.bind(this);
     this.onCancelButton = this.onCancel.bind(this);
+    this.onSubmitButton = this.onSubmit.bind(this);
+
   }
 
   componentDidMount() {
     this.map = this.mapRef.current.leafletElement;
+    const {getIncidentstype} = this.props;
+    getIncidentstype();
   }
 
   initDrawControls = () => {
@@ -110,8 +119,16 @@ export default class Incidents extends React.Component {
     this.map.closePopup();
   };
 
+onSubmit= () => {
+  this.map.removeControl(this.drawControl);
+  this.setState({ hideButton: false });
+  this.map.closePopup();
+
+}
   render() {
     const { position, zoom, showPopup, hideButton } = this.state;
+    const {incidentsType} = this.props;
+
     return (
       <div>
         {!hideButton ? (
@@ -128,7 +145,7 @@ export default class Incidents extends React.Component {
           />
           {showPopup ? (
             <Popup position={position} minWidth={450}>
-              <IncidentForm onCancelButton={this.onCancel} />
+              <IncidentForm onCancelButton={this.onCancel} onSubmitButton={this.onSubmit} incidentsType={incidentsType} />
             </Popup>
           ) : null}
         </LeafletMap>
@@ -136,3 +153,16 @@ export default class Incidents extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  incidentsType: state.incidentsType.data,
+})
+
+const mapDispatchToProps = dispatch => ({
+  getIncidentstype: bindActionCreators(
+    fetchIncidentsTypeSuccess,
+    dispatch
+  ),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Incidents)

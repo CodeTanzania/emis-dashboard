@@ -8,6 +8,7 @@ import {
   Row,
   Col,
   Divider,
+  Select,
 } from 'antd';
 import { connect } from 'react-redux';
 import './styles.css';
@@ -25,19 +26,28 @@ import './styles.css';
 
 const FormItem = Form.Item;
 const { TextArea } = Input;
+const Option = Select.Option;
 const AutoCompleteOption = AutoComplete.Option;
 
 class IncidentForm extends React.Component {
   state = {
     autoCompleteResult: [],
+    submitting: false,
   };
 
   handleSubmit = e => {
     e.preventDefault();
-    this.props.form.validateFieldsAndScroll((err, values) => {
+    const { onSubmitButton } = this.props
+    this.props.form.validateFieldsAndScroll((err, fieldsValue) => {
       if (!err) {
+        const values = {
+          ...fieldsValue,
+          'date-time-picker': fieldsValue['date-time-picker'].format('YYYY-MM-DD HH:mm:ss'),
+
+        }
         console.log('Received values of form: ', values);
       }
+      onSubmitButton();
     });
   };
 
@@ -101,39 +111,39 @@ class IncidentForm extends React.Component {
           {getFieldDecorator('name', {
             rules: [
               {
-                type: 'name',
-                message: 'The input is not valid name',
-              },
-              {
                 required: true,
                 message: 'Please input incident name!',
               },
             ],
           })(<Input />)}
         </FormItem>
-        <FormItem {...formItemLayout} label="Incident Type">
-          {getFieldDecorator('type', {
+        <FormItem label="Incident type" {...formItemLayout}>
+          {getFieldDecorator('incidentType', {
             rules: [
               {
-                type: 'type',
-                message: 'The input is not valid name',
-              },
-              {
                 required: true,
-                message: 'Please input incident type!',
+                message: 'Please select incident-type',
               },
             ],
-          })(<Input />)}
+          })(
+            <Select placeholder="Select incidentType">
+              <Option value="Flood">Flood</Option>
+              <Option value="Fire">Fire</Option>
+              <Option value="Drought">Drought</Option>
+              <Option value="Volcanic">Volcanic</Option>
+            </Select>
+          )}
         </FormItem>
         <FormItem {...formItemLayout} label="Date/Time initiated:">
-          {getFieldDecorator('date-picker', config)(<DatePicker />)}
+          {getFieldDecorator('date-time-picker', config)(
+
+            <DatePicker showTime format="YYYY-MM-DD HH:mm:ss" style={{ width: '100%' }} />
+
+          )}
         </FormItem>
         <FormItem {...formItemLayout} label="Location">
           {getFieldDecorator('location', {
             rules: [
-              {
-                type: 'location',
-              },
               {
                 required: true,
                 message: 'Please input incident location!',
@@ -141,14 +151,14 @@ class IncidentForm extends React.Component {
             ],
           })(<Input />)}
         </FormItem>
-        <FormItem {...formItemLayout} label="Website">
-          {getFieldDecorator('website', {
-            rules: [{ required: true, message: 'Please input website!' }],
+        <FormItem {...formItemLayout} label="Source">
+          {getFieldDecorator('source', {
+            rules: [{ required: true, message: 'Please input source!' }],
           })(
             <AutoComplete
               dataSource={websiteOptions}
               onChange={this.handleWebsiteChange}
-              placeholder="website"
+              placeholder="source"
             >
               <Input />
             </AutoComplete>
@@ -169,7 +179,8 @@ class IncidentForm extends React.Component {
               </Button>
             </Col>
             <Col span={12}>
-              <Button type="primary" htmlType="submit">
+              <Button type="primary"
+                htmlType="submit">
                 Create
               </Button>
             </Col>
