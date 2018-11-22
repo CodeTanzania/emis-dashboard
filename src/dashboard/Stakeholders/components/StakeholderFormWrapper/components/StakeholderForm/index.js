@@ -3,7 +3,7 @@ import { Button, Checkbox, Form, Input, Select, message } from 'antd';
 // import classNames from 'classnames/bind';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import API from '../../../../../../common/API';
+import { createStakeholder } from '../../../../../../common/API';
 import { addStakeholder, updateStakeholder } from '../../../../actions';
 // import styles from './styles.css';
 
@@ -65,7 +65,7 @@ class StakeholderForm extends Component {
   createStakeholder = data => {
     const { onCancel } = this.props;
     this.setState({ submitting: true });
-    API.createStakeholder(data)
+    createStakeholder(data)
       .then(result => {
         // submitted successfully
         this.props.addStakeholder(result);

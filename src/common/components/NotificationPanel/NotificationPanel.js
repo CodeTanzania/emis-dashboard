@@ -1,7 +1,7 @@
 /* eslint no-underscore-dangle: "off" */
 import React, { Component } from 'react';
 import { Modal, Form, Select, Spin, Input, message } from 'antd';
-import API from '../../API';
+import * as API from '../../API';
 
 const { Option } = Select;
 const FormItem = Form.Item;

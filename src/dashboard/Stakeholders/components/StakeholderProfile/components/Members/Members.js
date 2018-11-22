@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Col, Row, Button, Input, List, Avatar } from 'antd';
 import classNames from 'classnames';
-import API from '../../../../../../common/API';
+import { findStakeholders } from '../../../../../../common/API';
 import PersonnelCard from './components/PersonnelCard';
 
 import styles from './styles.css';
@@ -72,7 +72,7 @@ class Members extends Component {
     this.setState({ [name]: searchText });
     setTimeout(() => {
       this.setState({ searching: true });
-      API.findStakeholders({
+      findStakeholders({
         q: searchText,
         filters: { group: 'type', selected: ['Individual'] },
       })

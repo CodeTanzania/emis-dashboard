@@ -16,72 +16,69 @@ const Axios = axios.create({
   },
 });
 
-const API = {
-  /**
-   * Find stakeholders
-   */
-  findStakeholders: ({ filters = [], page, q } = {}) => {
-    const params = { page: page || 1 };
-    filters.forEach(filter => {
-      params[`filter[${filter.group}][$in]`] = JSON.stringify(filter.selected);
-    });
-    if (q) {
-      params.q = q;
-    }
-    return Axios.get('/parties', {
-      params,
-    }).then(response => response.data);
-  },
-  /**
-   * Retrieve stakeholder with the id provided
-   * @param id {string} - Stakeholder Id
-   */
-  findStakeholderById: id =>
-    Axios.get(`/parties/${id}`).then(response => response.data),
-  /**
-   * Retrieve stakeholder schema
-   */
-  loadStakeholdersSchema: () =>
-    Axios.get('/parties/schema').then(response => response.data),
-  /**
-   * Retrieve stakeholder predefined roles
-   */
-  getStakeholderPredRoles: () =>
-    Axios.get('/roles').then(response => response.data),
+/**
+ * Find stakeholders
+ */
+export const findStakeholders = ({ filters = [], page, q } = {}) => {
+  const params = { page: page || 1 };
+  filters.forEach(filter => {
+    params[`filter[${filter.group}][$in]`] = JSON.stringify(filter.selected);
+  });
+  if (q) {
+    params.q = q;
+  }
+  return Axios.get('/parties', {
+    params,
+  }).then(response => response.data);
+};
+/**
+ * Retrieve stakeholder with the id provided
+ * @param id {string} - Stakeholder Id
+ */
+export const findStakeholderById = id =>
+  Axios.get(`/parties/${id}`).then(response => response.data);
+/**
+ * Retrieve stakeholder schema
+ */
+export const loadStakeholdersSchema = () =>
+  Axios.get('/parties/schema').then(response => response.data);
+/**
+ * Retrieve stakeholder predefined roles
+ */
+export const getStakeholderPredRoles = () =>
+  Axios.get('/roles').then(response => response.data);
 
-  /**
-   * Search stakeholder using query string
-   * @param {string} searchText - Search query string
-   */
-  searchStakeholder: searchText => {
-    const config = {
-      params: {
-        q: searchText,
-      },
-    };
-    return Axios.get('/parties', config).then(response => response.data);
-  },
-
-  /**
-   * Create new stakeholder
-   * @param {Object} data stakeholder data to create
-   */
-  createStakeholder: data => Axios.post('/parties', data).then(res => res.data),
-
-  /**
-   * It update stakeholder information
-   * @param {String} stakeholder stakeholder Identifier to update
-   * @param {Object} updates stakeholder update data
-   */
-  updateStakeholder: (stakeholderId, updates) =>
-    Axios.patch(`/parties/${stakeholderId}`, updates).then(res => res.data),
-
-  /**
-   * Create and send new notification
-   * @param {Object} data - notification data
-   */
-  sendNotification: data =>
-    Axios.post('/notifications', data).then(res => res.data),
+/**
+ * Search stakeholder using query string
+ * @param {string} searchText - Search query string
+ */
+export const searchStakeholder = searchText => {
+  const config = {
+    params: {
+      q: searchText,
+    },
+  };
+  return Axios.get('/parties', config).then(response => response.data);
 };
 
-export default API;
+/**
+ * Create new stakeholder
+ * @param {Object} data stakeholder data to create
+ */
+export const createStakeholder = data =>
+  Axios.post('/parties', data).then(res => res.data);
+
+/**
+ * It update stakeholder information
+ * @param {String} stakeholder stakeholder Identifier to update
+ * @param {Object} updates stakeholder update data
+ */
+export const updateStakeholder = (stakeholderId, updates) =>
+  Axios.patch(`/parties/${stakeholderId}`, updates).then(res => res.data);
+
+/**
+ * Create and send new notification
+ * @param {Object} data - notification data
+ */
+export const sendNotification = data =>
+  Axios.post('/notifications', data).then(res => res.data);
