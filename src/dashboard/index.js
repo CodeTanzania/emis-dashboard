@@ -71,7 +71,7 @@ export default function Dashboard() {
         style={{
           display: 'flex',
           flexDirection: 'column',
-          overflow: 'auto',
+          overflow: 'hidden',
           background: '#fff',
           borderTop: '1px solid #e6e6e6',
         }}

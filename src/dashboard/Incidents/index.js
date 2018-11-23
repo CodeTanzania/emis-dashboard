@@ -5,8 +5,8 @@ import * as ReactLeaflet from 'react-leaflet';
 import 'leaflet-draw';
 import IncidentForm from './components/IncidentForm';
 import MapNav from './components/MapNav';
-import { fetchIncidentsTypeSuccess } from './actions';
-
+import { fetchIncidentsTypeSuccess } from '../Settings/actions';
+import { getIncidentsSuccess } from './actions'
 
 import '../styles.css';
 import 'leaflet-draw/dist/leaflet.draw.css';
@@ -47,8 +47,9 @@ const { Map: LeafletMap, TileLayer, Popup } = ReactLeaflet;
 
   componentDidMount() {
     this.map = this.mapRef.current.leafletElement;
-    const {getIncidentstype} = this.props;
+    const {getIncidentstype, handleIncidents} = this.props;
     getIncidentstype();
+    handleIncidents();
   }
 
   initDrawControls = () => {
@@ -156,6 +157,7 @@ onSubmit= () => {
 
 const mapStateToProps = state => ({
   incidentsType: state.incidentsType.data,
+  incidents: state.incidents.data,
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -163,6 +165,7 @@ const mapDispatchToProps = dispatch => ({
     fetchIncidentsTypeSuccess,
     dispatch
   ),
+  handleIncidents: bindActionCreators(getIncidentsSuccess,dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Incidents)

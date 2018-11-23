@@ -1,14 +1,14 @@
 import {
     GET_INCIDENTS_SUCCESS,
-    GET_INCIDENTS_START,
     GET_INCIDENT_FAILURE,
+    GET_INCIDENTS_START,
   } from './actions';
   
   /**
    * Incident reducers
    *
    * @function
-   * @name IncidentsType
+   * @name Incidents
    *
    * @param {Object} state - Initial state
    * @param {Object} action - Redux action object
@@ -21,9 +21,11 @@ import {
   const initialState = {
     data: [],
     error: null,
+    page: 1,
+    total: 0
   };
   
-  export default function Incidents(state = initialState, action) {
+  export default function incidents(state = initialState, action) {
     switch (action.type) {
       case GET_INCIDENTS_START:
         return {

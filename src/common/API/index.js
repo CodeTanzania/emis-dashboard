@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 const API_END_POINT = 'https://emis-asat.herokuapp.com/v1';
-const INCIDENTS_API = 'https://emis-incident-type.herokuapp.com/v1';
+const INCIDENTS_TYPE_API = 'https://emis-incident-type.herokuapp.com/v1';
+const INCIDENTS_API = 'https://emis-incident.herokuapp.com/v1/';
 
 /**
  * Initialize axios library
@@ -89,14 +90,22 @@ const API = {
    */
   getIncidentType: ({ page }) => {
     const params = { page: page || 1 };
-    const url = Axios.get(`${INCIDENTS_API}/incidenttypes`, {
+    const url = Axios.get(`${INCIDENTS_TYPE_API}/incidenttypes`, {
       params,
     }).then(response => response.data);
     return url;
   },
 
+  getIncident: ({page}) => {
+    const params ={page: page || 1};
+    const url = Axios.get(`${INCIDENTS_API}/incidents`,{
+      params,
+    }).then(response => response.data);
+    return url
+  },
+
   createIncidentType: data => {
-    const url = `${INCIDENTS_API}/incidenttypes`;
+    const url = `${INCIDENTS_TYPE_API}/incidenttypes`;
     const config = {
       method: 'POST',
       body: JSON.stringify(data),
@@ -108,7 +117,7 @@ const API = {
   },
 
   updateIncidentType: (incidentTypeId, updates) => {
-    const url = `${INCIDENTS_API}/incidenttypes/${incidentTypeId}`;
+    const url = `${INCIDENTS_TYPE_API}/incidenttypes/${incidentTypeId}`;
     const config = {
       method: 'PATCH',
       body: JSON.stringify(updates),
@@ -128,7 +137,7 @@ const API = {
         q: searchValue,
       },
     };
-    return Axios.get(`${INCIDENTS_API}/incidenttypes`, config).then(
+    return Axios.get(`${INCIDENTS_TYPE_API}/incidenttypes`, config).then(
       response => response.data
     );
   },
