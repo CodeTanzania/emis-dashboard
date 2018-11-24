@@ -151,7 +151,7 @@ export default class PhaseActivities extends Component {
                 <Button
                   title={`${title} Phase Actions`}
                   icon="ellipsis"
-                  className="f-20 b-0"
+                  className="ActionButton"
                 />
               </Popover>
             </Col>
