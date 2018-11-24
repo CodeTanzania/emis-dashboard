@@ -4,6 +4,15 @@ import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import './styles.css';
 
+/**
+ * Plan Options
+ *
+ * @param {Object} props
+ * @param {function} props.onEditPlan
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
 function PlanOptions({ onEditPlan }) {
   return (
     <Fragment>
@@ -224,3 +233,7 @@ export default class PlanCard extends Component {
     );
   }
 }
+
+PlanOptions.propTypes = {
+  onEditPlan: PropTypes.func.isRequired,
+};
