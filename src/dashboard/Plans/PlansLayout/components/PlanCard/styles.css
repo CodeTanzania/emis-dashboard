@@ -31,4 +31,29 @@
   font-size: 12px;
   line-height: 20px;
   margin-top: 5px;
+  color: #909090;
+}
+
+.PlanCard .ActionButton {
+  transform: rotate(90deg);
+  border: none;
+  position: absolute;
+  right: 6px;
+  font-size: 20px;
+  top: 10px;
+  box-shadow: none;
+  padding: 0;
+  background-color: transparent;
+}
+
+.PlanCard .ActionButton:focus {
+  background-color: transparent;
+}
+
+.PlanCard .ActionButton:active {
+  background-color: transparent;
+}
+
+.PlanCard .ActionButton:hover {
+  background-color: transparent;
 }
