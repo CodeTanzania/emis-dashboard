@@ -1,4 +1,3 @@
-import { Button, Col, Row } from 'antd';
 import PropTypes from 'prop-types';
 import React from 'react';
 import './styles.css';
@@ -17,21 +16,7 @@ import './styles.css';
 export default function ActivityDescription({ description }) {
   return (
     <div className="ActivityDescription">
-      <Row className="header">
-        <Col xs={15} md={18} xl={21} xxl={22}>
-          <h4>Description</h4>
-        </Col>
-        <Col xs={7} md={6} xl={3} xxl={2}>
-          <Button
-            title="Edit Activity Description"
-            type="default"
-            icon="edit"
-            style={{ border: 0 }}
-          >
-            Edit Description
-          </Button>
-        </Col>
-      </Row>
+      <h4 className="header">Description</h4>
       <p>{description}</p>
     </div>
   );
