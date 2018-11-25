@@ -47,6 +47,16 @@ export default function Dashboard() {
             </NavLink>
           </Menu.Item>
           {/* end contact menu */}
+          {/* alerts menu */}
+          <Menu.Item key="3">
+            <a href="https://emis-web-alerts.herokuapp.com/" target="_blank">
+            <Icon type="warning" theme="outlined" className="f-25" />
+            <span>
+              Alerts
+              </span>
+            </a>
+          </Menu.Item>
+          {/* end alerts menu */}
           {/* setting menu */}
           <Menu.Item key="3">
             <NavLink to="/settings/incidentType">
