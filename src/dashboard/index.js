@@ -49,7 +49,7 @@ export default function Dashboard() {
           {/* end contact menu */}
           {/* alerts menu */}
           <Menu.Item key="3">
-            <a href="https://emis-web-alerts.herokuapp.com/" target="_blank">
+            <a href="https://emis-web-alerts.herokuapp.com/" target="_blank"  rel="noopener noreferrer" >
             <Icon type="warning" theme="outlined" className="f-25" />
             <span>
               Alerts
