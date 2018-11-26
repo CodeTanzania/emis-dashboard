@@ -36,3 +36,29 @@ export const showAdjustStockForm = stock => ({
 export const cancelAdjustStock = () => ({
   type: types.CANCEL_ADJUST_STOCK,
 });
+
+export const getResourceItemsStart = () => ({
+  type: types.GET_RESOURCE_ITEMS_START,
+});
+
+export const getResourceItemsSuccess = items => ({
+  type: types.GET_RESOURCE_ITEMS_SUCCESS,
+  payload: {
+    data: items,
+  },
+});
+
+export const getResourceItemsFailed = error => ({
+  type: types.GET_RESOURCE_ITEMS_ERROR,
+  payload: {
+    data: error,
+  },
+  error: true,
+});
+
+export const getResourceItems = params => (dispatch, getState, { API }) => {
+  dispatch(getResourceItemsStart());
+  API.findResourceItems(params)
+    .then(items => dispatch(getResourceItemsSuccess(items)))
+    .catch(error => dispatch(getResourceItemsFailed(error)));
+};

@@ -3,6 +3,7 @@ import React, { Component, Fragment } from 'react';
 import { Layout, Tabs } from 'antd';
 import classNames from 'classnames';
 import StocksTable from './components/StocksTable';
+import ItemsTable from './components/ItemTable';
 import styles from './styles.css';
 
 const cx = classNames.bind(styles);
@@ -24,11 +25,11 @@ class Resource extends Component {
                         <div className={cx('buttons')}>baba</div>
                     </Header> */}
           <Tabs defaultActiveKey="1">
-            <TabPane tab="Stocks" key="1" className={cx('content')}>
+            <TabPane tab="Stocks" key="2" className={cx('content')}>
               <StocksTable />
             </TabPane>
-            <TabPane tab="Items" key="2" className={cx('content')}>
-              Resources Items
+            <TabPane tab="Items" key="1" className={cx('content')}>
+              <ItemsTable />
             </TabPane>
           </Tabs>
           <div />

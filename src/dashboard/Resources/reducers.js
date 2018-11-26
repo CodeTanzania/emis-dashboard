@@ -54,3 +54,37 @@ export const stockToAdjust = (state = null, action) => {
       return state;
   }
 };
+
+/**
+ *
+ * @param {*} state
+ * @param {*} action
+ */
+export const fetchingResourceItems = (state = false, action) => {
+  switch (action.type) {
+    case types.GET_RESOURCE_ITEMS_START:
+      return true;
+    case types.GET_RESOURCE_ITEMS_SUCCESS:
+      return false;
+    case types.GET_RESOURCE_ITEMS_ERROR:
+      return false;
+    default:
+      return state;
+  }
+};
+
+/**
+ *
+ * @param {*} state
+ * @param {*} action
+ */
+export const resourceItems = (state = { data: [] }, action) => {
+  switch (action.type) {
+    case types.GET_RESOURCE_ITEMS_SUCCESS:
+      return action.payload.data;
+    case types.GET_RESOURCE_ITEMS_ERROR:
+      return [];
+    default:
+      return state;
+  }
+};
