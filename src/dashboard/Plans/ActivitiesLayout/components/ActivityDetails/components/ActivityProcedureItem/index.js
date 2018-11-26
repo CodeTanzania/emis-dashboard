@@ -144,7 +144,7 @@ function ActivityProcedureItem({
           <Col xs={1} md={1} xl={1} xxl={1} className="checkboxContainer">
             <Checkbox />
           </Col>
-          <Col xs={17} md={21} xl={18} xxl={19} title={description}>
+          <Col xs={17} md={21} xl={18} xxl={20} title={description}>
             <span className="name">{`${index + 1} : ${name}`}</span>
           </Col>
           {/* SOP actions */}
@@ -152,7 +152,7 @@ function ActivityProcedureItem({
             xs={6}
             md={2}
             xl={{ span: 4, offset: 1 }}
-            xxl={{ span: 3, offset: 1 }}
+            xxl={{ span: 2, offset: 1 }}
           >
             <Button
               icon="eye"
@@ -161,27 +161,27 @@ function ActivityProcedureItem({
               theme="outlined"
               size="large"
             />
-            <Button
-              icon="file-text"
-              title="Attach Assessment to the SOP"
-              style={{ border: 0 }}
-              theme="outlined"
-              size="large"
-            />
-            <Button
-              icon="user-add"
-              title="Attach Stakeholder Role"
-              style={{ border: 0 }}
-              theme="outlined"
-              size="large"
-            />
-            <Button
-              icon="gold"
-              title="Add SOP Resource"
-              style={{ border: 0 }}
-              theme="outlined"
-              size="large"
-            />
+            {/* <Button */}
+            {/*   icon="file-text" */}
+            {/*   title="Attach Assessment to the SOP" */}
+            {/*   style={{ border: 0 }} */}
+            {/*   theme="outlined" */}
+            {/*   size="large" */}
+            {/* /> */}
+            {/* <Button */}
+            {/*   icon="user-add" */}
+            {/*   title="Attach Stakeholder Role" */}
+            {/*   style={{ border: 0 }} */}
+            {/*   theme="outlined" */}
+            {/*   size="large" */}
+            {/* /> */}
+            {/* <Button */}
+            {/*   icon="gold" */}
+            {/*   title="Add SOP Resource" */}
+            {/*   style={{ border: 0 }} */}
+            {/*   theme="outlined" */}
+            {/*   size="large" */}
+            {/* /> */}
             <Button
               icon="edit"
               title="Edit SOP"
@@ -191,7 +191,7 @@ function ActivityProcedureItem({
               onClick={onEdit}
             />
             <Button
-              icon="delete"
+              icon="close"
               title="Delete SOP"
               style={{ border: 0 }}
               theme="outlined"

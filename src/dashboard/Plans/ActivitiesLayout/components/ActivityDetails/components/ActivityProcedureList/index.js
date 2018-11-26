@@ -136,6 +136,7 @@ class ActivityProcedureList extends Component {
           )}
         />
         {/* end activity procedure draggable list */}
+
         {/* Activity form modal */}
         <Modal
           visible={showActivityProcedureForm}
@@ -147,6 +148,7 @@ class ActivityProcedureList extends Component {
           maskClosable={false}
           onCancel={this.handleCloseActivityProcedureForm}
           footer={null}
+          destroyOnClose
         >
           <ActivityProcedureForm
             isEditForm={isEditForm}

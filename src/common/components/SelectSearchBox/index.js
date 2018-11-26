@@ -1,6 +1,8 @@
 import { Icon, Select, Spin } from 'antd';
+import isArray from 'lodash/isArray';
 import isEmpty from 'lodash/isEmpty';
 import isFunction from 'lodash/isFunction';
+import map from 'lodash/map';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
@@ -22,28 +24,48 @@ export default class SelectSearchBox extends Component {
     onChange: PropTypes.func,
     onSearch: PropTypes.func.isRequired,
     placeholder: PropTypes.string.isRequired,
-    onFocus: PropTypes.func,
-    onBlur: PropTypes.func,
     style: PropTypes.objectOf(PropTypes.string),
     optionLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.func])
       .isRequired,
-    optionValue: PropTypes.oneOfType([PropTypes.string, PropTypes.func])
-      .isRequired,
+    optionValue: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+      PropTypes.func,
+    ]).isRequired,
+    value: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+      PropTypes.func,
+    ]),
     mode: PropTypes.string,
   };
 
   static defaultProps = {
     onChange: null,
-    onFocus: null,
-    onBlur: null,
     mode: 'default',
+    value: undefined,
     style: {},
   };
 
-  state = {
-    data: [],
-    loading: false,
-  };
+  constructor(props) {
+    super(props);
+    const { value, optionValue } = props;
+
+    if (isArray(props.value)) {
+      const defaultValue = map(value, item => item[optionValue]);
+      this.state = {
+        data: [...props.value],
+        loading: false,
+        defaultValue,
+      };
+    } else {
+      this.state = {
+        data: isEmpty(props.value) ? [] : [props.value],
+        loading: false,
+        defaultValue: undefined,
+      };
+    }
+  }
 
   /**
    * Function called when searching in select box
@@ -62,7 +84,7 @@ export default class SelectSearchBox extends Component {
   };
 
   /**
-   * Function called when value of selectbox changes
+   * Function called when value of select box changes
    *
    * @function
    * @name handleChange
@@ -76,7 +98,7 @@ export default class SelectSearchBox extends Component {
   };
 
   /**
-   * Function called when the selectbox is opened
+   * Function called when the select box is opened
    *
    * @function
    * @name handleOnDropdownVisibleChange
@@ -88,7 +110,7 @@ export default class SelectSearchBox extends Component {
     const { onSearch } = this.props;
     const { data } = this.state;
 
-    if (open && isEmpty(data)) {
+    if (open && data.length < 9) {
       this.setState({ loading: true });
       onSearch()
         .then(response => {
@@ -101,42 +123,34 @@ export default class SelectSearchBox extends Component {
     }
   };
 
-  render() {
-    const { data, loading } = this.state;
-    const {
-      optionValue,
-      optionLabel,
-      placeholder,
-      onFocus,
-      onBlur,
-      mode,
-      style,
-    } = this.props;
+  /**
+   * Extract Option property based on provided prop
+   *
+   * @function
+   * @name getOptionProp
+   *
+   * @param {string | function} prop - The property name or value return from
+   *                                   a provided function
+   * @param {Object} option - A single data item for select options
+   * @returns {String} - Value of the extracted property
+   *
+   * @version 0.1.0
+   * @since 0.1.0
+   */
+  getOptionProp = (prop, option) => {
+    if (isFunction(prop)) {
+      return prop(option);
+    }
+    return option[prop];
+  };
 
-    /**
-     * Extract Option property based on provided prop
-     *
-     * @function
-     * @name getOptionProp
-     *
-     * @param {string | function} prop - The property name or value return from
-     *                                   a provided function
-     * @param {Object} option - A single data item for select options
-     * @returns {String} - Value of the extracted property
-     *
-     * @version 0.1.0
-     * @since 0.1.0
-     */
-    const getOptionProp = (prop, option) => {
-      if (isFunction(prop)) {
-        return prop(option);
-      }
-      return option[prop];
-    };
+  render() {
+    const { data, loading, defaultValue } = this.state;
+    const { optionValue, optionLabel, placeholder, mode, style } = this.props;
 
     const options = data.map(option => (
-      <Option key={getOptionProp(optionValue, option)}>
-        {getOptionProp(optionLabel, option)}
+      <Option key={this.getOptionProp(optionValue, option)}>
+        {this.getOptionProp(optionLabel, option)}
       </Option>
     ));
 
@@ -149,8 +163,7 @@ export default class SelectSearchBox extends Component {
         allowClear
         onDropdownVisibleChange={this.handleOnDropdownVisibleChange}
         placeholder={placeholder}
-        onFocus={onFocus}
-        onBlur={onBlur}
+        defaultValue={defaultValue || undefined}
         filterOption={false}
         style={style}
         notFoundContent={

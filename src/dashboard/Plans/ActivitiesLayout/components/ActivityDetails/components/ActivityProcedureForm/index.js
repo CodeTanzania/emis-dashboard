@@ -3,6 +3,11 @@ import flow from 'lodash/flow';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
+  getResourceItems,
+  getRoles,
+} from '../../../../../../../common/API/api';
+import SelectSearchBox from '../../../../../../../common/components/SelectSearchBox';
+import {
   postPlanActivityProcedure,
   putPlanActivityProcedure,
 } from '../../../../../actions';
@@ -26,7 +31,6 @@ class ActivityProcedureForm extends Component {
     const {
       procedure,
       isEditForm,
-      form,
       postProcedure,
       updateProcedure,
       form: { validateFields },
@@ -40,7 +44,6 @@ class ActivityProcedureForm extends Component {
         } else {
           postProcedure(values);
         }
-        form.resetFields();
       }
     });
   };
@@ -52,6 +55,7 @@ class ActivityProcedureForm extends Component {
       procedure,
       onCancel,
       form: { getFieldDecorator },
+      form,
     } = this.props;
 
     const formItemLayout = {
@@ -102,12 +106,72 @@ class ActivityProcedureForm extends Component {
         </FormItem>
         {/* end procedure description */}
 
+        {/* responsible roles select input */}
+        <FormItem label="Primary Responsible Role(s)" {...formItemLayout}>
+          {getFieldDecorator('primary', {
+            rules: [
+              {
+                required: true,
+                message: 'Please Select Responsible Role(s)',
+              },
+            ],
+            initialValue: isEditForm ? procedure.primary : undefined,
+          })(
+            <SelectSearchBox
+              placeholder="Select Role ..."
+              mode="multiple"
+              onSearch={getRoles}
+              optionLabel="name"
+              optionValue="_id"
+            />
+          )}
+        </FormItem>
+        {/* end responsible roles select input */}
+
+        {/* responsible roles select input */}
+        <FormItem label="Supportive Role(s)" {...formItemLayout}>
+          {getFieldDecorator('supportive', {
+            initialValue: isEditForm ? procedure.supportive : undefined,
+          })(
+            <SelectSearchBox
+              placeholder="Select Role ..."
+              mode="multiple"
+              onSearch={getRoles}
+              optionLabel="name"
+              optionValue="_id"
+            />
+          )}
+        </FormItem>
+        {/* end responsible roles select input */}
+
+        {/* resource select input */}
+        <FormItem label="Resources Needed" {...formItemLayout}>
+          {getFieldDecorator('resources', {
+            initialValue: isEditForm ? procedure.resources : undefined,
+          })(
+            <SelectSearchBox
+              placeholder="Select Role ..."
+              mode="multiple"
+              onSearch={getResourceItems}
+              optionLabel="name"
+              optionValue="_id"
+            />
+          )}
+        </FormItem>
+        {/* end resource select input */}
+
         <Row>
           <Col span={24} style={{ textAlign: 'right' }}>
             <Button type="primary" htmlType="submit" loading={posting}>
               Save
             </Button>
-            <Button style={{ marginLeft: 8 }} onClick={onCancel}>
+            <Button
+              style={{ marginLeft: 8 }}
+              onClick={() => {
+                form.resetFields();
+                onCancel();
+              }}
+            >
               Cancel
             </Button>
           </Col>
