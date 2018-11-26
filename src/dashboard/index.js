@@ -5,7 +5,9 @@ import { NavLink, Route, Switch } from 'react-router-dom';
 import logo from '../logo.svg';
 import Plans from './Plans';
 import Stakeholders from './Stakeholders';
+import Resources from './Resources';
 import NotificationPanel from '../common/components/NotificationPanel';
+import AdjustStockForm from './Resources/components/AdjustStockForm';
 /* import styles */
 import styles from './styles.css';
 
@@ -56,6 +58,12 @@ export default function Dashboard() {
               </NavLink>
             </Menu.Item>
             {/* end setting menu */}
+            <Menu.Item key="4">
+              <NavLink to="/resources">
+                <Icon type="idcard" className="f-25" />
+                <span>Resources</span>
+              </NavLink>
+            </Menu.Item>
           </Menu>
         </Sider>
         {/* content section */}
@@ -64,12 +72,14 @@ export default function Dashboard() {
             <Switch>
               <Route path="/plans" component={Plans} />
               <Route path="/stakeholders" exact component={Stakeholders} />
+              <Route path="/resources" exact component={Resources} />
             </Switch>
           </Content>
         </Layout>
         {/* end content section */}
       </Layout>
       <NotificationPanel />
+      <AdjustStockForm />
     </Fragment>
   );
 }

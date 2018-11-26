@@ -82,3 +82,40 @@ export const updateStakeholder = (stakeholderId, updates) =>
  */
 export const sendNotification = data =>
   Axios.post('/notifications', data).then(res => res.data);
+
+/**
+ * Retrieve resource stocks
+ * @param {Object} params - Query parameters
+ */
+export const getResourceStocks = (query = {}) => {
+  const params = {};
+  if (query.item) {
+    // set item filter
+    params['filter[item]'] = query.item;
+  }
+  if (query.owner) {
+    // set stock owner filter
+    params['filter[owner]'] = query.owner;
+  }
+  if (query.q) {
+    // stock search text which focus on stock name
+    params.q = query.q;
+  }
+  return axios
+    .get('/api/resources/stocks', { params })
+    .then(response => response.data);
+};
+
+/**
+ * Retrieve resource items
+ * @param {Object} params Query params
+ */
+export const findResourceItems = params =>
+  axios.get('/api/resources/items', { params }).then(response => response.data);
+
+/**
+ *
+ * @param {Object} data - Resource adjustment data
+ */
+export const createResourceStockAdjustment = data =>
+  axios.post('/api/resources/adjustments', data).then(res => res.data);

@@ -1,0 +1,12 @@
+.stockTableOperations {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 16px;
+}
+
+.stockTableActions {
+    /* display: flex; */
+    /* align-items: flex-end; */
+    /* vertical-align: bottom; */
+}
