@@ -4,7 +4,6 @@ import {
   Input,
   DatePicker,
   Button,
-  AutoComplete,
   Row,
   Col,
   Divider,
@@ -26,46 +25,28 @@ import './styles.css';
 
 const FormItem = Form.Item;
 const { TextArea } = Input;
-const Option = Select.Option;
-const AutoCompleteOption = AutoComplete.Option;
+const  Option  = Select.Option;
 
 class IncidentForm extends React.Component {
-  state = {
-    autoCompleteResult: [],
-    submitting: false,
-  };
-
   handleSubmit = e => {
     e.preventDefault();
-    const { onSubmitButton } = this.props
+    const { onSubmitButton } = this.props;
     this.props.form.validateFieldsAndScroll((err, fieldsValue) => {
       if (!err) {
         const values = {
           ...fieldsValue,
-          'date-time-picker': fieldsValue['date-time-picker'].format('YYYY-MM-DD HH:mm:ss'),
-
-        }
+          'date-time-picker': fieldsValue['date-time-picker'].format(
+            'YYYY-MM-DD HH:mm:ss'
+          ),
+        };
         console.log('Received values of form: ', values);
       }
       onSubmitButton();
     });
   };
 
-  handleWebsiteChange = value => {
-    let autoCompleteResult;
-    if (!value) {
-      autoCompleteResult = [];
-    } else {
-      autoCompleteResult = ['.com', '.org', '.net'].map(
-        domain => `${value}${domain}`
-      );
-    }
-    this.setState({ autoCompleteResult });
-  };
-
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { autoCompleteResult } = this.state;
     const { onCancelButton } = this.props;
 
     const formItemLayout = {
@@ -96,10 +77,6 @@ class IncidentForm extends React.Component {
         { type: 'object', required: true, message: 'Please select time!' },
       ],
     };
-
-    const websiteOptions = autoCompleteResult.map(website => (
-      <AutoCompleteOption key={website}>{website}</AutoCompleteOption>
-    ));
 
     return (
       <Form onSubmit={this.handleSubmit} className="IncidentForm">
@@ -136,9 +113,11 @@ class IncidentForm extends React.Component {
         </FormItem>
         <FormItem {...formItemLayout} label="Date/Time initiated:">
           {getFieldDecorator('date-time-picker', config)(
-
-            <DatePicker showTime format="YYYY-MM-DD HH:mm:ss" style={{ width: '100%' }} />
-
+            <DatePicker
+              showTime
+              format="YYYY-MM-DD HH:mm:ss"
+              style={{ width: '100%' }}
+            />
           )}
         </FormItem>
         <FormItem {...formItemLayout} label="Location">
@@ -150,19 +129,6 @@ class IncidentForm extends React.Component {
               },
             ],
           })(<Input />)}
-        </FormItem>
-        <FormItem {...formItemLayout} label="Source">
-          {getFieldDecorator('source', {
-            rules: [{ required: true, message: 'Please input source!' }],
-          })(
-            <AutoComplete
-              dataSource={websiteOptions}
-              onChange={this.handleWebsiteChange}
-              placeholder="source"
-            >
-              <Input />
-            </AutoComplete>
-          )}
         </FormItem>
         <FormItem {...formItemLayout} label="Incident Summary">
           {getFieldDecorator('summary', {
@@ -179,8 +145,7 @@ class IncidentForm extends React.Component {
               </Button>
             </Col>
             <Col span={12}>
-              <Button type="primary"
-                htmlType="submit">
+              <Button type="primary" htmlType="submit">
                 Create
               </Button>
             </Col>

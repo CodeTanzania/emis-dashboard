@@ -96,12 +96,12 @@ const API = {
     return url;
   },
 
-  getIncident: ({page}) => {
-    const params ={page: page || 1};
-    const url = Axios.get(`${INCIDENTS_API}/incidents`,{
+  getIncident: ({ page }) => {
+    const params = { page: page || 1 };
+    const url = Axios.get(`${INCIDENTS_API}/incidents`, {
       params,
     }).then(response => response.data);
-    return url
+    return url;
   },
 
   createIncidentType: data => {
