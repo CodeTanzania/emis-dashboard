@@ -1,4 +1,4 @@
-import {incidentToGeojson} from '../../common/lib/mapUtil'; /* const actions */
+import { incidentToGeojson } from '../../common/lib/mapUtil'; /* const actions */
 
 /* Actions for the incident */ export const CREATE_INCIDENT_TYPE_SUCCESS =
   'INCIDENTS:CREATE_INCIDENT_TYPE';
@@ -19,7 +19,7 @@ export const getIncidentsError = message => ({
 
 export const getIncidentsSuccess = page => (dispatch, getState, { API }) => {
   dispatch(getIncidentsStart());
-  API.getIncident({ page })
+  API.getIncidents({ page })
     .then(results => {
       const { data: receivedIncidents } = results;
       const data = receivedIncidents.map(result => {

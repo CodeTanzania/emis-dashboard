@@ -53,8 +53,8 @@ class Incidents extends React.Component {
       zoom: 7,
       showPopup: false,
       hideButton: false,
+      area: {},
     };
-
     this.mapRef = React.createRef();
     this.onclickNewIncidentButton = this.onclickNewIncidentButton.bind(this);
     this.onCancelButton = this.onCancel.bind(this);
@@ -71,7 +71,6 @@ class Incidents extends React.Component {
 
   componentDidUpdate(prevProps) {
     const { incidents } = this.props;
-    console.log(incidents);
     if (incidents !== prevProps.incidents) {
       incidents.map(({ epicentre }) => this.incidentLayer.addData(epicentre));
       this.map.setView([-6.179, 35.754], 7);
@@ -223,7 +222,7 @@ class Incidents extends React.Component {
     this.setState({
       position:
         type === 'Point' ? layer.getLatLng() : layer.getBounds().getCenter(),
-      // area: layer.toGeoJSON(),
+      area: layer.toGeoJSON(),
       showPopup: true,
     });
   };
@@ -273,8 +272,7 @@ class Incidents extends React.Component {
   };
 
   render() {
-    const { position, zoom, showPopup, hideButton } = this.state;
-
+    const { position, zoom, showPopup, hideButton, area } = this.state;
     return (
       <div>
         {!hideButton ? (
@@ -294,6 +292,7 @@ class Incidents extends React.Component {
               <IncidentForm
                 onCancelButton={this.onCancel}
                 onSubmitButton={this.onSubmit}
+                area={area}
               />
             </Popup>
           ) : null}

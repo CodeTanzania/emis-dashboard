@@ -10,7 +10,12 @@ import {
   Select,
 } from 'antd';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import PropTypes from 'prop-types';
 import './styles.css';
+import API from '../../../../common/API';
+import { fetchIncidentsTypeSuccess } from '../../../Settings/actions';
+
 /**
  * IncidentForm component
  * this component displays  form
@@ -25,29 +30,58 @@ import './styles.css';
 
 const FormItem = Form.Item;
 const { TextArea } = Input;
-const  Option  = Select.Option;
+const { Option } = Select;
 
 class IncidentForm extends React.Component {
+
+  static propTypes = {
+    incidentsTypeData: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string,
+        nature: PropTypes.string.isRequired,
+        family: PropTypes.string.isRequired,
+        code: PropTypes.string.isRequired,
+        cap: PropTypes.string.isRequired,
+        color: PropTypes.string,
+        _id: PropTypes.string,
+      }).isRequired
+    ),
+    getIncidentstypeTrigger: PropTypes.func,
+  };
+
+  static defaultProps = {
+    incidentsTypeData: null,
+    getIncidentstypeTrigger: null,
+  };
+
   handleSubmit = e => {
     e.preventDefault();
-    const { onSubmitButton } = this.props;
+    const { onSubmitButton, area, } = this.props;
     this.props.form.validateFieldsAndScroll((err, fieldsValue) => {
       if (!err) {
+        const { geometry } = area
         const values = {
           ...fieldsValue,
-          'date-time-picker': fieldsValue['date-time-picker'].format(
-            'YYYY-MM-DD HH:mm:ss'
-          ),
+          epicentre: geometry,
+          'startedAt': fieldsValue['startedAt'].toISOString(),
         };
-        console.log('Received values of form: ', values);
+        API.createIncident(values);
+        console.log(values);
       }
       onSubmitButton();
     });
   };
 
+  componentDidMount (){
+    const {getIncidentstypeTrigger} = this.props;
+    getIncidentstypeTrigger();
+  }
+
+  renderIncidentTypes = (incidentsTypes) => incidentsTypes.map( ({name, _id}) => <Option key={_id} value={_id}>{name}</Option>);
+
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { onCancelButton } = this.props;
+    const { onCancelButton, incidentsTypeData } = this.props;
 
     const formItemLayout = {
       labelCol: {
@@ -104,15 +138,12 @@ class IncidentForm extends React.Component {
             ],
           })(
             <Select placeholder="Select incidentType">
-              <Option value="Flood">Flood</Option>
-              <Option value="Fire">Fire</Option>
-              <Option value="Drought">Drought</Option>
-              <Option value="Volcanic">Volcanic</Option>
+              { this.renderIncidentTypes( incidentsTypeData ) }
             </Select>
           )}
         </FormItem>
         <FormItem {...formItemLayout} label="Date/Time initiated:">
-          {getFieldDecorator('date-time-picker', config)(
+          {getFieldDecorator('startedAt', config)(
             <DatePicker
               showTime
               format="YYYY-MM-DD HH:mm:ss"
@@ -120,18 +151,8 @@ class IncidentForm extends React.Component {
             />
           )}
         </FormItem>
-        <FormItem {...formItemLayout} label="Location">
-          {getFieldDecorator('location', {
-            rules: [
-              {
-                required: true,
-                message: 'Please input incident location!',
-              },
-            ],
-          })(<Input />)}
-        </FormItem>
         <FormItem {...formItemLayout} label="Incident Summary">
-          {getFieldDecorator('summary', {
+          {getFieldDecorator('description', {
             rules: [
               { required: true, message: 'Please input the summary you got!' },
             ],
@@ -156,9 +177,16 @@ class IncidentForm extends React.Component {
   }
 }
 
-const mapStateToProps = () => ({});
+const mapStateToProps = state => ({
+  incidentsTypeData: state.incidentsType.data ? state.incidentsType.data : [],
+});
 
-const mapDispatchToProps = () => ({});
+const mapDispatchToProps = dispatch => ({
+  getIncidentstypeTrigger: bindActionCreators(
+    fetchIncidentsTypeSuccess,
+    dispatch
+  ),
+});
 
 export default connect(
   mapStateToProps,

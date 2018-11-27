@@ -96,14 +96,6 @@ const API = {
     return url;
   },
 
-  getIncident: ({ page }) => {
-    const params = { page: page || 1 };
-    const url = Axios.get(`${INCIDENTS_API}/incidents`, {
-      params,
-    }).then(response => response.data);
-    return url;
-  },
-
   createIncidentType: data => {
     const url = `${INCIDENTS_TYPE_API}/incidenttypes`;
     const config = {
@@ -140,6 +132,27 @@ const API = {
     return Axios.get(`${INCIDENTS_TYPE_API}/incidenttypes`, config).then(
       response => response.data
     );
+  },
+
+  /* API for Incidents */
+
+  getIncidents: ({ page }) => {
+    const params = { page: page || 1 };
+    const url = Axios.get(`${INCIDENTS_API}/incidents`, {
+      params,
+    }).then(response => response.data);
+    return url;
+  },
+  createIncident: data => {
+    const url = `${INCIDENTS_API}/incidents`;
+    const config = {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'content-type': 'application/json',
+      },
+    };
+    return fetch(url, config).then(res => res.json());
   },
 };
 
