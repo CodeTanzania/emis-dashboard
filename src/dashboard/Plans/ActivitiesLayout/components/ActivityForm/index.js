@@ -1,9 +1,12 @@
 import { Button, Col, Form, Input, Radio, Row } from 'antd';
 import flow from 'lodash/flow';
+import map from 'lodash/map';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { postPlanActivity } from '../../../actions';
+import { getResourceItems, getRoles } from '../../../../../common/API/api';
+import SelectSearchBox from '../../../../../common/components/SelectSearchBox';
+import { postPlanActivity, putPlanActivity } from '../../../actions';
 
 /* local constants */
 const FormItem = Form.Item;
@@ -34,19 +37,28 @@ class ActivityForm extends Component {
 
     const {
       initialSelectedPhase,
-      form: { validateFields, resetFields },
+      form: { validateFields },
       postActivity,
+      activity,
+      updateActivity,
+      isEditForm,
     } = this.props;
 
     validateFields((error, values) => {
       if (!error) {
-        let activity = values;
-        if (initialSelectedPhase) {
-          activity = Object.assign({}, values, { phase: initialSelectedPhase });
+        if (isEditForm) {
+          const updatedActivity = Object.assign({}, activity, values);
+          updateActivity(updatedActivity);
+        } else {
+          let newActivity = values;
+          if (initialSelectedPhase) {
+            newActivity = Object.assign({}, values, {
+              phase: initialSelectedPhase,
+            });
+          }
+
+          postActivity(newActivity);
         }
-        postActivity(activity);
-        // onCancel();
-        resetFields();
       }
     });
   };
@@ -56,6 +68,8 @@ class ActivityForm extends Component {
       initialSelectedPhase,
       onCancel,
       posting,
+      isEditForm,
+      activity,
       form: { getFieldDecorator },
     } = this.props;
 
@@ -84,6 +98,7 @@ class ActivityForm extends Component {
         <FormItem {...formItemLayout} label="Activity Name">
           {getFieldDecorator('name', {
             rules: [{ required: true, message: 'Activity Name is Required' }],
+            initialValue: isEditForm ? activity.name : undefined,
           })(
             <TextArea
               autosize={{ minRows: 2, maxRows: 6 }}
@@ -95,7 +110,9 @@ class ActivityForm extends Component {
 
         {/* activity description */}
         <FormItem {...formItemLayout} label="Activity Description">
-          {getFieldDecorator('description')(
+          {getFieldDecorator('description', {
+            initialValue: isEditForm ? activity.description : undefined,
+          })(
             <TextArea
               autosize={{ minRows: 3, maxRows: 6 }}
               placeholder="Enter Activity Description"
@@ -111,7 +128,7 @@ class ActivityForm extends Component {
               rules: [
                 { required: true, message: 'Activity Phase is Required' },
               ],
-              initialValue: initialSelectedPhase,
+              initialValue: isEditForm ? activity.phase : initialSelectedPhase,
             })(
               <RadioGroup>
                 <Radio value="Mitigation">Mitigation</Radio>
@@ -123,6 +140,69 @@ class ActivityForm extends Component {
           </FormItem>
         )}
         {/* end activity phases */}
+
+        {/* responsible roles select input */}
+        <FormItem label="Primary Responsible Role(s)" {...formItemLayout}>
+          {getFieldDecorator('primary', {
+            rules: [
+              {
+                required: true,
+                message: 'Please Select Responsible Role(s)',
+              },
+            ],
+            initialValue: isEditForm
+              ? map(activity.primary, role => role._id) // eslint-disable-line
+              : [],
+          })(
+            <SelectSearchBox
+              placeholder="Select Role ..."
+              mode="multiple"
+              onSearch={getRoles}
+              optionLabel="name"
+              optionValue="_id"
+              initialValue={isEditForm ? activity.primary : []}
+            />
+          )}
+        </FormItem>
+        {/* end responsible roles select input */}
+
+        {/* responsible roles select input */}
+        <FormItem label="Supportive Role(s)" {...formItemLayout}>
+          {getFieldDecorator('supportive', {
+            initialValue: isEditForm
+              ? map(activity.supportive, role => role._id) // eslint-disable-line
+              : [],
+          })(
+            <SelectSearchBox
+              placeholder="Select Role ..."
+              mode="multiple"
+              onSearch={getRoles}
+              optionLabel="name"
+              optionValue="_id"
+              initialValue={isEditForm ? activity.supportive : []}
+            />
+          )}
+        </FormItem>
+        {/* end responsible roles select input */}
+
+        {/* resource select input */}
+        <FormItem label="Resources Needed" {...formItemLayout}>
+          {getFieldDecorator('resources', {
+            initialValue: isEditForm
+              ? map(activity.resources, item => item._id) // eslint-disable-line
+              : [],
+          })(
+            <SelectSearchBox
+              placeholder="Select Resources Needed ..."
+              mode="multiple"
+              onSearch={getResourceItems}
+              optionLabel="name"
+              optionValue="_id"
+              initialValue={isEditForm ? activity.resources : []}
+            />
+          )}
+        </FormItem>
+        {/* end resource select input */}
 
         {/* form actions */}
         <Row>
@@ -142,12 +222,16 @@ class ActivityForm extends Component {
 }
 
 const mapStateToProps = state => ({
+  activity: state.selectedPlanActivity,
   posting: state.planActivities.posting,
 });
 
 const mapDispatchToProps = dispatch => ({
   postActivity(activity) {
     dispatch(postPlanActivity(activity));
+  },
+  updateActivity(activity) {
+    dispatch(putPlanActivity(activity));
   },
 });
 

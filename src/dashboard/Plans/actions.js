@@ -341,6 +341,60 @@ export function postPlanError(error) {
 }
 
 /**
+ * Action dispatched when updating plan to the API starts
+ *
+ * @function
+ * @name putPlanStart
+ *
+ * @returns {Object} - Redux Action
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function putPlanStart() {
+  return {
+    type: PUT_PLAN_START,
+  };
+}
+
+/**
+ * Action dispatched when updating plan to the API is successfully
+ *
+ * @function
+ * @name putPlanSuccess
+ *
+ * @returns {Object} - Redux Action
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function putPlanSuccess() {
+  return {
+    type: PUT_PLAN_SUCCESS,
+  };
+}
+
+/**
+ * Action dispatched when updating plan to the API fails
+ *
+ * @function
+ * @name putPlanError
+ *
+ * @param {Error} error - Error Instance
+ * @returns {Object} - Redux Action
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function putPlanError(error) {
+  return {
+    type: PUT_PLAN_ERROR,
+    payload: { data: error },
+    error: true,
+  };
+}
+
+/**
  * Action dispatched when plan activity is selected
  *
  * @param {Object} activity
@@ -509,6 +563,62 @@ export function postPlanActivitySuccess() {
 export function postPlanActivityError(error) {
   return {
     type: POST_PLAN_ACTIVITY_ERROR,
+    payload: {
+      data: error,
+    },
+    error: true,
+  };
+}
+
+/**
+ * Action dispatched when updating plan activity to the API starts
+ *
+ * @function
+ * @name putPlanActivityStart
+ *
+ * @returns {Object} - Redux Action
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function putPlanActivityStart() {
+  return {
+    type: PUT_PLAN_ACTIVITY_START,
+  };
+}
+
+/**
+ * Action dispatched when updating plan activity to the API is successfully
+ *
+ * @function
+ * @name putPlanActivitySuccess
+ *
+ * @returns {Object} - Redux Action
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function putPlanActivitySuccess() {
+  return {
+    type: PUT_PLAN_ACTIVITY_SUCCESS,
+  };
+}
+
+/**
+ * Action dispatched when updating plan activity to the API fails
+ *
+ * @function
+ * @name putPlanActivityError
+ *
+ * @param {Error} error - Error Instance
+ * @returns {Object} - Redux Action
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function putPlanActivityError(error) {
+  return {
+    type: PUT_PLAN_ACTIVITY_ERROR,
     payload: {
       data: error,
     },
@@ -810,6 +920,33 @@ export function postPlan(plan) {
 }
 
 /**
+ * A thunk function which performs asynchronous updating of plan
+ * to the API
+ *
+ * @function
+ * @name putPlan
+ *
+ * @param {Object} plan - Updated plan object
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function putPlan(plan) {
+  return (dispatch, getState, API) => {
+    dispatch(putPlanStart());
+
+    return API.putPlan(plan)
+      .then(() => {
+        dispatch(putPlanSuccess());
+        dispatch(getPlans());
+      })
+      .catch(error => {
+        dispatch(putPlanError(error));
+      });
+  };
+}
+
+/**
  * A thunk function which perform asynchronous fetching of plan activities from API
  *
  * @function
@@ -868,6 +1005,33 @@ export function postPlanActivity(activity) {
       })
       .catch(error => {
         dispatch(postPlanActivityError(error));
+      });
+  };
+}
+
+/**
+ * A thunk function which performs asynchronous updating of plan activity
+ * to the API
+ *
+ * @function
+ * @name putPlanActivity
+ *
+ * @param {Object} activity - Updated activity object
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function putPlanActivity(activity) {
+  return (dispatch, getState, API) => {
+    dispatch(putPlanActivityStart());
+
+    return API.putPlanActivity(activity)
+      .then(() => {
+        dispatch(putPlanActivitySuccess());
+        dispatch(getPlanActivities());
+      })
+      .catch(error => {
+        dispatch(putPlanActivityError(error));
       });
   };
 }

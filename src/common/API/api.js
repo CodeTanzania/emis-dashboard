@@ -47,8 +47,8 @@ export function postPlan(plan) {
  * @version 0.1.0
  * @since 0.1.0
  */
-export function putPlan(planId, plan) {
-  return axios.put(`/plans/${planId}`, plan);
+export function putPlan(plan) {
+  return axios.put(`/plans/${plan._id}`, plan); // eslint-disable-line
 }
 
 /**
@@ -109,6 +109,22 @@ export function postPlanActivity(activity) {
 }
 
 /**
+ * Update Plan Activity in the API
+ *
+ * @function
+ * @name putPlanActivity
+ *
+ * @param {Object} activity - activity update object
+ * @returns {Promise}
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function putPlanActivity(activity) {
+  return axios.put(`/activities/${activity._id}`, JSON.stringify(activity)); //eslint-disable-line
+}
+
+/**
  * Get Standard operating procedures(SOP)  from the API
  *
  * @function
@@ -154,7 +170,7 @@ export function postPlanActivityProcedure(procedure) {
  * @function
  * @name putPlanActivityProcedure
  *
- * @param {Object} procedure - Updated procedure
+ * @param {Object} procedure - procedure update object
  * @returns {Promise}
  *
  * @version 0.1.0
@@ -232,4 +248,20 @@ export function getResourceItems(params = {}) {
  */
 export function getStakeholders(params = {}) {
   return axios.get(`/parties`, { params });
+}
+
+/**
+ *  Get Geographical features from API
+ *
+ * @function
+ * @name getFeatures
+ *
+ * @param {Object} params - params object
+ * @returns {Promise}
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function getFeatures(params = {}) {
+  return axios.get(`/features`, { params });
 }

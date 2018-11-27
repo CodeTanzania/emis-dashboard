@@ -45,7 +45,7 @@ function PlanOptions({ onEditPlan }) {
  *
  * A card component renders in plan list
  *
- * @function
+ * @class
  * @name PlanCard
  *
  * @param {Object} props
@@ -75,6 +75,7 @@ export default class PlanCard extends Component {
     color: PropTypes.string,
     updatedAt: PropTypes.string.isRequired,
     onClickPlan: PropTypes.func.isRequired,
+    onEditPlan: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -124,8 +125,9 @@ export default class PlanCard extends Component {
    * @version 0.1.0
    * @since 0.1.0
    */
-  handleEditPlan = e => {
-    e.preventDefault();
+  handleEditPlan = () => {
+    const { onEditPlan } = this.props;
+    onEditPlan();
     this.handleHidePopover();
   };
 
@@ -140,8 +142,7 @@ export default class PlanCard extends Component {
    * @version 0.1.0
    * @since 0.1.0
    */
-  handleDisseminatePlan = e => {
-    e.preventDefault();
+  handleDisseminatePlan = () => {
     this.handleHidePopover();
   };
 
@@ -156,8 +157,7 @@ export default class PlanCard extends Component {
    * @version 0.1.0
    * @since 0.1.0
    */
-  handleActivatePlan = e => {
-    e.preventDefault();
+  handleActivatePlan = () => {
     this.handleHidePopover();
   };
 
@@ -215,20 +215,16 @@ export default class PlanCard extends Component {
             Last Review Date:{' '}
             {new Intl.DateTimeFormat('en-GB').format(new Date(updatedAt))}
           </p>
-          <Popover
-            content={<PlanOptions onEditPlan={this.handleEditPlan} />}
-            trigger="hover"
-            placement="bottom"
-            visible={showPopover}
-            onVisibleChange={this.handlePopoverVisibilityChange}
-          >
-            <Button
-              icon="ellipsis"
-              className="ActionButton"
-              onClick={e => e.preventDefault()}
-            />
-          </Popover>
         </Link>
+        <Popover
+          content={<PlanOptions onEditPlan={this.handleEditPlan} />}
+          trigger="hover"
+          placement="bottomRight"
+          visible={showPopover}
+          onVisibleChange={this.handlePopoverVisibilityChange}
+        >
+          <Button icon="ellipsis" className="ActionButton" />
+        </Popover>
       </Card>
     );
   }

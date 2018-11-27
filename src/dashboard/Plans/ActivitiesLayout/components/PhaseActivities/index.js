@@ -1,6 +1,8 @@
 import { Badge, Button, Col, Layout, List, Popover, Row } from 'antd';
 import PropTypes from 'prop-types';
 import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
+import { openPlanActivityForm, selectPlanActivity } from '../../../actions';
 import ActivityCard from '../ActivityCard';
 import './style.css';
 
@@ -45,7 +47,7 @@ function PhaseOptions({ onClickAddActivity }) {
  * @version 0.1.0
  * @since 0.1.0
  */
-export default class PhaseActivities extends Component {
+class PhaseActivities extends Component {
   state = { showPopover: false };
 
   /* default props */
@@ -69,6 +71,7 @@ export default class PhaseActivities extends Component {
     ),
     onClickCard: PropTypes.func.isRequired,
     onClickAddActivity: PropTypes.func.isRequired,
+    onClickEditActivity: PropTypes.func.isRequired,
   };
 
   /**
@@ -115,7 +118,13 @@ export default class PhaseActivities extends Component {
   };
 
   render() {
-    const { title, count, activities, onClickCard } = this.props;
+    const {
+      title,
+      count,
+      activities,
+      onClickCard,
+      onClickEditActivity,
+    } = this.props;
 
     const { showPopover } = this.state;
     return (
@@ -173,6 +182,9 @@ export default class PhaseActivities extends Component {
                   onClick={() => {
                     onClickCard(activity);
                   }}
+                  onEditActivity={() => {
+                    onClickEditActivity(activity);
+                  }}
                 />
               </List.Item>
             )}
@@ -189,3 +201,15 @@ export default class PhaseActivities extends Component {
 PhaseOptions.propTypes = {
   onClickAddActivity: PropTypes.func.isRequired,
 };
+
+const mapDispatchToProps = dispatch => ({
+  onSelectActivity(activity) {
+    dispatch(selectPlanActivity(activity));
+    dispatch(openPlanActivityForm());
+  },
+});
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(PhaseActivities);

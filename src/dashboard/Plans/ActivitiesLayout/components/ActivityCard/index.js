@@ -63,6 +63,7 @@ export default class ActivityCard extends Component {
     name: PropTypes.string.isRequired,
     taskCount: PropTypes.number,
     onClick: PropTypes.func.isRequired,
+    onEditActivity: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -109,7 +110,9 @@ export default class ActivityCard extends Component {
    * @since 0.1.0
    */
   handleEditActivity = e => {
+    const { onEditActivity } = this.props;
     e.preventDefault();
+    onEditActivity();
     this.handleHidePopover();
   };
 

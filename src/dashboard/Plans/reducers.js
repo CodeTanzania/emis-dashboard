@@ -24,9 +24,15 @@ import {
   POST_PLAN_ERROR,
   POST_PLAN_START,
   POST_PLAN_SUCCESS,
+  PUT_PLAN_ACTIVITY_ERROR,
   PUT_PLAN_ACTIVITY_PROCEDURE_ERROR,
   PUT_PLAN_ACTIVITY_PROCEDURE_START,
   PUT_PLAN_ACTIVITY_PROCEDURE_SUCCESS,
+  PUT_PLAN_ACTIVITY_START,
+  PUT_PLAN_ACTIVITY_SUCCESS,
+  PUT_PLAN_ERROR,
+  PUT_PLAN_START,
+  PUT_PLAN_SUCCESS,
   RESET_PLAN_FILTERS,
   SELECT_PLAN,
   SELECT_PLAN_ACTIVITY,
@@ -56,6 +62,7 @@ const defaultPlanActivitiesState = {
   showActivityForm: false,
   loading: false,
   posting: false,
+  error: null,
 };
 
 const defaultPlansState = {
@@ -68,6 +75,7 @@ const defaultPlansState = {
   filters: {
     incidentTypes: [],
   },
+  error: null,
 };
 
 const defaultProceduresState = {
@@ -77,6 +85,7 @@ const defaultProceduresState = {
   showProcedureForm: false,
   loading: false,
   posting: false,
+  error: null,
 };
 
 /*
@@ -127,6 +136,15 @@ export function plans(state = defaultPlansState, action) {
       return Object.assign({}, state, { posting: false, showPlanForm: false });
     case POST_PLAN_ERROR:
       return Object.assign({}, state, { error: action.payload.data });
+    case PUT_PLAN_START:
+      return Object.assign({}, state, { posting: true });
+    case PUT_PLAN_SUCCESS:
+      return Object.assign({}, state, { posting: false, showPlanForm: false });
+    case PUT_PLAN_ERROR:
+      return Object.assign({}, state, {
+        posting: false,
+        error: action.payload.data,
+      });
     case OPEN_PLAN_FORM:
       return Object.assign({}, state, {
         showPlanForm: true,
@@ -226,6 +244,20 @@ export function planActivities(state = defaultPlanActivitiesState, action) {
         error: action.payload.data,
         posting: false,
       });
+    case PUT_PLAN_ACTIVITY_START:
+      return Object.assign({}, state, {
+        posting: true,
+      });
+    case PUT_PLAN_ACTIVITY_SUCCESS:
+      return Object.assign({}, state, {
+        posting: false,
+        showActivityForm: false,
+      });
+    case PUT_PLAN_ACTIVITY_ERROR:
+      return Object.assign({}, state, {
+        posting: false,
+        error: action.payload.data,
+      });
     case OPEN_PLAN_ACTIVITY_FORM:
       return Object.assign({}, state, {
         showActivityForm: true,
@@ -317,6 +349,7 @@ export function planActivityProcedures(state = defaultProceduresState, action) {
     case PUT_PLAN_ACTIVITY_PROCEDURE_ERROR:
       return Object.assign({}, state, {
         posting: false,
+        error: action.payload.data,
       });
     case OPEN_PLAN_ACTIVITY_PROCEDURE_FORM:
       return Object.assign({}, state, {

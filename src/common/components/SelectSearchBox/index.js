@@ -2,7 +2,6 @@ import { Icon, Select, Spin } from 'antd';
 import isArray from 'lodash/isArray';
 import isEmpty from 'lodash/isEmpty';
 import isFunction from 'lodash/isFunction';
-import map from 'lodash/map';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
@@ -23,8 +22,6 @@ export default class SelectSearchBox extends Component {
   static propTypes = {
     onChange: PropTypes.func,
     onSearch: PropTypes.func.isRequired,
-    placeholder: PropTypes.string.isRequired,
-    style: PropTypes.objectOf(PropTypes.string),
     optionLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.func])
       .isRequired,
     optionValue: PropTypes.oneOfType([
@@ -37,32 +34,42 @@ export default class SelectSearchBox extends Component {
       PropTypes.number,
       PropTypes.func,
     ]),
-    mode: PropTypes.string,
+    initialValue: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.array,
+      PropTypes.number,
+      PropTypes.shape({
+        _id: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+      }),
+    ]),
   };
 
   static defaultProps = {
     onChange: null,
-    mode: 'default',
     value: undefined,
-    style: {},
+    initialValue: undefined,
   };
 
   constructor(props) {
     super(props);
-    const { value, optionValue } = props;
+    const { initialValue } = props;
 
-    if (isArray(props.value)) {
-      const defaultValue = map(value, item => item[optionValue]);
+    if (isArray(initialValue)) {
       this.state = {
-        data: [...props.value],
+        data: [...initialValue],
         loading: false,
-        defaultValue,
+      };
+    } else if (!isEmpty(initialValue)) {
+      // console.log(props.initialValue[optionValue]);
+      this.state = {
+        data: [initialValue],
+        loading: false,
       };
     } else {
       this.state = {
-        data: isEmpty(props.value) ? [] : [props.value],
+        data: [],
         loading: false,
-        defaultValue: undefined,
       };
     }
   }
@@ -145,8 +152,8 @@ export default class SelectSearchBox extends Component {
   };
 
   render() {
-    const { data, loading, defaultValue } = this.state;
-    const { optionValue, optionLabel, placeholder, mode, style } = this.props;
+    const { data, loading } = this.state;
+    const { optionValue, optionLabel, ...otherProps } = this.props;
 
     const options = data.map(option => (
       <Option key={this.getOptionProp(optionValue, option)}>
@@ -156,16 +163,13 @@ export default class SelectSearchBox extends Component {
 
     return (
       <Select
-        mode={mode}
+        {...otherProps}
         showSearch
         onSearch={this.handleSearch}
         onChange={this.handleChange}
         allowClear
         onDropdownVisibleChange={this.handleOnDropdownVisibleChange}
-        placeholder={placeholder}
-        defaultValue={defaultValue || undefined}
         filterOption={false}
-        style={style}
         notFoundContent={
           loading ? (
             <Spin size="small" indicator={spinIcon} />

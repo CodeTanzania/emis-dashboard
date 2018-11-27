@@ -95,6 +95,19 @@ class ActivityProcedureList extends Component {
     onCloseProcedureForm();
   };
 
+  /**
+   * Handle Close Activity details drawer event
+   *
+   * @function
+   * @name handleCloseActivityDetails
+   *
+   * @version 0.1.0
+   * @since 0.1.0
+   */
+  handleAfterCloseModal = () => {
+    this.setState({ isEditForm: false });
+  };
+
   render() {
     const { procedures, isEditForm } = this.state;
     const { onSelectProcedure, showActivityProcedureForm } = this.props;
@@ -149,6 +162,7 @@ class ActivityProcedureList extends Component {
           onCancel={this.handleCloseActivityProcedureForm}
           footer={null}
           destroyOnClose
+          afterClose={this.handleAfterCloseModal}
         >
           <ActivityProcedureForm
             isEditForm={isEditForm}

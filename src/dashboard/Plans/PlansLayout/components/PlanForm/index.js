@@ -3,11 +3,12 @@ import flow from 'lodash/flow';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
+  getFeatures,
   getIncidentTypes,
   getStakeholders,
 } from '../../../../../common/API/api';
 import SelectSearchBox from '../../../../../common/components/SelectSearchBox';
-import { postPlan } from '../../../actions';
+import { postPlan, putPlan } from '../../../actions';
 import './styles.css';
 
 /* local constants */
@@ -29,11 +30,19 @@ class PlanForm extends Component {
     const {
       form: { validateFieldsAndScroll },
       onPostPlan,
+      onUpdatePlan,
+      plan,
+      isEditForm,
     } = this.props;
 
     validateFieldsAndScroll((err, values) => {
       if (!err) {
-        onPostPlan(values);
+        if (isEditForm) {
+          const updatedPlan = Object.assign({}, plan, values);
+          onUpdatePlan(updatedPlan);
+        } else {
+          onPostPlan(values);
+        }
       }
     });
   };
@@ -78,6 +87,8 @@ class PlanForm extends Component {
       onCancel,
       form: { getFieldDecorator },
       posting,
+      plan,
+      isEditForm,
     } = this.props;
 
     return (
@@ -91,12 +102,14 @@ class PlanForm extends Component {
                 message: 'Please Select Plan Incident Type',
               },
             ],
+            initialValue: isEditForm ? plan.incidentType._id : undefined, //eslint-disable-line
           })(
             <SelectSearchBox
               placeholder="Select Incident Type ..."
               onSearch={getIncidentTypes}
               optionLabel="name"
               optionValue="_id"
+              initialValue={isEditForm ? plan.incidentType : undefined}
             />
           )}
         </FormItem>
@@ -111,12 +124,36 @@ class PlanForm extends Component {
                 message: 'Please Select the Plan Owner',
               },
             ],
+            initialValue: isEditForm ? plan.owner._id : undefined, //eslint-disable-line
           })(
             <SelectSearchBox
               placeholder="Select Plan Owner ..."
               onSearch={getStakeholders}
               optionLabel="name"
               optionValue="_id"
+              initialValue={isEditForm ? plan.owner : undefined}
+            />
+          )}
+        </FormItem>
+        {/* end plan owner select input */}
+
+        {/* plan owner select input */}
+        <FormItem label="boundary" {...formItemLayout}>
+          {getFieldDecorator('boundary', {
+            rules: [
+              {
+                required: true,
+                message: 'Please Select the Plan Applicable boundary',
+              },
+            ],
+            initialValue: isEditForm ? plan.boundary._id : undefined, // eslint-disable-line
+          })(
+            <SelectSearchBox
+              placeholder="Select Plan Boundary ..."
+              onSearch={getFeatures}
+              optionLabel="name"
+              optionValue="_id"
+              initialValue={isEditForm ? plan.boundary : undefined}
             />
           )}
         </FormItem>
@@ -149,6 +186,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   onPostPlan(plan) {
     dispatch(postPlan(plan));
+  },
+  onUpdatePlan(plan) {
+    dispatch(putPlan(plan));
   },
 });
 

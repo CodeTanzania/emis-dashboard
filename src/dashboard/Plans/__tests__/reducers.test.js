@@ -24,22 +24,12 @@ describe('Plan:Reducers', () => {
         filters: {
           incidentTypes: [],
         },
+        error: null,
       };
     });
 
     it('should return default state when no initial state is provided', () => {
-      const expectedState = {
-        data: [],
-        loading: false,
-        page: 1,
-        posting: false,
-        showPlanForm: false,
-        total: 0,
-        filters: {
-          incidentTypes: [],
-        },
-      };
-      expect(plans(undefined, {})).toEqual(expectedState);
+      expect(plans(undefined, {})).toEqual(previousState);
     });
 
     it('should return previous state when given invalid action type', () => {
@@ -52,15 +42,8 @@ describe('Plan:Reducers', () => {
 
     it(`should handle ${Actions.GET_PLANS_START}`, () => {
       const nextState = {
-        data: [],
-        page: 1,
-        total: 0,
-        showPlanForm: false,
+        ...previousState,
         loading: true,
-        posting: false,
-        filters: {
-          incidentTypes: [],
-        },
       };
       expect(plans(previousState, { type: Actions.GET_PLANS_START })).toEqual(
         nextState
@@ -80,15 +63,10 @@ describe('Plan:Reducers', () => {
       };
 
       const nextState = {
+        ...previousState,
         data: [...action.payload.data],
         page: action.meta.page,
         total: action.meta.total,
-        loading: false,
-        posting: false,
-        showPlanForm: false,
-        filters: {
-          incidentTypes: [],
-        },
       };
 
       expect(plans(previousState, action)).toEqual(nextState);
@@ -170,6 +148,56 @@ describe('Plan:Reducers', () => {
       expect(plans(previousState, action)).toEqual(expectedState);
     });
 
+    it(`should handle ${Actions.PUT_PLAN_START}`, () => {
+      const action = { type: Actions.PUT_PLAN_START };
+      const expectedState = {
+        ...previousState,
+        posting: true,
+      };
+
+      expect(plans(previousState, action)).toEqual(expectedState);
+    });
+
+    it(`should handle ${Actions.PUT_PLAN_SUCCESS}`, () => {
+      const action = { type: Actions.PUT_PLAN_SUCCESS };
+      previousState = { ...previousState, posting: true, showPlanForm: true };
+      const expectedState = {
+        ...previousState,
+        posting: false,
+        showPlanForm: false,
+      };
+
+      expect(plans(previousState, action)).toEqual(expectedState);
+    });
+
+    it(`should handle ${Actions.PUT_PLAN_ERROR}`, () => {
+      previousState = { ...previousState, showPlanForm: true };
+      const error = {
+        status: 404,
+        code: 404,
+        name: 'Error',
+        message: 'Not Found',
+        developerMessage: 'Not Found',
+        userMessage: 'Not Found',
+        error: 'Error',
+        error_description: 'Not Found',
+      };
+
+      const action = {
+        type: Actions.PUT_PLAN_ERROR,
+        payload: { data: error },
+        error: true,
+      };
+
+      const expectedState = {
+        ...previousState,
+        posting: false,
+        error,
+      };
+
+      expect(plans(previousState, action)).toEqual(expectedState);
+    });
+
     it(`should handle ${Actions.CLOSE_PLAN_FORM}`, () => {
       const action = { type: Actions.CLOSE_PLAN_FORM };
       previousState = { ...previousState, showPlanForm: true };
@@ -244,6 +272,7 @@ describe('Plan:Reducers', () => {
         showActivityForm: false,
         loading: false,
         posting: false,
+        error: null,
       };
     });
 
@@ -366,6 +395,55 @@ describe('Plan:Reducers', () => {
       expect(planActivities(previousState, action)).toEqual(expectedState);
     });
 
+    it(`should handle ${Actions.PUT_PLAN_ACTIVITY_START}`, () => {
+      const action = { type: Actions.PUT_PLAN_ACTIVITY_START };
+      const expectedState = {
+        ...previousState,
+        posting: true,
+      };
+
+      expect(planActivities(previousState, action)).toEqual(expectedState);
+    });
+
+    it(`should handle ${Actions.PUT_PLAN_ACTIVITY_SUCCESS}`, () => {
+      const action = { type: Actions.PUT_PLAN_ACTIVITY_SUCCESS };
+      previousState = { ...previousState, posting: true };
+      const expectedState = {
+        ...previousState,
+        posting: false,
+        showActivityForm: false,
+      };
+
+      expect(planActivities(previousState, action)).toEqual(expectedState);
+    });
+
+    it(`should handle ${Actions.PUT_PLAN_ACTIVITY_ERROR}`, () => {
+      previousState = { ...previousState, showActivityForm: true };
+      const error = {
+        status: 404,
+        code: 404,
+        name: 'Error',
+        message: 'Not Found',
+        developerMessage: 'Not Found',
+        userMessage: 'Not Found',
+        error: 'Error',
+        error_description: 'Not Found',
+      };
+
+      const action = {
+        type: Actions.PUT_PLAN_ACTIVITY_ERROR,
+        payload: { data: error },
+      };
+
+      const expectedState = {
+        ...previousState,
+        posting: false,
+        error,
+      };
+
+      expect(planActivities(previousState, action)).toEqual(expectedState);
+    });
+
     it(`should handle ${Actions.OPEN_PLAN_ACTIVITY_FORM}`, () => {
       const action = { type: Actions.OPEN_PLAN_ACTIVITY_FORM };
       const expectedState = { ...previousState, showActivityForm: true };
@@ -417,6 +495,7 @@ describe('Plan:Reducers', () => {
         showProcedureForm: false,
         loading: false,
         posting: false,
+        error: null,
       };
     });
 
@@ -597,6 +676,7 @@ describe('Plan:Reducers', () => {
       const expectedState = {
         ...previousState,
         posting: false,
+        error,
       };
 
       expect(planActivityProcedures(previousState, action)).toEqual(

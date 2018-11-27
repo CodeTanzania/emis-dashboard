@@ -1,5 +1,6 @@
 import { Button, Col, Form, Input, Row } from 'antd';
 import flow from 'lodash/flow';
+import map from 'lodash/map';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
@@ -115,7 +116,9 @@ class ActivityProcedureForm extends Component {
                 message: 'Please Select Responsible Role(s)',
               },
             ],
-            initialValue: isEditForm ? procedure.primary : undefined,
+            initialValue: isEditForm
+              ? map(procedure.primary, role => role._id) // eslint-disable-line
+              : [],
           })(
             <SelectSearchBox
               placeholder="Select Role ..."
@@ -123,6 +126,7 @@ class ActivityProcedureForm extends Component {
               onSearch={getRoles}
               optionLabel="name"
               optionValue="_id"
+              initialValue={isEditForm ? procedure.primary : []}
             />
           )}
         </FormItem>
@@ -131,7 +135,9 @@ class ActivityProcedureForm extends Component {
         {/* responsible roles select input */}
         <FormItem label="Supportive Role(s)" {...formItemLayout}>
           {getFieldDecorator('supportive', {
-            initialValue: isEditForm ? procedure.supportive : undefined,
+            initialValue: isEditForm
+              ? map(procedure.supportive, role => role._id) // eslint-disable-line
+              : [],
           })(
             <SelectSearchBox
               placeholder="Select Role ..."
@@ -139,6 +145,7 @@ class ActivityProcedureForm extends Component {
               onSearch={getRoles}
               optionLabel="name"
               optionValue="_id"
+              initialValue={isEditForm ? procedure.supportive : []}
             />
           )}
         </FormItem>
@@ -147,7 +154,9 @@ class ActivityProcedureForm extends Component {
         {/* resource select input */}
         <FormItem label="Resources Needed" {...formItemLayout}>
           {getFieldDecorator('resources', {
-            initialValue: isEditForm ? procedure.resources : undefined,
+            initialValue: isEditForm
+              ? map(procedure.resources, item => item._id) // eslint-disable-line
+              : [],
           })(
             <SelectSearchBox
               placeholder="Select Role ..."
@@ -155,6 +164,7 @@ class ActivityProcedureForm extends Component {
               onSearch={getResourceItems}
               optionLabel="name"
               optionValue="_id"
+              initialValue={isEditForm ? procedure.resources : []}
             />
           )}
         </FormItem>

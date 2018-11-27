@@ -64,6 +64,7 @@ class PlanActivitiesLayout extends Component {
   state = {
     showActivityDetails: false,
     initialSelectedPhase: undefined,
+    isEditForm: false,
   };
 
   static propTypes = {
@@ -117,7 +118,7 @@ class PlanActivitiesLayout extends Component {
   };
 
   /**
-   * Open drawer which contains action form
+   * Open Modal window which contains new activity form
    *
    * @function
    * @name handleOpenActivityForm
@@ -129,6 +130,25 @@ class PlanActivitiesLayout extends Component {
     const { onOpenActivityForm } = this.props;
     this.setState({
       initialSelectedPhase: initialPhase,
+      isEditForm: false,
+    });
+    onOpenActivityForm();
+  };
+
+  /**
+   * Open Modal window which contains edit activity form
+   *
+   * @function
+   * @name handleOpenActivityForm
+   *
+   * @version 0.1.0
+   * @since 0.1.0
+   */
+  handleOpenActivityEditForm = activity => {
+    const { onOpenActivityForm, onSelectActivity } = this.props;
+    onSelectActivity(activity);
+    this.setState({
+      isEditForm: true,
     });
     onOpenActivityForm();
   };
@@ -144,7 +164,23 @@ class PlanActivitiesLayout extends Component {
    */
   handleCloseActivityForm = () => {
     const { onCloseActivityForm } = this.props;
+    this.setState({
+      initialSelectedPhase: undefined,
+    });
     onCloseActivityForm();
+  };
+
+  /**
+   * Function called when modal window is closed
+   *
+   * @function
+   * @name handleAfterCloseModal
+   *
+   * @version 0.1.0
+   * @since 0.1.0
+   */
+  handleAfterCloseModal = () => {
+    this.setState({ isEditForm: false });
   };
 
   /**
@@ -177,7 +213,11 @@ class PlanActivitiesLayout extends Component {
   };
 
   render() {
-    const { showActivityDetails, initialSelectedPhase } = this.state;
+    const {
+      showActivityDetails,
+      initialSelectedPhase,
+      isEditForm,
+    } = this.state;
 
     const {
       plan,
@@ -188,6 +228,14 @@ class PlanActivitiesLayout extends Component {
       showActivityForm,
       loading,
     } = this.props;
+
+    let modalTitle = initialSelectedPhase
+      ? `Add New Activity in ${initialSelectedPhase} phase`
+      : 'Add New Activity';
+
+    if (isEditForm) {
+      modalTitle = `Edit Activity`;
+    }
 
     return (
       <Spin
@@ -262,6 +310,7 @@ class PlanActivitiesLayout extends Component {
                   activities={mitigationActivities}
                   onClickCard={this.handleOpenActivityDetails}
                   onClickAddActivity={this.handleOpenActivityForm}
+                  onClickEditActivity={this.handleOpenActivityEditForm}
                 />
               </Col>
               <Col span={6} className="section section-b-r">
@@ -271,6 +320,7 @@ class PlanActivitiesLayout extends Component {
                   activities={preparednessActivities}
                   onClickCard={this.handleOpenActivityDetails}
                   onClickAddActivity={this.handleOpenActivityForm}
+                  onClickEditActivity={this.handleOpenActivityEditForm}
                 />
               </Col>
               <Col span={6} className="section section-b-r">
@@ -280,6 +330,7 @@ class PlanActivitiesLayout extends Component {
                   activities={responseActivities}
                   onClickCard={this.handleOpenActivityDetails}
                   onClickAddActivity={this.handleOpenActivityForm}
+                  onClickEditActivity={this.handleOpenActivityEditForm}
                 />
               </Col>
               <Col span={6} className="section">
@@ -289,6 +340,7 @@ class PlanActivitiesLayout extends Component {
                   activities={recoveryActivities}
                   onClickCard={this.handleOpenActivityDetails}
                   onClickAddActivity={this.handleOpenActivityForm}
+                  onClickEditActivity={this.handleOpenActivityEditForm}
                 />
               </Col>
             </Row>
@@ -308,16 +360,15 @@ class PlanActivitiesLayout extends Component {
           {/* Activity form modal */}
           <Modal
             visible={showActivityForm}
-            title={
-              initialSelectedPhase
-                ? `Add New Activity in ${initialSelectedPhase} phase`
-                : 'Add New Activity'
-            }
+            title={modalTitle}
             maskClosable={false}
             onCancel={this.handleCloseActivityForm}
             footer={null}
+            destroyOnClose
+            afterClose={this.handleAfterCloseModal}
           >
             <ActivityForm
+              isEditForm={isEditForm}
               onCancel={this.handleCloseActivityForm}
               initialSelectedPhase={initialSelectedPhase}
             />
