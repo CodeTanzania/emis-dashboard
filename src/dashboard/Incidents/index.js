@@ -10,7 +10,8 @@ import 'leaflet-draw';
 import IncidentForm from './components/IncidentForm';
 import MapNav from './components/MapNav';
 import { getIncidentsSuccess } from './actions';
-
+import { showMarkers} from '../../common/lib/mapUtil';
+import popupContent from './components/mapPopup';
 import '../styles.css';
 import 'leaflet-draw/dist/leaflet.draw.css';
 
@@ -80,62 +81,20 @@ class Incidents extends React.Component {
 
   DisplayMarkers = () => {
     this.incidentLayer = L.geoJSON([], {
-      pointToLayer: this.showMarkers,
+      pointToLayer: showMarkers,
       onEachFeature: this.onEachFeature,
     }).addTo(this.map);
   };
-
-  showMarkers = geoJSON => {
-    const customIcon = this.generateMarkerIcon();
-    const { geometry } = geoJSON;
-    const { coordinates } = geometry;
-    return L.marker(coordinates.reverse(), { icon: customIcon });
-  };
-
-  generateMarkerIcon = (fillColor = '#93c47d') => {
-    const svg = `<svg id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 453.54 566.93">
-    <defs>
-      <style>
-        .cls-1 {
-          fill: ${fillColor};
-        }
-      </style>
-    </defs>
-    <title>Severity-Minor</title>
-    <path class="cls-1"
-     d="M198.43,17.57A160.05,160.05,0,0,0,54.1,246.69c.56,1.19,144.33,282.88,144.33,282.88L341,250.19A160,160,0,0,0,198.43,17.57Zm0,256a96,96,0,1,1,96-96A96,96,0,0,1,198.43,273.57Z"/>
-    </svg>
-    `;
-
-    const CustomIcon = L.Icon.extend({
-      options: {
-        iconSize: [40, 40],
-        iconAnchor: [10, 20],
-        shadowAnchor: [4, 62],
-        popupAnchor: [0, -25],
-      },
-    });
-
-    const iconUrl = encodeURI(`data:image/svg+xml,${svg}`).replace('#', '%23');
-    const icon = new CustomIcon({ iconUrl });
-    return icon;
-  };
-
+ 
   onEachFeature = (feature, layer) => {
-    const { geometry, properties } = feature;
-    const { event } = properties;
-    const { type } = geometry;
-    switch (type) {
-      case 'Point': {
+    const { properties, } = feature;
+    const { name,incidentType,description,startedAt, } = properties;
+    layer.bindPopup(popupContent({name,incidentType,description,startedAt}));
         layer
           .on({ click: this.onclickGeoJson })
-          .bindTooltip(`${event}`)
+          .bindTooltip(`${name}`)
           .openTooltip();
-        return true;
-      }
-      default:
-        return false;
-    }
+      
   };
 
   mapLayers = () => {

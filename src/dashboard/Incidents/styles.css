@@ -1,9 +1,7 @@
-<<<<<<< HEAD
 
   .sample{
       background: black;
-      
-=======
+  } 
 #sidebar {
     position: absolute;
     right: 5%;
@@ -13,5 +11,4 @@
     overflow: hidden;
     float: right;
     font-size: 12px;
->>>>>>> feature/settings
   }

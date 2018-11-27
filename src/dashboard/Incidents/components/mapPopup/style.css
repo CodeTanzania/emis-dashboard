@@ -1,0 +1,28 @@
+.leaflet-popup-content{
+    width: 470px;
+}
+#iw-container {
+    margin-bottom: 10px;
+}
+#iw-container .iw-title {
+    font-family: Source Sans Pro, "Helvetica", "Arial", sans-serif;
+    font-size: 1.12em;
+    font-weight: bold;
+    padding: 10px;
+    background-color: #89c2ec;
+    color: white;
+    margin: 0;
+    border-radius: 2px 2px 0 0;
+}
+#iw-container .iw-content {
+    line-height: 18px;
+    font-weight: 400;
+    margin-right: 1px;
+    padding-top: 15px ;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+#popupData{
+    padding-left: 10%;
+}
