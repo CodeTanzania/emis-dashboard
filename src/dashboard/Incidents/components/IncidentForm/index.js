@@ -33,7 +33,6 @@ const { TextArea } = Input;
 const { Option } = Select;
 
 class IncidentForm extends React.Component {
-
   static propTypes = {
     incidentsTypeData: PropTypes.arrayOf(
       PropTypes.shape({
@@ -54,30 +53,34 @@ class IncidentForm extends React.Component {
     getIncidentstypeTrigger: null,
   };
 
+  componentDidMount() {
+    const { getIncidentstypeTrigger } = this.props;
+    getIncidentstypeTrigger();
+  }
+
+  renderIncidentTypes = incidentsTypes =>
+    incidentsTypes.map(({ name, _id }) => (
+      <Option key={_id} value={_id}>
+        {name}
+      </Option>
+    ));
+
   handleSubmit = e => {
     e.preventDefault();
-    const { onSubmitButton, area, } = this.props;
+    const { onSubmitButton, area } = this.props;
     this.props.form.validateFieldsAndScroll((err, fieldsValue) => {
       if (!err) {
-        const { geometry } = area
+        const { geometry } = area;
         const values = {
           ...fieldsValue,
           epicentre: geometry,
-          'startedAt': fieldsValue['startedAt'].toISOString(),
+          startedAt: fieldsValue.startedAt.toISOString(),
         };
         API.createIncident(values);
-        console.log(values);
       }
       onSubmitButton();
     });
   };
-
-  componentDidMount (){
-    const {getIncidentstypeTrigger} = this.props;
-    getIncidentstypeTrigger();
-  }
-
-  renderIncidentTypes = (incidentsTypes) => incidentsTypes.map( ({name, _id}) => <Option key={_id} value={_id}>{name}</Option>);
 
   render() {
     const { getFieldDecorator } = this.props.form;
@@ -138,7 +141,7 @@ class IncidentForm extends React.Component {
             ],
           })(
             <Select placeholder="Select incidentType">
-              { this.renderIncidentTypes( incidentsTypeData ) }
+              {this.renderIncidentTypes(incidentsTypeData)}
             </Select>
           )}
         </FormItem>

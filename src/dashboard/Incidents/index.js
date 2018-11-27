@@ -246,10 +246,10 @@ class Incidents extends React.Component {
       .openOn(this.map);
     this.setState({ hideButton: true });
 
-    document.querySelector('#ok-button').addEventListener('click', e => {
-      e.preventDefault();
-      this.map.closePopup();
-    });
+    // document.querySelector('#ok-button').addEventListener('click', e => {
+    //   e.preventDefault();
+    //   this.map.closePopup();
+    // });
   };
 
   onclickNewIncidentButton = () => {
