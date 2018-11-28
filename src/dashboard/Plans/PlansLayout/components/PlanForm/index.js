@@ -138,12 +138,12 @@ class PlanForm extends Component {
         {/* end plan owner select input */}
 
         {/* plan owner select input */}
-        <FormItem label="boundary" {...formItemLayout}>
+        <FormItem label="Plan Applicable Area" {...formItemLayout}>
           {getFieldDecorator('boundary', {
             rules: [
               {
                 required: true,
-                message: 'Please Select the Plan Applicable boundary',
+                message: 'Please Select the Plan Applicable Area',
               },
             ],
             initialValue: isEditForm ? plan.boundary._id : undefined, // eslint-disable-line
