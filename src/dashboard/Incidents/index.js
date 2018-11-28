@@ -47,6 +47,140 @@ class Incidents extends React.Component {
     handleIncidents: null,
   };
 
+  incidents = [
+    {
+      "type":"Feature",
+      "properties": {
+      "name": "Land slide",
+      "description": "Strong winds and large waves are expected along the coastal areas.",
+      "startedAt": "2018-11-27T08:30:51.052Z",
+      "endedAt": "2018-11-13T03:55:22.588Z",
+      "incidentType": {
+        "nature": "Natural",
+        "family": "Geophysical",
+        "code": "NGE",
+        "name": "Earthquake",
+        "color": "#FFB2B5",
+        "_id": "5be5733a266f3200041c7382"
+      },
+      
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-6.99404, 39.75621]
+    },
+    },
+    {
+      "type":"Feature",
+      "properties": {
+        "name": "Land slide",
+        "description": "Strong winds and large waves are expected along the coastal areas.",
+        "startedAt": "2018-11-27T08:30:51.052Z",
+        "endedAt": "2018-11-13T03:55:22.588Z",
+        "incidentType": {
+          "nature": "Natural",
+         "family": "Hydrological",
+         "code": "NHWA",
+         "name": "Wave Action",
+         "color": "#C4F2FF",
+         "_id": "5be5733a266f3200041c7376",
+         },
+        },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [ 
+          39.699996,
+          -7.56664]
+    },
+    },{
+      "type":"Feature",
+      "properties": {
+        "name": "Land slide",
+        "description": "Strong winds and large waves are expected along the coastal areas.",
+        "startedAt": "2018-11-27T08:30:51.052Z",
+        "endedAt": "2018-11-13T03:55:22.588Z",
+        "incidentType": {
+          "nature": "Natural",
+         "family": "Biological",
+         "code": "NBII",
+         "name": "Insect Infestation",
+         "color": "#F7EF80",
+         "_id": "5be5733a266f3200041c7377",
+         },
+        },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [ 32.69130434782609,
+          -2.039130434782609]
+    },
+    },{
+      "type":"Feature",
+    
+      "properties": {
+        "name": "Land slide",
+        "description": "Strong winds and large waves are expected along the coastal areas.",
+        "startedAt": "2018-11-27T08:30:51.052Z",
+        "endedAt": "2018-11-13T03:55:22.588Z",
+        "incidentType": {
+          "nature": "Natural",
+          "family": "Extra-terrestrial",
+          "code": "NESW",
+          "name": "Space Weather",
+          "color": "#92F4B5",
+          "_id": "5be5733a266f3200041c7378",
+        }, 
+        },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [35.6908,
+          -6.63125]
+    },
+    },{
+      "type":"Feature",
+     
+      "properties": {
+        "name": "Land slide",
+        "description": "Strong winds and large waves are expected along the coastal areas.",
+        "startedAt": "2018-11-27T08:30:51.052Z",
+        "endedAt": "2018-11-13T03:55:22.588Z",
+        "incidentType": {
+          "nature": "Natural",
+          "family": "Hydrological",
+          "code": "NHF",
+          "name": "Flood",
+          "color": "#A0FFC4",
+          "_id": "5be5733a266f3200041c737a",
+        },
+        },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [37.730555555555554,
+          -9.383333333333335]
+    },
+    },{
+      "type":"Feature",
+      "properties": {
+        "name": "Land slide",
+        "description": "Strong winds and large waves are expected along the coastal areas.",
+        "startedAt": "2018-11-27T08:30:51.052Z",
+        "endedAt": "2018-11-13T03:55:22.588Z",
+        "incidentType": {
+          "nature": "Natural",
+          "family": "Geophysical",
+          "code": "NGVA",
+          "name": "Volcanic Activity",
+          "color": "#90DFF9",
+          "_id": "5be5733a266f3200041c7379",
+        },
+        },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [ 34.40909090909091,
+          -6.5227272727272725]
+    },
+    }
+]
+
   constructor() {
     super();
     this.state = {
@@ -71,9 +205,9 @@ class Incidents extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { incidents } = this.props;
-    if (incidents !== prevProps.incidents) {
-      incidents.map(({ epicentre }) => this.incidentLayer.addData(epicentre));
+    // const { this.incidents } = this.props;
+    if (this.incidents !== prevProps.incidents) {
+      this.incidents.map( epicentre => this.incidentLayer.addData(epicentre));
       this.map.setView([-6.179, 35.754], 7);
       this.map.flyTo([-6.179, 35.754]);
     }

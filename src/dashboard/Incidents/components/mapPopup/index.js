@@ -5,8 +5,7 @@ export default function popupContent({ name, description, startedAt, incidentTyp
     return (
       `<div class="popupContent">
           <div id="iw-container">
-            <div class="iw-title">`+
-               name + 
+            <div class="iw-title">`+ name + 
             `</div>
             <div class="iw-content">
               <table >

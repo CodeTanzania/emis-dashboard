@@ -113,8 +113,10 @@ export function generateMarkerIcon (fillColor = '#93c47d') {
 
 
 export function showMarkers (geoJSON) {
-  const customIcon = generateMarkerIcon();
-  const { geometry } = geoJSON;
+  const { geometry,properties } = geoJSON;
+  const {incidentType} = properties;
+  const {color} = incidentType;
+  const customIcon = generateMarkerIcon(color);
   const { coordinates } = geometry;
   return L.marker(coordinates.reverse(), { icon: customIcon });
 };
