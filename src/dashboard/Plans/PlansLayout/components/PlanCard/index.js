@@ -68,6 +68,7 @@ export default class PlanCard extends Component {
   static propTypes = {
     incidentType: PropTypes.string.isRequired,
     jurisdiction: PropTypes.string.isRequired,
+    level: PropTypes.string.isRequired,
     description: PropTypes.string,
     nature: PropTypes.string,
     family: PropTypes.string,
@@ -76,6 +77,7 @@ export default class PlanCard extends Component {
     updatedAt: PropTypes.string.isRequired,
     onClickPlan: PropTypes.func.isRequired,
     onEditPlan: PropTypes.func.isRequired,
+    owner: PropTypes.string,
   };
 
   static defaultProps = {
@@ -83,6 +85,7 @@ export default class PlanCard extends Component {
     color: '#0071fc',
     nature: 'N/A',
     family: 'N/A',
+    owner: 'N/A',
     description: '',
   };
 
@@ -162,9 +165,11 @@ export default class PlanCard extends Component {
     const {
       incidentType,
       jurisdiction,
+      level,
       description,
       nature,
       family,
+      owner,
       activityCount,
       color,
       updatedAt,
@@ -192,7 +197,8 @@ export default class PlanCard extends Component {
               >
                 {`${nature} > ${family}`}
               </p>
-              <p className="subtitle">{jurisdiction}</p>
+              <p className="subtitle">{`Area: ${jurisdiction} (${level})`}</p>
+              <p className="subtitle">{`Created by: ${owner}`}</p>
             </Col>
             <Col span={3} xl={6} xxl={4} className="activitiesBadge">
               <Badge

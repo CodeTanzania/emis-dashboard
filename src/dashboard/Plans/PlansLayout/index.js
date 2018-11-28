@@ -203,7 +203,9 @@ class PlansLayout extends Component {
                   <List.Item>
                     <PlanCard
                       incidentType={plan.incidentType.name}
-                      jurisdiction="Dar es Salaam"
+                      jurisdiction={plan.boundary.name}
+                      level={plan.boundary.level}
+                      owner={plan.owner.name}
                       description={plan.description}
                       nature={plan.incidentType.nature}
                       family={plan.incidentType.family}
