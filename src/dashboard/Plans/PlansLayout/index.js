@@ -132,6 +132,7 @@ class PlansLayout extends Component {
               <Row>
                 <Col span={5}>
                   <SelectSearchBox
+                    isFilter
                     onChange={onFilterByIncidentType}
                     onSearch={getIncidentTypes}
                     placeholder="Filter by Incident Type"
@@ -142,6 +143,7 @@ class PlansLayout extends Component {
                 </Col>
                 <Col span={5}>
                   <SelectSearchBox
+                    isFilter
                     onChange={() => {}}
                     onSearch={getIncidentTypes}
                     placeholder="Filter by Plan Location"
@@ -152,6 +154,7 @@ class PlansLayout extends Component {
                 </Col>
                 <Col span={5}>
                   <SelectSearchBox
+                    isFilter
                     onChange={() => {}}
                     onSearch={getIncidentTypes}
                     placeholder="Filter by Plan Owner"

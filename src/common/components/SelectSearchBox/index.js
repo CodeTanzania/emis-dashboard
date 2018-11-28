@@ -43,12 +43,14 @@ export default class SelectSearchBox extends Component {
         name: PropTypes.string.isRequired,
       }),
     ]),
+    isFilter: PropTypes.bool,
   };
 
   static defaultProps = {
     onChange: null,
     value: undefined,
     initialValue: undefined,
+    isFilter: false,
   };
 
   constructor(props) {
@@ -101,6 +103,9 @@ export default class SelectSearchBox extends Component {
    */
   handleChange = value => {
     const { onChange } = this.props;
+    this.setState({
+      value,
+    });
     onChange(value);
   };
 
@@ -152,14 +157,38 @@ export default class SelectSearchBox extends Component {
   };
 
   render() {
-    const { data, loading } = this.state;
-    const { optionValue, optionLabel, ...otherProps } = this.props;
+    const { data, loading, value } = this.state;
+    const { optionValue, optionLabel, isFilter, ...otherProps } = this.props;
 
     const options = data.map(option => (
       <Option key={this.getOptionProp(optionValue, option)}>
         {this.getOptionProp(optionLabel, option)}
       </Option>
     ));
+
+    if (isFilter) {
+      return (
+        <Select
+          {...otherProps}
+          showSearch
+          onSearch={this.handleSearch}
+          onChange={this.handleChange}
+          allowClear
+          value={value}
+          onDropdownVisibleChange={this.handleOnDropdownVisibleChange}
+          filterOption={false}
+          notFoundContent={
+            loading ? (
+              <Spin size="small" indicator={spinIcon} />
+            ) : (
+              'Results Not Found'
+            )
+          }
+        >
+          {options}
+        </Select>
+      );
+    }
 
     return (
       <Select
