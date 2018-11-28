@@ -130,7 +130,7 @@ class PlansLayout extends Component {
           <Toolbar>
             <Filters span={17}>
               <Row>
-                <Col span={5}>
+                <Col md={7} xl={7} xxl={5}>
                   <SelectSearchBox
                     isFilter
                     onChange={onFilterByIncidentType}
@@ -141,7 +141,7 @@ class PlansLayout extends Component {
                     optionValue="_id"
                   />
                 </Col>
-                <Col span={5}>
+                <Col md={7} xl={7} xxl={5}>
                   <SelectSearchBox
                     isFilter
                     onChange={() => {}}
@@ -152,7 +152,7 @@ class PlansLayout extends Component {
                     optionValue="_id"
                   />
                 </Col>
-                <Col span={5}>
+                <Col md={7} xl={7} xxl={5}>
                   <SelectSearchBox
                     isFilter
                     onChange={() => {}}

@@ -120,8 +120,6 @@ export default class PlanCard extends Component {
    * @function
    * @name handleEditPlan
    *
-   * @param {Event} e - Event triggered object
-   *
    * @version 0.1.0
    * @since 0.1.0
    */
@@ -137,7 +135,6 @@ export default class PlanCard extends Component {
    * @function
    * @name handleDisseminatePlan
    *
-   * @param {Event} e - Event triggered object
    *
    * @version 0.1.0
    * @since 0.1.0
@@ -151,8 +148,6 @@ export default class PlanCard extends Component {
    *
    * @function
    * @name handleActivatePlan
-   *
-   * @param {Event} e - Event triggered object
    *
    * @version 0.1.0
    * @since 0.1.0
