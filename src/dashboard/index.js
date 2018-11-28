@@ -8,6 +8,7 @@ import Stakeholders from './Stakeholders';
 import Resources from './Resources';
 import NotificationPanel from '../common/components/NotificationPanel';
 import AdjustStockForm from './Resources/components/AdjustStockForm';
+import ItemForm from './Resources/components/ItemForm';
 /* import styles */
 import styles from './styles.css';
 
@@ -80,6 +81,7 @@ export default function Dashboard() {
       </Layout>
       <NotificationPanel />
       <AdjustStockForm />
+      <ItemForm />
     </Fragment>
   );
 }

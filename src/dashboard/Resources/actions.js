@@ -62,3 +62,21 @@ export const getResourceItems = params => (dispatch, getState, { API }) => {
     .then(items => dispatch(getResourceItemsSuccess(items)))
     .catch(error => dispatch(getResourceItemsFailed(error)));
 };
+
+export const showResourceItemForm = (item = null) => ({
+  type: types.SHOW_RESOURCE_ITEM_FORM,
+  payload: {
+    data: item,
+  },
+});
+
+export const dismissResourceItemForm = () => ({
+  type: types.DISMISS_RESOURCE_ITEM_FORM,
+});
+
+export const setResourceSchema = schema => ({
+  type: types.SET_RESOURCE_SCHEMA,
+  payload: {
+    data: schema,
+  },
+});

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { getResourceItems } from '../../actions';
+import { getResourceItems, showResourceItemForm } from '../../actions';
 import ItemTable from './ItemTable';
 
 const mapStateToProps = state => ({
@@ -9,6 +9,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   getResourceItems,
+  showResourceItemForm,
 };
 
 export default connect(

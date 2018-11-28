@@ -88,3 +88,35 @@ export const resourceItems = (state = { data: [] }, action) => {
       return state;
   }
 };
+
+export const showResourceItemForm = (state = false, action) => {
+  switch (action.type) {
+    case types.SHOW_RESOURCE_ITEM_FORM:
+      return true;
+    case types.DISMISS_RESOURCE_ITEM_FORM:
+      return false;
+    default:
+      return state;
+  }
+};
+
+export const resourceItemToEdit = (state = null, action) => {
+  switch (action.type) {
+    case types.SHOW_RESOURCE_ITEM_FORM:
+      return action.payload.data;
+    case types.DISMISS_RESOURCE_ITEM_FORM:
+      // dimiss item form and set item to null
+      return null;
+    default:
+      return state;
+  }
+};
+
+export const resourceItemSchema = (state = null, action) => {
+  switch (action.type) {
+    case types.SET_RESOURCE_SCHEMA:
+      return action.payload.data;
+    default:
+      return state;
+  }
+};

@@ -101,9 +101,7 @@ export const getResourceStocks = (query = {}) => {
     // stock search text which focus on stock name
     params.q = query.q;
   }
-  return axios
-    .get('/api/resources/stocks', { params })
-    .then(response => response.data);
+  return Axios.get('/stocks', { params }).then(response => response.data);
 };
 
 /**
@@ -111,11 +109,17 @@ export const getResourceStocks = (query = {}) => {
  * @param {Object} params Query params
  */
 export const findResourceItems = params =>
-  axios.get('/api/resources/items', { params }).then(response => response.data);
+  Axios.get('/items', { params }).then(response => response.data);
 
 /**
  *
  * @param {Object} data - Resource adjustment data
  */
 export const createResourceStockAdjustment = data =>
-  axios.post('/api/resources/adjustments', data).then(res => res.data);
+  Axios.post('/adjustments', data).then(res => res.data);
+
+/**
+ * Retrieve resource item schema
+ */
+export const loadResourceItemSchema = () =>
+  Axios.get('/items/schema').then(response => response.data);

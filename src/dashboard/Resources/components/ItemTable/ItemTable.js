@@ -1,5 +1,5 @@
 /* eslint no-underscore-dangle: 'off' */
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { Form, Input, Table, Button, Divider } from 'antd';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
@@ -49,6 +49,20 @@ const getColumns = handleEditItem => [
     title: 'Color',
     dataIndex: 'color',
     width: '10%',
+    render: text => (
+      <span>
+        <span
+          style={{
+            display: 'inline-block',
+            width: '20px',
+            height: '10px',
+            backgroundColor: `${text}`,
+          }}
+        />
+        &nbsp;
+        {text}
+      </span>
+    ),
     sorter: (a, b) => a.color - b.color,
   },
   {
@@ -90,6 +104,7 @@ class ItemTable extends Component {
       data: PropTypes.arrayOf(PropTypes.object),
     }).isRequired,
     loadingItems: PropTypes.bool.isRequired,
+    showResourceItemForm: PropTypes.func.isRequired,
   };
 
   componentDidMount() {
@@ -103,19 +118,22 @@ class ItemTable extends Component {
     }, 500);
   };
 
-  handleOnEditClick = () => {};
+  handleAddNewItem = () => {
+    this.props.showResourceItemForm();
+  };
+
+  handleOnEditClick = item => {
+    this.props.showResourceItemForm(item);
+  };
 
   render() {
     const { items, loadingItems } = this.props;
 
     return (
-      <Fragment>
+      <div className={cx('ResourceTable')}>
         <div className={cx('itemTableOperations')}>
-          <Form layout="vertical" style={{ width: '80%' }}>
-            <FormItem
-              label="Filter by Name"
-              style={{ width: '100%', marginBottom: '0', paddingBottom: '0' }}
-            >
+          <Form layout="vertical" className={cx('filters')}>
+            <FormItem label="Filter by Name" className={cx('nameFilter')}>
               <Input
                 type="text"
                 placeholder="Search By Item Name..."
@@ -124,8 +142,7 @@ class ItemTable extends Component {
             </FormItem>
           </Form>
           <div>
-            <Button type="primary" icon="plus">
-              {' '}
+            <Button type="primary" icon="plus" onClick={this.handleAddNewItem}>
               New Item
             </Button>
           </div>
@@ -138,7 +155,7 @@ class ItemTable extends Component {
           size="middle"
           columns={getColumns(this.handleOnEditClick)}
         />
-      </Fragment>
+      </div>
     );
   }
 }
