@@ -10,6 +10,7 @@ import {
   openPlanActivityProcedureForm,
   selectPlanActivityProcedure,
 } from '../../../../../actions';
+import ActivityProcedureDetails from '../ActivityProcedureDetails';
 import ActivityProcedureForm from '../ActivityProcedureForm';
 import ActivityProcedureItem from '../ActivityProcedureItem';
 import './styles.css';
@@ -96,6 +97,32 @@ class ActivityProcedureList extends Component {
   };
 
   /**
+   * Handle click action to view procedure details
+   *
+   * @function
+   * @name handleOpenProcedureDetails
+   *
+   * @version 0.1.0
+   * @since  0.1.0
+   */
+  handleOpenProcedureDetails = () => {
+    this.setState({ showProcedureDetails: true });
+  };
+
+  /**
+   * Handle click action to close procedure details modal
+   *
+   * @function
+   * @name handleCloseProcedureDetails
+   *
+   * @version 0.1.0
+   * @since  0.1.0
+   */
+  handleCloseProcedureDetails = () => {
+    this.setState({ showProcedureDetails: false });
+  };
+
+  /**
    * Handle Close Activity details drawer event
    *
    * @function
@@ -104,12 +131,12 @@ class ActivityProcedureList extends Component {
    * @version 0.1.0
    * @since 0.1.0
    */
-  handleAfterCloseModal = () => {
-    this.setState({ isEditForm: false });
+  handleAfterCloseFormModal = () => {
+    this.setState({ isEditForm: false, showProcedureDetails: false });
   };
 
   render() {
-    const { procedures, isEditForm } = this.state;
+    const { procedures, isEditForm, showProcedureDetails } = this.state;
     const { onSelectProcedure, showActivityProcedureForm } = this.props;
     return (
       <div className="ActivityProcedureList">
@@ -147,12 +174,16 @@ class ActivityProcedureList extends Component {
                 onSelectProcedure(procedure);
                 this.handleOpenActivityProcedureForm(true);
               }}
+              onView={() => {
+                onSelectProcedure(procedure);
+                this.handleOpenProcedureDetails();
+              }}
             />
           )}
         />
         {/* end activity procedure draggable list */}
 
-        {/* Activity form modal */}
+        {/* Procedure form modal */}
         <Modal
           visible={showActivityProcedureForm}
           title={
@@ -164,14 +195,25 @@ class ActivityProcedureList extends Component {
           onCancel={this.handleCloseActivityProcedureForm}
           footer={null}
           destroyOnClose
-          afterClose={this.handleAfterCloseModal}
+          afterClose={this.handleAfterCloseFormModal}
         >
           <ActivityProcedureForm
             isEditForm={isEditForm}
             onCancel={this.handleCloseActivityProcedureForm}
           />
         </Modal>
-        {/* End Activity form modal */}
+        {/* End procedure form modal */}
+
+        {/* Procedure Details Modal */}
+        <Modal
+          visible={showProcedureDetails}
+          title="Standard Operating Procedure Details"
+          maskClosable={false}
+          onCancel={this.handleCloseProcedureDetails}
+        >
+          <ActivityProcedureDetails />
+        </Modal>
+        {/* End procedure Details Modal */}
       </div>
     );
   }

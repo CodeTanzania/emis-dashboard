@@ -1,4 +1,4 @@
-import { Checkbox, Col, Row, Button } from 'antd';
+import { Button, Checkbox, Col, Row } from 'antd';
 import flow from 'lodash/flow';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -131,6 +131,7 @@ function ActivityProcedureItem({
   description,
   isDragging,
   onEdit,
+  onView,
   connectDragSource,
   connectDropTarget,
 }) {
@@ -160,28 +161,8 @@ function ActivityProcedureItem({
               style={{ border: 0 }}
               theme="outlined"
               size="large"
+              onClick={onView}
             />
-            {/* <Button */}
-            {/*   icon="file-text" */}
-            {/*   title="Attach Assessment to the SOP" */}
-            {/*   style={{ border: 0 }} */}
-            {/*   theme="outlined" */}
-            {/*   size="large" */}
-            {/* /> */}
-            {/* <Button */}
-            {/*   icon="user-add" */}
-            {/*   title="Attach Stakeholder Role" */}
-            {/*   style={{ border: 0 }} */}
-            {/*   theme="outlined" */}
-            {/*   size="large" */}
-            {/* /> */}
-            {/* <Button */}
-            {/*   icon="gold" */}
-            {/*   title="Add SOP Resource" */}
-            {/*   style={{ border: 0 }} */}
-            {/*   theme="outlined" */}
-            {/*   size="large" */}
-            {/* /> */}
             <Button
               icon="edit"
               title="Edit SOP"
@@ -210,6 +191,8 @@ ActivityProcedureItem.propTypes = {
   name: PropTypes.string.isRequired,
   description: PropTypes.string,
   number: PropTypes.number,
+  onEdit: PropTypes.func.isRequired,
+  onView: PropTypes.func.isRequired,
   isDragging: PropTypes.bool.isRequired,
   connectDragSource: PropTypes.func.isRequired,
   connectDropTarget: PropTypes.func.isRequired,
