@@ -1,8 +1,11 @@
 
 .MapNav {
     position: absolute;
-    right: 5%;
     top: 2%;
     z-index: 1000;
-  
+    float: left;
+    left: 150px;
+    height: auto;
+    overflow: hidden;
+    font-size: 12px;
 }

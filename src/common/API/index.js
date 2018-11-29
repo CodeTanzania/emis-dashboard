@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API_END_POINT = 'https://emis-asat.herokuapp.com/v1';
-const INCIDENTS_TYPE_API = 'https://emis-incident-type.herokuapp.com/v1';
+const INCIDENTS_TYPE_API = 'https://emis-plan.herokuapp.com/v1';
 const INCIDENTS_API = 'https://emis-incident.herokuapp.com/v1/';
 
 /**

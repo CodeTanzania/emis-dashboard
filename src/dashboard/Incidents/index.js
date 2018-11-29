@@ -10,7 +10,7 @@ import 'leaflet-draw';
 import IncidentForm from './components/IncidentForm';
 import MapNav from './components/MapNav';
 import { getIncidentsSuccess } from './actions';
-import { showMarkers} from '../../common/lib/mapUtil';
+import { showMarkers,baseMaps } from '../../common/lib/mapUtil';
 import popupContent from './components/mapPopup';
 import '../styles.css';
 import 'leaflet-draw/dist/leaflet.draw.css';
@@ -39,147 +39,150 @@ class Incidents extends React.Component {
         endAt: PropTypes.string.isRequired,
       }).isRequired
     ),
-    handleIncidents: PropTypes.func,
+    // handleIncidents: PropTypes.func,
   };
 
   static defaultProps = {
     incidents: null,
-    handleIncidents: null,
+    // handleIncidents: null,
   };
 
   incidents = [
     {
-      "type":"Feature",
-      "properties": {
-      "name": "Land slide",
-      "description": "Strong winds and large waves are expected along the coastal areas.",
-      "startedAt": "2018-11-27T08:30:51.052Z",
-      "endedAt": "2018-11-13T03:55:22.588Z",
-      "incidentType": {
-        "nature": "Natural",
-        "family": "Geophysical",
-        "code": "NGE",
-        "name": "Earthquake",
-        "color": "#FFB2B5",
-        "_id": "5be5733a266f3200041c7382"
+      type: 'Feature',
+      properties: {
+        name: 'Land slide',
+        description:
+          'Strong winds and large waves are expected along the coastal areas.',
+        startedAt: '2018-11-27T08:30:51.052Z',
+        endedAt: '2018-11-13T03:55:22.588Z',
+        incidentType: {
+          nature: 'Natural',
+          family: 'Geophysical',
+          code: 'NGE',
+          name: 'Earthquake',
+          color: '#FFB2B5',
+          _id: '5be5733a266f3200041c7382',
+        },
       },
-      
+      geometry: {
+        type: 'Point',
+        coordinates: [-6.99404, 39.75621],
       },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [-6.99404, 39.75621]
-    },
     },
     {
-      "type":"Feature",
-      "properties": {
-        "name": "Land slide",
-        "description": "Strong winds and large waves are expected along the coastal areas.",
-        "startedAt": "2018-11-27T08:30:51.052Z",
-        "endedAt": "2018-11-13T03:55:22.588Z",
-        "incidentType": {
-          "nature": "Natural",
-         "family": "Hydrological",
-         "code": "NHWA",
-         "name": "Wave Action",
-         "color": "#C4F2FF",
-         "_id": "5be5733a266f3200041c7376",
-         },
+      type: 'Feature',
+      properties: {
+        name: 'Land slide',
+        description:
+          'Strong winds and large waves are expected along the coastal areas.',
+        startedAt: '2018-11-27T08:30:51.052Z',
+        endedAt: '2018-11-13T03:55:22.588Z',
+        incidentType: {
+          nature: 'Natural',
+          family: 'Hydrological',
+          code: 'NHWA',
+          name: 'Wave Action',
+          color: '#C4F2FF',
+          _id: '5be5733a266f3200041c7376',
         },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [ 
-          39.699996,
-          -7.56664]
+      },
+      geometry: {
+        type: 'Point',
+        coordinates: [39.699996, -7.56664],
+      },
     },
-    },{
-      "type":"Feature",
-      "properties": {
-        "name": "Land slide",
-        "description": "Strong winds and large waves are expected along the coastal areas.",
-        "startedAt": "2018-11-27T08:30:51.052Z",
-        "endedAt": "2018-11-13T03:55:22.588Z",
-        "incidentType": {
-          "nature": "Natural",
-         "family": "Biological",
-         "code": "NBII",
-         "name": "Insect Infestation",
-         "color": "#F7EF80",
-         "_id": "5be5733a266f3200041c7377",
-         },
+    {
+      type: 'Feature',
+      properties: {
+        name: 'Land slide',
+        description:
+          'Strong winds and large waves are expected along the coastal areas.',
+        startedAt: '2018-11-27T08:30:51.052Z',
+        endedAt: '2018-11-13T03:55:22.588Z',
+        incidentType: {
+          nature: 'Natural',
+          family: 'Biological',
+          code: 'NBII',
+          name: 'Insect Infestation',
+          color: '#F7EF80',
+          _id: '5be5733a266f3200041c7377',
         },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [ 32.69130434782609,
-          -2.039130434782609]
+      },
+      geometry: {
+        type: 'Point',
+        coordinates: [32.69130434782609, -2.039130434782609],
+      },
     },
-    },{
-      "type":"Feature",
-    
-      "properties": {
-        "name": "Land slide",
-        "description": "Strong winds and large waves are expected along the coastal areas.",
-        "startedAt": "2018-11-27T08:30:51.052Z",
-        "endedAt": "2018-11-13T03:55:22.588Z",
-        "incidentType": {
-          "nature": "Natural",
-          "family": "Extra-terrestrial",
-          "code": "NESW",
-          "name": "Space Weather",
-          "color": "#92F4B5",
-          "_id": "5be5733a266f3200041c7378",
-        }, 
+    {
+      type: 'Feature',
+
+      properties: {
+        name: 'Land slide',
+        description:
+          'Strong winds and large waves are expected along the coastal areas.',
+        startedAt: '2018-11-27T08:30:51.052Z',
+        endedAt: '2018-11-13T03:55:22.588Z',
+        incidentType: {
+          nature: 'Natural',
+          family: 'Extra-terrestrial',
+          code: 'NESW',
+          name: 'Space Weather',
+          color: '#92F4B5',
+          _id: '5be5733a266f3200041c7378',
         },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [35.6908,
-          -6.63125]
+      },
+      geometry: {
+        type: 'Point',
+        coordinates: [35.6908, -6.63125],
+      },
     },
-    },{
-      "type":"Feature",
-     
-      "properties": {
-        "name": "Land slide",
-        "description": "Strong winds and large waves are expected along the coastal areas.",
-        "startedAt": "2018-11-27T08:30:51.052Z",
-        "endedAt": "2018-11-13T03:55:22.588Z",
-        "incidentType": {
-          "nature": "Natural",
-          "family": "Hydrological",
-          "code": "NHF",
-          "name": "Flood",
-          "color": "#A0FFC4",
-          "_id": "5be5733a266f3200041c737a",
+    {
+      type: 'Feature',
+
+      properties: {
+        name: 'Land slide',
+        description:
+          'Strong winds and large waves are expected along the coastal areas.',
+        startedAt: '2018-11-27T08:30:51.052Z',
+        endedAt: '2018-11-13T03:55:22.588Z',
+        incidentType: {
+          nature: 'Natural',
+          family: 'Hydrological',
+          code: 'NHF',
+          name: 'Flood',
+          color: '#A0FFC4',
+          _id: '5be5733a266f3200041c737a',
         },
-        },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [37.730555555555554,
-          -9.383333333333335]
+      },
+      geometry: {
+        type: 'Point',
+        coordinates: [37.730555555555554, -9.383333333333335],
+      },
     },
-    },{
-      "type":"Feature",
-      "properties": {
-        "name": "Land slide",
-        "description": "Strong winds and large waves are expected along the coastal areas.",
-        "startedAt": "2018-11-27T08:30:51.052Z",
-        "endedAt": "2018-11-13T03:55:22.588Z",
-        "incidentType": {
-          "nature": "Natural",
-          "family": "Geophysical",
-          "code": "NGVA",
-          "name": "Volcanic Activity",
-          "color": "#90DFF9",
-          "_id": "5be5733a266f3200041c7379",
+    {
+      type: 'Feature',
+      properties: {
+        name: 'Land slide',
+        description:
+          'Strong winds and large waves are expected along the coastal areas.',
+        startedAt: '2018-11-27T08:30:51.052Z',
+        endedAt: '2018-11-13T03:55:22.588Z',
+        incidentType: {
+          nature: 'Natural',
+          family: 'Geophysical',
+          code: 'NGVA',
+          name: 'Volcanic Activity',
+          color: '#90DFF9',
+          _id: '5be5733a266f3200041c7379',
         },
-        },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [ 34.40909090909091,
-          -6.5227272727272725]
+      },
+      geometry: {
+        type: 'Point',
+        coordinates: [34.40909090909091, -6.5227272727272725],
+      },
     },
-    }
-]
+  ];
 
   constructor() {
     super();
@@ -200,14 +203,14 @@ class Incidents extends React.Component {
     this.map = this.mapRef.current.leafletElement;
     this.mapLayers();
     this.DisplayMarkers();
-    const { handleIncidents } = this.props;
-    handleIncidents();
+    // const { handleIncidents } = this.props;
+    // handleIncidents();
   }
 
   componentDidUpdate(prevProps) {
     // const { this.incidents } = this.props;
     if (this.incidents !== prevProps.incidents) {
-      this.incidents.map( epicentre => this.incidentLayer.addData(epicentre));
+      this.incidents.map(epicentre => this.incidentLayer.addData(epicentre));
       this.map.setView([-6.179, 35.754], 7);
       this.map.flyTo([-6.179, 35.754]);
     }
@@ -219,82 +222,28 @@ class Incidents extends React.Component {
       onEachFeature: this.onEachFeature,
     }).addTo(this.map);
   };
- 
+
   onEachFeature = (feature, layer) => {
-    const { properties, } = feature;
-    const { name,incidentType,description,startedAt, } = properties;
-    layer.bindPopup(popupContent({name,incidentType,description,startedAt}));
-        layer
-          .on({ click: this.onclickGeoJson })
-          .bindTooltip(`${name}`)
-          .openTooltip();
-      
+    const { properties } = feature;
+    const { name, incidentType, description, startedAt } = properties;
+    layer.bindPopup(
+      popupContent({ name, incidentType, description, startedAt })
+    );
+    layer
+      .on({ click: this.onclickGeoJson })
+      .bindTooltip(`${name}`)
+      .openTooltip();
   };
 
   mapLayers = () => {
-    const mapboxAttribution =
-      '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a>' +
-      ' © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> ' +
-      '<strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">' +
-      'Improve this map</a></strong>';
-
-    const osmAttr =
-      'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors,' +
-      ' <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>';
-
-    const osm = new L.TileLayer(
-      'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-      {
-        attribution: osmAttr,
-        maxZoom: 19,
-      }
-    );
-
-    const customOsmBright = new L.TileLayer(
-      'https://api.mapbox.com/styles/v1/samtwesa/' +
-        'cj6p13u2o25wa2rmj3k05qnrx/tiles/256/{z}/{x}/{y}?access_token=' +
-        'pk.eyJ1Ijoic2FtdHdlc2EiLCJhIjoiZTc1OTQ4ODE0ZmY2MzY0MGYwMDNjOWNlYTYxMjU4NDYifQ.' +
-        'F1zCcOYqpXWd4C9l9xqvEQ',
-      {
-        attribution: mapboxAttribution,
-        maxZoom: 20,
-      }
-    );
-
-    const defaultMap = new L.TileLayer(
-      'https://api.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoid29ybGRiYW5rLWVkdWNhdGlvbiIsImEiOiJIZ2VvODFjIn0.TDw5VdwGavwEsch53sAVxA#1.6/23.725906/-39.714135/0',
-      {
-        attribution: mapboxAttribution,
-        maxZoom: 20,
-      }
-    );
-
-    const satelliteLayer = new L.TileLayer(
-      'https://api.mapbox.com/styles/v1/mapbox/satellite-v9/' +
-        'tiles/256/{z}/{x}/{y}?access_token=' +
-        'pk.eyJ1Ijoic2FtdHdlc2EiLCJhIjoiZTc1OTQ4ODE0ZmY2MzY0MGYwMDNjOWNlYTYxMjU4NDYifQ.' +
-        'F1zCcOYqpXWd4C9l9xqvEQ',
-      {
-        attribution: mapboxAttribution,
-        maxZoom: 20,
-      }
-    );
-
-    const baseMaps = {
-      OpenStreetMap: osm,
-      Satellite: satelliteLayer,
-      Standard: customOsmBright,
-      Dafault: defaultMap,
-    };
-
-    L.control.layers(baseMaps).addTo(this.map);
+    L.control.layers(baseMaps, {}, {position:'bottomright'}).addTo(this.map);
   };
 
   initDrawControls = () => {
     this.drawnItems = new L.FeatureGroup();
     this.map.addLayer(this.drawnItems);
     this.drawControl = new L.Control.Draw({
-      position: 'topleft',
+      position: 'topright',
       draw: {
         polyline: false,
         circlemarker: false,

@@ -1,4 +1,5 @@
 import L from 'leaflet';
+
 export function incidentToGeojson(incident) {
   const {
     name,
@@ -22,7 +23,6 @@ export function incidentToGeojson(incident) {
   return { type, properties, geometry };
 }
 
-export function mapLayers() {
   const mapboxAttribution =
     '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a>' +
     ' © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> ' +
@@ -43,9 +43,9 @@ export function mapLayers() {
 
   const customOsmBright = new L.TileLayer(
     'https://api.mapbox.com/styles/v1/samtwesa/' +
-    'cj6p13u2o25wa2rmj3k05qnrx/tiles/256/{z}/{x}/{y}?access_token=' +
-    'pk.eyJ1Ijoic2FtdHdlc2EiLCJhIjoiZTc1OTQ4ODE0ZmY2MzY0MGYwMDNjOWNlYTYxMjU4NDYifQ.' +
-    'F1zCcOYqpXWd4C9l9xqvEQ',
+      'cj6p13u2o25wa2rmj3k05qnrx/tiles/256/{z}/{x}/{y}?access_token=' +
+      'pk.eyJ1Ijoic2FtdHdlc2EiLCJhIjoiZTc1OTQ4ODE0ZmY2MzY0MGYwMDNjOWNlYTYxMjU4NDYifQ.' +
+      'F1zCcOYqpXWd4C9l9xqvEQ',
     {
       attribution: mapboxAttribution,
       maxZoom: 20,
@@ -62,27 +62,23 @@ export function mapLayers() {
 
   const satelliteLayer = new L.TileLayer(
     'https://api.mapbox.com/styles/v1/mapbox/satellite-v9/' +
-    'tiles/256/{z}/{x}/{y}?access_token=' +
-    'pk.eyJ1Ijoic2FtdHdlc2EiLCJhIjoiZTc1OTQ4ODE0ZmY2MzY0MGYwMDNjOWNlYTYxMjU4NDYifQ.' +
-    'F1zCcOYqpXWd4C9l9xqvEQ',
+      'tiles/256/{z}/{x}/{y}?access_token=' +
+      'pk.eyJ1Ijoic2FtdHdlc2EiLCJhIjoiZTc1OTQ4ODE0ZmY2MzY0MGYwMDNjOWNlYTYxMjU4NDYifQ.' +
+      'F1zCcOYqpXWd4C9l9xqvEQ',
     {
       attribution: mapboxAttribution,
       maxZoom: 20,
     }
   );
 
-  const baseMaps = {
-    OpenStreetMap: osm,
-    Satellite: satelliteLayer,
-    Standard: customOsmBright,
-    Dafault: defaultMap,
-  };
+export const baseMaps = {
+  OpenStreetMap: osm,
+  Satellite: satelliteLayer,
+  Standard: customOsmBright,
+  Dafault: defaultMap,
+};
 
-  L.control.layers(baseMaps).addTo(this.map);
-}
-
-
-export function generateMarkerIcon (fillColor = '#93c47d') {
+export function generateMarkerIcon(fillColor = '#93c47d') {
   const svg = `<svg id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 453.54 566.93">
   <defs>
     <style>
@@ -109,14 +105,13 @@ export function generateMarkerIcon (fillColor = '#93c47d') {
   const iconUrl = encodeURI(`data:image/svg+xml,${svg}`).replace('#', '%23');
   const icon = new CustomIcon({ iconUrl });
   return icon;
-};
+}
 
-
-export function showMarkers (geoJSON) {
-  const { geometry,properties } = geoJSON;
-  const {incidentType} = properties;
-  const {color} = incidentType;
+export function showMarkers(geoJSON) {
+  const { geometry, properties } = geoJSON;
+  const { incidentType } = properties;
+  const { color } = incidentType;
   const customIcon = generateMarkerIcon(color);
   const { coordinates } = geometry;
   return L.marker(coordinates.reverse(), { icon: customIcon });
-};
+}
