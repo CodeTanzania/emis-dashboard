@@ -80,3 +80,10 @@ export const setResourceSchema = schema => ({
     data: schema,
   },
 });
+
+export const setResourceAdjustmentSchema = schema => ({
+  type: types.SET_RESOURCE_ADJUSTMENT_SCHEMA,
+  payload: {
+    data: schema,
+  },
+});

@@ -2,8 +2,11 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Modal, Form, Select, Input, InputNumber, Switch } from 'antd';
-import { loadResourceItemSchema } from '../../../../common/API';
+import { Modal, Form, Select, Input, InputNumber, Switch, message } from 'antd';
+import {
+  loadResourceItemSchema,
+  createResourceItem,
+} from '../../../../common/API';
 
 const FormItem = Form.Item;
 const { Option } = Select;
@@ -18,7 +21,7 @@ class ItemForm extends Component {
       _id: PropTypes.string,
     }),
     itemSchema: PropTypes.shape({
-      properties: PropTypes.arrayOf(PropTypes.object),
+      properties: PropTypes.object,
     }),
     dismissItemForm: PropTypes.func.isRequired,
     setResourceSchema: PropTypes.func.isRequired,
@@ -61,30 +64,27 @@ class ItemForm extends Component {
   }
 
   handleSaveItem = () => {
-    // const { form, stockToAdjust } = this.props;
-    // form.validateFields(errors => {
-    //     if (errors) {
-    //         // There is the validation error, quit save
-    //         return;
-    //     }
-    //     const fields = form.getFieldsValue();
-    //     const data = {
-    //         ...fields,
-    //         item: stockToAdjust.item._id,
-    //         party: stockToAdjust.owner._id,
-    //     };
-    //     if (fields.expiredAt) {
-    //         data.expiredAt = fields.expiredAt.toDate();
-    //     }
-    //     this.setState({ saving: true });
-    //     createResourceStockAdjustment(data)
-    //         .then(() => {
-    //             // TODO refresh stock adjusted & dismiss stock form
-    //             this.setState({ saving: false });
-    //             this.props.form.resetFields();
-    //         })
-    //         .catch(() => this.setState({ saving: false }));
-    // });
+    const { form } = this.props;
+    form.validateFields(errors => {
+      if (errors) {
+        // There is the validation error, quit save
+        return;
+      }
+      const fields = form.getFieldsValue();
+      const data = { ...fields };
+      this.setState({ saving: true });
+      createResourceItem(data)
+        .then(() => {
+          // TODO refresh resource items
+          this.props.form.resetFields();
+          this.setState({ saving: false });
+          message.success(`${data.name} successfully saved`);
+        })
+        .catch(() => {
+          this.setState({ saving: false });
+          message.error(`${data.name} cannot be saved`);
+        });
+    });
   };
 
   handleDismissForm = () => {

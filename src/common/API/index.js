@@ -105,11 +105,24 @@ export const getResourceStocks = (query = {}) => {
 };
 
 /**
+ * Create resource item
+ * @param {Object} data - item data
+ */
+export const createResourceItem = data =>
+  Axios.post('/items', data).then(res => res.data);
+
+/**
  * Retrieve resource items
  * @param {Object} params Query params
  */
 export const findResourceItems = params =>
   Axios.get('/items', { params }).then(response => response.data);
+
+/**
+ * Retrieve resource item schema
+ */
+export const loadResourceItemSchema = () =>
+  Axios.get('/items/schema').then(response => response.data);
 
 /**
  *
@@ -119,7 +132,7 @@ export const createResourceStockAdjustment = data =>
   Axios.post('/adjustments', data).then(res => res.data);
 
 /**
- * Retrieve resource item schema
+ * Retrieve resource adjustment schema
  */
-export const loadResourceItemSchema = () =>
-  Axios.get('/items/schema').then(response => response.data);
+export const loadResourceAdjustmentSchema = () =>
+  Axios.get('/adjustments/schema').then(response => response.data);

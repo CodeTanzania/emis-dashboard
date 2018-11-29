@@ -1,8 +1,11 @@
 /* eslint  no-underscore-dangle: 'off' */
 
 import React, { Component } from 'react';
-import { Modal, Form, Select, Input, DatePicker } from 'antd';
-import { createResourceStockAdjustment } from '../../../../common/API';
+import { Modal, Form, Select, Input, DatePicker, InputNumber } from 'antd';
+import {
+  createResourceStockAdjustment,
+  loadResourceAdjustmentSchema,
+} from '../../../../common/API';
 
 const FormItem = Form.Item;
 const { Option } = Select;
@@ -10,6 +13,15 @@ const { TextArea } = Input;
 
 class AdjustStockForm extends Component {
   state = { adjustingStock: false };
+
+  componentDidMount() {
+    if (!this.props.itemSchema) {
+      // Set resource item schema is not set then set it
+      loadResourceAdjustmentSchema().then(result => {
+        this.props.setResourceAdjustmentSchema(result);
+      });
+    }
+  }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.stockToAdjust !== this.props.stockToAdjust) {
@@ -49,6 +61,7 @@ class AdjustStockForm extends Component {
         .then(() => {
           // TODO refresh stock adjusted & dismiss stock form
           this.setState({ adjustingStock: false });
+          this.props.cancelAdjustStock();
         })
         .catch(() => this.setState({ adjustingStock: false }));
     });
@@ -60,7 +73,7 @@ class AdjustStockForm extends Component {
 
   render() {
     const { adjustingStock } = this.state;
-    const { stockToAdjust, form } = this.props;
+    const { stockToAdjust, form, adjustmentSchema } = this.props;
     const { getFieldDecorator } = form;
     const showAdjustForm = stockToAdjust !== null;
     let title = '';
@@ -92,7 +105,7 @@ class AdjustStockForm extends Component {
         okText="Adjust"
         title={title}
       >
-        {stockToAdjust ? (
+        {stockToAdjust && adjustmentSchema ? (
           <div>
             <Form>
               <FormItem {...formItemLayout} label="Owner">
@@ -119,14 +132,39 @@ class AdjustStockForm extends Component {
                 {getFieldDecorator('type', {
                   rules: [
                     {
-                      required: true,
+                      required: adjustmentSchema.required.some(
+                        property => property === 'type'
+                      ),
                       message: 'Please select adjustment type',
                     },
                   ],
                 })(
                   <Select placeholder="Adjustment Type">
-                    <Option value="Addition">Addition</Option>
-                    <Option value="Deduction">Deduction</Option>
+                    {adjustmentSchema.properties.type.enum.map(enumValue => (
+                      <Option key={enumValue} value={enumValue}>
+                        {enumValue}
+                      </Option>
+                    ))}
+                  </Select>
+                )}
+              </FormItem>
+              <FormItem {...formItemLayout} label="Reason">
+                {getFieldDecorator('reason', {
+                  rules: [
+                    {
+                      required: adjustmentSchema.required.some(
+                        property => property === 'reason'
+                      ),
+                      message: 'Please select adjustment reason',
+                    },
+                  ],
+                })(
+                  <Select placeholder="Reason">
+                    {adjustmentSchema.properties.reason.enum.map(enumValue => (
+                      <Option key={enumValue} value={enumValue}>
+                        {enumValue}
+                      </Option>
+                    ))}
                   </Select>
                 )}
               </FormItem>
@@ -134,17 +172,48 @@ class AdjustStockForm extends Component {
                 {getFieldDecorator('quantity', {
                   rules: [
                     {
-                      required: true,
+                      required: adjustmentSchema.required.some(
+                        property => property === 'quantity'
+                      ),
                       message: 'Please specify quantity',
                     },
+                    {
+                      type: 'number',
+                      message: 'Quantity must be a number',
+                    },
                   ],
-                })(<Input type="number" placeholder="Quantity" />)}
+                })(<InputNumber placeholder="Quantity" />)}
+              </FormItem>
+              <FormItem {...formItemLayout} label="Cost">
+                {getFieldDecorator('cost', {
+                  rules: [
+                    {
+                      required: adjustmentSchema.required.some(
+                        property => property === 'cost'
+                      ),
+                      message: 'Please specify cost',
+                    },
+                    {
+                      type: 'number',
+                      message: 'Cost must be a number',
+                    },
+                  ],
+                })(<InputNumber placeholder="Cost" />)}
               </FormItem>
               <FormItem {...formItemLayout} label="Expire Date">
                 {getFieldDecorator('expiredAt')(<DatePicker />)}
               </FormItem>
               <FormItem {...formItemLayout} label="Remarks">
-                <TextArea rows={5} />
+                {getFieldDecorator('remarks', {
+                  rules: [
+                    {
+                      required: adjustmentSchema.required.some(
+                        property => property === 'remarks'
+                      ),
+                      message: 'Please specify remarks',
+                    },
+                  ],
+                })(<TextArea rows={5} />)}
               </FormItem>
             </Form>
           </div>

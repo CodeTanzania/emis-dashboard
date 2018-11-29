@@ -5,7 +5,13 @@ import * as types from './types';
  * {
  *  fetchingResourceStocks: boolean,
  *  resourceStocks: Object,
- *  stockToAdjust: Object
+ *  stockToAdjust: Object,
+ *  resourceStockSchema: Object,
+ *  fetchingResourceItems: bool // loading resource items
+ *  resourceItems: Object, //
+ *  showResourceItemForm: bool, // show or hide resource item form
+ *  resourceItemToEdit: Object, // set to item when user click edit resource item
+ *  resourceItemSchema: Object // resource item schema
  * }
  */
 
@@ -115,6 +121,15 @@ export const resourceItemToEdit = (state = null, action) => {
 export const resourceItemSchema = (state = null, action) => {
   switch (action.type) {
     case types.SET_RESOURCE_SCHEMA:
+      return action.payload.data;
+    default:
+      return state;
+  }
+};
+
+export const resourceAdjustmentSchema = (state = null, action) => {
+  switch (action.type) {
+    case types.SET_RESOURCE_ADJUSTMENT_SCHEMA:
       return action.payload.data;
     default:
       return state;

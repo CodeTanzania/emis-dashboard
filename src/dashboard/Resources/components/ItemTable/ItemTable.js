@@ -1,6 +1,6 @@
 /* eslint no-underscore-dangle: 'off' */
 import React, { Component } from 'react';
-import { Form, Input, Table, Button, Divider } from 'antd';
+import { Form, Input, Table, Button } from 'antd';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import styles from './styles.css';
@@ -83,14 +83,6 @@ const getColumns = handleEditItem => [
           onClick={() => handleEditItem(record)}
         >
           Edit
-        </button>
-        <Divider type="vertical" />
-        <button
-          type="button"
-          className="link"
-          onClick={() => handleEditItem(record)}
-        >
-          Delete
         </button>
       </span>
     ),

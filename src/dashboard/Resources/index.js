@@ -25,10 +25,10 @@ class Resource extends Component {
                         <div className={cx('buttons')}>baba</div>
                     </Header> */}
           <Tabs defaultActiveKey="1">
-            <TabPane tab="Stocks" key="2" className={cx('content')}>
+            <TabPane tab="Stocks" key="1" className={cx('content')}>
               <StocksTable />
             </TabPane>
-            <TabPane tab="Items" key="1" className={cx('content')}>
+            <TabPane tab="Items" key="2" className={cx('content')}>
               <ItemsTable />
             </TabPane>
           </Tabs>
