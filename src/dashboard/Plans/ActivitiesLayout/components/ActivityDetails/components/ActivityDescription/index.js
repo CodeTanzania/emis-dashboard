@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
-import React from 'react';
-import './styles.css';
+import React, { Fragment } from 'react';
 
 /**
  * ActivityDescription
@@ -15,10 +14,10 @@ import './styles.css';
  */
 export default function ActivityDescription({ description }) {
   return (
-    <div className="ActivityDescription">
-      <h4 className="header">Description</h4>
+    <Fragment>
+      <h4 className="ActivityDetailsBodyHeader">Description</h4>
       <p>{description}</p>
-    </div>
+    </Fragment>
   );
 }
 

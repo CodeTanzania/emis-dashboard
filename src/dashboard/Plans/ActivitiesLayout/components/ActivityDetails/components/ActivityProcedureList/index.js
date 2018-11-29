@@ -116,7 +116,9 @@ class ActivityProcedureList extends Component {
         {/* Activity procedures section header */}
         <Row className="header">
           <Col xs={16} md={18} xl={21} xxl={22}>
-            <h4>Standard Operating Procedures (SOP)</h4>
+            <h4 style={{ fontWeight: 600 }}>
+              Standard Operating Procedures (SOP)
+            </h4>
           </Col>
           <Col xs={18} md={6} xl={3} xxl={2}>
             <Button
