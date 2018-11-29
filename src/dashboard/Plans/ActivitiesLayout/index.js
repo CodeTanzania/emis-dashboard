@@ -251,9 +251,9 @@ class PlanActivitiesLayout extends Component {
             {plan ? (
               <h3>
                 {plan ? plan.incidentType.name : 'N/A'}{' '}
-                <span className="muted">{`( Dar es Salaam ) by ${
-                  plan.owner.name
-                }`}</span>
+                <span className="muted">{` Plan for ${plan.boundary.name} (${
+                  plan.boundary.level
+                })  by ${plan.owner.name}`}</span>
               </h3>
             ) : (
               <h3>Plan</h3>
