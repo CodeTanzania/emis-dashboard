@@ -74,6 +74,8 @@ const defaultPlansState = {
   posting: false,
   filters: {
     incidentTypes: [],
+    boundaries: [],
+    owners: [],
   },
   error: null,
 };
@@ -153,16 +155,20 @@ export function plans(state = defaultPlansState, action) {
       return Object.assign({}, state, {
         showPlanForm: false,
       });
-    case UPDATE_PLAN_FILTERS:
+    case UPDATE_PLAN_FILTERS: {
+      const filters = merge({}, state.filters, action.payload.data);
       return merge({}, state, {
-        filters: action.payload.data,
+        filters,
       });
-    case RESET_PLAN_FILTERS:
+    }
+    case RESET_PLAN_FILTERS: {
+      const filters = Object.assign({}, state.filters, {
+        [action.payload.data]: [],
+      });
       return Object.assign({}, state, {
-        filters: {
-          incidentTypes: [],
-        },
+        filters,
       });
+    }
     default:
       return state;
   }

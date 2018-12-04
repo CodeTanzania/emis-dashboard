@@ -1,3 +1,4 @@
+import merge from 'lodash/merge';
 import * as Actions from '../actions';
 import {
   planActivities,
@@ -23,6 +24,8 @@ describe('Plan:Reducers', () => {
         posting: false,
         filters: {
           incidentTypes: [],
+          owners: [],
+          boundaries: [],
         },
         error: null,
       };
@@ -206,24 +209,77 @@ describe('Plan:Reducers', () => {
       expect(plans(previousState, action)).toEqual(expectedState);
     });
 
-    it(`should handle ${Actions.UPDATE_PLAN_FILTERS}`, () => {
+    it(`should handle ${
+      Actions.UPDATE_PLAN_FILTERS
+    } when no filters set`, () => {
       const action = {
         type: Actions.UPDATE_PLAN_FILTERS,
         payload: { data: { incidentTypes: ['deddeed'] } },
       };
-      const expectedState = { ...previousState, filters: action.payload.data };
+
+      const expectedState = {
+        ...previousState,
+        filters: merge({}, previousState.filters, action.payload.data),
+      };
+      expect(plans(previousState, action)).toEqual(expectedState);
+    });
+
+    it(`should handle ${
+      Actions.UPDATE_PLAN_FILTERS
+    } when filters are set`, () => {
+      previousState = merge(previousState, {
+        filters: { incidentTypes: ['dedddd'] },
+      });
+
+      const action = {
+        type: Actions.UPDATE_PLAN_FILTERS,
+        payload: { data: { owners: ['deddeed'] } },
+      };
+
+      const expectedState = {
+        ...previousState,
+        filters: merge({}, previousState.filters, action.payload.data),
+      };
+      expect(plans(previousState, action)).toEqual(expectedState);
+    });
+
+    it(`should handle ${
+      Actions.RESET_PLAN_FILTERS
+    } when a single filter is active`, () => {
+      previousState = merge(previousState, {
+        filters: { incidentTypes: ['dedddd'], owners: ['cdddedd'] },
+      });
+
+      const action = {
+        type: Actions.RESET_PLAN_FILTERS,
+        payload: { data: 'owners' },
+      };
+
+      const filters = Object.assign({}, previousState.filters, {
+        [action.payload.data]: [],
+      });
+
+      const expectedState = Object.assign({}, previousState, { filters });
 
       expect(plans(previousState, action)).toEqual(expectedState);
     });
 
-    it(`should handle ${Actions.RESET_PLAN_FILTERS}`, () => {
+    it(`should handle ${
+      Actions.RESET_PLAN_FILTERS
+    } when a multiple filters are active`, () => {
+      previousState = merge(previousState, {
+        filters: { incidentTypes: ['dedddd'], owners: ['cdddedd'] },
+      });
+
       const action = {
         type: Actions.RESET_PLAN_FILTERS,
+        payload: { data: 'owners' },
       };
-      const expectedState = {
-        ...previousState,
-        filters: { incidentTypes: [] },
-      };
+      const filters = Object.assign({}, previousState.filters, {
+        [action.payload.data]: [],
+      });
+
+      const expectedState = Object.assign({}, previousState, { filters });
 
       expect(plans(previousState, action)).toEqual(expectedState);
     });

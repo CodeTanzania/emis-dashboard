@@ -174,11 +174,11 @@ export function updatePlanFilters(filters) {
  * @version 0.1.0
  * @since 0.1.0
  */
-export function resetPlanFilters() {
+export function resetPlanFilters(filter) {
   return {
     type: RESET_PLAN_FILTERS,
     payload: {
-      data: { incidentTypes: null },
+      data: filter,
     },
   };
 }
@@ -883,8 +883,20 @@ export function getPlans(params) {
 
     let allParams = params;
     if (!isEmpty(filters.incidentTypes)) {
-      allParams = merge({}, params, {
+      allParams = merge({}, allParams, {
         filter: { incidentType: { $in: filters.incidentTypes } },
+      });
+    }
+
+    if (!isEmpty(filters.boundaries)) {
+      allParams = merge({}, allParams, {
+        filter: { boundary: { $in: filters.boundaries } },
+      });
+    }
+
+    if (!isEmpty(filters.owners)) {
+      allParams = merge({}, allParams, {
+        filter: { owner: { $in: filters.owners } },
       });
     }
 

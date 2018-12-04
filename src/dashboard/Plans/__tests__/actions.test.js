@@ -27,10 +27,10 @@ describe('Plans:Module', () => {
     });
 
     it(`should create an action of type ${Actions.RESET_PLAN_FILTERS}`, () => {
-      expect(Actions.resetPlanFilters()).toEqual({
+      expect(Actions.resetPlanFilters('owners')).toEqual({
         type: Actions.RESET_PLAN_FILTERS,
         payload: {
-          data: { incidentTypes: null },
+          data: 'owners',
         },
       });
     });

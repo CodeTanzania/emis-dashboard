@@ -64,6 +64,8 @@ class PlansLayout extends Component {
     onEditPlan: PropTypes.func.isRequired,
     onPaginate: PropTypes.func.isRequired,
     onFilterByIncidentType: PropTypes.func.isRequired,
+    onFilterByOwner: PropTypes.func.isRequired,
+    onFilterByBoundary: PropTypes.func.isRequired,
     showPlanForm: PropTypes.bool.isRequired,
     onOpenPlanForm: PropTypes.func.isRequired,
     onClosePlanForm: PropTypes.func.isRequired,
@@ -112,6 +114,8 @@ class PlansLayout extends Component {
       onGetPlanActivities,
       onPaginate,
       onFilterByIncidentType,
+      onFilterByOwner,
+      onFilterByBoundary,
       showPlanForm,
       onOpenPlanForm,
     } = this.props;
@@ -151,7 +155,7 @@ class PlansLayout extends Component {
                 <Col md={7} xl={7} xxl={5}>
                   <SelectSearchBox
                     isFilter
-                    onChange={() => {}}
+                    onChange={onFilterByBoundary}
                     onSearch={getFeatures}
                     placeholder="Filter by Plan Applicable Area"
                     style={{ width: '250px' }}
@@ -164,7 +168,7 @@ class PlansLayout extends Component {
                 <Col md={7} xl={7} xxl={5}>
                   <SelectSearchBox
                     isFilter
-                    onChange={() => {}}
+                    onChange={onFilterByOwner}
                     onSearch={getStakeholders}
                     placeholder="Filter by Plan Owner"
                     style={{ width: '250px' }}
@@ -289,11 +293,26 @@ const mapDispatchToProps = dispatch => ({
   onFilterByIncidentType(incidentType) {
     if (incidentType) {
       dispatch(updatePlanFilters({ incidentTypes: [incidentType] }));
-      dispatch(getPlans());
     } else {
-      dispatch(resetPlanFilters());
-      dispatch(getPlans());
+      dispatch(resetPlanFilters('incidentTypes'));
     }
+    dispatch(getPlans());
+  },
+  onFilterByBoundary(boundary) {
+    if (boundary) {
+      dispatch(updatePlanFilters({ boundaries: [boundary] }));
+    } else {
+      dispatch(resetPlanFilters('boundaries'));
+    }
+    dispatch(getPlans());
+  },
+  onFilterByOwner(owner) {
+    if (owner) {
+      dispatch(updatePlanFilters({ owners: [owner] }));
+    } else {
+      dispatch(resetPlanFilters('owners'));
+    }
+    dispatch(getPlans());
   },
 });
 
