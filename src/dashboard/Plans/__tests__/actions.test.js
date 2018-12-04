@@ -399,12 +399,14 @@ describe('Plans:Module', () => {
   describe('Thunks', () => {
     it(`should dispatch an action of type ${
       Actions.GET_PLANS_SUCCESS
-    } when fetching plans is successfully when filters(incidentType) is null`, () => {
+    } when fetching plans is successfully when filters are null`, () => {
       const store = mockStore({
         plans: {
           data: [],
           filters: {
             incidentTypes: null,
+            owners: null,
+            boundaries: null,
           },
         },
       });
@@ -439,12 +441,14 @@ describe('Plans:Module', () => {
     });
     it(`should dispatch an action of type ${
       Actions.GET_PLANS_SUCCESS
-    } when fetching plans is successfully when filters(incidentType) is set`, () => {
+    } when fetching plans is successfully when filters are set`, () => {
       const store = mockStore({
         plans: {
           data: [],
           filters: {
             incidentTypes: ['dedede'],
+            boundaries: ['dedede'],
+            owners: ['dedede'],
           },
         },
       });
