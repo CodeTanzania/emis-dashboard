@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import ActivitiesLayout from './ActivitiesLayout';
-import PlanLayout from './PlansLayout';
+import PlansLayout from './PlansLayout';
 
 /**
  * Plans Base Layout component
@@ -18,7 +18,7 @@ import PlanLayout from './PlansLayout';
 export default function Plans({ match }) {
   return (
     <Switch>
-      <Route path={`${match.url}/index`} component={PlanLayout} />
+      <Route path={`${match.url}/index`} component={PlansLayout} />
       <Route
         path={`${match.url}/plan/activities`}
         component={ActivitiesLayout}

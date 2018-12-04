@@ -40,6 +40,7 @@ export const CLOSE_PLAN_FORM = 'CLOSE_PLAN_FORM';
  * Plan activity action types
  *------------------------------------------------------------------------------
  */
+
 /* get/fetch actions types */
 export const GET_PLAN_ACTIVITIES_START = 'GET_PLAN_ACTIVITIES_START';
 export const GET_PLAN_ACTIVITIES_SUCCESS = 'GET_PLAN_ACTIVITIES_SUCCESS';

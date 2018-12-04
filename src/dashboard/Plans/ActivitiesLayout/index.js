@@ -12,8 +12,9 @@ import {
   Spin,
 } from 'antd';
 import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
+import LayoutHeader from '../../../common/components/LayoutHeader';
 import Toolbar from '../../../common/components/Toolbar';
 import {
   closePlanActivityForm,
@@ -28,7 +29,7 @@ import Phase from './components/PhaseActivities';
 import './styles.css';
 
 /* local constants */
-const { Header, Content } = Layout;
+const { Content } = Layout;
 const { Filters, Actions } = Toolbar;
 const { Search } = Input;
 const spinIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
@@ -247,18 +248,25 @@ class PlanActivitiesLayout extends Component {
       >
         <Layout className="PlanActivitiesLayout">
           {/* start primary header */}
-          <Header className="header">
-            {plan ? (
-              <h3>
-                {plan ? plan.incidentType.name : 'N/A'}{' '}
-                <span className="muted">{` Plan for ${plan.boundary.name} (${
-                  plan.boundary.level
-                })  by ${plan.owner.name}`}</span>
-              </h3>
-            ) : (
-              <h3>Plan</h3>
-            )}
-          </Header>
+          <LayoutHeader
+            title={
+              plan ? (
+                <Fragment>
+                  {plan ? plan.incidentType.name : 'N/A'}{' '}
+                  <span className="muted">{` Plan for ${plan.boundary.name} (${
+                    plan.boundary.level
+                  })  by ${plan.owner.name}`}</span>
+                </Fragment>
+              ) : (
+                'Plan'
+              )
+            }
+            breadcrumbs={[
+              { name: 'EMIS' },
+              { name: 'Emergency Plans', link: '/plans/index' },
+              { name: plan ? `${plan.incidentType.name} Plan` : 'N/A' },
+            ]}
+          />
           {/* end primary header */}
           {/* Toolbar */}
           <Toolbar>

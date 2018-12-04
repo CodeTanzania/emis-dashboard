@@ -9,10 +9,16 @@ import {
   Row,
   Spin,
 } from 'antd';
+import upperFirst from 'lodash/upperFirst';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getIncidentTypes } from '../../../common/API/api';
+import {
+  getFeatures,
+  getIncidentTypes,
+  getStakeholders,
+} from '../../../common/API/api';
+import LayoutHeader from '../../../common/components/LayoutHeader';
 import SelectSearchBox from '../../../common/components/SelectSearchBox';
 import Toolbar from '../../../common/components/Toolbar';
 import {
@@ -29,7 +35,7 @@ import PlanForm from './components/PlanForm';
 import './styles.css';
 
 /* local constants */
-const { Header, Content } = Layout;
+const { Content } = Layout;
 const { Filters, Actions, Pagination: ToolbarPagination } = Toolbar;
 const spinIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
 
@@ -122,9 +128,10 @@ class PlansLayout extends Component {
       >
         <Layout className="PlansLayout">
           {/* start primary header */}
-          <Header className="header">
-            <h3>Plans</h3>
-          </Header>
+          <LayoutHeader
+            title="Emergency Plans"
+            breadcrumbs={[{ name: 'EMIS' }, { name: 'Emergency Plans' }]}
+          />
           {/* end primary header */}
           {/* Toolbar */}
           <Toolbar>
@@ -145,10 +152,12 @@ class PlansLayout extends Component {
                   <SelectSearchBox
                     isFilter
                     onChange={() => {}}
-                    onSearch={getIncidentTypes}
-                    placeholder="Filter by Plan Location"
+                    onSearch={getFeatures}
+                    placeholder="Filter by Plan Applicable Area"
                     style={{ width: '250px' }}
-                    optionLabel="name"
+                    optionLabel={feature =>
+                      `${feature.name} (${upperFirst(feature.level)})`
+                    }
                     optionValue="_id"
                   />
                 </Col>
@@ -156,7 +165,7 @@ class PlansLayout extends Component {
                   <SelectSearchBox
                     isFilter
                     onChange={() => {}}
-                    onSearch={getIncidentTypes}
+                    onSearch={getStakeholders}
                     placeholder="Filter by Plan Owner"
                     style={{ width: '250px' }}
                     optionLabel="name"

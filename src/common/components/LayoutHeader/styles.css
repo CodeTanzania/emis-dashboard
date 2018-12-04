@@ -1,0 +1,13 @@
+.LayoutHeader {
+  background: #fff;
+  padding-left: 10px;
+  border-bottom: 1px solid #e0e0e0;
+  height: 75px;
+}
+
+.LayoutHeader .Breadcrumb {
+  position: absolute;
+  top: 45px;
+  padding-left: 2px;
+  font-size: 11px;
+}

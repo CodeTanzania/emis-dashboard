@@ -53,7 +53,6 @@ function ActivityOptions({ onEditActivity }) {
  * @version 0.1.0
  * @since 0.1.0
  */
-
 export default class ActivityCard extends Component {
   state = {
     showPopover: false,
