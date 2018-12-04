@@ -10,11 +10,9 @@ import {
   Select,
 } from 'antd';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import './styles.css';
 import API from '../../../../common/API';
-import { getIncidentsSuccess } from '../../actions';
 
 /**
  * IncidentForm component
@@ -45,25 +43,21 @@ class IncidentForm extends React.Component {
         _id: PropTypes.string,
       }).isRequired
     ),
-    getIncidentType: PropTypes.func,
   };
 
   static defaultProps = {
     incidentsTypeData: null,
-    getIncidentType: null,
   };
 
-  componentDidMount() {
-    const { getIncidentType } = this.props;
-    getIncidentType();
-  }
-
   renderIncidentTypes = incidents =>
-    incidents.map(({ incidentType, }) => (
-      <Option key={incidentType._id} value={incidentType._id}>
-        {incidentType.name}
-      </Option>
-    ));
+    incidents.map(({ incidentType }) => {
+      const { _id: id } = incidentType;
+      return (
+        <Option key={id} value={id}>
+          {incidentType.name}
+        </Option>
+      );
+    });
 
   handleSubmit = e => {
     e.preventDefault();
@@ -180,13 +174,9 @@ class IncidentForm extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  incidentsTypeData: state.incidents.data ? state.incidents.data : [],
-});
+const mapStateToProps = () => ({});
 
-const mapDispatchToProps = dispatch => ({
-  getIncidentType: bindActionCreators( getIncidentsSuccess, dispatch)
-});
+const mapDispatchToProps = () => ({});
 
 export default connect(
   mapStateToProps,

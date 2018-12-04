@@ -5,6 +5,7 @@ export default function popupContent({
   description,
   startedAt,
   incidentType,
+  _id,
 }) {
   return `<div class="popupContent">
           <div id="iw-container">'
@@ -20,6 +21,7 @@ export default function popupContent({
                   <tr><td>Description</td><td id="popupData"> ${description}</td></tr>
                 </tbody></table>
             </div>
+            <br/><button id='more_details' type="button" class="ant-btn ant-btn-primary" data =${_id}>Click for more</button> 
         </div>
       </div>`;
 }

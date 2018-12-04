@@ -9,8 +9,8 @@ import PropTypes from 'prop-types';
 import 'leaflet-draw';
 import IncidentForm from './components/IncidentForm';
 import MapNav from './components/MapNav';
-import { getIncidentsSuccess } from './actions';
-import { showMarkers,baseMaps } from '../../common/lib/mapUtil';
+import { getIncidentsSuccess, getSelectedIncident } from './actions';
+import { showMarkers, baseMaps } from '../../common/lib/mapUtil';
 import popupContent from './components/mapPopup';
 import '../styles.css';
 import 'leaflet-draw/dist/leaflet.draw.css';
@@ -33,18 +33,50 @@ class Incidents extends React.Component {
     incidents: PropTypes.arrayOf(
       PropTypes.shape({
         name: PropTypes.string,
-        incidentsType: PropTypes.string.isRequired,
+        incidentsTypeData: PropTypes.arrayOf(
+          PropTypes.shape({
+            name: PropTypes.string,
+            nature: PropTypes.string.isRequired,
+            family: PropTypes.string.isRequired,
+            code: PropTypes.string.isRequired,
+            cap: PropTypes.string.isRequired,
+            color: PropTypes.string,
+            _id: PropTypes.string,
+          }).isRequired
+        ),
         description: PropTypes.string.isRequired,
-        startAt: PropTypes.string.isRequired,
-        endAt: PropTypes.string.isRequired,
+        startAt: PropTypes.date,
+        endAt: PropTypes.date,
       }).isRequired
     ),
     handleIncidents: PropTypes.func,
+    getIncident: PropTypes.func,
+    selected: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string,
+        incidentsTypeData: PropTypes.arrayOf(
+          PropTypes.shape({
+            name: PropTypes.string,
+            nature: PropTypes.string.isRequired,
+            family: PropTypes.string.isRequired,
+            code: PropTypes.string.isRequired,
+            cap: PropTypes.string.isRequired,
+            color: PropTypes.string,
+            _id: PropTypes.string,
+          }).isRequired
+        ),
+        description: PropTypes.string.isRequired,
+        startAt: PropTypes.date,
+        endAt: PropTypes.date,
+      }).isRequired
+    ),
   };
 
   static defaultProps = {
     incidents: null,
     handleIncidents: null,
+    selected: null,
+    getIncident: null,
   };
 
   constructor() {
@@ -71,13 +103,22 @@ class Incidents extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { incidents } = this.props;
+    const { incidents, selected } = this.props;
     if (incidents !== prevProps.incidents) {
-      incidents.map(({epicentre}) => this.incidentLayer.addData(epicentre));
+      incidents.map(({ epicentre }) => this.incidentLayer.addData(epicentre));
       this.map.setView([-6.179, 35.754], 7);
       this.map.flyTo([-6.179, 35.754]);
     }
+    if (selected && selected !== prevProps.selected) {
+      this.showSelectedIncident(selected);
+    } else if (selected !== prevProps.selected) {
+      this.map.removeLayer(this.selectedLayer);
+    }
   }
+
+  mapLayers = () => {
+    L.control.layers(baseMaps, {}, { position: 'bottomright' }).addTo(this.map);
+  };
 
   DisplayMarkers = () => {
     this.incidentLayer = L.geoJSON([], {
@@ -88,18 +129,26 @@ class Incidents extends React.Component {
 
   onEachFeature = (feature, layer) => {
     const { properties } = feature;
-    const { name, incidentType, description, startedAt } = properties;
+    const { name, incidentType, description, startedAt, _id } = properties;
     layer.bindPopup(
-      popupContent({ name, incidentType, description, startedAt })
+      popupContent({ name, incidentType, description, startedAt, _id })
     );
     layer
-      .on({ click: this.onclickGeoJson })
+      .on({ click: this.onClickIncident })
       .bindTooltip(`${name}`)
       .openTooltip();
   };
 
-  mapLayers = () => {
-    L.control.layers(baseMaps, {}, {position:'bottomright'}).addTo(this.map);
+  showPoint = areaSelected => {
+    L.geoJSON(areaSelected, {
+      pointToLayer: showMarkers,
+      // onEachFeature: this.onEachFeature
+    }).addTo(this.map);
+  };
+
+  showSelectedIncident = incidentSelected => {
+    const {areaSelected} = incidentSelected;
+      this.selectedLayer = this.showPoint(areaSelected);
   };
 
   initDrawControls = () => {
@@ -176,8 +225,16 @@ class Incidents extends React.Component {
     this.map.closePopup();
   };
 
+  onClickIncident = data => {
+    const id = get(data, 'target.feature.properties._id');
+    const { getIncident } = this.props;
+    getIncident(id);
+    this.map.removeLayer(this.incidentLayer);
+  };
+
   render() {
     const { position, zoom, showPopup, hideButton, area } = this.state;
+    const { incidents } = this.props;
     return (
       <div>
         {!hideButton ? (
@@ -198,6 +255,7 @@ class Incidents extends React.Component {
                 onCancelButton={this.onCancel}
                 onSubmitButton={this.onSubmit}
                 area={area}
+                incidentsTypeData={incidents}
               />
             </Popup>
           ) : null}
@@ -207,14 +265,16 @@ class Incidents extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-      incidents: state.incidents.data ? state.incidents.data : [],
-  }
-  };
+const mapStateToProps = state => ({
+  incidents: state.incidents.data ? state.incidents.data : [],
+  selected: state.selectedIncident.incident
+    ? state.selectedIncident.incident
+    : [],
+});
 
 const mapDispatchToProps = dispatch => ({
   handleIncidents: bindActionCreators(getIncidentsSuccess, dispatch),
+  getIncident: bindActionCreators(getSelectedIncident, dispatch),
 });
 export default connect(
   mapStateToProps,

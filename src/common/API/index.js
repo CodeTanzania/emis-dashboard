@@ -143,6 +143,7 @@ const API = {
     }).then(response => response.data);
     return url;
   },
+  
   createIncident: data => {
     const url = `${INCIDENTS_API}/incidents`;
     const config = {
@@ -153,6 +154,11 @@ const API = {
       },
     };
     return fetch(url, config).then(res => res.json());
+  },
+
+  getIncidentById: (incidentId) => {
+    const url = Axios.get(`${INCIDENTS_API}/incidents/${incidentId}`).then(res => res.data);
+    return url;
   },
 };
 
