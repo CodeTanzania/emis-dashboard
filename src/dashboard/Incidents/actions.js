@@ -12,6 +12,10 @@ export const SELECT_ACTIVE_INCIDENT = 'SELECT_ACTIVE_INCIDENT';
 export const GET_ACTIONS_START = 'GET_ACTIONS_START';
 export const GET_ACTIONS_SUCCESS = 'GET_ACTIONS_SUCCESS';
 export const GET_ACTIONS_ERROR = 'GET_ACTIONS_ERROR';
+export const GET_INCIDENT_ACTION_ERROR = 'GET_INCIDENT_ACTION_ERROR';
+export const GET_INCIDENT_ACTION_START = 'GET_INCIDENT_ACTION_START';
+export const GET_INCIDENT_ACTION_SUCCESS = 'GET_INCIDENT_ACTION_SUCCESS';
+
 
 /* Actions creater */
 
@@ -43,16 +47,37 @@ export const getActionsStart = () => ({
   type: GET_ACTIONS_START
 })
 
+export const getActionsSuccess = incidentsActions => ({
+  type: GET_ACTIONS_SUCCESS,
+  payload: { data:incidentsActions },
+});
+
 export const getActionsError = message => ({
   type: GET_ACTIONS_ERROR,
   payload: { message },
 });
 
-export const getActionsSuccess = incidentActions => ({
-  type: GET_ACTIONS_SUCCESS,
-  payload: { data:incidentActions },
+export const setIncidentActionStart = (id) => ({
+  type: GET_INCIDENT_ACTION_START,
+  payload: {
+    id:null
+  }
+})
+
+export const setIncidentActionSuccess = incidentAction => ({
+  type: GET_INCIDENT_ACTION_SUCCESS,
+  payload: { data:incidentAction },
 });
 
+export const setIncidentActionError = message => ({
+  type: GET_INCIDENT_ACTION_ERROR,
+  payload: { message },
+});
+
+export const getNavActive = activeItem => ({
+  type: SELECT_ACTIVE_INCIDENT,
+  payload: { activeItem },
+});
 
 export const getIncidentsSuccess = page => (dispatch, getState, { API }) => {
   dispatch(getIncidentsStart());
@@ -87,12 +112,6 @@ export const getSelectedIncident = (incidentId = null) => (
     .catch(error => dispatch(selectIncidentError(error)));
 };
 
-export const getNavActive = activeItem => ({
-  type: SELECT_ACTIVE_INCIDENT,
-  payload: { activeItem },
-});
-
-
 export const getIncidentActions = page => (dispatch, getState, { API }) => {
 
   dispatch(getActionsStart());
@@ -103,3 +122,11 @@ export const getIncidentActions = page => (dispatch, getState, { API }) => {
     .catch(error => dispatch(getActionsError(error)));
 }
 
+export const activeIncidentAction = (incidentId = null) => (dispatch, getState, { API }) => {
+  dispatch(setIncidentActionStart(incidentId));
+  API.getIncidentActionById(incidentId)
+    .then(activeAction => {
+      dispatch(setIncidentActionSuccess(activeAction));
+    })
+    .catch(error => dispatch(setIncidentActionError(error)));
+}

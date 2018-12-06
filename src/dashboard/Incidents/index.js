@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import 'leaflet-draw';
 import IncidentForm from './components/IncidentForm';
 import MapNav from './components/MapNav';
-import { getIncidentsSuccess, getSelectedIncident, getNavActive, getIncidentActions } from './actions';
+import { getIncidentsSuccess, getSelectedIncident, getNavActive, getIncidentActions, activeIncidentAction } from './actions';
 import { showMarkers, baseMaps } from '../../common/lib/mapUtil';
 import popupContent from './components/mapPopup';
 import '../styles.css';
@@ -98,9 +98,9 @@ class Incidents extends React.Component {
     this.map = this.mapRef.current.leafletElement;
     this.mapLayers();
     this.DisplayMarkers();
-    const { handleIncidents , handleIncidentActions} = this.props;
+    const { handleIncidents , handleIncidentActions,} = this.props;
     handleIncidents();
-    handleIncidentActions()
+    handleIncidentActions();
   }
 
   componentDidUpdate(prevProps) {
@@ -226,13 +226,22 @@ class Incidents extends React.Component {
     this.map.closePopup();
   };
 
-  onClickIncident = data => {
-    const id = get(data, 'target.feature.properties._id');
-    const { getIncident, handleActiveNav } = this.props;
+  onClickIncident = e => {
+    const { getIncident, setIncidentAction, handleActiveNav ,incidentsAction} = this.props;
+    const id = get(e, 'target.feature.properties._id');
+    incidentsAction.filter(incidentAction => {
+      if(incidentAction.incident._id === id ) {
+        const {_id : actionId} = incidentAction;
+        setIncidentAction(actionId)
+        console.log(incidentAction)
+      }
+      else {
+        console.log("Not found in this page");
+      }
+    })
     getIncident(id);
     this.map.removeLayer(this.incidentLayer);
     handleActiveNav('details');
-
   };
 
   render() {
@@ -267,19 +276,23 @@ class Incidents extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = state => {
+  return {
   incidents: state.incidents.data ? state.incidents.data : [],
   selected: state.selectedIncident.incident
     ? state.selectedIncident.incident
     : [],  
+  incidentsAction: state.incidents.incidentActionsData ? 
+  state.incidents.incidentActionsData : [],
     
-});
+}};
 
 const mapDispatchToProps = dispatch => ({
   handleIncidents: bindActionCreators(getIncidentsSuccess, dispatch),
   getIncident: bindActionCreators(getSelectedIncident, dispatch),
   handleActiveNav: bindActionCreators(getNavActive, dispatch),
-  handleIncidentActions: bindActionCreators(getIncidentActions, dispatch)
+  handleIncidentActions: bindActionCreators(getIncidentActions, dispatch),
+  setIncidentAction: bindActionCreators(activeIncidentAction, dispatch)
 });
 export default connect(
   mapStateToProps,

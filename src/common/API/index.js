@@ -173,7 +173,12 @@ const API = {
     })
       .then( response => response.data);
       return url;
-  }
+  },
+
+ getIncidentActionById: incidentId => {
+    return Axios.get(`${INCIDENT_ACTIONS_API}/actions/${incidentId}`).then(res => res.data)
+
+ } 
 };
 
 export default API;

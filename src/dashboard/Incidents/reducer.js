@@ -7,6 +7,8 @@ import {
   GET_ACTIONS_START,
   GET_ACTIONS_SUCCESS,
   GET_ACTIONS_ERROR,
+  GET_INCIDENT_ACTION_SUCCESS,
+  GET_INCIDENT_ACTION_ERROR,
 } from './actions';
 
 /**
@@ -28,7 +30,7 @@ const initialState = {
   error: null,
   page: 1,
   total: 0,
-  incidentActionData: [],
+  incidentActionsData: [],
 };
 
 export function incidents(state = initialState, action) {
@@ -60,7 +62,7 @@ export function incidents(state = initialState, action) {
       };
     case GET_ACTIONS_SUCCESS:
       return {
-        incidentActionData: action.payload.data.data,
+        incidentActionsData: action.payload.data.data,
         total: action.payload.data.total,
         error:null
       };
@@ -82,6 +84,17 @@ export function selectedIncident(state = [], action) {
         ...state,
         incident: action.payload.data,
       };
+      case GET_INCIDENT_ACTION_SUCCESS:
+      return {
+        ...state,
+        incidentAction: action.payload.data,
+      };
+      case GET_INCIDENT_ACTION_ERROR:
+      return {
+        ...state,
+        error: action.payload,
+      };
+    
     default:
       return state;
   }
