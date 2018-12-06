@@ -33,43 +33,34 @@ class Incidents extends React.Component {
     incidents: PropTypes.arrayOf(
       PropTypes.shape({
         name: PropTypes.string,
-        incidentsTypeData: PropTypes.arrayOf(
-          PropTypes.shape({
+        incidentsTypeData:PropTypes.shape({
             name: PropTypes.string,
             nature: PropTypes.string.isRequired,
-            family: PropTypes.string.isRequired,
-            code: PropTypes.string.isRequired,
-            cap: PropTypes.string.isRequired,
+            family: PropTypes.string.isRequired,      
             color: PropTypes.string,
             _id: PropTypes.string,
-          }).isRequired
-        ),
+          }).isRequired,
         description: PropTypes.string.isRequired,
-        startAt: PropTypes.date,
-        endAt: PropTypes.date,
-      }).isRequired
+        startedAt: PropTypes.date,
+        endedAt: PropTypes.date,
+        _id: PropTypes.string,
+      }).isRequired,
     ),
     handleIncidents: PropTypes.func,
     getIncident: PropTypes.func,
-    selected: PropTypes.arrayOf(
-      PropTypes.shape({
+    selected: PropTypes.shape({
         name: PropTypes.string,
-        incidentsTypeData: PropTypes.arrayOf(
-          PropTypes.shape({
+        incidentsTypeData: PropTypes.shape({
             name: PropTypes.string,
             nature: PropTypes.string.isRequired,
             family: PropTypes.string.isRequired,
-            code: PropTypes.string.isRequired,
-            cap: PropTypes.string.isRequired,
             color: PropTypes.string,
             _id: PropTypes.string,
-          }).isRequired
-        ),
+          }),
         description: PropTypes.string.isRequired,
-        startAt: PropTypes.date,
-        endAt: PropTypes.date,
-      }).isRequired
-    ),
+        startedAt: PropTypes.date,
+        endedAt: PropTypes.date,
+      }).isRequired,
   };
 
   static defaultProps = {
@@ -283,8 +274,7 @@ const mapStateToProps = state => {
     ? state.selectedIncident.incident
     : [],  
   incidentsAction: state.incidents.incidentActionsData ? 
-  state.incidents.incidentActionsData : [],
-    
+  state.incidents.incidentActionsData : [], 
 }};
 
 const mapDispatchToProps = dispatch => ({

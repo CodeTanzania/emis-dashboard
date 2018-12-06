@@ -33,6 +33,11 @@ const initialState = {
   incidentActionsData: [],
 };
 
+const initialselectedState = {
+  incident:{},
+  incidentAction: {},
+}
+
 export function incidents(state = initialState, action) {
   switch (action.type) {
     case GET_INCIDENTS_START:
@@ -77,7 +82,7 @@ export function incidents(state = initialState, action) {
   }
 }
 
-export function selectedIncident(state = [], action) {
+export function selectedIncident(state = initialselectedState, action) {
   switch (action.type) {
     case SELECT_INCIDENT_SUCCESS:
       return {

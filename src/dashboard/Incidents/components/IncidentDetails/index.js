@@ -2,6 +2,8 @@ import React from 'react';
 import {} from 'antd';
 import PropTypes from 'prop-types';
 import './styles.css'
+import { connect } from 'react-redux';
+import IncidentActions from '../IncidentActions';
 
 /**
  * Incident details Layout component
@@ -14,31 +16,47 @@ import './styles.css'
  * @version 0.1.0
  * @since 0.1.0
  */
-export default class IncidentDetails extends React.Component {
+
+ class IncidentDetails extends React.Component {
   static propTypes = {
-    incident: PropTypes.arrayOf(
-      PropTypes.shape({
-        name: PropTypes.string,
-        incidentType: PropTypes.arrayOf(
-          PropTypes.shape({
-            name: PropTypes.string,
-            nature: PropTypes.string.isRequired,
-            family: PropTypes.string.isRequired,
-            code: PropTypes.string.isRequired,
-            cap: PropTypes.string.isRequired,
-            color: PropTypes.string,
-            _id: PropTypes.string,
-          }).isRequired
-        ),
-        description: PropTypes.string.isRequired,
-        startAt: PropTypes.date,
-        endAt: PropTypes.date,
-      }).isRequired
-    ),
+    incident: PropTypes.shape({
+      name: PropTypes.string,
+      incidentsTypeData:PropTypes.shape({
+          name: PropTypes.string,
+          nature: PropTypes.string.isRequired,
+          family: PropTypes.string.isRequired,      
+          color: PropTypes.string,
+          _id: PropTypes.string,
+        }).isRequired,
+      description: PropTypes.string.isRequired,
+      startedAt: PropTypes.date,
+      endedAt: PropTypes.date,
+      _id: PropTypes.string,
+    }).isRequired,
+    selectedAction: PropTypes.shape({
+      name: PropTypes.string,
+      description: PropTypes.string.isRequired,
+      phase: PropTypes.string.isRequired,
+      incident: PropTypes.shape({
+          name:PropTypes.string.isRequired,
+          startedAt:PropTypes.string.isRequired,
+          endedAt:PropTypes.string.isRequired,
+          _id: PropTypes.string,
+      }),
+      incidentType: PropTypes.shape({
+          name: PropTypes.string,
+          nature: PropTypes.string.isRequired,
+          family: PropTypes.string.isRequired,
+          color: PropTypes.string,
+          _id: PropTypes.string
+      }),
+      _id: PropTypes.string,
+    }).isRequired
   };
 
   static defaultProps = {
     incident: null,
+    selectedAction:null,
   };
 
   constructor() {
@@ -47,7 +65,7 @@ export default class IncidentDetails extends React.Component {
   }
 
   render() {
-    const { incident } = this.props;
+    const { incident, actionTaken } = this.props;
     const {
       name,
       incidentType = [],
@@ -84,9 +102,18 @@ export default class IncidentDetails extends React.Component {
                 </tr>
               </tbody>
             </table>
+            <IncidentActions selectedAction = {actionTaken}/>
           </div>
         </div>
       </div>
     );
   }
 }
+
+const mapStateToProps = state => { 
+  return{
+  actionTaken: state.selectedIncident.incidentAction ? 
+  state.selectedIncident.incidentAction : [],
+}}
+
+export default connect(mapStateToProps, '')(IncidentDetails);
