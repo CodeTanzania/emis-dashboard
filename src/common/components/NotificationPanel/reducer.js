@@ -6,7 +6,7 @@ import { SHOW_NOTIFICATION_PANEL, CLOSE_NOTIFICATION_PANEL } from './actions';
  * @param {Object} state - redux state
  * @param {Object} action - redux action
  */
-const showNotificationPanel = (state = false, action) => {
+export const showNotificationPanel = (state = false, action) => {
   switch (action.type) {
     case SHOW_NOTIFICATION_PANEL:
       return true;
@@ -17,4 +17,22 @@ const showNotificationPanel = (state = false, action) => {
   }
 };
 
-export default showNotificationPanel;
+export const notificationDestinations = (state = [], action) => {
+  switch (action.type) {
+    case SHOW_NOTIFICATION_PANEL: {
+      const { data } = action.payload;
+      if (data) {
+        // data exist
+        if (!Array.isArray(data)) {
+          // data is not array, it's single object, convert it to array
+          return [data];
+        }
+        // data is an array, return as it is
+        return data;
+      }
+      return [];
+    }
+    default:
+      return state;
+  }
+};

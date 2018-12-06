@@ -5,6 +5,7 @@ import { renderNotificationPanel, dismissNotificationPanel } from './actions';
 const mapStateToProps = state => ({
   showNotificationPanel: state.showNotificationPanel,
   stakeholders: state.stakeholders.data,
+  to: state.notificationDestinations,
 });
 
 const mapDispatchToProps = {

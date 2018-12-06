@@ -20,6 +20,21 @@ class NotificationPanel extends Component {
     notification: { to: [], subject: '', body: '' },
   };
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.to !== this.props.to) {
+      const { to } = nextProps;
+      if (to && to.length) {
+        const destination = to.map(stakeholder => ({
+          key: stakeholder._id,
+          label: stakeholder.name,
+        }));
+        this.setState(prevState => ({
+          notification: { ...prevState.notification, to: destination },
+        }));
+      }
+    }
+  }
+
   resetState = () => {
     this.setState({
       stakeholders: [],
@@ -31,6 +46,12 @@ class NotificationPanel extends Component {
 
   dismiss = () => {
     this.props.dismissNotificationPanel();
+    this.setState({
+      stakeholders: [],
+      fetching: false,
+      sending: false,
+      notification: { to: [], subject: '', body: '' },
+    });
   };
 
   handleSelectChange = value => {
