@@ -3,6 +3,7 @@ import axios from 'axios';
 const API_END_POINT = 'https://emis-asat.herokuapp.com/v1';
 const INCIDENTS_TYPE_API = 'https://emis-plan.herokuapp.com/v1';
 const INCIDENTS_API = 'https://emis-incident.herokuapp.com/v1/';
+const INCIDENT_ACTIONS_API = 'https://emis-incident.herokuapp.com/v1';
 
 /**
  * Initialize axios library
@@ -144,6 +145,7 @@ const API = {
     return url;
   },
 
+  /* Api for recording new incident */
   createIncident: data => {
     const url = `${INCIDENTS_API}/incidents`;
     const config = {
@@ -156,12 +158,22 @@ const API = {
     return fetch(url, config).then(res => res.json());
   },
 
+  /* Api for displaying incident by Id */
   getIncidentById: incidentId => {
     const url = Axios.get(`${INCIDENTS_API}/incidents/${incidentId}`).then(
       res => res.data
     );
     return url;
   },
+
+  getIncidentActions: (page) => {
+    const params = { page: page || 1 };
+    const url = Axios.get(`${INCIDENT_ACTIONS_API}/actions`, {
+      params,
+    })
+      .then( response => response.data);
+      return url;
+  }
 };
 
 export default API;

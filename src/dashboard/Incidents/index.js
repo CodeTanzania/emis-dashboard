@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import 'leaflet-draw';
 import IncidentForm from './components/IncidentForm';
 import MapNav from './components/MapNav';
-import { getIncidentsSuccess, getSelectedIncident, getNavActive } from './actions';
+import { getIncidentsSuccess, getSelectedIncident, getNavActive, getIncidentActions } from './actions';
 import { showMarkers, baseMaps } from '../../common/lib/mapUtil';
 import popupContent from './components/mapPopup';
 import '../styles.css';
@@ -98,8 +98,9 @@ class Incidents extends React.Component {
     this.map = this.mapRef.current.leafletElement;
     this.mapLayers();
     this.DisplayMarkers();
-    const { handleIncidents } = this.props;
+    const { handleIncidents , handleIncidentActions} = this.props;
     handleIncidents();
+    handleIncidentActions()
   }
 
   componentDidUpdate(prevProps) {
@@ -270,14 +271,15 @@ const mapStateToProps = state => ({
   incidents: state.incidents.data ? state.incidents.data : [],
   selected: state.selectedIncident.incident
     ? state.selectedIncident.incident
-    : [],
+    : [],  
     
 });
 
 const mapDispatchToProps = dispatch => ({
   handleIncidents: bindActionCreators(getIncidentsSuccess, dispatch),
   getIncident: bindActionCreators(getSelectedIncident, dispatch),
-  handleActiveNav: bindActionCreators(getNavActive, dispatch)
+  handleActiveNav: bindActionCreators(getNavActive, dispatch),
+  handleIncidentActions: bindActionCreators(getIncidentActions, dispatch)
 });
 export default connect(
   mapStateToProps,

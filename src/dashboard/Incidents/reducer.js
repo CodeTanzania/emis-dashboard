@@ -4,6 +4,9 @@ import {
   GET_INCIDENTS_START,
   SELECT_INCIDENT_SUCCESS,
   SELECT_ACTIVE_INCIDENT,
+  GET_ACTIONS_START,
+  GET_ACTIONS_SUCCESS,
+  GET_ACTIONS_ERROR,
 } from './actions';
 
 /**
@@ -25,6 +28,7 @@ const initialState = {
   error: null,
   page: 1,
   total: 0,
+  incidentActionData: [],
 };
 
 export function incidents(state = initialState, action) {
@@ -46,9 +50,26 @@ export function incidents(state = initialState, action) {
       return {
         data: [],
         isLoading: false,
-        error: action.payload,
+        error: null,
       };
-
+    case GET_ACTIONS_START:
+      return{
+        state,
+        isLoading: true,
+        error: null,
+      };
+    case GET_ACTIONS_SUCCESS:
+      return {
+        incidentActionData: action.payload.data.data,
+        total: action.payload.data.total,
+        error:null
+      };
+    case GET_ACTIONS_ERROR:
+      return {
+        incidentActionData: [],
+        isLoading: false,
+        error: null,
+      };
     default:
       return state;
   }
