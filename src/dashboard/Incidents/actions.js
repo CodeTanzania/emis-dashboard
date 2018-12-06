@@ -8,6 +8,7 @@ export const GET_INCIDENT_FAILURE = 'INCIDENTS :GET_INCIDENTS_FAILURE';
 export const SELECT_INCIDENT_START = 'INCIDENTS :SELECT_INCIDENT_START';
 export const SELECT_INCIDENT_SUCCESS = 'INCIDENTS :SELECT_INCIDENT_SUCCESS';
 export const SELECT_INCIDENT_ERROR = 'INCIDENTS :SELECT_INCIDENT_ERROR';
+export const SELECT_ACTIVE_INCIDENT = 'SELECT_ACTIVE_INCIDENT';
 
 /* Actions creater */
 
@@ -54,15 +55,21 @@ export const getIncidentsSuccess = page => (dispatch, getState, { API }) => {
     .catch(error => dispatch(getIncidentsError(error)));
 };
 
-export const getSelectedIncident = (  incidentId = null) => (
+export const getSelectedIncident = (incidentId = null) => (
   dispatch,
   getState,
   { API }
 ) => {
   dispatch(selectIncidentStart(incidentId));
-    API.getIncidentById(incidentId).then(incident => {
+  API.getIncidentById(incidentId)
+    .then(incident => {
       const areaSelected = incidentToGeojson(incident);
       dispatch(selectIncidentSuccess({ ...incident, areaSelected }));
     })
-  .catch (error => dispatch(selectIncidentError(error)));
+    .catch(error => dispatch(selectIncidentError(error)));
 };
+
+export const getNavActive = activeItem => ({
+  type: SELECT_ACTIVE_INCIDENT,
+  payload: { activeItem },
+});

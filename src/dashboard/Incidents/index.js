@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import 'leaflet-draw';
 import IncidentForm from './components/IncidentForm';
 import MapNav from './components/MapNav';
-import { getIncidentsSuccess, getSelectedIncident } from './actions';
+import { getIncidentsSuccess, getSelectedIncident, getNavActive } from './actions';
 import { showMarkers, baseMaps } from '../../common/lib/mapUtil';
 import popupContent from './components/mapPopup';
 import '../styles.css';
@@ -147,8 +147,8 @@ class Incidents extends React.Component {
   };
 
   showSelectedIncident = incidentSelected => {
-    const {areaSelected} = incidentSelected;
-      this.selectedLayer = this.showPoint(areaSelected);
+    const { areaSelected } = incidentSelected;
+    this.selectedLayer = this.showPoint(areaSelected);
   };
 
   initDrawControls = () => {
@@ -227,9 +227,11 @@ class Incidents extends React.Component {
 
   onClickIncident = data => {
     const id = get(data, 'target.feature.properties._id');
-    const { getIncident } = this.props;
+    const { getIncident, handleActiveNav } = this.props;
     getIncident(id);
     this.map.removeLayer(this.incidentLayer);
+    handleActiveNav('details');
+
   };
 
   render() {
@@ -240,7 +242,6 @@ class Incidents extends React.Component {
         {!hideButton ? (
           <MapNav
             newIncidentButton={this.onclickNewIncidentButton}
-            id="mapNav"
           />
         ) : null}
         <LeafletMap center={position} zoom={zoom} ref={this.mapRef}>
@@ -270,11 +271,13 @@ const mapStateToProps = state => ({
   selected: state.selectedIncident.incident
     ? state.selectedIncident.incident
     : [],
+    
 });
 
 const mapDispatchToProps = dispatch => ({
   handleIncidents: bindActionCreators(getIncidentsSuccess, dispatch),
   getIncident: bindActionCreators(getSelectedIncident, dispatch),
+  handleActiveNav: bindActionCreators(getNavActive, dispatch)
 });
 export default connect(
   mapStateToProps,

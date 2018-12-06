@@ -3,6 +3,7 @@ import {
   GET_INCIDENT_FAILURE,
   GET_INCIDENTS_START,
   SELECT_INCIDENT_SUCCESS,
+  SELECT_ACTIVE_INCIDENT,
 } from './actions';
 
 /**
@@ -59,6 +60,18 @@ export function selectedIncident(state = [], action) {
       return {
         ...state,
         incident: action.payload.data,
+      };
+    default:
+      return state;
+  }
+}
+
+export function activeNav(state = { activeItem: 'legend' }, action) {
+  switch (action.type) {
+    case SELECT_ACTIVE_INCIDENT:
+      return {
+        ...state,
+        ...action.payload,
       };
     default:
       return state;
