@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+const API_BASE_URL =
+  process.env.EMIS_API_ENDPOINT || 'https://emis-plan.herokuapp.com';
 /**
  * Initialize axios library
  *
@@ -9,7 +11,7 @@ import axios from 'axios';
  * @since 0.1.0
  */
 const Axios = axios.create({
-  baseURL: '/api',
+  baseURL: `${API_BASE_URL}/v1`,
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',
