@@ -1,0 +1,20 @@
+.stakeholderBasicInfo {
+  padding: 20px;
+}
+
+.stakeholderBasicInfo .summary {
+  display: flex;
+}
+
+.stakeholderBasicInfo .avatar {
+  width: 100px;
+  margin-right: 20px;
+}
+
+.stakeholderBasicInfo .info {
+  flex: 1;
+}
+
+.stakeholderBasicInfo .name {
+  margin-bottom: 7px;
+}

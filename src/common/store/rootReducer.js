@@ -5,4 +5,12 @@ import { combineReducers } from 'redux';
 import stakeholders from '../../dashboard/Stakeholders/reducer';
 import incidentsType from '../../dashboard/Settings/reducer';
 
-export default combineReducers({ stakeholders, incidentsType });
+import showNotificationPanel from '../components/NotificationPanel/reducer';
+import * as resourceReducers from '../../dashboard/Resources/reducers';
+
+export default combineReducers({
+  stakeholders,
+  showNotificationPanel,
+  incidentsType,
+  ...resourceReducers,
+});

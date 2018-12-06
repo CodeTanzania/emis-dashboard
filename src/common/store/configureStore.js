@@ -5,7 +5,7 @@ import thunk from 'redux-thunk';
 /* local dependencies */
 import rootReducer from './rootReducer';
 import rootEpic from './rootEpic';
-import API from '../API';
+import * as API from '../API';
 
 /* local constants */
 const epicMiddleware = createEpicMiddleware({

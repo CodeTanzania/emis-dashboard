@@ -1,23 +1,18 @@
 /* eslint no-underscore-dangle: "off" */
-import { Button, Checkbox, Form, Input, Radio, Select } from 'antd';
-import classNames from 'classnames/bind';
+import { Button, Checkbox, Form, Input, Select, message } from 'antd';
+// import classNames from 'classnames/bind';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { from } from 'rxjs';
-import API from '../../../../common/API';
-import {
-  addNewStakeholderSuccess,
-  updateStakeholderSuccess,
-} from '../../actions';
-import styles from './styles.css';
+import { createStakeholder } from '../../../../../../common/API';
+import { addStakeholder, updateStakeholder } from '../../../../actions';
+// import styles from './styles.css';
 
-const cx = classNames.bind(styles);
+// const cx = classNames.bind(styles);
 const FormItem = Form.Item;
 const { Option } = Select;
-const RadioGroup = Radio.Group;
 const CheckboxGroup = Checkbox.Group;
 
-class BasicDetailsForm extends Component {
+class StakeholderForm extends Component {
   // state = { errorMsg: '', submitting: false };
   state = { submitting: false };
 
@@ -29,10 +24,23 @@ class BasicDetailsForm extends Component {
       // antd warning i.e you cannot set field before registering it.
       const fieldsValues = {};
       formFields.forEach(field => {
-        fieldsValues[field] = stakeholder[field];
+        if (field === 'role') {
+          fieldsValues[field] = stakeholder[field] && stakeholder[field]._id;
+        } else {
+          fieldsValues[field] = stakeholder[field];
+        }
         return fieldsValues[field];
       });
       form.setFieldsValue(fieldsValues);
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.updatingStakeholder !== this.props.updatingStakeholder) {
+      if (!nextProps.updatingStakeholder) {
+        // stakeholder updating done, close the form
+        this.props.onCancel();
+      }
     }
   }
 
@@ -43,7 +51,7 @@ class BasicDetailsForm extends Component {
       if (!err) {
         const { stakeholder } = this.props;
         if (stakeholder) {
-          this.updateStakeholder(stakeholder._id, data);
+          this.patchStakeholder(stakeholder._id, data);
         } else {
           this.createStakeholder(data);
         }
@@ -55,41 +63,37 @@ class BasicDetailsForm extends Component {
    * Create stakeholder helper function
    */
   createStakeholder = data => {
-    const { handleCancelClick } = this.props;
+    const { onCancel } = this.props;
     this.setState({ submitting: true });
-    from(API.createStakeholder(data)).subscribe(result => {
-      if (result.error) {
+    createStakeholder(data)
+      .then(result => {
+        // submitted successfully
+        this.props.addStakeholder(result);
+        this.setState({ submitting: false });
+        message.success('New stakeholder successfully added');
+        onCancel();
+      })
+      .catch(() => {
         // There is an error upon submitting
         this.setState({ submitting: false });
-        // this.setState({ errorMsg: result.message });
-      } else {
-        // submitted successfully
-        addNewStakeholderSuccess(result);
-        this.setState({ submitting: false });
-        handleCancelClick();
-      }
-    });
+        message.error('Adding new stakeholder failed');
+      });
   };
 
-  updateStakeholder = (stakeholderId, updates) => {
-    const { handleCancelClick } = this.props;
-    this.setState({ submitting: true });
-    from(API.updateStakeholder(stakeholderId, updates)).subscribe(result => {
-      if (result.error) {
-        // There is an error upon submitting
-        this.setState({ submitting: false });
-        // this.setState({ errorMsg: result.message });
-      } else {
-        // patch submitted successfully
-        updateStakeholderSuccess(result);
-        this.setState({ submitting: false });
-        handleCancelClick();
-      }
-    });
+  patchStakeholder = (stakeholderId, updates) => {
+    this.props.updateStakeholder(stakeholderId, updates);
   };
 
   render() {
-    const { handleCancelClick, form } = this.props;
+    const {
+      onCancel,
+      form,
+      phases,
+      types,
+      predRoles,
+      stakeholder,
+      updatingStakeholder,
+    } = this.props;
     const { submitting } = this.state;
     const { getFieldDecorator } = form;
     const formItemLayout = {
@@ -126,7 +130,7 @@ class BasicDetailsForm extends Component {
     );
 
     return (
-      <div className={cx('content')}>
+      <div>
         <Form onSubmit={this.handleSubmit}>
           <FormItem label="Name" {...formItemLayout}>
             {getFieldDecorator('name', {
@@ -135,13 +139,13 @@ class BasicDetailsForm extends Component {
               ],
             })(<Input placeholder="Stakeholder Name" />)}
           </FormItem>
-          <FormItem label="Phone" {...formItemLayout}>
-            {getFieldDecorator('phone', {
+          <FormItem label="Mobile" {...formItemLayout}>
+            {getFieldDecorator('mobile', {
               rules: [
-                { required: true, message: 'Please input phone number!' },
+                { required: true, message: 'Please input mobile number!' },
               ],
             })(
-              <Input addonBefore={prefixSelector} placeholder="Phone Number" />
+              <Input addonBefore={prefixSelector} placeholder="Mobile Number" />
             )}
           </FormItem>
           <FormItem label="Email" {...formItemLayout}>
@@ -168,23 +172,24 @@ class BasicDetailsForm extends Component {
               ],
             })(
               <Select placeholder="Select Type">
-                <Option value="Agency">Agency</Option>
-                <Option value="Committee">Committee</Option>
-                <Option value="Team">Team</Option>
-                <Option value="Individual">Individual</Option>
+                {types.map(type => (
+                  <Option key={type} value={type}>
+                    {type}
+                  </Option>
+                ))}
               </Select>
             )}
           </FormItem>
-          <FormItem label="Ownership" {...formItemLayout}>
-            {getFieldDecorator('ownership', { initialValue: 'Government' })(
-              <RadioGroup>
-                <Radio value="Government">Government</Radio>
-                <Radio value="Private">Private</Radio>
-              </RadioGroup>
+          <FormItem label="Role" {...formItemLayout}>
+            {getFieldDecorator('role')(
+              <Select placeholder="Select Role">
+                {predRoles.map(predRole => (
+                  <Option key={predRole._id} value={predRole._id}>
+                    {predRole.name}
+                  </Option>
+                ))}
+              </Select>
             )}
-          </FormItem>
-          <FormItem label="Area" {...formItemLayout}>
-            {getFieldDecorator('area')(<Input placeholder="Area" />)}
           </FormItem>
           <FormItem label="Physical Address" {...formItemLayout}>
             {getFieldDecorator('physicalAddress')(
@@ -204,21 +209,30 @@ class BasicDetailsForm extends Component {
           </FormItem>
           <FormItem label="Phase" {...formItemLayout}>
             {getFieldDecorator('phases', { initialValue: ['Mitigation'] })(
-              <CheckboxGroup
-                options={['Mitigation', 'Preparedness', 'Response', 'Recovery']}
-              />
+              <CheckboxGroup options={phases} />
             )}
           </FormItem>
           <FormItem {...tailFormItemLayout}>
-            <Button onClick={handleCancelClick}>Cancel</Button>
-            <Button
-              type="primary"
-              htmlType="submit"
-              style={{ marginLeft: 8 }}
-              loading={submitting}
-            >
-              Save
-            </Button>
+            <Button onClick={onCancel}>Cancel</Button>
+            {stakeholder ? (
+              <Button
+                type="primary"
+                htmlType="submit"
+                style={{ marginLeft: 8 }}
+                loading={updatingStakeholder}
+              >
+                Update
+              </Button>
+            ) : (
+              <Button
+                type="primary"
+                htmlType="submit"
+                style={{ marginLeft: 8 }}
+                loading={submitting}
+              >
+                Save
+              </Button>
+            )}
           </FormItem>
         </Form>
       </div>
@@ -226,10 +240,22 @@ class BasicDetailsForm extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  const { schema, predRoles, updatingStakeholder } = state.stakeholders;
+  const { phases, type } = schema.properties;
+
+  return {
+    phases: phases.enum,
+    types: type.enum.reverse(),
+    predRoles: predRoles.data,
+    updatingStakeholder,
+  };
+};
+
 export default connect(
-  null,
+  mapStateToProps,
   {
-    addNewStakeholderSuccess,
-    updateStakeholderSuccess,
+    addStakeholder,
+    updateStakeholder,
   }
-)(Form.create()(BasicDetailsForm));
+)(Form.create()(StakeholderForm));
