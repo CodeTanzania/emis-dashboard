@@ -1,142 +1,54 @@
 /* eslint no-underscore-dangle: "off" */
 import {
-  ADD_NEW_STAKEHOLDER_SUCCESS,
-  FETCH_STAKEHOLDERS,
-  FETCH_STAKEHOLDERS_FAILURE,
-  FETCH_STAKEHOLDERS_SUCCESS,
+  INIT_STAKEHOLDERS_START,
+  INIT_STAKEHOLDERS_SUCCESS,
+  INIT_STAKEHOLDERS_ERROR,
+  CREATE_STAKEHOLDER,
+  GET_STAKEHOLDERS_START,
+  GET_STAKEHOLDERS_ERROR,
+  GET_STAKEHOLDERS_SUCCESS,
   SELECT_STAKEHOLDER,
+  UPDATE_STAKEHOLDER_START,
   UPDATE_STAKEHOLDER_SUCCESS,
+  UPDATE_STAKEHOLDER_ERROR,
   TOGGLE_STAKEHOLDER_FILTER,
+  RESET_STAKEHOLDER_FILTERS,
+  SHOW_STAKEHOLDER_FORM,
 } from './actions';
+
+import { buildUIFilters, updateFilterItem, resetFilters } from './helpers';
+
 /**
- * Stakeholders Reducers
+ * State shape
+{
+  stakeholders: Object
+    stakeholders.data: Object[], // contain the stakeholders returned by the API
+    stakeholders.total: number, // total number of stakeholders returned
+    stakeholders.isLoading: boolean, // check if stakeholders fetching in progress
+    stakeholders.init: boolean, // check if stakeholders UI booted
+    stakeholders.error: Object, // set if stakeholder init or fetch failed
+    stakeholders.selected: Object, // keep track of the selected stakeholder in UI stakeholders list
+    stakeholders.filters: Object[], // keep track of stakeholder UI filters and their status
+    stakeholders.schema: Object, // stakeholder schema definition,
+    stakeholders.predRoles: Object[] // predefined roles
+    stakeholders.form: Object // monitor the stakeholder form 
+    updatingStakeholder: boolean
+}
  */
 
+// initial stakeholders state
 const initialState = {
   data: [],
   total: 0,
   isLoading: false,
+  init: false,
   error: null,
   selected: null,
   filters: [],
+  schema: null,
+  predRoles: null,
+  form: null,
 };
-
-/**
- * Create stakeholder filters using data from the API
- *
- * Transform
- * "filters": [
-        {
-            "group": "phases",
-            "data": [
-                {
-                    "name": "Mitigation",
-                    "count": 0
-                }
-            ]
-        }
-      ]
-   Into 
-    "filters": [
-        {
-            "group": "phases",
-            "data": [
-                {
-                    "name": "Mitigation",
-                    "count": 0
-                    "selected": false
-                }
-            ]
-        }
-      ]
- * @param {Object[]} filters 
- * @param {string} filters[].group - Filter group name, e.g phases, types etc
- * @param {Object[]} filters[].data - Filter data
- * @param {string} filters[].data[].name - Filter name
- * @param {number} filters[].data[].count - Number of stakeholders tagged with this filter name
- * @returns {Object[]} - Filters with filter item added selected property
- */
-function createUIFiltersFromAPI(filters) {
-  return filters.map(filter => {
-    const data = filter.data.map(item => ({ ...item, selected: false }));
-    return { ...filter, data };
-  });
-}
-
-/**
- * It updates UIfilter count property using data from the API
- *
- * @param {Object[]} UIFilters filters as displayed in UI
- * @param {string} UIFilters[].group - Filter group
- * @param {Object[]} UIFilters[].data - Filters in a specific group
- * @param {Object[]} APIFilters filters as returned from the API
- * @param {string} APIFilters[].group
- * @param {Object[]} APIFilters[].data
- */
-function updateUIFiltersFromAPI(UIFilters, APIFilters) {
-  // Iterate all UI filters
-  return UIFilters.map(UIFilter => {
-    // Find API filter group corresponding to UI filter group
-    const foundAPIFilterGroup = APIFilters.find(
-      APIFilterGroup => APIFilterGroup.group === UIFilter.group
-    );
-    let data;
-    if (foundAPIFilterGroup) {
-      // API filter group corresponding to UI filter group found
-      // Iterate all UIFilter items
-      data = UIFilter.data.map(item => {
-        // find API filter item corrsponding to UI filter Item
-        const foundAPIFilterItem = foundAPIFilterGroup.data.find(
-          APIFilterItem => APIFilterItem.name === item.name
-        );
-        if (foundAPIFilterItem) {
-          // API filter item corresponding to UI filter found
-          return { ...item, count: foundAPIFilterItem.count };
-        }
-        return item;
-      });
-    }
-
-    // return updated filter if there is a API match
-    // otherwise return UI filter as it is
-    return data ? { ...UIFilter, data } : UIFilter;
-  });
-}
-
-/**
- * Update filter item with selected status
- * @param {Object[]} filters
- * @param {string} filterGroup - Filter group name
- * @param {string} filterName - Filter name
- * @param {boolean} selected - Filter selected status
- */
-function updateStakeholderFilterItem(
-  filters,
-  filterGroup,
-  filterName,
-  selected
-) {
-  return filters.map(filter => {
-    if (filter.group !== filterGroup) {
-      return filter;
-    }
-    const filterItems = filter.data.map(item => {
-      if (item.name !== filterName) {
-        // This isn't the item filter we care about - keep it as-is
-        return item;
-      }
-      // Otherwise, this is the one we want - return an updated value
-      return {
-        ...item,
-        selected,
-      };
-    });
-    return {
-      ...filter,
-      data: filterItems,
-    };
-  });
-}
 
 /**
  * Stakeholder reducer function
@@ -145,66 +57,116 @@ function updateStakeholderFilterItem(
  */
 export default function stakeholders(state = initialState, action) {
   switch (action.type) {
-    case FETCH_STAKEHOLDERS:
+    case INIT_STAKEHOLDERS_START:
+      return { ...state, init: true };
+    case INIT_STAKEHOLDERS_SUCCESS: {
+      const {
+        filters,
+        schema,
+        data,
+        total,
+        page,
+        predRoles,
+      } = action.payload.data;
+      const uiFilters = buildUIFilters(filters);
+      return {
+        ...state,
+        init: false,
+        selected: data[0],
+        // we set filters dynamically to prevent showing filters that doesn't work / removed
+        // we want to set filters only once and use it per session as the result
+        // we prevent to set filter everytime stakeholders change
+        filters: uiFilters,
+        data,
+        total,
+        page,
+        schema,
+        predRoles,
+      };
+    }
+    case INIT_STAKEHOLDERS_ERROR:
+      return {
+        ...state,
+        init: false,
+        error: action.payload.data,
+      };
+    case GET_STAKEHOLDERS_START:
       return {
         ...state,
         isLoading: true,
         error: null,
       };
-    case FETCH_STAKEHOLDERS_SUCCESS: {
-      const UIFilters = state.filters.length
-        ? updateUIFiltersFromAPI(state.filters, action.payload.filters)
-        : createUIFiltersFromAPI(action.payload.filters);
+    case GET_STAKEHOLDERS_SUCCESS: {
+      const { data, total, page } = action.payload.data;
       return {
-        data: [...action.payload.data],
-        total: action.payload.total,
+        ...state,
+        selected: data[0],
         isLoading: false,
         error: null,
-        selected: action.payload.data[0],
-        // we set filters dynamically to prevent showing filters that doesn't work / removed
-        // we want to set filters only once and use it per session as the result
-        // we prevent to set filter everytime stakeholders change
-        filters: UIFilters,
+        data,
+        total,
+        page,
       };
     }
-    case FETCH_STAKEHOLDERS_FAILURE:
+    case GET_STAKEHOLDERS_ERROR: {
+      const { data } = action.payload;
       return {
         data: [],
         isLoading: false,
-        error: action.payload,
+        error: data,
       };
+    }
+    case TOGGLE_STAKEHOLDER_FILTER: {
+      const { group, name, selected } = action.payload.data;
+      const uiFilters = state.filters;
+      const updatedFilters = updateFilterItem(uiFilters, group, name, selected);
+      return { ...state, filters: updatedFilters };
+    }
     case SELECT_STAKEHOLDER:
       return {
         ...state,
-        selected: action.stakeholder,
+        selected: action.payload.data,
       };
-    case ADD_NEW_STAKEHOLDER_SUCCESS:
+    case CREATE_STAKEHOLDER:
       return {
         ...state,
-        data: [action.stakeholder, ...state.data],
+        data: [action.payload.data, ...state.data],
+        selected: action.payload.data,
       };
+
+    case UPDATE_STAKEHOLDER_START:
+      return { ...state, updatingStakeholder: true };
     case UPDATE_STAKEHOLDER_SUCCESS: {
       const data = [...state.data]; // grab stakeholder array
-      const { stakeholder } = action; // grab stakeholder
+      const stakeholder = action.payload.data; // grab stakeholder
       const foundIndex = data.findIndex(item => item._id === stakeholder._id);
       data[foundIndex] = stakeholder;
       return {
         ...state,
         data,
         selected: stakeholder,
+        updatingStakeholder: false,
       };
     }
-    case TOGGLE_STAKEHOLDER_FILTER: {
-      const { filterGroup, filterName, selected } = action;
-      const filters = updateStakeholderFilterItem(
-        state.filters,
-        filterGroup,
-        filterName,
-        selected
-      );
+    case UPDATE_STAKEHOLDER_ERROR:
       return {
         ...state,
-        filters,
+        error: action.payload.data,
+        updatingStakeholder: false,
+      };
+    case RESET_STAKEHOLDER_FILTERS: {
+      const filters = resetFilters(state.filters);
+      return { ...state, filters };
+    }
+    case SHOW_STAKEHOLDER_FORM: {
+      const { drawerOptions, stakeholder } = action.payload.data;
+      return {
+        ...state,
+        form: {
+          show: true,
+          drawerOptions,
+          stakeholder,
+        },
       };
     }
     default:

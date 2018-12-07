@@ -6,7 +6,7 @@ import {
   getFeatures,
   getIncidentTypes,
   getStakeholders,
-} from '../../../../../common/API/api';
+} from '../../../../../common/API';
 import SelectSearchBox from '../../../../../common/components/SelectSearchBox';
 import { postPlan, putPlan } from '../../../actions';
 import './styles.css';

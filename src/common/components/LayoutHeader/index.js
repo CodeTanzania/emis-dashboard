@@ -26,11 +26,13 @@ export default function LayoutHeader({ title, breadcrumbs }) {
         <Breadcrumb className="Breadcrumb" separator=">">
           {breadcrumbs.map(breadcrumb =>
             has(breadcrumb, 'link') ? (
-              <Breadcrumb.Item>
+              <Breadcrumb.Item key={breadcrumb.name}>
                 <Link to={breadcrumb.link}>{breadcrumb.name}</Link>
               </Breadcrumb.Item>
             ) : (
-              <Breadcrumb.Item>{breadcrumb.name}</Breadcrumb.Item>
+              <Breadcrumb.Item key={breadcrumb.name}>
+                {breadcrumb.name}
+              </Breadcrumb.Item>
             )
           )}
         </Breadcrumb>

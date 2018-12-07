@@ -4,7 +4,7 @@ import map from 'lodash/map';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getResourceItems, getRoles } from '../../../../../common/API/api';
+import { getResourceItems, getRoles } from '../../../../../common/API';
 import SelectSearchBox from '../../../../../common/components/SelectSearchBox';
 import { postPlanActivity, putPlanActivity } from '../../../actions';
 

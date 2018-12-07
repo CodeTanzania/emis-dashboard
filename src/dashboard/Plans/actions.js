@@ -878,7 +878,7 @@ export function putPlanActivityProcedureError(error) {
  * @since 0.1.0
  */
 export function getPlans(params) {
-  return (dispatch, getState, API) => {
+  return (dispatch, getState, { API }) => {
     const { filters } = getState().plans;
 
     let allParams = params;
@@ -919,7 +919,7 @@ export function getPlans(params) {
 }
 
 export function postPlan(plan) {
-  return (dispatch, getState, API) => {
+  return (dispatch, getState, { API }) => {
     dispatch(postPlanStart());
     return API.postPlan(plan)
       .then(() => {
@@ -945,7 +945,7 @@ export function postPlan(plan) {
  * @since 0.1.0
  */
 export function putPlan(plan) {
-  return (dispatch, getState, API) => {
+  return (dispatch, getState, { API }) => {
     dispatch(putPlanStart());
 
     return API.putPlan(plan)
@@ -969,7 +969,7 @@ export function putPlan(plan) {
  * @since 0.1.0
  */
 export function getPlanActivities() {
-  return (dispatch, getState, API) => {
+  return (dispatch, getState, { API }) => {
     dispatch(getPlanActivitiesStart());
 
     const planId = getState().selectedPlan._id; //eslint-disable-line
@@ -1003,7 +1003,7 @@ export function getPlanActivities() {
  * @since 0.1.0
  */
 export function postPlanActivity(activity) {
-  return (dispatch, getState, API) => {
+  return (dispatch, getState, { API }) => {
     dispatch(postPlanActivityStart());
 
     const plan = getState().selectedPlan._id; //eslint-disable-line
@@ -1035,7 +1035,7 @@ export function postPlanActivity(activity) {
  * @since 0.1.0
  */
 export function putPlanActivity(activity) {
-  return (dispatch, getState, API) => {
+  return (dispatch, getState, { API }) => {
     dispatch(putPlanActivityStart());
 
     return API.putPlanActivity(activity)
@@ -1060,7 +1060,7 @@ export function putPlanActivity(activity) {
  * @since 0.1.0
  */
 export function getPlanActivityProcedures() {
-  return (dispatch, getState, API) => {
+  return (dispatch, getState, { API }) => {
     dispatch(getPlanActivityProceduresStart());
 
     const activityId = getState().selectedPlanActivity._id; //eslint-disable-line
@@ -1094,7 +1094,7 @@ export function getPlanActivityProcedures() {
  * @since 0.1.0
  */
 export function postPlanActivityProcedure(procedure) {
-  return (dispatch, getState, API) => {
+  return (dispatch, getState, { API }) => {
     dispatch(postPlanActivityProcedureStart());
 
     const activity = getState().selectedPlanActivity._id; // eslint-disable-line
@@ -1126,7 +1126,7 @@ export function postPlanActivityProcedure(procedure) {
  * @since 0.1.0
  */
 export function putPlanActivityProcedure(procedure) {
-  return (dispatch, getState, API) => {
+  return (dispatch, getState, { API }) => {
     dispatch(putPlanActivityProcedureStart());
 
     return API.putPlanActivityProcedure(procedure)

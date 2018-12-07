@@ -3,8 +3,15 @@
  */
 import { combineEpics } from 'redux-observable';
 import {
-  fetchStakeholdersEpic,
-  searchStakeholdersEpic,
-} from '../../dashboard/Stakeholders/epics';
+  getIncidentsTypeEpic,
+  addIncidentTypeEpic,
+  searchIncidentTypeEpic,
+  updateIncidentTypeEpic,
+} from '../../dashboard/Settings/epic';
 
-export default combineEpics(fetchStakeholdersEpic, searchStakeholdersEpic);
+export default combineEpics(
+  addIncidentTypeEpic,
+  getIncidentsTypeEpic,
+  searchIncidentTypeEpic,
+  updateIncidentTypeEpic
+);

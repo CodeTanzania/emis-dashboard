@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import 'react-app-polyfill/ie9'; // For IE 9-11 support as CRA doesn't support IE by default
 /* import components */
 import App from './App';
 /* import styles */

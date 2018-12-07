@@ -17,7 +17,7 @@ import {
   getFeatures,
   getIncidentTypes,
   getStakeholders,
-} from '../../../common/API/api';
+} from '../../../common/API';
 import LayoutHeader from '../../../common/components/LayoutHeader';
 import SelectSearchBox from '../../../common/components/SelectSearchBox';
 import Toolbar from '../../../common/components/Toolbar';

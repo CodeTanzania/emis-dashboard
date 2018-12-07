@@ -1,9 +1,11 @@
-import { Col, Row } from 'antd';
-import PropTypes from 'prop-types';
 import React from 'react';
-/* import component */
-import InformationItem from './Item';
+import PropTypes from 'prop-types';
+import { Avatar, Button } from 'antd';
+import classNames from 'classnames';
+import InfoLineItem from './components/InfoLineItem';
+import styles from './styles.css';
 
+const cx = classNames.bind(styles);
 /**
  * Contact information component
  * Render basic information about the contact
@@ -14,28 +16,41 @@ import InformationItem from './Item';
  * @version 0.1.0
  * @since 0.1.0
  */
-export default function BasicInfo({ stakeholder }) {
-  const { phone, email, physicalAddress, fax } = stakeholder;
+export default function BasicInfo({ stakeholder, onClickEdit }) {
+  const {
+    name,
+    mobile,
+    email,
+    fax,
+    phases,
+    role,
+    physicalAddress,
+    postalAddress,
+    website,
+  } = stakeholder;
   return (
-    <div>
-      <Row>
-        <Col span={12}>
-          <InformationItem label="Phone" value={phone} />
-        </Col>
-        <Col span={12}>
-          <InformationItem label="Address" value={physicalAddress} />
-        </Col>
-      </Row>
-      <Row>
-        <Col span={12}>
-          <InformationItem label="Email" value={email} />
-        </Col>
-      </Row>
-      <Row>
-        <Col span={12}>
-          <InformationItem label="Fax" value={fax} />
-        </Col>
-      </Row>
+    <div className={cx('stakeholderBasicInfo')}>
+      <div className={cx('summary')}>
+        <div className={cx('avatar')}>
+          <Avatar shape="square" size={100} icon="user" />
+        </div>
+        <div className={cx('info')}>
+          <h3 className={cx('name')}>{name}</h3>
+          <InfoLineItem label="Role" value={role && role.name} />
+          <InfoLineItem label="Phases" value={phases} />
+        </div>
+        <div>
+          <Button icon="edit" onClick={() => onClickEdit()}>
+            Edit Profile
+          </Button>
+        </div>
+      </div>
+      <InfoLineItem label="Phone" value={mobile} block />
+      <InfoLineItem label="Email" value={email} block />
+      <InfoLineItem label="Fax" value={fax} block />
+      <InfoLineItem label="Physical Address" value={physicalAddress} block />
+      <InfoLineItem label="Postal Address" value={postalAddress} block />
+      <InfoLineItem label="Web" value={website} block />
     </div>
   );
 }
@@ -47,9 +62,6 @@ BasicInfo.propTypes = {
     email: PropTypes.string,
     physicalAddress: PropTypes.string,
     fax: PropTypes.string,
-  }),
-};
-
-BasicInfo.defaultProps = {
-  stakeholder: {},
+  }).isRequired,
+  onClickEdit: PropTypes.func.isRequired,
 };

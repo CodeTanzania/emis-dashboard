@@ -1,11 +1,11 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import * as API from '../../../common/API/api';
+import * as API from '../../../common/API';
 import * as Actions from '../actions';
 
-jest.mock('../../../common/API/api');
+jest.mock('../../../common/API');
 
-const middlewares = [thunk.withExtraArgument(API)];
+const middlewares = [thunk.withExtraArgument({ API })];
 const mockStore = configureMockStore(middlewares);
 
 describe('Plans:Module', () => {

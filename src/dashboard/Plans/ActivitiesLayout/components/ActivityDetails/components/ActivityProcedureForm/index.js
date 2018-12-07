@@ -3,10 +3,7 @@ import flow from 'lodash/flow';
 import map from 'lodash/map';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {
-  getResourceItems,
-  getRoles,
-} from '../../../../../../../common/API/api';
+import { getResourceItems, getRoles } from '../../../../../../../common/API';
 import SelectSearchBox from '../../../../../../../common/components/SelectSearchBox';
 import {
   postPlanActivityProcedure,

@@ -2,13 +2,16 @@ import { applyMiddleware, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension'; // eslint-disable-line import/no-extraneous-dependencies
 import { createEpicMiddleware } from 'redux-observable';
 import thunk from 'redux-thunk';
+import * as API from '../API';
+import rootEpic from './rootEpic';
 /* local dependencies */
 import rootReducer from './rootReducer';
-import rootEpic from './rootEpic';
-import * as API from '../API/api';
 
 /* local constants */
-const epicMiddleware = createEpicMiddleware();
+const epicMiddleware = createEpicMiddleware({
+  // see https://redux-observable.js.org/docs/recipes/InjectingDependenciesIntoEpics.html
+  dependencies: { API },
+});
 
 /**
  * Configure Redux store
@@ -25,7 +28,7 @@ const configureStore = () => {
   const store = createStore(
     rootReducer,
     composeWithDevTools(
-      applyMiddleware(epicMiddleware, thunk.withExtraArgument(API))
+      applyMiddleware(epicMiddleware, thunk.withExtraArgument({ API }))
     )
   );
 
