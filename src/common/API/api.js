@@ -57,14 +57,14 @@ export function putPlan(plan) {
  * @function
  * @name deletePlan
  *
- * @param {string} planId - Plan unique ID
+ * @param {string} plan - Plan to be deleted
  * @returns {Promise}
  *
  * @version 0.1.0
  * @since 0.1.0
  */
-export function delPlan(planId) {
-  return axios.delete(`/plans/${planId}`);
+export function delPlan(plan) {
+  return axios.delete(`/plans/${plan._id}`); //eslint-disable-line
 }
 
 /**
