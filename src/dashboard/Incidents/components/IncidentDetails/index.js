@@ -1,7 +1,7 @@
 import React from 'react';
 import {} from 'antd';
 import PropTypes from 'prop-types';
-import './styles.css'
+import './styles.css';
 import { connect } from 'react-redux';
 import IncidentActions from '../IncidentActions';
 
@@ -17,20 +17,20 @@ import IncidentActions from '../IncidentActions';
  * @since 0.1.0
  */
 
- class IncidentDetails extends React.Component {
+class IncidentDetails extends React.Component {
   static propTypes = {
     incident: PropTypes.shape({
       name: PropTypes.string,
-      incidentsTypeData:PropTypes.shape({
-          name: PropTypes.string,
-          nature: PropTypes.string.isRequired,
-          family: PropTypes.string.isRequired,      
-          color: PropTypes.string,
-          _id: PropTypes.string,
-        }).isRequired,
+      incidentsTypeData: PropTypes.shape({
+        name: PropTypes.string,
+        nature: PropTypes.string.isRequired,
+        family: PropTypes.string.isRequired,
+        color: PropTypes.string,
+        _id: PropTypes.string,
+      }).isRequired,
       description: PropTypes.string.isRequired,
-      startedAt: PropTypes.date,
-      endedAt: PropTypes.date,
+      startedAt: PropTypes.instanceOf(Date),
+      endedAt: PropTypes.instanceOf(Date),
       _id: PropTypes.string,
     }).isRequired,
     selectedAction: PropTypes.shape({
@@ -38,25 +38,25 @@ import IncidentActions from '../IncidentActions';
       description: PropTypes.string.isRequired,
       phase: PropTypes.string.isRequired,
       incident: PropTypes.shape({
-          name:PropTypes.string.isRequired,
-          startedAt:PropTypes.string.isRequired,
-          endedAt:PropTypes.string.isRequired,
-          _id: PropTypes.string,
+        name: PropTypes.string.isRequired,
+        startedAt: PropTypes.instanceOf(Date),
+        endedAt: PropTypes.instanceOf(Date),
+        _id: PropTypes.string,
       }),
       incidentType: PropTypes.shape({
-          name: PropTypes.string,
-          nature: PropTypes.string.isRequired,
-          family: PropTypes.string.isRequired,
-          color: PropTypes.string,
-          _id: PropTypes.string
+        name: PropTypes.string,
+        nature: PropTypes.string.isRequired,
+        family: PropTypes.string.isRequired,
+        color: PropTypes.string,
+        _id: PropTypes.string,
       }),
       _id: PropTypes.string,
-    }).isRequired
+    }).isRequired,
+    actionTaken: PropTypes.func,
   };
 
   static defaultProps = {
-    incident: null,
-    selectedAction:null,
+    actionTaken: null,
   };
 
   constructor() {
@@ -102,7 +102,7 @@ import IncidentActions from '../IncidentActions';
                 </tr>
               </tbody>
             </table>
-            <IncidentActions selectedAction = {actionTaken}/>
+            <IncidentActions selectedAction={actionTaken} />
           </div>
         </div>
       </div>
@@ -110,10 +110,13 @@ import IncidentActions from '../IncidentActions';
   }
 }
 
-const mapStateToProps = state => { 
-  return{
-  actionTaken: state.selectedIncident.incidentAction ? 
-  state.selectedIncident.incidentAction : [],
-}}
+const mapStateToProps = state => ({
+  actionTaken: state.selectedIncident.incidentAction
+    ? state.selectedIncident.incidentAction
+    : [],
+});
 
-export default connect(mapStateToProps, '')(IncidentDetails);
+export default connect(
+  mapStateToProps,
+  ''
+)(IncidentDetails);

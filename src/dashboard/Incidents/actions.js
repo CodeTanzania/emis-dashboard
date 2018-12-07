@@ -16,7 +16,6 @@ export const GET_INCIDENT_ACTION_ERROR = 'GET_INCIDENT_ACTION_ERROR';
 export const GET_INCIDENT_ACTION_START = 'GET_INCIDENT_ACTION_START';
 export const GET_INCIDENT_ACTION_SUCCESS = 'GET_INCIDENT_ACTION_SUCCESS';
 
-
 /* Actions creater */
 
 export const getIncidentsStart = () => ({
@@ -44,12 +43,12 @@ export const selectIncidentSuccess = incident => ({
 });
 
 export const getActionsStart = () => ({
-  type: GET_ACTIONS_START
-})
+  type: GET_ACTIONS_START,
+});
 
 export const getActionsSuccess = incidentsActions => ({
   type: GET_ACTIONS_SUCCESS,
-  payload: { data:incidentsActions },
+  payload: { data: incidentsActions },
 });
 
 export const getActionsError = message => ({
@@ -57,16 +56,16 @@ export const getActionsError = message => ({
   payload: { message },
 });
 
-export const setIncidentActionStart = (id) => ({
+export const setIncidentActionStart = id => ({
   type: GET_INCIDENT_ACTION_START,
   payload: {
-    id:null
-  }
-})
+    id,
+  },
+});
 
 export const setIncidentActionSuccess = incidentAction => ({
   type: GET_INCIDENT_ACTION_SUCCESS,
-  payload: { data:incidentAction },
+  payload: { data: incidentAction },
 });
 
 export const setIncidentActionError = message => ({
@@ -113,20 +112,23 @@ export const getSelectedIncident = (incidentId = null) => (
 };
 
 export const getIncidentActions = page => (dispatch, getState, { API }) => {
-
   dispatch(getActionsStart());
-  API.getIncidentActions({page})
+  API.getIncidentActions({ page })
     .then(actions => {
       dispatch(getActionsSuccess(actions));
     })
     .catch(error => dispatch(getActionsError(error)));
-}
+};
 
-export const activeIncidentAction = (incidentId = null) => (dispatch, getState, { API }) => {
+export const activeIncidentAction = (incidentId = null) => (
+  dispatch,
+  getState,
+  { API }
+) => {
   dispatch(setIncidentActionStart(incidentId));
   API.getIncidentActionById(incidentId)
     .then(activeAction => {
       dispatch(setIncidentActionSuccess(activeAction));
     })
     .catch(error => dispatch(setIncidentActionError(error)));
-}
+};

@@ -223,11 +223,10 @@ class Incidents extends React.Component {
     incidentsAction.filter(incidentAction => {
       if(incidentAction.incident._id === id ) {
         const {_id : actionId} = incidentAction;
-        setIncidentAction(actionId)
-        console.log(incidentAction)
+        return setIncidentAction(actionId)
       }
       else {
-        console.log("Not found in this page");
+        return console.log("Not found in this page");
       }
     })
     getIncident(id);

@@ -166,19 +166,18 @@ const API = {
     return url;
   },
 
-  getIncidentActions: (page) => {
+  getIncidentActions: page => {
     const params = { page: page || 1 };
     const url = Axios.get(`${INCIDENT_ACTIONS_API}/actions`, {
       params,
-    })
-      .then( response => response.data);
-      return url;
+    }).then(response => response.data);
+    return url;
   },
 
- getIncidentActionById: incidentId => {
-    return Axios.get(`${INCIDENT_ACTIONS_API}/actions/${incidentId}`).then(res => res.data)
-
- } 
+  getIncidentActionById: incidentId =>
+    Axios.get(`${INCIDENT_ACTIONS_API}/actions/${incidentId}`).then(
+      res => res.data
+    ),
 };
 
 export default API;

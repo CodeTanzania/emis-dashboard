@@ -34,9 +34,9 @@ const initialState = {
 };
 
 const initialselectedState = {
-  incident:{},
-  incidentAction: {},
-}
+  incident: null,
+  incidentAction: null,
+};
 
 export function incidents(state = initialState, action) {
   switch (action.type) {
@@ -60,7 +60,7 @@ export function incidents(state = initialState, action) {
         error: null,
       };
     case GET_ACTIONS_START:
-      return{
+      return {
         state,
         isLoading: true,
         error: null,
@@ -69,7 +69,7 @@ export function incidents(state = initialState, action) {
       return {
         incidentActionsData: action.payload.data.data,
         total: action.payload.data.total,
-        error:null
+        error: null,
       };
     case GET_ACTIONS_ERROR:
       return {
@@ -89,17 +89,17 @@ export function selectedIncident(state = initialselectedState, action) {
         ...state,
         incident: action.payload.data,
       };
-      case GET_INCIDENT_ACTION_SUCCESS:
+    case GET_INCIDENT_ACTION_SUCCESS:
       return {
         ...state,
         incidentAction: action.payload.data,
       };
-      case GET_INCIDENT_ACTION_ERROR:
+    case GET_INCIDENT_ACTION_ERROR:
       return {
         ...state,
         error: action.payload,
       };
-    
+
     default:
       return state;
   }
