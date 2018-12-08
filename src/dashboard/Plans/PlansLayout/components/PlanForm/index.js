@@ -1,5 +1,6 @@
 import { Button, Col, Form, Row } from 'antd';
 import flow from 'lodash/flow';
+import upperFirst from 'lodash/upperFirst';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
@@ -151,8 +152,10 @@ class PlanForm extends Component {
             <SelectSearchBox
               placeholder="Select Plan Boundary ..."
               onSearch={getFeatures}
-              optionLabel="name"
               optionValue="_id"
+              optionLabel={feature =>
+                `${feature.name} (${upperFirst(feature.level)})`
+              }
               initialValue={isEditForm ? plan.boundary : undefined}
             />
           )}
