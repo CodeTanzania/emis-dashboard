@@ -137,8 +137,8 @@ const API = {
 
   /* API for Incidents */
 
-  getIncidents: ({ page }) => {
-    const params = { page: page || 1 };
+  getIncidents: () => {
+    const params = { limit: 100 };
     const url = Axios.get(`${INCIDENTS_API}/incidents`, {
       params,
     }).then(response => response.data);
@@ -166,8 +166,8 @@ const API = {
     return url;
   },
 
-  getIncidentActions: page => {
-    const params = { page: page || 1 };
+  getIncidentsActions: () => {
+    const params = { limit:100 };
     const url = Axios.get(`${INCIDENT_ACTIONS_API}/actions`, {
       params,
     }).then(response => response.data);

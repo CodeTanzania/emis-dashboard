@@ -95,9 +95,9 @@ export const createIncidentFail = message =>( {
   }
 })
 
-export const getIncidentsSuccess = page => (dispatch, getState, { API }) => {
+export const getIncidentsSuccess = () => (dispatch, getState, { API }) => {
   dispatch(getIncidentsStart());
-  API.getIncidents({ page })
+  API.getIncidents()
     .then(results => {
       const { data: receivedIncidents } = results;
       const data = receivedIncidents.map(result => {
@@ -142,9 +142,9 @@ export const getSelectedIncident = (incidentId = null) => (
     .catch(error => dispatch(selectIncidentError(error)));
 };
 
-export const getIncidentActions = page => (dispatch, getState, { API }) => {
+export const getIncidentActions = () => (dispatch, getState, { API }) => {
   dispatch(getActionsStart());
-  API.getIncidentActions({ page })
+  API.getIncidentsActions()
     .then(actions => {
       dispatch(getActionsSuccess(actions));
     })
