@@ -1,6 +1,7 @@
 import React from 'react';
 import {} from 'antd';
 import PropTypes from 'prop-types';
+import './styles.css';
 
 /**
  * Incident actions Layout component
@@ -23,15 +24,15 @@ export default function IncidentActions({ selectedAction }) {
       <table>
         <tbody>
           <tr>
-            <td>Incident Action</td>
+            <td>INCIDENT ACTION</td>
             <td id="popupData">{name}</td>
           </tr>
           <tr>
-            <td>phase</td>
+            <td>PHASE</td>
             <td id="popupData">{phase}</td>
           </tr>
           <tr>
-            <td>Description</td>
+            <td>DESCRIPTION</td>
             <td id="popupData"> {description}</td>
           </tr>
         </tbody>

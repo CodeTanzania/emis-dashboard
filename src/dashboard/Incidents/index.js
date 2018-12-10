@@ -9,7 +9,13 @@ import PropTypes from 'prop-types';
 import 'leaflet-draw';
 import IncidentForm from './components/IncidentForm';
 import MapNav from './components/MapNav';
-import { getIncidentsSuccess, getSelectedIncident, getNavActive, getIncidentActions, activeIncidentAction } from './actions';
+import {
+  getIncidentsSuccess,
+  getSelectedIncident,
+  getNavActive,
+  getIncidentActions,
+  activeIncidentAction,
+} from './actions';
 import { showMarkers, baseMaps } from '../../common/lib/mapUtil';
 import popupContent from './components/mapPopup';
 import '../styles.css';
@@ -33,41 +39,65 @@ class Incidents extends React.Component {
     incidents: PropTypes.arrayOf(
       PropTypes.shape({
         name: PropTypes.string,
-        incidentsTypeData:PropTypes.shape({
-            name: PropTypes.string,
-            nature: PropTypes.string.isRequired,
-            family: PropTypes.string.isRequired,      
-            color: PropTypes.string,
-            _id: PropTypes.string,
-          }).isRequired,
+        incidentsTypeData: PropTypes.shape({
+          name: PropTypes.string,
+          nature: PropTypes.string.isRequired,
+          family: PropTypes.string.isRequired,
+          color: PropTypes.string,
+          _id: PropTypes.string,
+        }).isRequired,
         description: PropTypes.string.isRequired,
-        startedAt: PropTypes.date,
-        endedAt: PropTypes.date,
+        startedAt: PropTypes.instanceOf(Date),
+        endedAt: PropTypes.instanceOf(Date),
         _id: PropTypes.string,
-      }).isRequired,
+      }).isRequired
     ),
+    selected: PropTypes.shape({
+      name: PropTypes.string,
+      incidentsTypeData: PropTypes.shape({
+        name: PropTypes.string,
+        nature: PropTypes.string.isRequired,
+        family: PropTypes.string.isRequired,
+        color: PropTypes.string,
+        _id: PropTypes.string,
+      }),
+      description: PropTypes.string.isRequired,
+      startedAt: PropTypes.instanceOf(Date),
+      endedAt: PropTypes.instanceOf(Date),
+    }).isRequired,
+    incidentsAction: PropTypes.shape({
+      name: PropTypes.string,
+      description: PropTypes.string.isRequired,
+      phase: PropTypes.string.isRequired,
+      incident: PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        startedAt: PropTypes.instanceOf(Date),
+        endedAt: PropTypes.instanceOf(Date),
+        _id: PropTypes.string,
+      }),
+      incidentType: PropTypes.shape({
+        name: PropTypes.string,
+        nature: PropTypes.string.isRequired,
+        family: PropTypes.string.isRequired,
+        color: PropTypes.string,
+        _id: PropTypes.string,
+      }),
+      _id: PropTypes.string,
+    }).isRequired,
+    handleIncidentActions: PropTypes.func,
+    handleActiveNav: PropTypes.func,
     handleIncidents: PropTypes.func,
     getIncident: PropTypes.func,
-    selected: PropTypes.shape({
-        name: PropTypes.string,
-        incidentsTypeData: PropTypes.shape({
-            name: PropTypes.string,
-            nature: PropTypes.string.isRequired,
-            family: PropTypes.string.isRequired,
-            color: PropTypes.string,
-            _id: PropTypes.string,
-          }),
-        description: PropTypes.string.isRequired,
-        startedAt: PropTypes.date,
-        endedAt: PropTypes.date,
-      }).isRequired,
+    setIncidentAction: PropTypes.func,
   };
 
   static defaultProps = {
     incidents: null,
     handleIncidents: null,
-    selected: null,
     getIncident: null,
+    handleIncidentActions: null,
+    handleActiveNav: null,
+    setIncidentAction: null,
   };
 
   constructor() {
@@ -89,7 +119,7 @@ class Incidents extends React.Component {
     this.map = this.mapRef.current.leafletElement;
     this.mapLayers();
     this.DisplayMarkers();
-    const { handleIncidents , handleIncidentActions,} = this.props;
+    const { handleIncidents, handleIncidentActions } = this.props;
     handleIncidents();
     handleIncidentActions();
   }
@@ -192,10 +222,10 @@ class Incidents extends React.Component {
       .openOn(this.map);
     this.setState({ hideButton: true });
 
-    document.querySelector('#ok-button').addEventListener('click', e => {
-      e.preventDefault();
-      this.map.closePopup();
-    });
+    // document.querySelector('#ok-button').addEventListener('click', e => {
+    //   e.preventDefault();
+    //   this.map.closePopup();
+    // });
   };
 
   onclickNewIncidentButton = () => {
@@ -218,17 +248,21 @@ class Incidents extends React.Component {
   };
 
   onClickIncident = e => {
-    const { getIncident, setIncidentAction, handleActiveNav ,incidentsAction} = this.props;
+    const {
+      getIncident,
+      setIncidentAction,
+      handleActiveNav,
+      incidentsAction,
+    } = this.props;
     const id = get(e, 'target.feature.properties._id');
     incidentsAction.filter(incidentAction => {
-      if(incidentAction.incident._id === id ) {
-        const {_id : actionId} = incidentAction;
-        return setIncidentAction(actionId)
+      if (incidentAction.incident._id === id) {
+        const { _id: actionId } = incidentAction;
+        return setIncidentAction(actionId);
       }
-      else {
-        return console.log("Not found in this page");
-      }
-    })
+
+      return console.log('Not found in this page');
+    });
     getIncident(id);
     this.map.removeLayer(this.incidentLayer);
     handleActiveNav('details');
@@ -240,9 +274,7 @@ class Incidents extends React.Component {
     return (
       <div>
         {!hideButton ? (
-          <MapNav
-            newIncidentButton={this.onclickNewIncidentButton}
-          />
+          <MapNav newIncidentButton={this.onclickNewIncidentButton} />
         ) : null}
         <LeafletMap center={position} zoom={zoom} ref={this.mapRef}>
           <TileLayer
@@ -266,22 +298,22 @@ class Incidents extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
+const mapStateToProps = state => ({
   incidents: state.incidents.data ? state.incidents.data : [],
   selected: state.selectedIncident.incident
     ? state.selectedIncident.incident
-    : [],  
-  incidentsAction: state.incidents.incidentActionsData ? 
-  state.incidents.incidentActionsData : [], 
-}};
+    : [],
+  incidentsAction: state.incidents.incidentActionsData
+    ? state.incidents.incidentActionsData
+    : [],
+});
 
 const mapDispatchToProps = dispatch => ({
   handleIncidents: bindActionCreators(getIncidentsSuccess, dispatch),
   getIncident: bindActionCreators(getSelectedIncident, dispatch),
   handleActiveNav: bindActionCreators(getNavActive, dispatch),
   handleIncidentActions: bindActionCreators(getIncidentActions, dispatch),
-  setIncidentAction: bindActionCreators(activeIncidentAction, dispatch)
+  setIncidentAction: bindActionCreators(activeIncidentAction, dispatch),
 });
 export default connect(
   mapStateToProps,

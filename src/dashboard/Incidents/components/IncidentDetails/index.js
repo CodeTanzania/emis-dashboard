@@ -81,23 +81,23 @@ class IncidentDetails extends React.Component {
             <table>
               <tbody>
                 <tr>
-                  <td>Incident</td>
+                  <td>INCIDENT NAME</td>
                   <td id="popupData">{name}</td>
                 </tr>
                 <tr>
-                  <td>Type</td>
+                  <td>INCIDENT TYPE</td>
                   <td id="popupData">{type}</td>
                 </tr>
                 <tr>
-                  <td>Time of Call</td>
+                  <td>TIME OF CALL</td>
                   <td id="popupData">{startedAt}</td>
                 </tr>
                 <tr>
-                  <td>End at</td>
+                  <td>END AT</td>
                   <td id="popupData">{endedAt}</td>
                 </tr>
                 <tr>
-                  <td>Description</td>
+                  <td>DESCRIPTION</td>
                   <td id="popupData"> {description}</td>
                 </tr>
               </tbody>
