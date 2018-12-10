@@ -1,8 +1,8 @@
 /*
  * @file: Stakeholder base component, this component hold all stakeholders details
- * and facilitate communication between them 
- * @Author: kasongoyo@gmail.com 
- * @Date: 2018-09-27 13:45:02 
+ * and facilitate communication between them
+ * @Author: kasongoyo@gmail.com
+ * @Date: 2018-09-27 13:45:02
  */
 
 import React, { Component, Fragment } from 'react';

@@ -75,6 +75,7 @@ export default function incidentsType(state = initialState, action) {
       };
     }
 
+    
     case SELECT_COLOR_AUTOFILL:
       return {
         ...state,

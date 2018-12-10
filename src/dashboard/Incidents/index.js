@@ -45,16 +45,18 @@ class Incidents extends React.Component {
           family: PropTypes.string.isRequired,
           color: PropTypes.string,
           _id: PropTypes.string,
-        }).isRequired,
+        }),
         description: PropTypes.string.isRequired,
-        startedAt: PropTypes.instanceOf(Date),
-        endedAt: PropTypes.instanceOf(Date),
+        startedAt: PropTypes.string,
+        endedAt: PropTypes.string,
         _id: PropTypes.string,
       }).isRequired
     ),
-    selected: PropTypes.shape({
+    selected: PropTypes.arrayOf(
+    PropTypes.shape({
       name: PropTypes.string,
-      incidentsTypeData: PropTypes.shape({
+      incidentsTypeData: 
+      PropTypes.shape({
         name: PropTypes.string,
         nature: PropTypes.string.isRequired,
         family: PropTypes.string.isRequired,
@@ -65,14 +67,16 @@ class Incidents extends React.Component {
       startedAt: PropTypes.instanceOf(Date),
       endedAt: PropTypes.instanceOf(Date),
     }).isRequired,
-    incidentsAction: PropTypes.shape({
+    ),
+    incidentsAction: PropTypes.arrayOf(
+    PropTypes.shape({
       name: PropTypes.string,
       description: PropTypes.string.isRequired,
       phase: PropTypes.string.isRequired,
       incident: PropTypes.shape({
         name: PropTypes.string.isRequired,
-        startedAt: PropTypes.instanceOf(Date),
-        endedAt: PropTypes.instanceOf(Date),
+        startedAt: PropTypes.string,
+        endedAt: PropTypes.string,
         _id: PropTypes.string,
       }),
       incidentType: PropTypes.shape({
@@ -84,6 +88,7 @@ class Incidents extends React.Component {
       }),
       _id: PropTypes.string,
     }).isRequired,
+    ),
     handleIncidentActions: PropTypes.func,
     handleActiveNav: PropTypes.func,
     handleIncidents: PropTypes.func,
@@ -112,7 +117,6 @@ class Incidents extends React.Component {
     this.mapRef = React.createRef();
     this.onclickNewIncidentButton = this.onclickNewIncidentButton.bind(this);
     this.onCancelButton = this.onCancel.bind(this);
-    this.onSubmitButton = this.onSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -241,12 +245,6 @@ class Incidents extends React.Component {
     this.map.closePopup();
   };
 
-  onSubmit = () => {
-    this.map.removeControl(this.drawControl);
-    this.setState({ hideButton: false });
-    this.map.closePopup();
-  };
-
   onClickIncident = e => {
     const {
       getIncident,
@@ -278,7 +276,7 @@ class Incidents extends React.Component {
         ) : null}
         <LeafletMap center={position} zoom={zoom} ref={this.mapRef}>
           <TileLayer
-            attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
+            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             id="mapbox.light"
             url="https://api.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoid29ybGRiYW5rLWVkdWNhdGlvbiIsImEiOiJIZ2VvODFjIn0.TDw5VdwGavwEsch53sAVxA#1.6/23.725906/-39.714135/0"
           />
@@ -286,7 +284,6 @@ class Incidents extends React.Component {
             <Popup position={position} minWidth={450}>
               <IncidentForm
                 onCancelButton={this.onCancel}
-                onSubmitButton={this.onSubmit}
                 area={area}
                 incidentsTypeData={incidents}
               />

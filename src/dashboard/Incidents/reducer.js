@@ -9,6 +9,7 @@ import {
   GET_ACTIONS_ERROR,
   GET_INCIDENT_ACTION_SUCCESS,
   GET_INCIDENT_ACTION_ERROR,
+  POST_INCIDENT_SUCCESS,
 } from './actions';
 
 /**
@@ -76,6 +77,11 @@ export function incidents(state = initialState, action) {
         incidentActionData: [],
         isLoading: false,
         error: null,
+      };
+    case POST_INCIDENT_SUCCESS:
+      return {
+        ...state,
+        data: [action.payload.incident, ...state.data],
       };
     default:
       return state;

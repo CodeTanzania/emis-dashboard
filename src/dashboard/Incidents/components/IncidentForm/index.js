@@ -11,8 +11,10 @@ import {
 } from 'antd';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import {bindActionCreators}from 'redux'
+import {createIncidentSuccess} from '../../actions';
+
 import './styles.css';
-import API from '../../../../common/API';
 
 /**
  * IncidentForm component
@@ -61,7 +63,7 @@ class IncidentForm extends React.Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    const { onSubmitButton, area } = this.props;
+    const { area,newIncidentAdded, onCancelButton } = this.props;
     this.props.form.validateFieldsAndScroll((err, fieldsValue) => {
       if (!err) {
         const { geometry } = area;
@@ -70,9 +72,9 @@ class IncidentForm extends React.Component {
           epicentre: geometry,
           startedAt: fieldsValue.startedAt.toISOString(),
         };
-        API.createIncident(values);
+        newIncidentAdded(values);
       }
-      onSubmitButton();
+      onCancelButton();
     });
   };
 
@@ -176,7 +178,10 @@ class IncidentForm extends React.Component {
 
 const mapStateToProps = () => ({});
 
-const mapDispatchToProps = () => ({});
+const mapDispatchToProps = dispatch => ({
+  newIncidentAdded: bindActionCreators(createIncidentSuccess, dispatch),
+
+});
 
 export default connect(
   mapStateToProps,

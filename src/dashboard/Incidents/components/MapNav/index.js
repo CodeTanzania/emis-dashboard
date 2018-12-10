@@ -32,7 +32,7 @@ class MapNav extends React.Component {
         color: PropTypes.string,
         _id: PropTypes.string,
       }),
-      description: PropTypes.string.isRequired,
+      description: PropTypes.string,
       startedAt: PropTypes.instanceOf(Date),
       endedAt: PropTypes.instanceOf(Date),
       _id: PropTypes.string,
@@ -50,7 +50,7 @@ class MapNav extends React.Component {
       startedAt: PropTypes.instanceOf(Date),
       endedAt: PropTypes.instanceOf(Date),
       _id: PropTypes.string,
-    }).isRequired,
+    }),
     activatedNav: PropTypes.func,
   };
 

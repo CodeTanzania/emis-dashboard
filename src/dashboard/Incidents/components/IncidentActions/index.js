@@ -44,7 +44,7 @@ export default function IncidentActions({ selectedAction }) {
 IncidentActions.propTypes = {
   selectedAction: PropTypes.shape({
     name: PropTypes.string,
-    description: PropTypes.string.isRequired,
+    description: PropTypes.string,
     phase: PropTypes.string.isRequired,
     incident: PropTypes.shape({
       name: PropTypes.string.isRequired,

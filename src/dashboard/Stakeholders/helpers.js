@@ -33,8 +33,8 @@ export const updateFilterItem = (filters, filterGroup, filterName, selected) =>
       // It's not filter group we care about
       return filter;
     }
-    const filterItems = filter.data.map(
-      item => (item.name === filterName ? { ...item, selected } : item)
+    const filterItems = filter.data.map(item =>
+      item.name === filterName ? { ...item, selected } : item
     );
     return {
       ...filter,
