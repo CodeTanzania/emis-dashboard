@@ -167,7 +167,7 @@ const API = {
   },
 
   getIncidentsActions: () => {
-    const params = { limit:100 };
+    const params = { limit: 100 };
     const url = Axios.get(`${INCIDENT_ACTIONS_API}/actions`, {
       params,
     }).then(response => response.data);

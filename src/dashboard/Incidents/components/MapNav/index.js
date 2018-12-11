@@ -50,7 +50,7 @@ class MapNav extends React.Component {
       startedAt: PropTypes.instanceOf(Date),
       endedAt: PropTypes.instanceOf(Date),
       _id: PropTypes.string,
-    }),
+    }).isRequired,
     activatedNav: PropTypes.func,
   };
 

@@ -11,8 +11,8 @@ import {
 } from 'antd';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import {bindActionCreators}from 'redux'
-import {createIncidentSuccess} from '../../actions';
+import { bindActionCreators } from 'redux';
+import { createIncidentSuccess } from '../../actions';
 
 import './styles.css';
 
@@ -63,7 +63,7 @@ class IncidentForm extends React.Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    const { area,newIncidentAdded, onCancelButton } = this.props;
+    const { area, newIncidentAdded, onCancelButton } = this.props;
     this.props.form.validateFieldsAndScroll((err, fieldsValue) => {
       if (!err) {
         const { geometry } = area;
@@ -71,6 +71,9 @@ class IncidentForm extends React.Component {
           ...fieldsValue,
           epicentre: geometry,
           startedAt: fieldsValue.startedAt.toISOString(),
+          endedAt: fieldsValue.endedAt.toISOString()
+            ? fieldsValue.endedAt.toISOString()
+            : null,
         };
         newIncidentAdded(values);
       }
@@ -150,6 +153,15 @@ class IncidentForm extends React.Component {
             />
           )}
         </FormItem>
+        <FormItem {...formItemLayout} label="End date:">
+          {getFieldDecorator('endedAt')(
+            <DatePicker
+              showTime
+              format="YYYY-MM-DD HH:mm:ss"
+              style={{ width: '100%' }}
+            />
+          )}
+        </FormItem>
         <FormItem {...formItemLayout} label="Incident Summary">
           {getFieldDecorator('description', {
             rules: [
@@ -180,7 +192,6 @@ const mapStateToProps = () => ({});
 
 const mapDispatchToProps = dispatch => ({
   newIncidentAdded: bindActionCreators(createIncidentSuccess, dispatch),
-
 });
 
 export default connect(

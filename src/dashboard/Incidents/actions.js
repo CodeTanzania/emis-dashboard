@@ -1,8 +1,7 @@
 import { incidentToGeojson } from '../../common/lib/mapUtil'; /* const actions */
 
 /* Actions for the incident */
- export const CREATE_INCIDENT_TYPE_SUCCESS =
-  'INCIDENTS:CREATE_INCIDENT_TYPE';
+export const CREATE_INCIDENT_TYPE_SUCCESS = 'INCIDENTS:CREATE_INCIDENT_TYPE';
 export const GET_INCIDENTS_START = 'INCIDENTS :GET_INCIDENTS_START';
 export const GET_INCIDENTS_SUCCESS = 'INCIDENTS :GET_INCIDENTS_SUCCESS';
 export const GET_INCIDENT_FAILURE = 'INCIDENTS :GET_INCIDENTS_FAILURE';
@@ -19,8 +18,6 @@ export const GET_INCIDENT_ACTION_SUCCESS = 'GET_INCIDENT_ACTION_SUCCESS';
 export const POST_INCIDENT_START = 'POST_INCIDENT_START';
 export const POST_INCIDENT_SUCCESS = 'POST_INCIDENT_SUCCESS';
 export const POST_INCIDENT_ERROR = 'POST_INCIDENT_ERROR';
-
-
 
 /* Actions creater */
 
@@ -84,16 +81,16 @@ export const getNavActive = activeItem => ({
   payload: { activeItem },
 });
 
-export const createIncidentStart = () =>( {
+export const createIncidentStart = () => ({
   type: POST_INCIDENT_START,
 });
 
-export const createIncidentFail = message =>( {
+export const createIncidentFail = message => ({
   type: POST_INCIDENT_ERROR,
   payload: {
-    message
-  }
-})
+    message,
+  },
+});
 
 export const getIncidentsSuccess = () => (dispatch, getState, { API }) => {
   dispatch(getIncidentsStart());
@@ -124,9 +121,8 @@ export const createIncidentSuccess = incident => (
     .then(() => {
       dispatch(getIncidentsSuccess());
     })
-    .catch(error => dispatch(createIncidentFail(error))
-    );
-  };
+    .catch(error => dispatch(createIncidentFail(error)));
+};
 
 export const getSelectedIncident = (incidentId = null) => (
   dispatch,

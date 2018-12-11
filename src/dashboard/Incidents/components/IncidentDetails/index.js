@@ -92,13 +92,12 @@ class IncidentDetails extends React.Component {
                   <td>TIME OF CALL</td>
                   <td id="popupData">{startedAt}</td>
                 </tr>
-                { endedAt ?
-                (
-                <tr>
-                  <td>END AT</td>
-                  <td id="popupData">{endedAt}</td> 
-                </tr> 
-                ): null}
+                {endedAt ? (
+                  <tr>
+                    <td>END AT</td>
+                    <td id="popupData">{endedAt}</td>
+                  </tr>
+                ) : null}
                 <tr>
                   <td>DESCRIPTION</td>
                   <td id="popupData"> {description}</td>

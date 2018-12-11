@@ -53,41 +53,40 @@ class Incidents extends React.Component {
       }).isRequired
     ),
     selected: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string,
-      incidentsTypeData: 
       PropTypes.shape({
         name: PropTypes.string,
-        nature: PropTypes.string.isRequired,
-        family: PropTypes.string.isRequired,
-        color: PropTypes.string,
-        _id: PropTypes.string,
-      }),
-      description: PropTypes.string.isRequired,
-      startedAt: PropTypes.instanceOf(Date),
-      endedAt: PropTypes.instanceOf(Date),
-    }).isRequired,
+        incidentsTypeData: PropTypes.shape({
+          name: PropTypes.string,
+          nature: PropTypes.string.isRequired,
+          family: PropTypes.string.isRequired,
+          color: PropTypes.string,
+          _id: PropTypes.string,
+        }),
+        description: PropTypes.string.isRequired,
+        startedAt: PropTypes.instanceOf(Date),
+        endedAt: PropTypes.instanceOf(Date),
+      }).isRequired
     ),
     incidentsAction: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string,
-      description: PropTypes.string.isRequired,
-      phase: PropTypes.string.isRequired,
-      incident: PropTypes.shape({
-        name: PropTypes.string.isRequired,
-        startedAt: PropTypes.string,
-        endedAt: PropTypes.string,
-        _id: PropTypes.string,
-      }),
-      incidentType: PropTypes.shape({
+      PropTypes.shape({
         name: PropTypes.string,
-        nature: PropTypes.string.isRequired,
-        family: PropTypes.string.isRequired,
-        color: PropTypes.string,
+        description: PropTypes.string.isRequired,
+        phase: PropTypes.string.isRequired,
+        incident: PropTypes.shape({
+          name: PropTypes.string.isRequired,
+          startedAt: PropTypes.string,
+          endedAt: PropTypes.string,
+          _id: PropTypes.string,
+        }),
+        incidentType: PropTypes.shape({
+          name: PropTypes.string,
+          nature: PropTypes.string.isRequired,
+          family: PropTypes.string.isRequired,
+          color: PropTypes.string,
+          _id: PropTypes.string,
+        }).isRequired,
         _id: PropTypes.string,
-      }),
-      _id: PropTypes.string,
-    }).isRequired,
+      }).isRequired
     ),
     handleIncidentActions: PropTypes.func,
     handleActiveNav: PropTypes.func,
@@ -98,6 +97,8 @@ class Incidents extends React.Component {
 
   static defaultProps = {
     incidents: null,
+    selected: null,
+    incidentsAction: null,
     handleIncidents: null,
     getIncident: null,
     handleIncidentActions: null,
@@ -155,20 +156,19 @@ class Incidents extends React.Component {
 
   onEachFeature = (feature, layer) => {
     const { properties } = feature;
-    const { name, incidentType, description, startedAt, _id } = properties;
-    layer.bindPopup(
-      popupContent({ name, incidentType, description, startedAt, _id })
-    );
+    const { name } = properties;
+    layer.bindPopup(popupContent(properties),
     layer
-      .on({ click: this.onClickIncident })
-      .bindTooltip(`${name}`)
-      .openTooltip();
+    .on({ click: this.onClickIncident })
+    .bindTooltip(`${name}`)
+    .openTooltip()
+    );
+  
   };
 
   showPoint = areaSelected => {
     L.geoJSON(areaSelected, {
       pointToLayer: showMarkers,
-      // onEachFeature: this.onEachFeature
     }).addTo(this.map);
   };
 
@@ -226,10 +226,10 @@ class Incidents extends React.Component {
       .openOn(this.map);
     this.setState({ hideButton: true });
 
-    // document.querySelector('#ok-button').addEventListener('click', e => {
-    //   e.preventDefault();
-    //   this.map.closePopup();
-    // });
+    document.querySelector('#ok-button').addEventListener('click', e => {
+      e.preventDefault();
+      this.map.closePopup();
+    });
   };
 
   onclickNewIncidentButton = () => {
@@ -295,7 +295,8 @@ class Incidents extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = state => {
+  return{
   incidents: state.incidents.data ? state.incidents.data : [],
   selected: state.selectedIncident.incident
     ? state.selectedIncident.incident
@@ -303,7 +304,7 @@ const mapStateToProps = state => ({
   incidentsAction: state.incidents.incidentActionsData
     ? state.incidents.incidentActionsData
     : [],
-});
+}};
 
 const mapDispatchToProps = dispatch => ({
   handleIncidents: bindActionCreators(getIncidentsSuccess, dispatch),
