@@ -18,6 +18,8 @@ export const GET_INCIDENT_ACTION_SUCCESS = 'GET_INCIDENT_ACTION_SUCCESS';
 export const POST_INCIDENT_START = 'POST_INCIDENT_START';
 export const POST_INCIDENT_SUCCESS = 'POST_INCIDENT_SUCCESS';
 export const POST_INCIDENT_ERROR = 'POST_INCIDENT_ERROR';
+export const FILTER_INCIDENT_BY_DATE = 'FILTER_INCIDENT_BY_DATE';
+export const SET_FILTER_INCIDENTTYPE = 'SET_FILTER_INCIDENTTYPE';
 
 /* Actions creater */
 
@@ -81,6 +83,16 @@ export const getNavActive = activeItem => ({
   payload: { activeItem },
 });
 
+export const filterIncidentByDate = selectedDate => ({
+  type: FILTER_INCIDENT_BY_DATE,
+  payload: { selectedDate },
+});
+
+export const filterByIncidentType = filteredIncident => ({
+  type: SET_FILTER_INCIDENTTYPE,
+  payload: { filteredIncident },
+});
+
 export const createIncidentStart = () => ({
   type: POST_INCIDENT_START,
 });
@@ -94,7 +106,9 @@ export const createIncidentFail = message => ({
 
 export const getIncidentsSuccess = () => (dispatch, getState, { API }) => {
   dispatch(getIncidentsStart());
-  API.getIncidents()
+  const state = getState();
+  const { filter } = state;
+  API.getIncidents(filter)
     .then(results => {
       const { data: receivedIncidents } = results;
       const data = receivedIncidents.map(result => {

@@ -132,9 +132,10 @@ class Incidents extends React.Component {
   componentDidUpdate(prevProps) {
     const { incidents, selected } = this.props;
     if (incidents !== prevProps.incidents) {
-      incidents.map(({ epicentre }) => this.incidentLayer.addData(epicentre));
+      // this.incidentsLayer.clearLayers();
+      incidents.map(({ epicentre }) => this.incidentsLayer.addData(epicentre));
+      this.incidentsLayer.addTo(this.map);
       this.map.setView([-6.179, 35.754], 7);
-      this.map.flyTo([-6.179, 35.754]);
     }
     if (selected && selected !== prevProps.selected) {
       this.showSelectedIncident(selected);
@@ -144,11 +145,11 @@ class Incidents extends React.Component {
   }
 
   mapLayers = () => {
-    L.control.layers(baseMaps, {}, { position: 'bottomright' }).addTo(this.map);
+    L.control.layers(baseMaps, {}, { position: 'topleft' }).addTo(this.map);
   };
 
   DisplayMarkers = () => {
-    this.incidentLayer = L.geoJSON([], {
+    this.incidentsLayer = L.geoJSON([], {
       pointToLayer: showMarkers,
       onEachFeature: this.onEachFeature,
     }).addTo(this.map);
@@ -157,13 +158,13 @@ class Incidents extends React.Component {
   onEachFeature = (feature, layer) => {
     const { properties } = feature;
     const { name } = properties;
-    layer.bindPopup(popupContent(properties),
-    layer
-    .on({ click: this.onClickIncident })
-    .bindTooltip(`${name}`)
-    .openTooltip()
+    layer.bindPopup(
+      popupContent(properties),
+      layer
+        .on({ click: this.onClickIncident })
+        .bindTooltip(`${name}`)
+        .openTooltip()
     );
-  
   };
 
   showPoint = areaSelected => {
@@ -262,13 +263,13 @@ class Incidents extends React.Component {
       return console.log('Not found in this page');
     });
     getIncident(id);
-    this.map.removeLayer(this.incidentLayer);
+    this.map.removeLayer(this.incidentsLayer);
     handleActiveNav('details');
   };
 
   render() {
     const { position, zoom, showPopup, hideButton, area } = this.state;
-    const { incidents } = this.props;
+    const { incidents, incidentsAction } = this.props;
     return (
       <div>
         {!hideButton ? (
@@ -286,6 +287,7 @@ class Incidents extends React.Component {
                 onCancelButton={this.onCancel}
                 area={area}
                 incidentsTypeData={incidents}
+                incidentAction={incidentsAction}
               />
             </Popup>
           ) : null}
@@ -295,8 +297,7 @@ class Incidents extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return{
+const mapStateToProps = state => ({
   incidents: state.incidents.data ? state.incidents.data : [],
   selected: state.selectedIncident.incident
     ? state.selectedIncident.incident
@@ -304,7 +305,7 @@ const mapStateToProps = state => {
   incidentsAction: state.incidents.incidentActionsData
     ? state.incidents.incidentActionsData
     : [],
-}};
+});
 
 const mapDispatchToProps = dispatch => ({
   handleIncidents: bindActionCreators(getIncidentsSuccess, dispatch),

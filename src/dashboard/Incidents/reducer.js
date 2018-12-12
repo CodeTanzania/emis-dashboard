@@ -10,6 +10,8 @@ import {
   GET_INCIDENT_ACTION_SUCCESS,
   GET_INCIDENT_ACTION_ERROR,
   POST_INCIDENT_SUCCESS,
+  FILTER_INCIDENT_BY_DATE,
+  SET_FILTER_INCIDENTTYPE,
 } from './actions';
 
 /**
@@ -37,6 +39,11 @@ const initialState = {
 const initialselectedState = {
   incident: null,
   incidentAction: null,
+};
+
+const initialFilters = {
+  incidentFilter: [],
+  incidentDateFilter: [],
 };
 
 export function incidents(state = initialState, action) {
@@ -111,12 +118,29 @@ export function selectedIncident(state = initialselectedState, action) {
   }
 }
 
-export function activeNav(state = { activeItem: 'legend' }, action) {
+export function activeNav(state = { activeItem: 'filters' }, action) {
   switch (action.type) {
     case SELECT_ACTIVE_INCIDENT:
       return {
         ...state,
         ...action.payload,
+      };
+    default:
+      return state;
+  }
+}
+
+export function filter(state = initialFilters, action) {
+  switch (action.type) {
+    case FILTER_INCIDENT_BY_DATE:
+      return {
+        ...state,
+        incidentDateFilter: action.payload.selectedDate,
+      };
+    case SET_FILTER_INCIDENTTYPE:
+      return {
+        ...state,
+        incidentFilter: action.payload.filteredIncident,
       };
     default:
       return state;

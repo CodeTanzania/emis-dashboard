@@ -21,6 +21,22 @@ const Axios = axios.create({
   },
 });
 
+const generateFiter = (severityData, dates) => {
+  let filter = {};
+
+  if (severityData.length > 0) {
+    const severity = { $in: severityData };
+    filter = { ...filter, severity };
+  }
+
+  if (dates.length > 0) {
+    const startedAt = { $gte: dates[0], $lt: dates[1] };
+    filter = { ...filter, startedAt };
+  }
+
+  return filter;
+};
+
 const API = {
   /**
    * Find stakeholders
@@ -137,8 +153,9 @@ const API = {
 
   /* API for Incidents */
 
-  getIncidents: () => {
-    const params = { limit: 100 };
+  getIncidents: ({ incidentFilter, incidentDateFilter } = {}) => {
+    const filter = generateFiter(incidentFilter, incidentDateFilter);
+    const params = { filter, limit: 100 };
     const url = Axios.get(`${INCIDENTS_API}/incidents`, {
       params,
     }).then(response => response.data);

@@ -8,12 +8,14 @@ import {
   incidents,
   selectedIncident,
   activeNav,
+  filter,
 } from '../../dashboard/Incidents/reducer';
 
 export default combineReducers({
   stakeholders,
   incidentsType,
   incidents,
+  filter,
   selectedIncident,
   activeNav,
 });

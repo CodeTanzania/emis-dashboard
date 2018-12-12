@@ -7,6 +7,7 @@ import { bindActionCreators } from 'redux';
 import IncidentDetails from '../IncidentDetails';
 import IncidentLegend from '../IncidentLegend';
 import { getNavActive } from '../../actions';
+import IncidentFilter from '../IncidentFilter';
 
 /**
  * Map Navigation  Layout component
@@ -82,6 +83,9 @@ class MapNav extends React.Component {
         case 'legends': {
           return <IncidentLegend />;
         }
+        case 'filters': {
+          return <IncidentFilter />;
+        }
         case 'details': {
           return <IncidentDetails incident={selected} />;
         }
@@ -103,7 +107,7 @@ class MapNav extends React.Component {
             selectedKeys={[currentMenu]}
             mode="horizontal"
           >
-            {/* <Menu.Item key="legend">Legend</Menu.Item> */}
+            <Menu.Item key="filters">Filters</Menu.Item>
             {selectNav ? <Menu.Item key="details">Details</Menu.Item> : null}
           </Menu>
           <div>{showNavContent(currentMenu)}</div>

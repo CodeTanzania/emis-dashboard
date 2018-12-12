@@ -1,0 +1,40 @@
+
+.AlertFilter {
+    display: flex;
+    flex-direction: column;
+    padding: 1px;
+    background-color: white;
+    }
+    
+    .AlertFilter .ant-calendar-picker {
+        flex: 1; 
+    }
+    
+    .AlertFilter .ant-checkbox-group {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .AlertFilterDates {
+    
+        margin: 40px 5px 30px 5px; 
+    }
+    
+    
+    .AlertFilter .ant-collapse {
+        flex: 1;
+    }
+    
+    .AlertFilter .ant-checkbox-group {
+        padding: 20px 0 10px 10px;
+    }
+    
+    .AlertFilter .ant-checkbox-wrapper + .ant-checkbox-wrapper {
+        margin-left: 0;
+    }
+    
+    .AlertFilter .ant-checkbox-wrapper {
+        display: flex;
+        margin: 0 0 10px 0;
+    }
+    
