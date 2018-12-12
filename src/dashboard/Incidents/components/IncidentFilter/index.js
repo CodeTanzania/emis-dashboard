@@ -12,7 +12,6 @@ import './styles.css';
 
 // constants
 const { RangePicker } = DatePicker;
-const { Panel } = Collapse;
 
 class IncidentFilter extends React.Component {
   static propTypes = {
@@ -64,17 +63,17 @@ class IncidentFilter extends React.Component {
           style={{
             backgroundColor: '#fff',
             textAlign: 'center',
-            border:'0px'
+            border: '0px',
           }}
         >
-            <Checkbox.Group
-              onChange={this.onChangeSeverity}
-              defaultValue={severity}
-              className='p-10'
-            >
-              <Checkbox value="Family">Family</Checkbox>
-              <Checkbox value="Name">Name</Checkbox>
-            </Checkbox.Group>
+          <Checkbox.Group
+            onChange={this.onChangeSeverity}
+            defaultValue={severity}
+            className="p-10"
+          >
+            <Checkbox value="Family">Family</Checkbox>
+            <Checkbox value="Name">Name</Checkbox>
+          </Checkbox.Group>
         </Collapse>
       </div>
     );

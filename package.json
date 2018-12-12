@@ -35,19 +35,20 @@
     "lint:fix": "eslint --fix --ext .jsx,.js src/"
   },
   "devDependencies": {
-    "babel-plugin-import": "^1.8.0",
+    "babel-plugin-import": "^1.11.0",
     "eslint-config-airbnb": "17.1.0",
-    "eslint-config-prettier": "^3.0.1",
+    "eslint-config-prettier": "^3.3.0",
     "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-jest": "^21.22.0",
-    "eslint-plugin-jsx-a11y": "^6.1.1",
-    "eslint-plugin-prettier": "^2.6.2",
+    "eslint-plugin-jest": "^22.0.0",
+    "eslint-plugin-jsx-a11y": "^6.1.2",
+    "eslint-plugin-prettier": "^3.0.0",
     "eslint-plugin-react": "^7.11.1",
     "faker": "^4.1.0",
-    "prettier": "^1.14.2",
+    "prettier": "^1.15.2",
     "react-app-rewire-css-modules-extensionless": "^1.2.0",
     "react-app-rewired": "^1.6.2",
-    "redux-devtools-extension": "^2.13.5"
+    "redux-devtools-extension": "^2.13.5",
+    "redux-mock-store": "^1.5.3"
   },
   "browserslist": [
     "> 1%",

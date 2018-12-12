@@ -45,49 +45,45 @@ class Incidents extends React.Component {
           family: PropTypes.string.isRequired,
           color: PropTypes.string,
           _id: PropTypes.string,
-        }),
-        description: PropTypes.string.isRequired,
-        startedAt: PropTypes.string,
-        endedAt: PropTypes.string,
-        _id: PropTypes.string,
-      }).isRequired
-    ),
-    selected: PropTypes.arrayOf(
-      PropTypes.shape({
-        name: PropTypes.string,
-        incidentsTypeData: PropTypes.shape({
-          name: PropTypes.string,
-          nature: PropTypes.string.isRequired,
-          family: PropTypes.string.isRequired,
-          color: PropTypes.string,
-          _id: PropTypes.string,
-        }),
+        }).isRequired,
         description: PropTypes.string.isRequired,
         startedAt: PropTypes.instanceOf(Date),
         endedAt: PropTypes.instanceOf(Date),
-      }).isRequired
-    ),
-    incidentsAction: PropTypes.arrayOf(
-      PropTypes.shape({
-        name: PropTypes.string,
-        description: PropTypes.string.isRequired,
-        phase: PropTypes.string.isRequired,
-        incident: PropTypes.shape({
-          name: PropTypes.string.isRequired,
-          startedAt: PropTypes.string,
-          endedAt: PropTypes.string,
-          _id: PropTypes.string,
-        }),
-        incidentType: PropTypes.shape({
-          name: PropTypes.string,
-          nature: PropTypes.string.isRequired,
-          family: PropTypes.string.isRequired,
-          color: PropTypes.string,
-          _id: PropTypes.string,
-        }).isRequired,
         _id: PropTypes.string,
       }).isRequired
     ),
+    selected: PropTypes.shape({
+      name: PropTypes.string,
+      incidentsTypeData: PropTypes.shape({
+        name: PropTypes.string,
+        nature: PropTypes.string.isRequired,
+        family: PropTypes.string.isRequired,
+        color: PropTypes.string,
+        _id: PropTypes.string,
+      }),
+      description: PropTypes.string.isRequired,
+      startedAt: PropTypes.instanceOf(Date),
+      endedAt: PropTypes.instanceOf(Date),
+    }).isRequired,
+    incidentsAction: PropTypes.shape({
+      name: PropTypes.string,
+      description: PropTypes.string.isRequired,
+      phase: PropTypes.string.isRequired,
+      incident: PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        startedAt: PropTypes.instanceOf(Date),
+        endedAt: PropTypes.instanceOf(Date),
+        _id: PropTypes.string,
+      }),
+      incidentType: PropTypes.shape({
+        name: PropTypes.string,
+        nature: PropTypes.string.isRequired,
+        family: PropTypes.string.isRequired,
+        color: PropTypes.string,
+        _id: PropTypes.string,
+      }),
+      _id: PropTypes.string,
+    }).isRequired,
     handleIncidentActions: PropTypes.func,
     handleActiveNav: PropTypes.func,
     handleIncidents: PropTypes.func,
@@ -97,8 +93,6 @@ class Incidents extends React.Component {
 
   static defaultProps = {
     incidents: null,
-    selected: null,
-    incidentsAction: null,
     handleIncidents: null,
     getIncident: null,
     handleIncidentActions: null,
@@ -118,6 +112,7 @@ class Incidents extends React.Component {
     this.mapRef = React.createRef();
     this.onclickNewIncidentButton = this.onclickNewIncidentButton.bind(this);
     this.onCancelButton = this.onCancel.bind(this);
+    this.onSubmitButton = this.onSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -132,10 +127,9 @@ class Incidents extends React.Component {
   componentDidUpdate(prevProps) {
     const { incidents, selected } = this.props;
     if (incidents !== prevProps.incidents) {
-      // this.incidentsLayer.clearLayers();
-      incidents.map(({ epicentre }) => this.incidentsLayer.addData(epicentre));
-      this.incidentsLayer.addTo(this.map);
+      incidents.map(({ epicentre }) => this.incidentLayer.addData(epicentre));
       this.map.setView([-6.179, 35.754], 7);
+      this.map.flyTo([-6.179, 35.754]);
     }
     if (selected && selected !== prevProps.selected) {
       this.showSelectedIncident(selected);
@@ -145,11 +139,11 @@ class Incidents extends React.Component {
   }
 
   mapLayers = () => {
-    L.control.layers(baseMaps, {}, { position: 'topleft' }).addTo(this.map);
+    L.control.layers(baseMaps, {}, { position: 'bottomright' }).addTo(this.map);
   };
 
   DisplayMarkers = () => {
-    this.incidentsLayer = L.geoJSON([], {
+    this.incidentLayer = L.geoJSON([], {
       pointToLayer: showMarkers,
       onEachFeature: this.onEachFeature,
     }).addTo(this.map);
@@ -157,19 +151,20 @@ class Incidents extends React.Component {
 
   onEachFeature = (feature, layer) => {
     const { properties } = feature;
-    const { name } = properties;
+    const { name, incidentType, description, startedAt, _id } = properties;
     layer.bindPopup(
-      popupContent(properties),
-      layer
-        .on({ click: this.onClickIncident })
-        .bindTooltip(`${name}`)
-        .openTooltip()
+      popupContent({ name, incidentType, description, startedAt, _id })
     );
+    layer
+      .on({ click: this.onClickIncident })
+      .bindTooltip(`${name}`)
+      .openTooltip();
   };
 
   showPoint = areaSelected => {
     L.geoJSON(areaSelected, {
       pointToLayer: showMarkers,
+      // onEachFeature: this.onEachFeature
     }).addTo(this.map);
   };
 
@@ -227,10 +222,10 @@ class Incidents extends React.Component {
       .openOn(this.map);
     this.setState({ hideButton: true });
 
-    document.querySelector('#ok-button').addEventListener('click', e => {
-      e.preventDefault();
-      this.map.closePopup();
-    });
+    // document.querySelector('#ok-button').addEventListener('click', e => {
+    //   e.preventDefault();
+    //   this.map.closePopup();
+    // });
   };
 
   onclickNewIncidentButton = () => {
@@ -246,6 +241,12 @@ class Incidents extends React.Component {
     this.map.closePopup();
   };
 
+  onSubmit = () => {
+    this.map.removeControl(this.drawControl);
+    this.setState({ hideButton: false });
+    this.map.closePopup();
+  };
+
   onClickIncident = e => {
     const {
       getIncident,
@@ -255,7 +256,9 @@ class Incidents extends React.Component {
     } = this.props;
     const id = get(e, 'target.feature.properties._id');
     incidentsAction.filter(incidentAction => {
-      if (incidentAction.incident._id === id) {
+        const {incident} = incidentAction;
+        const {_id: incidentId} = incident;
+      if (incidentId === id) {
         const { _id: actionId } = incidentAction;
         return setIncidentAction(actionId);
       }
@@ -263,13 +266,13 @@ class Incidents extends React.Component {
       return console.log('Not found in this page');
     });
     getIncident(id);
-    this.map.removeLayer(this.incidentsLayer);
+    this.map.removeLayer(this.incidentLayer);
     handleActiveNav('details');
   };
 
   render() {
     const { position, zoom, showPopup, hideButton, area } = this.state;
-    const { incidents, incidentsAction } = this.props;
+    const { incidents } = this.props;
     return (
       <div>
         {!hideButton ? (
@@ -277,7 +280,7 @@ class Incidents extends React.Component {
         ) : null}
         <LeafletMap center={position} zoom={zoom} ref={this.mapRef}>
           <TileLayer
-            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+            attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
             id="mapbox.light"
             url="https://api.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoid29ybGRiYW5rLWVkdWNhdGlvbiIsImEiOiJIZ2VvODFjIn0.TDw5VdwGavwEsch53sAVxA#1.6/23.725906/-39.714135/0"
           />
@@ -285,9 +288,9 @@ class Incidents extends React.Component {
             <Popup position={position} minWidth={450}>
               <IncidentForm
                 onCancelButton={this.onCancel}
+                onSubmitButton={this.onSubmit}
                 area={area}
                 incidentsTypeData={incidents}
-                incidentAction={incidentsAction}
               />
             </Popup>
           ) : null}
