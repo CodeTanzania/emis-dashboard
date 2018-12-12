@@ -26,11 +26,13 @@ class Members extends Component {
     }).isRequired,
     stakeholders: PropTypes.arrayOf(PropTypes.object),
     updatingStakeholder: PropTypes.bool,
+    memberType: PropTypes.string,
   };
 
   static defaultProps = {
     stakeholders: [],
     updatingStakeholder: false,
+    memberType: 'Members',
   };
 
   constructor(props) {
@@ -108,7 +110,7 @@ class Members extends Component {
 
   render() {
     const { addMemberFormVisible, stakeholders, searching, q } = this.state;
-    const { stakeholder } = this.props;
+    const { stakeholder, memberType } = this.props;
     const { members } = stakeholder;
 
     return (
@@ -129,7 +131,7 @@ class Members extends Component {
               className={cx('addMemberBtn', { hidden: addMemberFormVisible })}
             >
               <Button icon="plus" onClick={this.handleShowAddMemberFormClick}>
-                Add Members
+                Add {memberType}
               </Button>
             </div>
           </Row>
