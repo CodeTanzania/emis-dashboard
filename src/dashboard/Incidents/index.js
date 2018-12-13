@@ -120,9 +120,9 @@ class Incidents extends React.Component {
     this.map = this.mapRef.current.leafletElement;
     this.mapLayers();
     this.DisplayMarkers();
-    const { handleIncidents, handleIncidentActions } = this.props;
+    const { handleIncidents,  } = this.props;
+        // handleIncidentActions();
     handleIncidents();
-    handleIncidentActions();
   }
 
   componentDidUpdate(prevProps) {
@@ -248,16 +248,16 @@ class Incidents extends React.Component {
       incidentsAction,
     } = this.props;
     const id = get(e, 'target.feature.properties._id');
-    incidentsAction.filter(incidentAction => {
-      const { incident } = incidentAction;
-      const { _id: incidentId } = incident;
-      if (incidentId === id) {
-        const { _id: actionId } = incidentAction;
-        return setIncidentAction(actionId);
-      }
+    // incidentsAction.filter(incidentAction => {
+    //   const { incident } = incidentAction;
+    //   const { _id: incidentId } = incident;
+    //   if (incidentId === id) {
+    //     const { _id: actionId } = incidentAction;
+    //     return setIncidentAction(actionId);
+    //   }
 
-      return console.log('Not found in this page');
-    });
+    //   return console.log('Not found in this page');
+    // });
 
     getIncident(id);
     this.map.removeLayer(this.incidentLayer);
@@ -303,9 +303,9 @@ const mapStateToProps = state => ({
   selected: state.selectedIncident.incident
     ? state.selectedIncident.incident
     : [],
-  incidentsAction: state.incidents.incidentActionsData
-    ? state.incidents.incidentActionsData
-    : [],
+  // incidentsAction: state.incidents.incidentActionsData
+  //   ? state.incidents.incidentActionsData
+  //   : [],
 });
 
 const mapDispatchToProps = dispatch => ({

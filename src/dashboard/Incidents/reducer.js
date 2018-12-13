@@ -122,7 +122,7 @@ export function selectedIncident(state = initialselectedState, action) {
   }
 }
 
-export function activeNav(state = { activeItem: 'filters' }, action) {
+export function activeNav(state = { activeItem: 'list' }, action) {
   switch (action.type) {
     case SELECT_ACTIVE_INCIDENT:
       return {

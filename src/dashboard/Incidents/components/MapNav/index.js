@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Menu } from 'antd';
+import { Button, Menu, List } from 'antd';
 import { connect } from 'react-redux';
 import './styles.css';
 import { bindActionCreators } from 'redux';
 import IncidentDetails from '../IncidentDetails';
-import IncidentLegend from '../IncidentLegend';
 import { getNavActive } from '../../actions';
 import IncidentFilter from '../IncidentFilter';
+import IncidentsList from '../IncidentsList';
 
 /**
  * Map Navigation  Layout component
@@ -78,10 +78,17 @@ class MapNav extends React.Component {
     const { hideNav } = this.state;
 
     const showNavContent = currentNav => {
-      const { selected } = this.props;
+      const { selected, incidents} = this.props;
       switch (currentNav) {
-        case 'legends': {
-          return <IncidentLegend />;
+        case 'list': {
+          return <List
+          className="IncidentList"
+          itemLayout="horizontal"
+          dataSource={incidents}
+          renderItem={incident => (
+            <IncidentsList incidentsList = {incident}/>
+            )}
+        />
         }
         case 'filters': {
           return <IncidentFilter />;
@@ -107,6 +114,7 @@ class MapNav extends React.Component {
             selectedKeys={[currentMenu]}
             mode="horizontal"
           >
+          <Menu.Item key="list">Incidents</Menu.Item>
             <Menu.Item key="filters">Filters</Menu.Item>
             {selectNav ? <Menu.Item key="details">Details</Menu.Item> : null}
           </Menu>
@@ -116,7 +124,9 @@ class MapNav extends React.Component {
     ) : null;
   }
 }
-const mapStateToProps = state => ({
+const mapStateToProps = state => {
+  return{
+  incidents: state.incidents.data && state.incidents.data ? state.incidents.data : [],
   selected: state.selectedIncident.incident
     ? state.selectedIncident.incident
     : {},
@@ -124,7 +134,7 @@ const mapStateToProps = state => ({
   selectNav: state.selectedIncident.incident
     ? state.selectedIncident.incident
     : null,
-});
+}};
 
 const mapDispachToProps = dispatch => ({
   activatedNav: bindActionCreators(getNavActive, dispatch),
