@@ -42,7 +42,6 @@ const initialselectedState = {
 };
 
 const initialFilters = {
-  incidentFilter: [],
   incidentDateFilter: [],
 };
 
@@ -90,6 +89,11 @@ export function incidents(state = initialState, action) {
         ...state,
         data: [action.payload.incident, ...state.data],
       };
+      case SET_FILTER_INCIDENTTYPE:
+      return {
+        ...state,
+        data: [action.payload.filteredIncident, ...state.data],
+      };
     default:
       return state;
   }
@@ -136,12 +140,7 @@ export function filter(state = initialFilters, action) {
       return {
         ...state,
         incidentDateFilter: action.payload.selectedDate,
-      };
-    case SET_FILTER_INCIDENTTYPE:
-      return {
-        ...state,
-        incidentFilter: action.payload.filteredIncident,
-      };
+      }
     default:
       return state;
   }

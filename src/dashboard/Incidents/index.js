@@ -18,7 +18,9 @@ import {
 } from './actions';
 import { showMarkers, baseMaps } from '../../common/lib/mapUtil';
 import popupContent from './components/mapPopup';
-import '../styles.css';
+import { Button } from 'antd';
+
+import './styles.css';
 import 'leaflet-draw/dist/leaflet.draw.css';
 
 const { Map: LeafletMap, TileLayer, Popup } = ReactLeaflet;
@@ -112,7 +114,6 @@ class Incidents extends React.Component {
     this.mapRef = React.createRef();
     this.onclickNewIncidentButton = this.onclickNewIncidentButton.bind(this);
     this.onCancelButton = this.onCancel.bind(this);
-    this.onSubmitButton = this.onSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -127,10 +128,9 @@ class Incidents extends React.Component {
   componentDidUpdate(prevProps) {
     const { incidents, selected } = this.props;
     if (incidents !== prevProps.incidents) {
-      incidents.map(({ epicentre }) => this.incidentLayer.addData(epicentre));
-      this.map.setView([-6.179, 35.754], 7);
-      this.map.flyTo([-6.179, 35.754]);
-    }
+      this.incidentLayer.clearLayers();
+      this.showAllIncidents(incidents)
+  }
     if (selected && selected !== prevProps.selected) {
       this.showSelectedIncident(selected);
     } else if (selected !== prevProps.selected) {
@@ -139,7 +139,7 @@ class Incidents extends React.Component {
   }
 
   mapLayers = () => {
-    L.control.layers(baseMaps, {}, { position: 'bottomright' }).addTo(this.map);
+    L.control.layers(baseMaps, {}, { position: 'topleft' }).addTo(this.map);
   };
 
   DisplayMarkers = () => {
@@ -147,6 +147,12 @@ class Incidents extends React.Component {
       pointToLayer: showMarkers,
       onEachFeature: this.onEachFeature,
     }).addTo(this.map);
+  };
+
+  showAllIncidents = incidents => {
+    incidents.map(({ epicentre }) => this.incidentLayer.addData(epicentre));
+    this.map.setView([-6.179, 35.754], 7);
+    this.incidentLayer.addTo(this.map);
   };
 
   onEachFeature = (feature, layer) => {
@@ -164,7 +170,6 @@ class Incidents extends React.Component {
   showPoint = areaSelected => {
     L.geoJSON(areaSelected, {
       pointToLayer: showMarkers,
-      // onEachFeature: this.onEachFeature
     }).addTo(this.map);
   };
 
@@ -211,21 +216,15 @@ class Incidents extends React.Component {
       </div>
       <div class="ant-modal-footer">
         <div>
-          <button type="button" id="ok-button" class="ant-btn ant-btn-primary"><span>OK</span></button>
         </div>
       </div>
     </div> `;
 
-    this.popup = L.popup({ minWidth: 400 })
+    this.popup = L.popup({ minWidth: 350 })
       .setLatLng(position)
       .setContent(contents)
       .openOn(this.map);
     this.setState({ hideButton: true });
-
-    // document.querySelector('#ok-button').addEventListener('click', e => {
-    //   e.preventDefault();
-    //   this.map.closePopup();
-    // });
   };
 
   onclickNewIncidentButton = () => {
@@ -241,12 +240,6 @@ class Incidents extends React.Component {
     this.map.closePopup();
   };
 
-  onSubmit = () => {
-    this.map.removeControl(this.drawControl);
-    this.setState({ hideButton: false });
-    this.map.closePopup();
-  };
-
   onClickIncident = e => {
     const {
       getIncident,
@@ -256,8 +249,8 @@ class Incidents extends React.Component {
     } = this.props;
     const id = get(e, 'target.feature.properties._id');
     incidentsAction.filter(incidentAction => {
-        const {incident} = incidentAction;
-        const {_id: incidentId} = incident;
+      const { incident } = incidentAction;
+      const { _id: incidentId } = incident;
       if (incidentId === id) {
         const { _id: actionId } = incidentAction;
         return setIncidentAction(actionId);
@@ -265,6 +258,7 @@ class Incidents extends React.Component {
 
       return console.log('Not found in this page');
     });
+
     getIncident(id);
     this.map.removeLayer(this.incidentLayer);
     handleActiveNav('details');
@@ -275,12 +269,17 @@ class Incidents extends React.Component {
     const { incidents } = this.props;
     return (
       <div>
+        {/* <div className="filter">
+          <Button type="primary" onClick={this.onClickFilter}>
+            Family
+          </Button>
+        </div> */}
         {!hideButton ? (
           <MapNav newIncidentButton={this.onclickNewIncidentButton} />
         ) : null}
         <LeafletMap center={position} zoom={zoom} ref={this.mapRef}>
           <TileLayer
-            attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
+            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             id="mapbox.light"
             url="https://api.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoid29ybGRiYW5rLWVkdWNhdGlvbiIsImEiOiJIZ2VvODFjIn0.TDw5VdwGavwEsch53sAVxA#1.6/23.725906/-39.714135/0"
           />
@@ -288,7 +287,6 @@ class Incidents extends React.Component {
             <Popup position={position} minWidth={450}>
               <IncidentForm
                 onCancelButton={this.onCancel}
-                onSubmitButton={this.onSubmit}
                 area={area}
                 incidentsTypeData={incidents}
               />
@@ -301,7 +299,7 @@ class Incidents extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  incidents: state.incidents.data ? state.incidents.data : [],
+  incidents: state.incidents.data && state.incidents.data ? state.incidents.data : [],
   selected: state.selectedIncident.incident
     ? state.selectedIncident.incident
     : [],

@@ -1,10 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Form, Checkbox, Collapse, DatePicker } from 'antd';
+import { Form, DatePicker } from 'antd';
 import { bindActionCreators } from 'redux';
 import {
-  filterByIncidentType,
   filterIncidentByDate,
   getIncidentsSuccess,
 } from '../../actions';
@@ -30,10 +29,10 @@ class IncidentFilter extends React.Component {
     handleTypeFilter: null,
   };
 
-  onChangeSeverity = checkedValues => {
-    const { handleTypeFilter } = this.props;
-    handleTypeFilter(checkedValues);
-  };
+  componentDidMount() {
+    // const { handleIncidents } = this.props;
+    // handleIncidents();
+  }
 
   onDateChangeChange = dateString => {
     const { handleDateFilter, handleIncidents } = this.props;
@@ -42,52 +41,51 @@ class IncidentFilter extends React.Component {
     handleIncidents();
   };
 
+  // visibilityFilter = () =>{
+  //   console.log("clicked")
+  //   const {incidents} = this.props;
+  //    incidents.filter(incident =>{ 
+  //   const {incidentType} = incident;
+  //     if (incidentType.family === 'Biological'){
+  //       console.log('get it');
+  //       console.log(incident)
+  //       return incident
+  //     }
+  //     else {
+  //       return null
+  //     }
+  //   });
+  // }
+
   render() {
-    const { filters } = this.props;
-    const { severity } = filters;
     return (
-      <div className="AlertFilter">
-        <div className="AlertFilterDates">
-          <div>Dates:</div>
-          <RangePicker
-            style={{ width: 'auto' }}
-            showTime={{ format: 'HH:mm' }}
-            format="YYYY-MM-DD HH:mm"
-            placeholder={['Start Time', 'End Time']}
-            onChange={this.onDateChangeChange}
-          />
+      <div className="IncidentFilter">
+        <div className="p-10">
+          <div className="IncidentFilterDates">
+            <h3>Dates:</h3>
+            <RangePicker
+              style={{ width: 'auto' }}
+              showTime={{ format: 'HH:mm' }}
+              format="YYYY-MM-DD HH:mm"
+              placeholder={['Start Time', 'End Time']}
+              onChange={this.onDateChangeChange}
+            />
+          </div>
         </div>
-        <Collapse
-          accordion
-          defaultActiveKey={['1']}
-          style={{
-            backgroundColor: '#fff',
-            textAlign: 'center',
-            border: '0px',
-          }}
-        >
-          <Checkbox.Group
-            onChange={this.onChangeSeverity}
-            defaultValue={severity}
-            className="p-10"
-          >
-            <Checkbox value="Family">Family</Checkbox>
-            <Checkbox value="Name">Name</Checkbox>
-          </Checkbox.Group>
-        </Collapse>
       </div>
     );
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = state => {
+  return{
   filters: state.filter,
-});
+  incidents: state.incidents.data ? state.incidents.data : [],
+}};
 
 const mapDispatchToProp = dispatch => ({
   handleDateFilter: bindActionCreators(filterIncidentByDate, dispatch),
-  handleTypeFilter: bindActionCreators(filterByIncidentType, dispatch),
-  handleIncidents: bindActionCreators(getIncidentsSuccess, dispatch),
+  handleIncidents: bindActionCreators(getIncidentsSuccess, dispatch)
 });
 
 export default connect(

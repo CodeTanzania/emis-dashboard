@@ -1,39 +1,39 @@
 
-.AlertFilter {
+.IncidentFilter {
     display: flex;
     flex-direction: column;
     padding: 1px;
     background-color: white;
     }
     
-    .AlertFilter .ant-calendar-picker {
+    .IncidentFilter .ant-calendar-picker {
         flex: 1; 
     }
     
-    .AlertFilter .ant-checkbox-group {
+    .IncidentFilter .ant-checkbox-group {
         display: flex;
         flex-direction: column;
     }
     
-    .AlertFilterDates {
+    .IncidentFilterDates {
     
-        margin: 40px 5px 30px 5px; 
+        margin: 4px 0 20px 0px; 
     }
     
     
-    .AlertFilter .ant-collapse {
+    .IncidentFilter .ant-collapse {
         flex: 1;
     }
     
-    .AlertFilter .ant-checkbox-group {
+    .IncidentFilter .ant-checkbox-group {
         padding: 20px 0 10px 10px;
     }
     
-    .AlertFilter .ant-checkbox-wrapper + .ant-checkbox-wrapper {
+    .IncidentFilter .ant-checkbox-wrapper + .ant-checkbox-wrapper {
         margin-left: 0;
     }
     
-    .AlertFilter .ant-checkbox-wrapper {
+    .IncidentFilter .ant-checkbox-wrapper {
         display: flex;
         margin: 0 0 10px 0;
     }
