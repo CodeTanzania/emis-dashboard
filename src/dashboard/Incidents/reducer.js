@@ -74,6 +74,7 @@ export function incidents(state = initialState, action) {
       };
     case GET_ACTIONS_SUCCESS:
       return {
+        ...state,
         incidentActionsData: action.payload.data.data,
         total: action.payload.data.total,
         error: null,

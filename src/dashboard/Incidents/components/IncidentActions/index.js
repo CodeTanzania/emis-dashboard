@@ -13,7 +13,6 @@ import './styles.css';
  * @version 0.1.0
  * @since 0.1.0
  */
-
 export default function IncidentActions({ selectedAction }) {
   const { name, phase, description } = selectedAction;
   return (

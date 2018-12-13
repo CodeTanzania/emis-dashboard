@@ -51,7 +51,7 @@ class MapNav extends React.Component {
       startedAt: PropTypes.instanceOf(Date),
       endedAt: PropTypes.instanceOf(Date),
       _id: PropTypes.string,
-    }).isRequired,
+    }),
     activatedNav: PropTypes.func,
   };
 
@@ -78,7 +78,7 @@ class MapNav extends React.Component {
     const { hideNav } = this.state;
 
     const showNavContent = currentNav => {
-      const { selected, incidents} = this.props;
+      const { selected, clickedIncident, incidents} = this.props;
       switch (currentNav) {
         case 'list': {
           return <List
@@ -86,7 +86,9 @@ class MapNav extends React.Component {
           itemLayout="horizontal"
           dataSource={incidents}
           renderItem={incident => (
-            <IncidentsList incidentsList = {incident}/>
+            <IncidentsList 
+            clickedIncidentList = {clickedIncident}
+             incidentsList = {incident}/>
             )}
         />
         }

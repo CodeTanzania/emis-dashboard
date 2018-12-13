@@ -18,7 +18,6 @@ import {
 } from './actions';
 import { showMarkers, baseMaps } from '../../common/lib/mapUtil';
 import popupContent from './components/mapPopup';
-import { Button } from 'antd';
 
 import './styles.css';
 import 'leaflet-draw/dist/leaflet.draw.css';
@@ -47,7 +46,7 @@ class Incidents extends React.Component {
           family: PropTypes.string.isRequired,
           color: PropTypes.string,
           _id: PropTypes.string,
-        }).isRequired,
+        }),
         description: PropTypes.string.isRequired,
         startedAt: PropTypes.instanceOf(Date),
         endedAt: PropTypes.instanceOf(Date),
@@ -85,7 +84,7 @@ class Incidents extends React.Component {
         _id: PropTypes.string,
       }),
       _id: PropTypes.string,
-    }).isRequired,
+    }),
     handleIncidentActions: PropTypes.func,
     handleActiveNav: PropTypes.func,
     handleIncidents: PropTypes.func,
@@ -114,15 +113,17 @@ class Incidents extends React.Component {
     this.mapRef = React.createRef();
     this.onclickNewIncidentButton = this.onclickNewIncidentButton.bind(this);
     this.onCancelButton = this.onCancel.bind(this);
+    this.onSelectIncident = this.showSelectedIncident.bind(this)
   }
 
   componentDidMount() {
     this.map = this.mapRef.current.leafletElement;
     this.mapLayers();
     this.DisplayMarkers();
-    const { handleIncidents,  } = this.props;
-        // handleIncidentActions();
+    const { handleIncidents, handleIncidentActions } = this.props;
     handleIncidents();
+    handleIncidentActions();
+
   }
 
   componentDidUpdate(prevProps) {
@@ -167,9 +168,20 @@ class Incidents extends React.Component {
       .openTooltip();
   };
 
+  onEachFeaturePoint = (feature, layer) => {
+    const { properties } = feature;
+    const { name, incidentType, description, startedAt, } = properties;
+    layer.bindPopup(
+      popupContent({ name, incidentType, description, startedAt, })
+    )
+    this.incidentLayer.clearLayers();
+
+  };
+
   showPoint = areaSelected => {
     L.geoJSON(areaSelected, {
       pointToLayer: showMarkers,
+      onEachFeature:this.onEachFeaturePoint
     }).addTo(this.map);
   };
 
@@ -177,7 +189,7 @@ class Incidents extends React.Component {
     const { areaSelected } = incidentSelected;
     this.selectedLayer = this.showPoint(areaSelected);
   };
-
+  
   initDrawControls = () => {
     this.drawnItems = new L.FeatureGroup();
     this.map.addLayer(this.drawnItems);
@@ -243,23 +255,25 @@ class Incidents extends React.Component {
   onClickIncident = e => {
     const {
       getIncident,
-      setIncidentAction,
       handleActiveNav,
       incidentsAction,
+      setIncidentAction,
     } = this.props;
     const id = get(e, 'target.feature.properties._id');
-    // incidentsAction.filter(incidentAction => {
-    //   const { incident } = incidentAction;
-    //   const { _id: incidentId } = incident;
-    //   if (incidentId === id) {
-    //     const { _id: actionId } = incidentAction;
-    //     return setIncidentAction(actionId);
-    //   }
+    incidentsAction.filter(incidentAction => {
+      const { incident } = incidentAction;
+      const { _id: incidentId } = incident;
+      if (incidentId === id) {
+        const { _id: actionId } = incidentAction;
+        return setIncidentAction(actionId);
+      }
 
-    //   return console.log('Not found in this page');
-    // });
+      return console.log('Not found in this page');
+    });
 
     getIncident(id);
+    console.log("clicked data")
+    console.log(id)
     this.map.removeLayer(this.incidentLayer);
     handleActiveNav('details');
   };
@@ -269,13 +283,11 @@ class Incidents extends React.Component {
     const { incidents } = this.props;
     return (
       <div>
-        {/* <div className="filter">
-          <Button type="primary" onClick={this.onClickFilter}>
-            Family
-          </Button>
-        </div> */}
         {!hideButton ? (
-          <MapNav newIncidentButton={this.onclickNewIncidentButton} />
+          <MapNav 
+          newIncidentButton={this.onclickNewIncidentButton}
+          clickedIncident= {this.onSelectIncident}
+           />
         ) : null}
         <LeafletMap center={position} zoom={zoom} ref={this.mapRef}>
           <TileLayer
@@ -303,9 +315,9 @@ const mapStateToProps = state => ({
   selected: state.selectedIncident.incident
     ? state.selectedIncident.incident
     : [],
-  // incidentsAction: state.incidents.incidentActionsData
-  //   ? state.incidents.incidentActionsData
-  //   : [],
+  incidentsAction: state.incidents.incidentActionsData
+    ? state.incidents.incidentActionsData
+    : [],
 });
 
 const mapDispatchToProps = dispatch => ({
