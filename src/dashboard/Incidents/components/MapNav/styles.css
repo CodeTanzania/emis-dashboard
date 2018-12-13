@@ -1,11 +1,11 @@
 
 .MapNav {
     position: absolute;
-    top: 2%;
+    top: 55px;
     z-index: 1000;
-    float: left;
-    left: 150px;
+    right: 10px;
     height: auto;
+    /* float: right; */
     overflow: hidden;
     font-size: 12px;
 }
@@ -24,6 +24,8 @@
         background-color: white;
         display: flex;  
         flex-direction: column;
-        height: 94vh;
+        height: 89vh;
         overflow-y: auto;
+        margin-top: 50px;
+       border-top: 1px solid #e8e8e8;
 }

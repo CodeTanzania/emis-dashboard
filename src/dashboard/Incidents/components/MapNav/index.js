@@ -78,19 +78,26 @@ class MapNav extends React.Component {
     const { hideNav } = this.state;
 
     const showNavContent = currentNav => {
-      const { selected, clickedIncident, incidents} = this.props;
+      const { selected, clickedIncident, incidents } = this.props;
       switch (currentNav) {
         case 'list': {
-          return <List
-          className="IncidentList"
-          itemLayout="horizontal"
-          dataSource={incidents}
-          renderItem={incident => (
-            <IncidentsList 
-            clickedIncidentList = {clickedIncident}
-             incidentsList = {incident}/>
-            )}
-        />
+          return <div>
+            <div className="MapNav">
+              <Button type="primary" onClick={newIncidentButton}>
+                + New Incident
+          </Button>
+            </div>
+            <List
+              className="IncidentList"
+              itemLayout="horizontal"
+              dataSource={incidents}
+              renderItem={incident => (
+                <IncidentsList
+                  clickedIncidentList={clickedIncident}
+                  incidentsList={incident} />
+              )}
+            />
+          </div>
         }
         case 'filters': {
           return <IncidentFilter />;
@@ -105,18 +112,13 @@ class MapNav extends React.Component {
 
     return !hideNav ? (
       <div>
-        <div className="MapNav">
-          <Button type="primary" onClick={newIncidentButton}>
-            + New Incident
-          </Button>
-        </div>
         <div className="topNav">
           <Menu
             onClick={this.handleClick}
             selectedKeys={[currentMenu]}
             mode="horizontal"
           >
-          <Menu.Item key="list">Incidents</Menu.Item>
+            <Menu.Item key="list">Incidents</Menu.Item>
             <Menu.Item key="filters">Filters</Menu.Item>
             {selectNav ? <Menu.Item key="details">Details</Menu.Item> : null}
           </Menu>
@@ -127,16 +129,17 @@ class MapNav extends React.Component {
   }
 }
 const mapStateToProps = state => {
-  return{
-  incidents: state.incidents.data && state.incidents.data ? state.incidents.data : [],
-  selected: state.selectedIncident.incident
-    ? state.selectedIncident.incident
-    : {},
-  currentMenu: state.activeNav && state.activeNav.activeItem,
-  selectNav: state.selectedIncident.incident
-    ? state.selectedIncident.incident
-    : null,
-}};
+  return {
+    incidents: state.incidents.data && state.incidents.data ? state.incidents.data : [],
+    selected: state.selectedIncident.incident
+      ? state.selectedIncident.incident
+      : {},
+    currentMenu: state.activeNav && state.activeNav.activeItem,
+    selectNav: state.selectedIncident.incident
+      ? state.selectedIncident.incident
+      : null,
+  }
+};
 
 const mapDispachToProps = dispatch => ({
   activatedNav: bindActionCreators(getNavActive, dispatch),

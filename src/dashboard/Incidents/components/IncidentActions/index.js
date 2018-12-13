@@ -16,7 +16,7 @@ import './styles.css';
 export default function IncidentActions({ selectedAction }) {
   const { name, phase, description } = selectedAction;
   return (
-    <div className="IncidentActions">
+    <div className="IncidentActions">    
       <span>
         <h3>Action to be taken</h3>
       </span>
@@ -37,7 +37,7 @@ export default function IncidentActions({ selectedAction }) {
         </tbody>
       </table>
     </div>
-  );
+  ) 
 }
 
 IncidentActions.propTypes = {
