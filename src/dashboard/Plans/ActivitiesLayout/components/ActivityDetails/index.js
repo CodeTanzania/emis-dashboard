@@ -26,11 +26,26 @@ function ActivityDetailsBody({
   loading,
   primaryRoles,
   supportiveRoles,
+  resources,
+  assessments,
 }) {
   return (
     <Fragment>
       <ActivityDescription description={description} />
       <ActivityActors primary={primaryRoles} supportive={supportiveRoles} />
+      <h4 className="ActivityDetailsBodyHeader">Resource(s)</h4>
+      {resources.map(resource => (
+        <p className="ActivityDetailsContent">{`${resource.name}`}</p>
+      ))}
+      <h4 className="ActivityDetailsBodyHeader">Assessment(s)</h4>
+      {assessments.map(assessment => (
+        <p title={assessment.description} className="ActivityDetailsContent">
+          {`${assessment.title}`}
+          <span style={{ fontSize: '11px', color: '#909090' }}>
+            {`(${assessment.assess || 'N/A'})`}
+          </span>
+        </p>
+      ))}
       <Spin
         indicator={antIcon}
         size="large"
@@ -60,17 +75,33 @@ ActivityDetailsBody.propTypes = {
       abbreviation: PropTypes.string,
     })
   ),
+  resources: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string,
+      description: PropTypes.string,
+    })
+  ),
+  assessments: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.string,
+      description: PropTypes.string,
+    })
+  ),
 };
 
 ActivityDetailsBody.defaultProps = {
   primaryRoles: [],
   supportiveRoles: [],
+  resources: [],
+  assessments: [],
 };
 
 const mapStateToProps = state => ({
   description: state.selectedPlanActivity.description,
   primaryRoles: state.selectedPlanActivity.primary,
   supportiveRoles: state.selectedPlanActivity.supportive,
+  resources: state.selectedPlanActivity.resources,
+  assessments: state.selectedPlanActivity.assessments,
   loading: state.planActivityProcedures.loading,
 });
 

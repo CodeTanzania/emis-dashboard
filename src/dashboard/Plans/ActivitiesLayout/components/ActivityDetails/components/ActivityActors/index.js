@@ -1,4 +1,3 @@
-import { List } from 'antd';
 import PropTypes from 'prop-types';
 import React, { Fragment } from 'react';
 
@@ -47,31 +46,23 @@ export default function ActivityActors({ primary, supportive }) {
       <h5 style={{ margin: '10px 0' }} title="Primary Responsible Role(s)">
         PRIMARY :
       </h5>
-      <List
-        style={{ display: 'inline' }}
-        dataSource={primary}
-        renderItem={actor => (
-          <Actor
-            name={actor.name}
-            abbreviation={actor.abbreviation}
-            description={actor.description}
-          />
-        )}
-      />
+      {primary.map(actor => (
+        <Actor
+          name={actor.name}
+          abbreviation={actor.abbreviation}
+          description={actor.description}
+        />
+      ))}
       <h5 style={{ margin: '10px 0' }} title="Supportive Role(s)">
         SUPPORTIVE :
       </h5>
-      <List
-        style={{ display: 'inline' }}
-        dataSource={supportive}
-        renderItem={actor => (
-          <Actor
-            name={actor.name}
-            abbreviation={actor.abbreviation}
-            description={actor.description}
-          />
-        )}
-      />
+      {supportive.map(actor => (
+        <Actor
+          name={actor.name}
+          abbreviation={actor.abbreviation}
+          description={actor.description}
+        />
+      ))}
     </Fragment>
   );
 }
