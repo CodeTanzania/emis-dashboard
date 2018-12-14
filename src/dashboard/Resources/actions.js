@@ -1,5 +1,10 @@
 import * as types from './types';
 
+/**
+ * -----------------------------------------------------------
+ * Resource Stocks
+ * -----------------------------------------------------------
+ */
 export const getResourceStocksStart = () => ({
   type: types.GET_RESOURCE_STOCKS_START,
 });
@@ -26,16 +31,39 @@ export const getResourceStocks = params => (dispatch, getState, { API }) => {
     .catch(error => dispatch(getResourceStocksFailed(error)));
 };
 
-export const showAdjustStockForm = stock => ({
-  type: types.SHOW_ADJUST_STOCK_FORM,
+/**
+ * ------------------------------------------------------------
+ * Stock Adjustment
+ * ------------------------------------------------------------
+ */
+
+/**
+ *
+ * @param {Object} stock - Stock to bind to the form
+ */
+export const showStockAdjustmentForm = stock => ({
+  type: types.SHOW_STOCK_ADJUSTMENT_FORM,
   payload: {
     data: stock,
   },
 });
 
-export const cancelAdjustStock = () => ({
-  type: types.CANCEL_ADJUST_STOCK,
+export const dismissStockAdjustmentForm = () => ({
+  type: types.DISMISS_STOCK_ADJUSTMENT_FORM,
 });
+
+export const setResourceAdjustmentSchema = schema => ({
+  type: types.SET_RESOURCE_ADJUSTMENT_SCHEMA,
+  payload: {
+    data: schema,
+  },
+});
+
+/**
+ * --------------------------------------------------------------
+ * Resource Items
+ * --------------------------------------------------------------
+ */
 
 export const getResourceItemsStart = () => ({
   type: types.GET_RESOURCE_ITEMS_START,
@@ -81,9 +109,44 @@ export const setResourceSchema = schema => ({
   },
 });
 
-export const setResourceAdjustmentSchema = schema => ({
-  type: types.SET_RESOURCE_ADJUSTMENT_SCHEMA,
+/**
+ * ---------------------------------------------------------
+ * Resource Warehouses
+ * ---------------------------------------------------------
+ */
+export const getWarehousesStart = () => ({
+  type: types.GET_WAREHOUSES_START,
+});
+
+export const getWarehousesSuccess = items => ({
+  type: types.GET_WAREHOUSES_SUCCESS,
   payload: {
-    data: schema,
+    data: items,
   },
+});
+
+export const getWarehousesFailed = error => ({
+  type: types.GET_WAREHOUSES_ERROR,
+  payload: {
+    data: error,
+  },
+  error: true,
+});
+
+export const getWarehouses = params => (dispatch, getState, { API }) => {
+  dispatch(getWarehousesStart());
+  API.findWarehouses(params)
+    .then(items => dispatch(getWarehousesSuccess(items)))
+    .catch(error => dispatch(getWarehousesFailed(error)));
+};
+
+export const showWarehouseForm = (item = null) => ({
+  type: types.SHOW_WAREHOUSE_FORM,
+  payload: {
+    data: item,
+  },
+});
+
+export const dismissWarehouseForm = () => ({
+  type: types.DISMISS_WAREHOUSE_FORM,
 });

@@ -48,7 +48,7 @@ const getColumns = handleEditItem => [
   {
     title: 'Color',
     dataIndex: 'color',
-    width: '10%',
+    width: '20%',
     render: text => (
       <span>
         <span

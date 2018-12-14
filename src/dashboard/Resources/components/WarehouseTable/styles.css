@@ -1,11 +1,11 @@
-.ResourceTable .itemTableOperations {
+.WarehouseTable .tableOperations {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
     margin-bottom: 16px;
 }
 
-.ResourceTable .nameFilter{
+.WarehouseTable .nameFilter{
     width: 100%;
     margin-bottom: 0;
     padding-bottom: 0

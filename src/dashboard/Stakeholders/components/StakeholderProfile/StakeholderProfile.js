@@ -130,16 +130,15 @@ class StakeholderProfile extends Component {
                 />
               </TabPane>
             )}
-            {stakeholder &&
-              allowMembers && (
-                <TabPane
-                  tab={memberTitle}
-                  key="members"
-                  className={cx('tabContent')}
-                >
-                  <Members memberType={memberTitle} />
-                </TabPane>
-              )}
+            {stakeholder && allowMembers && (
+              <TabPane
+                tab={memberTitle}
+                key="members"
+                className={cx('tabContent')}
+              >
+                <Members memberType={memberTitle} />
+              </TabPane>
+            )}
           </Tabs>
         </div>
       </Fragment>

@@ -2,8 +2,10 @@
 import React, { Component, Fragment } from 'react';
 import { Layout, Tabs } from 'antd';
 import classNames from 'classnames';
+import AdjustStockForm from './components/AdjustStockForm';
 import StocksTable from './components/StocksTable';
 import ItemsTable from './components/ItemTable';
+import WarehouseTable from './components/WarehouseTable';
 import styles from './styles.css';
 
 const cx = classNames.bind(styles);
@@ -20,10 +22,6 @@ class Resource extends Component {
           <Header className={cx('header')}>
             <h3>Resources</h3>
           </Header>
-          {/* <Header className={cx('header', 'actions')}>
-                        <div className={cx('filters')}>mama</div>
-                        <div className={cx('buttons')}>baba</div>
-                    </Header> */}
           <Tabs defaultActiveKey="1">
             <TabPane tab="Stocks" key="1" className={cx('content')}>
               <StocksTable />
@@ -31,9 +29,13 @@ class Resource extends Component {
             <TabPane tab="Items" key="2" className={cx('content')}>
               <ItemsTable />
             </TabPane>
+            <TabPane tab="Warehouses" key="3" className={cx('content')}>
+              <WarehouseTable />
+            </TabPane>
           </Tabs>
           <div />
         </Layout>
+        <AdjustStockForm />
       </Fragment>
     );
   }

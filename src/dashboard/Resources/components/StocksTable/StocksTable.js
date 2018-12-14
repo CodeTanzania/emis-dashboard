@@ -61,7 +61,7 @@ const getColumns = handleAdjustClick => [
 class ResourceTable extends Component {
   static propTypes = {
     getResourceStocks: PropTypes.func.isRequired,
-    showAdjustStockForm: PropTypes.func.isRequired,
+    showStockAdjustmentForm: PropTypes.func.isRequired,
     stocks: PropTypes.shape({
       data: PropTypes.arrayOf(PropTypes.object),
     }).isRequired,
@@ -133,7 +133,7 @@ class ResourceTable extends Component {
   };
 
   handleAdjustClick = item => {
-    this.props.showAdjustStockForm(item);
+    this.props.showStockAdjustmentForm(item);
   };
 
   render() {

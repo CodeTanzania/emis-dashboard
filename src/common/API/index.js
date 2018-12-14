@@ -154,6 +154,26 @@ export const loadResourceAdjustmentSchema = () =>
   Axios.get('/adjustments/schema').then(response => response.data);
 
 /**
+ * load warehouse schema
+ */
+export const loadWarehouseSchema = () =>
+  Axios.get('/warehouses/schema').then(response => response.data);
+
+/**
+ * Retrieve resource warehouses
+ * @param {Object} params - Query string
+ */
+export const findWarehouses = params =>
+  Axios.get('/warehouses', { params }).then(response => response.data);
+
+/**
+ * Create warehouse
+ * @param {Object} data - Warehouse payload
+ */
+export const createWarehouse = data =>
+  Axios.post('/adjustments', data).then(res => res.data);
+
+/**
  * Get Plans from the API
  *
  * @function
