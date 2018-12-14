@@ -404,7 +404,7 @@ export function getStakeholders(params = {}) {
 }
 
 /**
- *  Get Geographical features from API
+ * Get Geographical features from API
  *
  * @function
  * @name getFeatures
@@ -417,4 +417,20 @@ export function getStakeholders(params = {}) {
  */
 export function getFeatures(params = {}) {
   return Axios.get(`/features`, { params });
+}
+
+/**
+ * Get list of questionnaires available from the API
+ *
+ * @function
+ * @name getQuestionnaires
+ *
+ * @param {Object} params
+ * @returns {Promise}
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function getQuestionnaires(params = {}) {
+  return Axios.get(`/questionnaires`, { params });
 }

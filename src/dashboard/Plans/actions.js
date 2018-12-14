@@ -918,6 +918,17 @@ export function getPlans(params) {
   };
 }
 
+/**
+ * A Thunk function which performs asynchronous creating plan into the API
+ *
+ * @function
+ * @name postPlan
+ *
+ * @param {Object} plan - Plan object
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
 export function postPlan(plan) {
   return (dispatch, getState, { API }) => {
     dispatch(postPlanStart());

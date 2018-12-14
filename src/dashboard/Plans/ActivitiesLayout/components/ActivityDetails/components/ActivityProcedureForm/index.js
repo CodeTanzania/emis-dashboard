@@ -3,7 +3,11 @@ import flow from 'lodash/flow';
 import map from 'lodash/map';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getResourceItems, getRoles } from '../../../../../../../common/API';
+import {
+  getQuestionnaires,
+  getResourceItems,
+  getRoles,
+} from '../../../../../../../common/API';
 import SelectSearchBox from '../../../../../../../common/components/SelectSearchBox';
 import {
   postPlanActivityProcedure,
@@ -166,6 +170,25 @@ class ActivityProcedureForm extends Component {
           )}
         </FormItem>
         {/* end resource select input */}
+
+        {/* Questionnaires select input */}
+        <FormItem label="Assessment to be performed" {...formItemLayout}>
+          {getFieldDecorator('assessments', {
+            initialValue: isEditForm
+              ? map(procedure.assessments, item => item._id) // eslint-disable-line
+              : [],
+          })(
+            <SelectSearchBox
+              placeholder="Select Role ..."
+              mode="multiple"
+              onSearch={getQuestionnaires}
+              optionLabel="title"
+              optionValue="_id"
+              initialValue={isEditForm ? procedure.assessments : []}
+            />
+          )}
+        </FormItem>
+        {/* end Questionnaires select input */}
 
         <Row>
           <Col span={24} style={{ textAlign: 'right' }}>
