@@ -9,6 +9,7 @@ function ActivityProcedureDetails({
   primaryActors,
   supportiveActors,
   resources,
+  assessments,
 }) {
   return (
     <Fragment>
@@ -31,6 +32,20 @@ function ActivityProcedureDetails({
       <h5 className="ActivityProcedureDetailsHeader">RESOURCES</h5>
       {resources.map(resource => (
         <p className="ActivityProcedureDetailsContent">{`${resource.name}`}</p>
+      ))}
+      <h5 className="ActivityProcedureDetailsHeader">
+        ASSESSMENT(s) TO BE PERFORMED
+      </h5>
+      {assessments.map(assessment => (
+        <p
+          title={assessment.description}
+          className="ActivityProcedureDetailsContent"
+        >
+          {`${assessment.title}`}
+          <span style={{ fontSize: '11px', color: '#909090' }}>
+            {`(${assessment.assess || 'N/A'})`}
+          </span>
+        </p>
       ))}
     </Fragment>
   );
@@ -59,12 +74,19 @@ ActivityProcedureDetails.propTypes = {
       description: PropTypes.string,
     })
   ),
+  assessments: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.string,
+      description: PropTypes.string,
+    })
+  ),
 };
 
 ActivityProcedureDetails.defaultProps = {
   primaryActors: [],
   supportiveActors: [],
   resources: [],
+  assessments: [],
 };
 
 const mapStateToProps = state => ({
@@ -73,6 +95,7 @@ const mapStateToProps = state => ({
   primaryActors: state.selectedPlanActivityProcedure.primary,
   supportiveActors: state.selectedPlanActivityProcedure.supportive,
   resources: state.selectedPlanActivityProcedure.resources,
+  assessments: state.selectedPlanActivityProcedure.assessments,
 });
 
 export default connect(mapStateToProps)(ActivityProcedureDetails);
