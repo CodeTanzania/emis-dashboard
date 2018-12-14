@@ -1,7 +1,9 @@
 import { Icon, Spin } from 'antd';
+import isEmpty from 'lodash/isEmpty';
 import PropTypes from 'prop-types';
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
+import EmptyStateMessage from '../EmptyStateMessage';
 import ActivityActors from './components/ActivityActors';
 import ActivityDescription from './components/ActivityDescription';
 import ActivityProcedureList from './components/ActivityProcedureList';
@@ -34,10 +36,18 @@ function ActivityDetailsBody({
       <ActivityDescription description={description} />
       <ActivityActors primary={primaryRoles} supportive={supportiveRoles} />
       <h4 className="ActivityDetailsBodyHeader">Resource(s)</h4>
+      <EmptyStateMessage
+        show={isEmpty(resources)}
+        message="No Resources(s) for this activity"
+      />
       {resources.map(resource => (
         <p className="ActivityDetailsContent">{`${resource.name}`}</p>
       ))}
-      <h4 className="ActivityDetailsBodyHeader">Assessment(s)</h4>
+      <h4 className="ActivityDetailsBodyHeader">Assessment(s) </h4>
+      <EmptyStateMessage
+        show={isEmpty(assessments)}
+        message="No assessment(s) for this activity"
+      />
       {assessments.map(assessment => (
         <p title={assessment.description} className="ActivityDetailsContent">
           {`${assessment.title}`}

@@ -1,6 +1,8 @@
+import isEmpty from 'lodash/isEmpty';
 import PropTypes from 'prop-types';
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
+import EmptyStateMessage from '../../../EmptyStateMessage';
 import './styles.css';
 
 function ActivityProcedureDetails({
@@ -18,24 +20,40 @@ function ActivityProcedureDetails({
       <h5 className="ActivityProcedureDetailsHeader">PROCEDURE DESCRIPTION</h5>
       <p className="ActivityProcedureDetailsContent">{description}</p>
       <h5 className="ActivityProcedureDetailsHeader">PRIMARY ACTORS</h5>
+      <EmptyStateMessage
+        show={isEmpty(primaryActors)}
+        message="No Primary Actor(s) for this Procedure"
+      />
       {primaryActors.map(actor => (
         <p className="ActivityProcedureDetailsContent">{`${
           actor.name
         } (${actor.abbreviation || 'N/A'})`}</p>
       ))}
       <h5 className="ActivityProcedureDetailsHeader">SUPPORTIVE ACTORS</h5>
+      <EmptyStateMessage
+        show={isEmpty(supportiveActors)}
+        message="No Supportive Actor(s) for this Procedure"
+      />
       {supportiveActors.map(actor => (
         <p className="ActivityProcedureDetailsContent">{`${
           actor.name
         } (${actor.abbreviation || 'N/A'})`}</p>
       ))}
       <h5 className="ActivityProcedureDetailsHeader">RESOURCES</h5>
+      <EmptyStateMessage
+        show={isEmpty(resources)}
+        message="No Resource(s) for this Procedure"
+      />
       {resources.map(resource => (
         <p className="ActivityProcedureDetailsContent">{`${resource.name}`}</p>
       ))}
       <h5 className="ActivityProcedureDetailsHeader">
         ASSESSMENT(s) TO BE PERFORMED
       </h5>
+      <EmptyStateMessage
+        show={isEmpty(assessments)}
+        message="No Assessment(s) for this Procedure"
+      />
       {assessments.map(assessment => (
         <p
           title={assessment.description}
