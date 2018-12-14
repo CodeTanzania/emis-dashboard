@@ -191,7 +191,7 @@ export function plans(state = defaultPlansState, action) {
 export function selectedPlan(state = null, action) {
   switch (action.type) {
     case SELECT_PLAN:
-      return Object.assign({}, state, action.payload.data);
+      return { ...action.payload.data };
     default:
       return state;
   }
@@ -292,8 +292,9 @@ export function planActivities(state = defaultPlanActivitiesState, action) {
  */
 export function selectedPlanActivity(state = null, action) {
   switch (action.type) {
-    case SELECT_PLAN_ACTIVITY:
-      return Object.assign({}, state, action.payload.data);
+    case SELECT_PLAN_ACTIVITY: {
+      return { ...action.payload.data };
+    }
     default:
       return state;
   }
@@ -385,7 +386,7 @@ export function planActivityProcedures(state = defaultProceduresState, action) {
 export function selectedPlanActivityProcedure(state = null, action) {
   switch (action.type) {
     case SELECT_PLAN_ACTIVITY_PROCEDURE:
-      return Object.assign({}, state, action.payload.data);
+      return { ...action.payload.data };
     default:
       return state;
   }
