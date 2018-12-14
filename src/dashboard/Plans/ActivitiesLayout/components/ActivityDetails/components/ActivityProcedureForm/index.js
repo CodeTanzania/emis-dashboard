@@ -160,7 +160,7 @@ class ActivityProcedureForm extends Component {
               : [],
           })(
             <SelectSearchBox
-              placeholder="Select Role ..."
+              placeholder="Select Resource items ..."
               mode="multiple"
               onSearch={getResourceItems}
               optionLabel="name"
@@ -172,14 +172,14 @@ class ActivityProcedureForm extends Component {
         {/* end resource select input */}
 
         {/* Questionnaires select input */}
-        <FormItem label="Assessment to be performed" {...formItemLayout}>
+        <FormItem label="Assessment(s) to be performed" {...formItemLayout}>
           {getFieldDecorator('assessments', {
             initialValue: isEditForm
               ? map(procedure.assessments, item => item._id) // eslint-disable-line
               : [],
           })(
             <SelectSearchBox
-              placeholder="Select Role ..."
+              placeholder="Select Questionnaires ..."
               mode="multiple"
               onSearch={getQuestionnaires}
               optionLabel="title"

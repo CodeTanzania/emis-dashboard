@@ -4,7 +4,11 @@ import map from 'lodash/map';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getResourceItems, getRoles } from '../../../../../common/API';
+import {
+  getQuestionnaires,
+  getResourceItems,
+  getRoles,
+} from '../../../../../common/API';
 import SelectSearchBox from '../../../../../common/components/SelectSearchBox';
 import { postPlanActivity, putPlanActivity } from '../../../actions';
 
@@ -203,6 +207,25 @@ class ActivityForm extends Component {
           )}
         </FormItem>
         {/* end resource select input */}
+
+        {/* assessment select input */}
+        <FormItem label="Assessment(s) to be performed" {...formItemLayout}>
+          {getFieldDecorator('assessments', {
+            initialValue: isEditForm
+              ? map(activity.assessments, item => item._id) // eslint-disable-line
+              : [],
+          })(
+            <SelectSearchBox
+              placeholder="Select Questionnaires ..."
+              mode="multiple"
+              onSearch={getQuestionnaires}
+              optionLabel="title"
+              optionValue="_id"
+              initialValue={isEditForm ? activity.assessments : []}
+            />
+          )}
+        </FormItem>
+        {/* end assessment select input */}
 
         {/* form actions */}
         <Row>
