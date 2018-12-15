@@ -84,7 +84,7 @@ class Incidents extends React.Component {
         _id: PropTypes.string,
       }),
       _id: PropTypes.string,
-    }),
+    }).isRequired,
     handleIncidentActions: PropTypes.func,
     handleActiveNav: PropTypes.func,
     handleIncidents: PropTypes.func,
@@ -113,7 +113,7 @@ class Incidents extends React.Component {
     this.mapRef = React.createRef();
     this.onclickNewIncidentButton = this.onclickNewIncidentButton.bind(this);
     this.onCancelButton = this.onCancel.bind(this);
-    this.onSelectIncident = this.showSelectedIncident.bind(this)
+    this.onSelectIncident = this.showSelectedIncident.bind(this);
   }
 
   componentDidMount() {
@@ -123,15 +123,14 @@ class Incidents extends React.Component {
     const { handleIncidents, handleIncidentActions } = this.props;
     handleIncidents();
     handleIncidentActions();
-
   }
 
   componentDidUpdate(prevProps) {
     const { incidents, selected } = this.props;
     if (incidents !== prevProps.incidents) {
       this.incidentLayer.clearLayers();
-      this.showAllIncidents(incidents)
-  }
+      this.showAllIncidents(incidents);
+    }
     if (selected && selected !== prevProps.selected) {
       this.showSelectedIncident(selected);
     } else if (selected !== prevProps.selected) {
@@ -162,26 +161,22 @@ class Incidents extends React.Component {
     layer.bindPopup(
       popupContent({ name, incidentType, description, startedAt, _id })
     );
-    layer
-      .on({ click: this.onClickIncident })
-      .bindTooltip(`${name}`)
-      .openTooltip();
+    layer.bindTooltip(`${name}`).openTooltip();
   };
 
   onEachFeaturePoint = (feature, layer) => {
     const { properties } = feature;
-    const { name, incidentType, description, startedAt, } = properties;
+    const { name, incidentType, description, startedAt } = properties;
     layer.bindPopup(
-      popupContent({ name, incidentType, description, startedAt, })
-    )
+      popupContent({ name, incidentType, description, startedAt })
+    );
     this.incidentLayer.clearLayers();
-
   };
 
   showPoint = areaSelected => {
     L.geoJSON(areaSelected, {
       pointToLayer: showMarkers,
-      onEachFeature:this.onEachFeaturePoint
+      onEachFeature: this.onEachFeaturePoint,
     }).addTo(this.map);
   };
 
@@ -189,7 +184,7 @@ class Incidents extends React.Component {
     const { areaSelected } = incidentSelected;
     this.selectedLayer = this.showPoint(areaSelected);
   };
-  
+
   initDrawControls = () => {
     this.drawnItems = new L.FeatureGroup();
     this.map.addLayer(this.drawnItems);
@@ -272,8 +267,6 @@ class Incidents extends React.Component {
     });
 
     getIncident(id);
-    console.log("clicked data")
-    console.log(id)
     this.map.removeLayer(this.incidentLayer);
     handleActiveNav('details');
   };
@@ -284,10 +277,10 @@ class Incidents extends React.Component {
     return (
       <div>
         {!hideButton ? (
-          <MapNav 
-          newIncidentButton={this.onclickNewIncidentButton}
-          clickedIncident= {this.onSelectIncident}
-           />
+          <MapNav
+            newIncidentButton={this.onclickNewIncidentButton}
+            clickedIncident={this.onSelectIncident}
+          />
         ) : null}
         <LeafletMap center={position} zoom={zoom} ref={this.mapRef}>
           <TileLayer
@@ -311,7 +304,8 @@ class Incidents extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  incidents: state.incidents.data && state.incidents.data ? state.incidents.data : [],
+  incidents:
+    state.incidents.data && state.incidents.data ? state.incidents.data : [],
   selected: state.selectedIncident.incident
     ? state.selectedIncident.incident
     : [],

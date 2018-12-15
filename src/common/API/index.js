@@ -21,7 +21,7 @@ const Axios = axios.create({
   },
 });
 
-const generateFiter = ( dates) => {
+const generateFiter = dates => {
   let filter = {};
   if (dates.length > 0) {
     const startedAt = { $gte: dates[0], $lt: dates[1] };
@@ -148,7 +148,7 @@ const API = {
   /* API for Incidents */
 
   getIncidents: ({ incidentDateFilter } = {}) => {
-    const filter = generateFiter( incidentDateFilter);
+    const filter = generateFiter(incidentDateFilter);
     const params = { filter, limit: 100 };
     const url = Axios.get(`${INCIDENTS_API}/incidents`, {
       params,

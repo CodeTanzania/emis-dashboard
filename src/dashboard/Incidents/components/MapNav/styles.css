@@ -1,13 +1,12 @@
 
 .MapNav {
     position: absolute;
-    top: 55px;
+    left: 250px;
+    top: 10px;
     z-index: 1000;
-    right: 10px;
     height: auto;
-    /* float: right; */
     overflow: hidden;
-    font-size: 12px;
+    font-size: 12px
 }
 .topNav{
     /* margin: 10px 10px 0 0; */
@@ -20,12 +19,21 @@
     background-color:white;
     width: 400px;
 }
+.filterNav {
+    position: absolute;
+    top: 54px;
+    z-index: 1000;
+    float: right;
+    left: 30px;
+    height: auto;
+    overflow: hidden;
+    font-size: 12px;
+}
 .IncidentList {
         background-color: white;
         display: flex;  
         flex-direction: column;
-        height: 89vh;
+        height: 82vh;
         overflow-y: auto;
-        margin-top: 50px;
        border-top: 1px solid #e8e8e8;
 }

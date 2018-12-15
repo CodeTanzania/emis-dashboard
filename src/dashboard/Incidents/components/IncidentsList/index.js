@@ -6,7 +6,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import styles from './styles.css';
-import {getSelectedIncident} from '../../actions'
+import { getSelectedIncident } from '../../actions';
 /**
  * Render a single contact item component for contacts list
  *
@@ -19,10 +19,36 @@ import {getSelectedIncident} from '../../actions'
 const cx = classNames.bind(styles);
 
 class IncidentsList extends React.Component {
+  static propTypes = {
+    getIncident: PropTypes.func,
+    incidentsList: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string,
+        incidentsTypeData: PropTypes.shape({
+          name: PropTypes.string,
+          nature: PropTypes.string.isRequired,
+          family: PropTypes.string.isRequired,
+          color: PropTypes.string,
+          _id: PropTypes.string,
+        }),
+        description: PropTypes.string.isRequired,
+        startedAt: PropTypes.instanceOf(Date),
+        endedAt: PropTypes.instanceOf(Date),
+        _id: PropTypes.string,
+      }).isRequired
+    ),
+    clickedIncidentList: PropTypes.func,
+  };
+
+  static defaultProps = {
+    clickedIncidentList: null,
+    getIncident: null,
+    incidentsList: [],
+  };
 
   onClick = () => {
-    const {getIncident, incidentsList, clickedIncidentList} = this.props;
-    const {_id: selectedId} = incidentsList;
+    const { getIncident, incidentsList, clickedIncidentList } = this.props;
+    const { _id: selectedId } = incidentsList;
     getIncident(selectedId);
     clickedIncidentList(incidentsList);
   };
@@ -30,9 +56,9 @@ class IncidentsList extends React.Component {
   render() {
     const { incidentsList } = this.props;
 
-    const { name, startedAt, endedAt, } = incidentsList;
+    const { name, startedAt, endedAt } = incidentsList;
     return (
-      <List.Item className={cx('p-l-20', )}>
+      <List.Item className={cx('p-l-20')}>
         <List.Item.Meta
           className="IncidentItemMeta"
           title={
@@ -53,14 +79,9 @@ class IncidentsList extends React.Component {
           }
           description={
             <div className="IncidentTypeDescription">
-              <p>
-              Created on:  {startedAt}
-              </p>
-              <p>
-              Ended on: {endedAt}
-              </p> 
+              <p>Created on: {startedAt}</p>
+              <p>Ended on: {endedAt}</p>
               {/* <p style={{paddingTop:'5px'}}>Description: {description}</p> */}
-
             </div>
           }
         />
@@ -69,15 +90,15 @@ class IncidentsList extends React.Component {
   }
 }
 const mapStateToProps = state => ({
-    selected: state.selectedIncident.incident
+  selected: state.selectedIncident.incident
     ? state.selectedIncident.incident
     : [],
-})
+});
 const mapDispatchToProps = dispatch => ({
-    getIncident: bindActionCreators(getSelectedIncident, dispatch),
+  getIncident: bindActionCreators(getSelectedIncident, dispatch),
 });
 
 export default connect(
-    mapStateToProps,
+  mapStateToProps,
   mapDispatchToProps
 )(IncidentsList);

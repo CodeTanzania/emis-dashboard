@@ -46,19 +46,39 @@ class MapNav extends React.Component {
         family: PropTypes.string.isRequired,
         color: PropTypes.string,
         _id: PropTypes.string,
-      }),
+      }).isRequired,
       description: PropTypes.string.isRequired,
       startedAt: PropTypes.instanceOf(Date),
       endedAt: PropTypes.instanceOf(Date),
       _id: PropTypes.string,
     }),
+    incidents: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string,
+        incidentsTypeData: PropTypes.shape({
+          name: PropTypes.string,
+          nature: PropTypes.string.isRequired,
+          family: PropTypes.string.isRequired,
+          color: PropTypes.string,
+          _id: PropTypes.string,
+        }),
+        description: PropTypes.string.isRequired,
+        startedAt: PropTypes.instanceOf(Date),
+        endedAt: PropTypes.instanceOf(Date),
+        _id: PropTypes.string,
+      }).isRequired
+    ),
     activatedNav: PropTypes.func,
+    clickedIncident: PropTypes.func,
   };
 
   static defaultProps = {
     newIncidentButton: null,
     currentMenu: '',
     activatedNav: null,
+    selectNav: {},
+    clickedIncident: null,
+    incidents: [],
   };
 
   constructor() {
@@ -81,26 +101,22 @@ class MapNav extends React.Component {
       const { selected, clickedIncident, incidents } = this.props;
       switch (currentNav) {
         case 'list': {
-          return <div>
-            <div className="MapNav">
-              <Button type="primary" onClick={newIncidentButton}>
-                + New Incident
-          </Button>
+          return (
+            <div>
+              <IncidentFilter />
+              <List
+                className="IncidentList"
+                itemLayout="horizontal"
+                dataSource={incidents}
+                renderItem={incident => (
+                  <IncidentsList
+                    clickedIncidentList={clickedIncident}
+                    incidentsList={incident}
+                  />
+                )}
+              />
             </div>
-            <List
-              className="IncidentList"
-              itemLayout="horizontal"
-              dataSource={incidents}
-              renderItem={incident => (
-                <IncidentsList
-                  clickedIncidentList={clickedIncident}
-                  incidentsList={incident} />
-              )}
-            />
-          </div>
-        }
-        case 'filters': {
-          return <IncidentFilter />;
+          );
         }
         case 'details': {
           return <IncidentDetails incident={selected} />;
@@ -113,13 +129,17 @@ class MapNav extends React.Component {
     return !hideNav ? (
       <div>
         <div className="topNav">
+          <div className="MapNav">
+            <Button type="primary" onClick={newIncidentButton}>
+              + New Incident
+            </Button>
+          </div>
           <Menu
             onClick={this.handleClick}
             selectedKeys={[currentMenu]}
             mode="horizontal"
           >
             <Menu.Item key="list">Incidents</Menu.Item>
-            <Menu.Item key="filters">Filters</Menu.Item>
             {selectNav ? <Menu.Item key="details">Details</Menu.Item> : null}
           </Menu>
           <div>{showNavContent(currentMenu)}</div>
@@ -128,18 +148,17 @@ class MapNav extends React.Component {
     ) : null;
   }
 }
-const mapStateToProps = state => {
-  return {
-    incidents: state.incidents.data && state.incidents.data ? state.incidents.data : [],
-    selected: state.selectedIncident.incident
-      ? state.selectedIncident.incident
-      : {},
-    currentMenu: state.activeNav && state.activeNav.activeItem,
-    selectNav: state.selectedIncident.incident
-      ? state.selectedIncident.incident
-      : null,
-  }
-};
+const mapStateToProps = state => ({
+  incidents:
+    state.incidents.data && state.incidents.data ? state.incidents.data : [],
+  selected: state.selectedIncident.incident
+    ? state.selectedIncident.incident
+    : {},
+  currentMenu: state.activeNav && state.activeNav.activeItem,
+  selectNav: state.selectedIncident.incident
+    ? state.selectedIncident.incident
+    : null,
+});
 
 const mapDispachToProps = dispatch => ({
   activatedNav: bindActionCreators(getNavActive, dispatch),
