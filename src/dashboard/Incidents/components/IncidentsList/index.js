@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import styles from './styles.css';
 import { getSelectedIncident } from '../../actions';
+import { convertIsoDate } from '../../../../common/lib/mapUtil';
 /**
  * Render a single contact item component for contacts list
  *
@@ -79,8 +80,8 @@ class IncidentsList extends React.Component {
           }
           description={
             <div className="IncidentTypeDescription">
-              <p>Created on: {startedAt}</p>
-              <p>Ended on: {endedAt}</p>
+              <p>Created on: {' '} {convertIsoDate(startedAt)}</p>
+              <p>Ended on: {' '} {convertIsoDate(endedAt)}</p>
               {/* <p style={{paddingTop:'5px'}}>Description: {description}</p> */}
             </div>
           }

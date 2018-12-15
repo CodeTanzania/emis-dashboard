@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import './styles.css';
 import { connect } from 'react-redux';
 import IncidentActions from '../IncidentActions';
-
+import {convertIsoDate} from '../../../../common/lib/mapUtil'
 /**
  * Incident details Layout component
  * this component contain detailed
@@ -90,12 +90,12 @@ class IncidentDetails extends React.Component {
                 </tr>
                 <tr>
                   <td>TIME OF CALL</td>
-                  <td id="popupData">{startedAt}</td>
+                  <td id="popupData">Created on: {' '} {convertIsoDate(startedAt)}</td>
                 </tr>
                 {endedAt ? (
                   <tr>
                     <td>END AT</td>
-                    <td id="popupData">{endedAt}</td>
+                    <td id="popupData">Created on: {' '} {convertIsoDate(endedAt)}</td>
                   </tr>
                 ) : null}
                 <tr>

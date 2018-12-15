@@ -1,7 +1,7 @@
 
 .MapNav {
     position: absolute;
-    left: 250px;
+    left: 210px;
     top: 10px;
     z-index: 1000;
     height: auto;
@@ -17,14 +17,15 @@
     top: 0;
     z-index: 1000;
     background-color:white;
-    width: 400px;
+    width: 350px;
+    overflow-x: hidden
 }
 .filterNav {
     position: absolute;
     top: 54px;
     z-index: 1000;
     float: right;
-    left: 30px;
+    /* left: 10px; */
     height: auto;
     overflow: hidden;
     font-size: 12px;
@@ -33,7 +34,7 @@
         background-color: white;
         display: flex;  
         flex-direction: column;
-        height: 82vh;
+        height: 83vh;
         overflow-y: auto;
        border-top: 1px solid #e8e8e8;
 }

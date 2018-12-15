@@ -1,4 +1,5 @@
 import L from 'leaflet';
+import moment from 'moment';
 
 export function incidentToGeojson(incident) {
   const {
@@ -117,3 +118,7 @@ export function showMarkers(geoJSON) {
   const { coordinates } = geometry;
   return L.marker(coordinates.reverse(), { icon: customIcon });
 }
+
+
+export const convertIsoDate = date =>
+  moment(date).format(' MMMM Do YYYY, h:mm:ss a');
