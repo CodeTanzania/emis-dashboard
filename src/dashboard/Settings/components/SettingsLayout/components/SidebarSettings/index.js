@@ -25,9 +25,7 @@ class SidebarSettings extends React.Component {
               </NavLink>
             </Menu.Item>
             <Menu.Item key="2">
-              <NavLink to='/settings/Alert/Category'>
                 Alert Category
-            </NavLink>
             </Menu.Item>
             <SubMenu key="sub3" title="Warning">
               <Menu.Item key="3">

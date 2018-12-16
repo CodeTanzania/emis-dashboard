@@ -71,8 +71,11 @@ export const searchStakeholder = searchText => {
 export const createStakeholder = data =>
   Axios.post('/parties', data).then(res => res.data);
 
-export const getIncidentType = () =>
-  Axios.get('/incidenttypes').then(res => res.data);
+export const getIncidentType = (params) =>
+  Axios.get('/incidenttypes', {
+    params,
+  }).then(res => res.data);
+  
 
 export const createIncidentType = data =>
   Axios.post('/incidenttypes', data).then(res => res.data);
