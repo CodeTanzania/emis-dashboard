@@ -80,7 +80,7 @@ class EditIncidentTypeForm extends Component {
     const { incidentTypeUpdate } = this.props;
     incidentTypeUpdate(incidentTypeId, updates);
     this.setState({ submitting: false });
-    message.success("Incidenttype updated successfull");
+    message.success('Incidenttype updated successfull');
     this.handleCancel();
   };
 

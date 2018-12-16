@@ -67,7 +67,6 @@ class SettingsLayout extends React.Component {
       <Layout
         style={{
           background: '#fff',
-          borderTop: '1px solid #e6e6e6',
         }}
       >
         <Row>

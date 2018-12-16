@@ -1,5 +1,6 @@
 import { Col, Layout, Row } from 'antd';
 import React from 'react';
+import './styles.css';
 
 /* local constants */
 const { Header } = Layout;
@@ -19,7 +20,7 @@ const { Header } = Layout;
 function Toolbar(props) {
   const { children } = props;
   return (
-    <Header {...props}>
+    <Header {...props} className="Toolbar">
       <Row>{children}</Row>
     </Header>
   );
@@ -59,8 +60,26 @@ function Filters(props) {
   return <Col {...props}>{children}</Col>;
 }
 
+/**
+ * Toolbar Pagination
+ *
+ * @function
+ * @name Pagination
+ *
+ * @param {Object} props - Antd Col component props
+ * @returns {ReactComponent}
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+function Pagination(props) {
+  const { children } = props;
+  return <Col {...props}>{children}</Col>;
+}
+
 Toolbar.Actions = Actions;
 Toolbar.Filters = Filters;
+Toolbar.Pagination = Pagination;
 
 /* export Toolbar component */
 export default Toolbar;
