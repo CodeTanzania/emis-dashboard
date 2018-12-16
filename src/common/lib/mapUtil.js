@@ -119,6 +119,5 @@ export function showMarkers(geoJSON) {
   return L.marker(coordinates.reverse(), { icon: customIcon });
 }
 
-
 export const convertIsoDate = date =>
   moment(date).format(' MMMM Do YYYY, h:mm:ss a');

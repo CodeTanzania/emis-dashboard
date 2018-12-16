@@ -17,7 +17,6 @@ import {
   activeIncidentAction,
 } from './actions';
 import { showMarkers, baseMaps } from '../../common/lib/mapUtil';
-import popupContent from './components/mapPopup';
 
 import './styles.css';
 import 'leaflet-draw/dist/leaflet.draw.css';
@@ -157,19 +156,14 @@ class Incidents extends React.Component {
 
   onEachFeature = (feature, layer) => {
     const { properties } = feature;
-    const { name, incidentType, description, startedAt, _id } = properties;
-    layer.bindPopup(
-      popupContent({ name, incidentType, description, startedAt, _id })
-    );
-    layer.bindTooltip(`${name}`).openTooltip();
+    const { name } = properties;
+    layer
+      .on('click', this.onClickIncident)
+      .bindTooltip(`${name}`)
+      .openTooltip();
   };
 
-  onEachFeaturePoint = (feature, layer) => {
-    const { properties } = feature;
-    const { name, incidentType, description, startedAt } = properties;
-    layer.bindPopup(
-      popupContent({ name, incidentType, description, startedAt })
-    );
+  onEachFeaturePoint = () => {
     this.incidentLayer.clearLayers();
   };
 

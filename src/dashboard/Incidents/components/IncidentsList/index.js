@@ -80,8 +80,8 @@ class IncidentsList extends React.Component {
           }
           description={
             <div className="IncidentTypeDescription">
-              <p>Created on: {' '} {convertIsoDate(startedAt)}</p>
-              <p>Ended on: {' '} {convertIsoDate(endedAt)}</p>
+              <p>Created on: {convertIsoDate(startedAt)}</p>
+              <p>Ended on: {convertIsoDate(endedAt)}</p>
               {/* <p style={{paddingTop:'5px'}}>Description: {description}</p> */}
             </div>
           }

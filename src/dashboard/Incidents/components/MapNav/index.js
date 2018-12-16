@@ -4,10 +4,10 @@ import { Button, Menu, List } from 'antd';
 import { connect } from 'react-redux';
 import './styles.css';
 import { bindActionCreators } from 'redux';
-import IncidentDetails from '../IncidentDetails';
 import { getNavActive } from '../../actions';
 import IncidentFilter from '../IncidentFilter';
 import IncidentsList from '../IncidentsList';
+import IncidentDetails from '../IncidentDetails';
 
 /**
  * Map Navigation  Layout component
@@ -24,7 +24,7 @@ class MapNav extends React.Component {
   static propTypes = {
     newIncidentButton: PropTypes.func,
     currentMenu: PropTypes.string,
-    selected: PropTypes.shape({
+    IncidentSelected: PropTypes.shape({
       name: PropTypes.string,
       incidentsTypeData: PropTypes.shape({
         name: PropTypes.string,
@@ -38,20 +38,6 @@ class MapNav extends React.Component {
       endedAt: PropTypes.instanceOf(Date),
       _id: PropTypes.string,
     }).isRequired,
-    selectNav: PropTypes.shape({
-      name: PropTypes.string,
-      incidentsTypeData: PropTypes.shape({
-        name: PropTypes.string,
-        nature: PropTypes.string.isRequired,
-        family: PropTypes.string.isRequired,
-        color: PropTypes.string,
-        _id: PropTypes.string,
-      }).isRequired,
-      description: PropTypes.string.isRequired,
-      startedAt: PropTypes.instanceOf(Date),
-      endedAt: PropTypes.instanceOf(Date),
-      _id: PropTypes.string,
-    }),
     incidents: PropTypes.arrayOf(
       PropTypes.shape({
         name: PropTypes.string,
@@ -76,7 +62,6 @@ class MapNav extends React.Component {
     newIncidentButton: null,
     currentMenu: '',
     activatedNav: null,
-    selectNav: {},
     clickedIncident: null,
     incidents: [],
   };
@@ -94,11 +79,11 @@ class MapNav extends React.Component {
   };
 
   render() {
-    const { newIncidentButton, currentMenu, selectNav } = this.props;
+    const { newIncidentButton, currentMenu, IncidentSelected } = this.props;
     const { hideNav } = this.state;
 
     const showNavContent = currentNav => {
-      const { selected, clickedIncident, incidents } = this.props;
+      const { clickedIncident, incidents } = this.props;
       switch (currentNav) {
         case 'list': {
           return (
@@ -118,9 +103,6 @@ class MapNav extends React.Component {
             </div>
           );
         }
-        case 'details': {
-          return <IncidentDetails incident={selected} />;
-        }
         default:
           return false;
       }
@@ -129,20 +111,26 @@ class MapNav extends React.Component {
     return !hideNav ? (
       <div>
         <div className="topNav">
-          <div className="MapNav">
-            <Button type="primary" onClick={newIncidentButton}>
-              + New Incident
-            </Button>
-          </div>
-          <Menu
-            onClick={this.handleClick}
-            selectedKeys={[currentMenu]}
-            mode="horizontal"
-          >
-            <Menu.Item key="list">Incidents</Menu.Item>
-            {selectNav ? <Menu.Item key="details">Details</Menu.Item> : null}
-          </Menu>
-          <div>{showNavContent(currentMenu)}</div>
+          {!IncidentSelected ? (
+            <div>
+              {' '}
+              <div className="MapNav">
+                <Button type="primary" onClick={newIncidentButton}>
+                  + New Incident
+                </Button>
+              </div>
+              <Menu
+                onClick={this.handleClick}
+                selectedKeys={[currentMenu]}
+                mode="horizontal"
+              >
+                <Menu.Item key="list">Incidents</Menu.Item>
+              </Menu>
+              <div>{showNavContent(currentMenu)}</div>
+            </div>
+          ) : (
+            <IncidentDetails />
+          )}
         </div>
       </div>
     ) : null;
@@ -151,11 +139,8 @@ class MapNav extends React.Component {
 const mapStateToProps = state => ({
   incidents:
     state.incidents.data && state.incidents.data ? state.incidents.data : [],
-  selected: state.selectedIncident.incident
-    ? state.selectedIncident.incident
-    : {},
   currentMenu: state.activeNav && state.activeNav.activeItem,
-  selectNav: state.selectedIncident.incident
+  IncidentSelected: state.selectedIncident.incident
     ? state.selectedIncident.incident
     : null,
 });
