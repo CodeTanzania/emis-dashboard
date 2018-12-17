@@ -1,18 +1,19 @@
-.IncidentGeneralDetail.p-20 span {
+.IncidentDetailContent.p-20 span {
     padding-right: 15px;
 }
-.IncidentGeneralDetail.p-20{
+.IncidentDetailContent.p-20{
     line-height: 2;
     padding-left: 40px;
+    border-bottom: 1px solid #e8e8e8;
     flex: auto;
     display: list-item;
     flex-direction: column;
 }
-.IncidentGeneralLocation.p-l-10,
+.IncidentDetailLocation.p-l-10,
 {
     padding: 5px 0 0 20px;
 }
-.IncidentGeneralLocation.p-l-10 span,{
+.IncidentDetailLocation.p-l-10 span,{
     line-height: 1.4;
     padding-right: 25px;
 }

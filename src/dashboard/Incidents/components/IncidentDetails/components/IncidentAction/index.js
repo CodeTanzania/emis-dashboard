@@ -128,7 +128,7 @@ export default class IncidentActionTaken extends React.Component {
           EIncident log
         </h3>
         <div className="table-operations">
-          <Button onClick={this.setAgeSort}>Sort age</Button>
+          <Button onClick={this.setAgeSort}>Sort Date</Button>
           <Button onClick={this.clearAll}>Clear filters and sorters</Button>
         </div>
         <Table

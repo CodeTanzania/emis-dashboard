@@ -17,11 +17,11 @@ export default function IncidentDetailsContent({ selected }) {
   const { name } = type;
 
   return (
-    <div className="IncidentGeneralDetails">
+    <div className="IncidentDetailContents">
       <h3 style={{ borderBottom: '1px solid #e8e8e8', padding: '9px' }}>
         Situation Analysis
       </h3>
-      <div className="IncidentGeneralDetail p-20">
+      <div className="IncidentDetailContent p-20">
       <span>
             <strong>Incident number:</strong>
           </span>{' '}
@@ -58,7 +58,7 @@ export default function IncidentDetailsContent({ selected }) {
           <strong>Location:</strong>
         </span>
         <br />
-        <div className="IncidentGeneralLocation p-l-10">
+        <div className="IncidentDetailLocation p-l-10">
           <span>
             <strong>Region:</strong>
           </span>{areas.map(area => area)}<br />

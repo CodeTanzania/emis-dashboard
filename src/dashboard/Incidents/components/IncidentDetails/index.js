@@ -91,7 +91,7 @@ class IncidentDetails extends React.Component {
           <div className="IncidentLocation p-l-10">
             <span>
               <strong>Region:</strong>
-            </span>{' '}{areas.map(area => area)} <br />
+            </span>{' '}{areas.map(area => area)} <br /><br />
           </div>
           <span>
             <strong>Impact:</strong>

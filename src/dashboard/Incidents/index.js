@@ -89,6 +89,7 @@ class Incidents extends React.Component {
     handleIncidents: PropTypes.func,
     getIncident: PropTypes.func,
     setIncidentAction: PropTypes.func,
+    currentMenu:PropTypes.string.isRequired
   };
 
   static defaultProps = {
@@ -98,6 +99,8 @@ class Incidents extends React.Component {
     handleIncidentActions: null,
     handleActiveNav: null,
     setIncidentAction: null,
+    currentMenu:null,
+
   };
 
   constructor() {
@@ -107,11 +110,12 @@ class Incidents extends React.Component {
       zoom: 7,
       showPopup: false,
       hideButton: false,
-      areaPoint: {},
+      area: {},
     };
     this.mapRef = React.createRef();
     this.onclickNewIncidentButton = this.onclickNewIncidentButton.bind(this);
     this.onCancelButton = this.onCancel.bind(this);
+    this.onCloseDetail = this.onClose.bind(this);
     this.onSelectIncident = this.showSelectedIncident.bind(this);
   }
 
@@ -232,6 +236,7 @@ class Incidents extends React.Component {
     this.contentPopup();
     this.initDrawControls();
     this.map.on('draw:created', e => this.showDrawnItems(e));
+    this.map.removeLayer(this.incidentLayer);
   };
 
   onCancel = () => {
@@ -241,12 +246,19 @@ class Incidents extends React.Component {
     this.map.closePopup();
   };
 
+  onClose = () => {
+    console.log('clicked');
+    // this.map.removeLayer(this.selectedLayer);
+    this.map.addLayer(this.incidentLayer);
+  }
+
   onClickIncident = e => {
     const {
       getIncident,
       handleActiveNav,
       incidentsAction,
       setIncidentAction,
+      currentMenu
     } = this.props;
     const id = get(e, 'target.feature.properties._id');
     incidentsAction.filter(incidentAction => {
@@ -262,11 +274,11 @@ class Incidents extends React.Component {
 
     getIncident(id);
     this.map.removeLayer(this.incidentLayer);
-    handleActiveNav('details');
+    handleActiveNav(currentMenu);
   };
 
   render() {
-    const { position, zoom, showPopup, hideButton, areaPoint } = this.state;
+    const { position, zoom, showPopup, hideButton, area } = this.state;
     const { incidents } = this.props;
     return (
       <div>
@@ -274,6 +286,8 @@ class Incidents extends React.Component {
           <MapNav
             newIncidentButton={this.onclickNewIncidentButton}
             clickedIncident={this.onSelectIncident}
+            onCloseDetail={this.onClose}
+
           />
         ) : null}
         <LeafletMap center={position} zoom={zoom} ref={this.mapRef}>
@@ -286,7 +300,7 @@ class Incidents extends React.Component {
             <Popup position={position} minWidth={450}>
               <IncidentForm
                 onCancelButton={this.onCancel}
-                location={areaPoint}
+                location={area}
                 incidentsTypeData={incidents}
               />
             </Popup>
@@ -306,6 +320,8 @@ const mapStateToProps = state => ({
   incidentsAction: state.incidents.incidentActionsData
     ? state.incidents.incidentActionsData
     : [],
+    currentMenu: state.activeNav && state.activeNav.activeItem,
+
 });
 
 const mapDispatchToProps = dispatch => ({

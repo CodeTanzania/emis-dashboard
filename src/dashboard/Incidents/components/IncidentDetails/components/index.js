@@ -43,7 +43,7 @@ class IncidentGeneralDetails extends React.Component {
     const { currentMenu, incidentSelected } = this.props;
     const showNavContent = currentNav => {
       switch (currentNav) {
-        case 'details': {
+        case 'list': {
           return <IncidentDetailsContent selected={incidentSelected} />;
         }
         case 'assessment': {
@@ -74,7 +74,7 @@ class IncidentGeneralDetails extends React.Component {
             selectedKeys={[currentMenu]}
             className="siderDetails"
           >
-            <Menu.Item key="details">Situation Analysis</Menu.Item>
+            <Menu.Item key="list">Situation Analysis</Menu.Item>
             <Menu.Item key="assessment">Assessment</Menu.Item>
             <Menu.Item key="actions">Action Taken</Menu.Item>
             <Menu.Item key="agencies">Responding agencies</Menu.Item>
