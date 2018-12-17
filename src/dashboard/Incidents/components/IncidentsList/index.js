@@ -57,7 +57,7 @@ class IncidentsList extends React.Component {
   render() {
     const { incidentsList } = this.props;
 
-    const { name, startedAt, endedAt } = incidentsList;
+    const { event, startedAt, endedAt, areas } = incidentsList;
     return (
       <List.Item className={cx('p-l-20')}>
         <List.Item.Meta
@@ -73,7 +73,7 @@ class IncidentsList extends React.Component {
                   tabIndex="0"
                   title="Click to view more"
                 >
-                  <h3>{name}</h3>
+                  <h3>{event}</h3>
                 </span>
               </Col>
             </Row>
@@ -82,7 +82,7 @@ class IncidentsList extends React.Component {
             <div className="IncidentTypeDescription">
               <p>Created on: {convertIsoDate(startedAt)}</p>
               <p>Ended on: {convertIsoDate(endedAt)}</p>
-              {/* <p style={{paddingTop:'5px'}}>Description: {description}</p> */}
+              <p>Location: {areas.map(area => area)}</p>
             </div>
           }
         />

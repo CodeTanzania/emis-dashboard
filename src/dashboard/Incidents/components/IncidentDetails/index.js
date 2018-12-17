@@ -20,7 +20,7 @@ import IncidentGeneralDetails from './components/index';
 class IncidentDetails extends React.Component {
   static propTypes = {
     selected: PropTypes.shape({
-      name: PropTypes.string.isRequired,
+      event: PropTypes.string.isRequired,
       incidentType: PropTypes.shape({
         name: PropTypes.string.isRequired,
         nature: PropTypes.string.isRequired,
@@ -31,6 +31,7 @@ class IncidentDetails extends React.Component {
       description: PropTypes.string.isRequired,
       startedAt: PropTypes.string.isRequired,
       endedAt: PropTypes.string.isRequired,
+      number:PropTypes.string,
     }).isRequired,
   };
 
@@ -50,19 +51,24 @@ class IncidentDetails extends React.Component {
 
   render() {
     const { selected } = this.props;
-    const { name, incidentType = [], startedAt, endedAt } = selected;
+    const { event, number, type = {}, startedAt, endedAt, causes, areas } = selected;
 
-    const { name: type } = incidentType;
+    const { name } = type;
     return (
       <div className="IncidentDetails">
         <div className="IncidentName">
-          <h3 className="p-l-10">{name}</h3>
+          <h3 className="p-l-10">{event}</h3>
         </div>
         <div className="IncidentDetail p-20">
-          <span>
-            <strong>Incident type:</strong>
+        <span>
+            <strong>Incident number:</strong>
           </span>{' '}
-          {type} <br />
+          {number} <br />
+        <span>
+            <strong>Type:</strong>
+          </span>{' '}
+          {name} <br />
+
           <span>
             <strong>Reported date:</strong>
           </span>
@@ -77,8 +83,7 @@ class IncidentDetails extends React.Component {
           ) : null}
           <span>
             <strong>Source:</strong>
-          </span>{' '}
-          Heavy rainful <br />
+          </span>{' '}{causes.map(cause => cause)} <br />
           <span>
             <strong>Location:</strong>
           </span>
@@ -86,20 +91,7 @@ class IncidentDetails extends React.Component {
           <div className="IncidentLocation p-l-10">
             <span>
               <strong>Region:</strong>
-            </span>
-            Dar es Salaam <br />
-            <span>
-              <strong>District:</strong>
-            </span>
-            Kinondoni District <br />
-            <span>
-              <strong>Ward:</strong>
-            </span>
-            Hananasif <br />
-            <span>
-              <strong>Street:</strong>
-            </span>
-            Mkunguni A <br />
+            </span>{' '}{areas.map(area => area)} <br />
           </div>
           <span>
             <strong>Impact:</strong>
@@ -127,7 +119,7 @@ class IncidentDetails extends React.Component {
             Read more
           </Button>
           <Drawer
-            title={name}
+            title={event}
             placement="right"
             closable={false}
             onClose={this.onClose}

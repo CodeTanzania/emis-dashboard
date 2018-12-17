@@ -38,7 +38,7 @@ class Incidents extends React.Component {
   static propTypes = {
     incidents: PropTypes.arrayOf(
       PropTypes.shape({
-        name: PropTypes.string,
+        event: PropTypes.string,
         incidentsTypeData: PropTypes.shape({
           name: PropTypes.string,
           nature: PropTypes.string.isRequired,
@@ -53,7 +53,7 @@ class Incidents extends React.Component {
       }).isRequired
     ),
     selected: PropTypes.shape({
-      name: PropTypes.string,
+      event: PropTypes.string,
       incidentsTypeData: PropTypes.shape({
         name: PropTypes.string,
         nature: PropTypes.string.isRequired,
@@ -66,7 +66,7 @@ class Incidents extends React.Component {
       endedAt: PropTypes.instanceOf(Date),
     }).isRequired,
     incidentsAction: PropTypes.shape({
-      name: PropTypes.string,
+      event: PropTypes.string,
       description: PropTypes.string.isRequired,
       phase: PropTypes.string.isRequired,
       incident: PropTypes.shape({
@@ -107,7 +107,7 @@ class Incidents extends React.Component {
       zoom: 7,
       showPopup: false,
       hideButton: false,
-      area: {},
+      areaPoint: {},
     };
     this.mapRef = React.createRef();
     this.onclickNewIncidentButton = this.onclickNewIncidentButton.bind(this);
@@ -156,10 +156,10 @@ class Incidents extends React.Component {
 
   onEachFeature = (feature, layer) => {
     const { properties } = feature;
-    const { name } = properties;
+    const { event } = properties;
     layer
       .on('click', this.onClickIncident)
-      .bindTooltip(`${name}`)
+      .bindTooltip(`${event}`)
       .openTooltip();
   };
 
@@ -266,7 +266,7 @@ class Incidents extends React.Component {
   };
 
   render() {
-    const { position, zoom, showPopup, hideButton, area } = this.state;
+    const { position, zoom, showPopup, hideButton, areaPoint } = this.state;
     const { incidents } = this.props;
     return (
       <div>
@@ -286,7 +286,7 @@ class Incidents extends React.Component {
             <Popup position={position} minWidth={450}>
               <IncidentForm
                 onCancelButton={this.onCancel}
-                area={area}
+                location={areaPoint}
                 incidentsTypeData={incidents}
               />
             </Popup>

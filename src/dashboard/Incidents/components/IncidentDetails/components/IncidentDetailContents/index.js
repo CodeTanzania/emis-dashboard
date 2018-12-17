@@ -4,9 +4,17 @@ import { convertIsoDate } from '../../../../../../common/lib/mapUtil';
 import './styles.css';
 
 export default function IncidentDetailsContent({ selected }) {
-  const { name, incidentType = [], startedAt, endedAt, description } = selected;
+  const { 
+    event, 
+    type,
+    number,
+     startedAt, 
+     endedAt, 
+     description, 
+     areas,
+      causes } = selected;
 
-  const { name: type } = incidentType;
+  const { name } = type;
 
   return (
     <div className="IncidentGeneralDetails">
@@ -14,14 +22,18 @@ export default function IncidentDetailsContent({ selected }) {
         Situation Analysis
       </h3>
       <div className="IncidentGeneralDetail p-20">
+      <span>
+            <strong>Incident number:</strong>
+          </span>{' '}
+          {number} <br />
         <span>
-          <strong>Incident Nmae:</strong>
+          <strong>Incident Name:</strong>
         </span>{' '}
-        {name} <br />
+        {event} <br />
         <span>
           <strong>Incident type:</strong>
         </span>{' '}
-        {type} <br />
+        {name} <br />
         <span>
           <strong>Reported date:</strong>
         </span>
@@ -36,8 +48,7 @@ export default function IncidentDetailsContent({ selected }) {
         ) : null}
         <span>
           <strong>Source:</strong>
-        </span>{' '}
-        Heavy rainful <br />
+        </span>{' '}{causes.map(cause => cause)} <br />
         <span>
           <strong>Description:</strong>
         </span>
@@ -50,8 +61,7 @@ export default function IncidentDetailsContent({ selected }) {
         <div className="IncidentGeneralLocation p-l-10">
           <span>
             <strong>Region:</strong>
-          </span>
-          Dar es Salaam <br />
+          </span>{areas.map(area => area)}<br />
           <span>
             <strong>District:</strong>
           </span>
@@ -76,7 +86,7 @@ export default function IncidentDetailsContent({ selected }) {
 
 IncidentDetailsContent.propTypes = {
   selected: PropTypes.shape({
-    name: PropTypes.string.isRequired,
+    event: PropTypes.string.isRequired,
     incidentType: PropTypes.shape({
       name: PropTypes.string.isRequired,
       nature: PropTypes.string.isRequired,

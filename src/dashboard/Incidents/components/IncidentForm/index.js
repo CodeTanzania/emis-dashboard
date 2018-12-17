@@ -52,21 +52,34 @@ class IncidentForm extends React.Component {
   };
 
   renderIncidentTypes = incidents =>
-    incidents.map(({ incidentType }) => {
-      const { _id: id } = incidentType;
+    incidents.map(({ type }) => {
+      const { _id: id } = type;
       return (
         <Option key={id} value={id}>
-          {incidentType.name}
+          {type.name}
         </Option>
       );
     });
 
+    renderAreas = incidents =>
+    incidents.map(({ areas }) => {
+      return (
+        areas.map(area => {
+          return (
+         <Option key={area} value={area}>
+          {area}
+        </Option>
+          )
+        }
+      )
+      )
+    });
   handleSubmit = e => {
     e.preventDefault();
-    const { area, newIncidentAdded, onCancelButton } = this.props;
+    const { location, newIncidentAdded, onCancelButton, } = this.props;
     this.props.form.validateFieldsAndScroll((err, fieldsValue) => {
       if (!err) {
-        const { geometry } = area;
+        const { geometry } = location;
         const values = {
           ...fieldsValue,
           epicentre: geometry,
@@ -121,7 +134,7 @@ class IncidentForm extends React.Component {
         </div>
         <Divider />
         <FormItem {...formItemLayout} label="Incident name">
-          {getFieldDecorator('name', {
+          {getFieldDecorator('event', {
             rules: [
               {
                 required: true,
@@ -131,7 +144,7 @@ class IncidentForm extends React.Component {
           })(<Input />)}
         </FormItem>
         <FormItem label="Incident type" {...formItemLayout}>
-          {getFieldDecorator('incidentType', {
+          {getFieldDecorator('type', {
             rules: [
               {
                 required: true,
@@ -141,6 +154,20 @@ class IncidentForm extends React.Component {
           })(
             <Select placeholder="Select incidentType">
               {this.renderIncidentTypes(incidentsTypeData)}
+            </Select>
+          )}
+        </FormItem>
+        <FormItem {...formItemLayout} label="Location">
+          {getFieldDecorator('areas', {
+            rules: [
+              {
+                required: true,
+                message: 'Please input location!',
+              },
+            ],
+          })(
+            <Select placeholder="Select incidentType">
+              {this.renderAreas(incidentsTypeData)}
             </Select>
           )}
         </FormItem>

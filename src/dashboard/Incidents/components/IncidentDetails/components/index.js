@@ -14,7 +14,7 @@ const { Content } = Layout;
 class IncidentGeneralDetails extends React.Component {
   static propTypes = {
     incidentSelected: PropTypes.shape({
-      name: PropTypes.string.isRequired,
+      event: PropTypes.string.isRequired,
       incidentType: PropTypes.shape({
         name: PropTypes.string.isRequired,
         nature: PropTypes.string.isRequired,
@@ -67,14 +67,14 @@ class IncidentGeneralDetails extends React.Component {
     };
     return (
       <Layout className="IncidentGeneralDetails">
-        <Sider className="IncidentDetailSider">
+        <Sider className="IncidentDetailSider" style={{flex:'0 0 250px', width:'250px', maxWidth:'250px'}}>
           <Menu
             onClick={this.handleClick}
             mode="inline"
             selectedKeys={[currentMenu]}
             className="siderDetails"
           >
-            <Menu.Item key="list">Situation Analysis</Menu.Item>
+            <Menu.Item key="details">Situation Analysis</Menu.Item>
             <Menu.Item key="assessment">Assessment</Menu.Item>
             <Menu.Item key="actions">Action Taken</Menu.Item>
             <Menu.Item key="agencies">Responding agencies</Menu.Item>

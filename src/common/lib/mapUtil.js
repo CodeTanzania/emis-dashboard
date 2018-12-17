@@ -3,8 +3,13 @@ import moment from 'moment';
 
 export function incidentToGeojson(incident) {
   const {
-    name,
-    incidentType,
+    number,
+    event,
+    causes,
+    areas,
+    remarks,
+    tags,
+    type :incidenttype,
     description,
     startedAt,
     endedAt,
@@ -13,11 +18,16 @@ export function incidentToGeojson(incident) {
   } = incident;
   const type = 'Feature';
   const properties = {
-    name,
+    number,
+    event,
+    causes,
+    areas,
+    remarks,
+    tags,
     description,
     startedAt,
     endedAt,
-    incidentType,
+    incidenttype,
     _id,
   };
 
@@ -112,8 +122,8 @@ export function generateMarkerIcon(fillColor = '#93c47d') {
 
 export function showMarkers(geoJSON) {
   const { geometry, properties } = geoJSON;
-  const { incidentType } = properties;
-  const { color } = incidentType;
+  const { incidenttype } = properties;
+  const { color } = incidenttype;
   const customIcon = generateMarkerIcon(color);
   const { coordinates } = geometry;
   return L.marker(coordinates.reverse(), { icon: customIcon });
