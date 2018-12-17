@@ -99,6 +99,7 @@ class AdjustStockForm extends Component {
             // TODO refresh stock adjusted & dismiss stock form
             this.setState({ adjustingStock: false });
             this.props.dismissStockAdjustmentForm();
+            this.props.getResourceStocks();
           })
           .catch(() => this.setState({ adjustingStock: false }));
       } else {
@@ -107,6 +108,7 @@ class AdjustStockForm extends Component {
             // TODO refresh stock adjusted & dismiss stock form
             this.setState({ adjustingStock: false });
             this.props.dismissStockAdjustmentForm();
+            this.props.getResourceStocks();
           })
           .catch(() => this.setState({ adjustingStock: false }));
       }

@@ -135,6 +135,14 @@ export const createResourceItem = data =>
   Axios.post('/items', data).then(res => res.data);
 
 /**
+ * Patch item
+ * @param {string} - Item Id to update
+ * @param {Object} - An update payload
+ */
+export const updateResourceItem = (itemId, updates) =>
+  Axios.patch(`/items/${itemId}`, updates).then(res => res.data);
+
+/**
  * Retrieve resource items
  * @param {Object} params Query params
  */
@@ -178,7 +186,14 @@ export const findWarehouses = params =>
  * @param {Object} data - Warehouse payload
  */
 export const createWarehouse = data =>
-  Axios.post('/adjustments', data).then(res => res.data);
+  Axios.post('/warehouses', data).then(res => res.data);
+
+/**
+ * Patch warehouse
+ * @param {Object} data - Warehouse payload
+ */
+export const updateWarehouse = (warehouseId, updates) =>
+  Axios.patch(`/warehouses/${warehouseId}`, updates).then(res => res.data);
 
 /**
  * Get Plans from the API

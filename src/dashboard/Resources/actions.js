@@ -140,7 +140,7 @@ export const getWarehouses = params => (dispatch, getState, { API }) => {
     .catch(error => dispatch(getWarehousesFailed(error)));
 };
 
-export const showWarehouseForm = (item = null) => ({
+export const showWarehouseForm = (item = {}) => ({
   type: types.SHOW_WAREHOUSE_FORM,
   payload: {
     data: item,
@@ -149,4 +149,11 @@ export const showWarehouseForm = (item = null) => ({
 
 export const dismissWarehouseForm = () => ({
   type: types.DISMISS_WAREHOUSE_FORM,
+});
+
+export const setWarehouseSchema = schema => ({
+  type: types.SET_WAREHOUSE_SCHEMA,
+  payload: {
+    data: schema,
+  },
 });

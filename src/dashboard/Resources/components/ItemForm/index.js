@@ -1,5 +1,9 @@
 import { connect } from 'react-redux';
-import { dismissResourceItemForm, setResourceSchema } from '../../actions';
+import {
+  dismissResourceItemForm,
+  setResourceSchema,
+  getResourceItems,
+} from '../../actions';
 import ItemForm from './ItemForm';
 
 const mapStateToProps = state => ({
@@ -11,6 +15,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   dismissItemForm: dismissResourceItemForm,
   setResourceSchema,
+  getResourceItems,
 };
 
 export default connect(

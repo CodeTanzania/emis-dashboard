@@ -12,6 +12,11 @@ import * as types from './types';
  *  showResourceItemForm: bool, // show or hide resource item form
  *  resourceItemToEdit: Object, // set to item when user click edit resource item
  *  resourceItemSchema: Object // resource item schema
+ *  fetchingWarehouses: boolean,
+ *  warehouses: Object,
+ *  showWarehouseForm: boolean,
+ *  warehouseToEdit: Object,
+ *  warehouseSchema: Object
  * }
  */
 
@@ -165,6 +170,38 @@ export const warehouses = (state = { data: [] }, action) => {
       return action.payload.data;
     case types.GET_WAREHOUSES_ERROR:
       return [];
+    default:
+      return state;
+  }
+};
+
+export const showWarehouseForm = (state = false, action) => {
+  switch (action.type) {
+    case types.SHOW_WAREHOUSE_FORM:
+      return true;
+    case types.DISMISS_WAREHOUSE_FORM:
+      return false;
+    default:
+      return state;
+  }
+};
+
+export const warehouseToEdit = (state = null, action) => {
+  switch (action.type) {
+    case types.SHOW_WAREHOUSE_FORM:
+      return action.payload.data;
+    case types.DISMISS_WAREHOUSE_FORM:
+      // dimiss warehouse form and set item to null
+      return null;
+    default:
+      return state;
+  }
+};
+
+export const warehouseSchema = (state = null, action) => {
+  switch (action.type) {
+    case types.SET_WAREHOUSE_SCHEMA:
+      return action.payload.data;
     default:
       return state;
   }

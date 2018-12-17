@@ -30,3 +30,6 @@ export const GET_WAREHOUSES_ERROR = 'GET_WAREHOUSES_ERROR';
 // Show/hide warehouse form
 export const SHOW_WAREHOUSE_FORM = 'SHOW_WAREHOUSE_FORM';
 export const DISMISS_WAREHOUSE_FORM = 'DISMISS_WAREHOUSE_FORM';
+
+// Set resource adjustment schema
+export const SET_WAREHOUSE_SCHEMA = 'SET_WAREHOUSE_SCHEMA';

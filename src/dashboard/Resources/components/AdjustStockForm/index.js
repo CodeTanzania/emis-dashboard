@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import {
   dismissStockAdjustmentForm,
   setResourceAdjustmentSchema,
+  getResourceStocks,
 } from '../../actions';
 import AdjustStockForm from './AdjustStockForm';
 
@@ -13,6 +14,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   dismissStockAdjustmentForm,
   setResourceAdjustmentSchema,
+  getResourceStocks,
 };
 
 export default connect(

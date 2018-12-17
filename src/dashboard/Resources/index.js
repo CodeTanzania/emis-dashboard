@@ -3,6 +3,7 @@ import React, { Component, Fragment } from 'react';
 import { Layout, Tabs } from 'antd';
 import classNames from 'classnames';
 import AdjustStockForm from './components/AdjustStockForm';
+import WarehouseForm from './components/WarehouseForm';
 import StocksTable from './components/StocksTable';
 import ItemsTable from './components/ItemTable';
 import WarehouseTable from './components/WarehouseTable';
@@ -36,6 +37,7 @@ class Resource extends Component {
           <div />
         </Layout>
         <AdjustStockForm />
+        <WarehouseForm />
       </Fragment>
     );
   }
