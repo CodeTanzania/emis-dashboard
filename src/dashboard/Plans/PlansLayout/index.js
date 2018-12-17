@@ -80,12 +80,26 @@ class PlansLayout extends Component {
     isEditForm: false,
   };
 
+  /**
+   * @function
+   * @name handleOpenPlanEditForm
+   *
+   * @version 0.1.0
+   * @since 0.1.0
+   */
   handleOpenPlanEditForm = plan => {
     const { onEditPlan } = this.props;
     this.setState({ isEditForm: true });
     onEditPlan(plan);
   };
 
+  /**
+   * @function
+   * @name handleClosePlanForm
+   *
+   * @version 0.1.0
+   * @since 0.1.0
+   */
   handleClosePlanForm = () => {
     const { onClosePlanForm } = this.props;
     this.setState({ isEditForm: false });

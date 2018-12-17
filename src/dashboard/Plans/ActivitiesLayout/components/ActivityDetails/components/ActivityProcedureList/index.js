@@ -210,6 +210,11 @@ class ActivityProcedureList extends Component {
           title="Standard Operating Procedure Details"
           maskClosable={false}
           onCancel={this.handleCloseProcedureDetails}
+          okText="Edit"
+          onOk={() => {
+            this.handleOpenActivityProcedureForm(true);
+            this.handleCloseProcedureDetails();
+          }}
         >
           <ActivityProcedureDetails />
         </Modal>

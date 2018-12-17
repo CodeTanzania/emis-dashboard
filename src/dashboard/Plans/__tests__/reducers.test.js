@@ -301,7 +301,9 @@ describe('Plan:Reducers', () => {
       ).toEqual(previousState);
     });
 
-    it(`should handle ${Actions.SELECT_PLAN}`, () => {
+    it(`should handle ${
+      Actions.SELECT_PLAN
+    } when previous state is null`, () => {
       const previousState = null;
       const action = {
         type: Actions.SELECT_PLAN,
@@ -310,6 +312,19 @@ describe('Plan:Reducers', () => {
         },
       };
 
+      expect(selectedPlan(previousState, action)).toEqual(action.payload.data);
+    });
+
+    it(`should handle ${
+      Actions.SELECT_PLAN
+    } when previous state is not null`, () => {
+      const previousState = { name: 'Earthquake', family: ['Natural'] };
+      const action = {
+        type: Actions.SELECT_PLAN,
+        payload: {
+          data: { name: 'Flood' },
+        },
+      };
       expect(selectedPlan(previousState, action)).toEqual(action.payload.data);
     });
   });
@@ -527,12 +542,28 @@ describe('Plan:Reducers', () => {
       expect(selectedPlanActivity(previousState, {})).toEqual(previousState);
     });
 
-    it(`should handle ${Actions.SELECT_PLAN_ACTIVITY}`, () => {
+    it(`should handle ${
+      Actions.SELECT_PLAN_ACTIVITY
+    } when previous state is null`, () => {
       const action = {
         type: Actions.SELECT_PLAN_ACTIVITY,
         payload: { data: { name: 'Flood' } },
       };
       const previousState = null;
+      const expectedState = action.payload.data;
+      expect(selectedPlanActivity(previousState, action)).toEqual(
+        expectedState
+      );
+    });
+
+    it(`should handle ${
+      Actions.SELECT_PLAN_ACTIVITY
+    } when previous state is not null`, () => {
+      const action = {
+        type: Actions.SELECT_PLAN_ACTIVITY,
+        payload: { data: { name: 'Flood' } },
+      };
+      const previousState = { name: 'CleanUp' };
       const expectedState = action.payload.data;
       expect(selectedPlanActivity(previousState, action)).toEqual(
         expectedState
@@ -778,13 +809,29 @@ describe('Plan:Reducers', () => {
       );
     });
 
-    it('should handle SELECT_PLAN_ACTIVITY_PROCEDURE', () => {
+    it(`should handle ${
+      Actions.SELECT_PLAN_ACTIVITY_PROCEDURE
+    } when previous state is null`, () => {
       const action = {
         type: Actions.SELECT_PLAN_ACTIVITY_PROCEDURE,
         payload: { data: { name: 'Test' } },
       };
 
       expect(selectedPlanActivityProcedure(null, action)).toEqual(
+        action.payload.data
+      );
+    });
+
+    it(`should handle ${
+      Actions.SELECT_PLAN_ACTIVITY_PROCEDURE
+    } when previous state is not null`, () => {
+      const action = {
+        type: Actions.SELECT_PLAN_ACTIVITY_PROCEDURE,
+        payload: { data: { name: 'Test' } },
+      };
+      const previousState = { name: 'CleanUp', age: 10 };
+
+      expect(selectedPlanActivityProcedure(previousState, action)).toEqual(
         action.payload.data
       );
     });

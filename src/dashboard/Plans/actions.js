@@ -1,6 +1,7 @@
 import groupBy from 'lodash/groupBy';
 import isEmpty from 'lodash/isEmpty';
 import merge from 'lodash/merge';
+import { notifyError, notifySuccess } from './helpers';
 
 /*
  *------------------------------------------------------------------------------
@@ -914,10 +915,22 @@ export function getPlans(params) {
       })
       .catch(error => {
         dispatch(getPlansError(error));
+        notifyError(error);
       });
   };
 }
 
+/**
+ * A Thunk function which performs asynchronous creating plan into the API
+ *
+ * @function
+ * @name postPlan
+ *
+ * @param {Object} plan - Plan object
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
 export function postPlan(plan) {
   return (dispatch, getState, { API }) => {
     dispatch(postPlanStart());
@@ -925,9 +938,11 @@ export function postPlan(plan) {
       .then(() => {
         dispatch(postPlanSuccess());
         dispatch(getPlans());
+        notifySuccess('Plan created successfully');
       })
       .catch(error => {
         dispatch(postPlanError(error));
+        notifyError(error);
       });
   };
 }
@@ -952,9 +967,11 @@ export function putPlan(plan) {
       .then(() => {
         dispatch(putPlanSuccess());
         dispatch(getPlans());
+        notifySuccess('Plan updated successfully');
       })
       .catch(error => {
         dispatch(putPlanError(error));
+        notifyError(error);
       });
   };
 }
@@ -987,6 +1004,7 @@ export function getPlanActivities() {
       })
       .catch(error => {
         dispatch(getPlanActivitiesError(error));
+        notifyError(error);
       });
   };
 }
@@ -1015,9 +1033,11 @@ export function postPlanActivity(activity) {
       .then(() => {
         dispatch(postPlanActivitySuccess());
         dispatch(getPlanActivities());
+        notifySuccess('Activity created successfully');
       })
       .catch(error => {
         dispatch(postPlanActivityError(error));
+        notifyError(error);
       });
   };
 }
@@ -1042,9 +1062,11 @@ export function putPlanActivity(activity) {
       .then(() => {
         dispatch(putPlanActivitySuccess());
         dispatch(getPlanActivities());
+        notifySuccess('Activity updated successfully');
       })
       .catch(error => {
         dispatch(putPlanActivityError(error));
+        notifyError(error);
       });
   };
 }
@@ -1077,6 +1099,7 @@ export function getPlanActivityProcedures() {
       })
       .catch(error => {
         dispatch(getPlanActivityProceduresError(error));
+        notifyError(error);
       });
   };
 }
@@ -1106,9 +1129,11 @@ export function postPlanActivityProcedure(procedure) {
       .then(() => {
         dispatch(postPlanActivityProcedureSuccess());
         dispatch(getPlanActivityProcedures());
+        notifySuccess('Standard Operating Procedure created successfully');
       })
       .catch(error => {
         dispatch(postPlanActivityProcedureError(error));
+        notifyError(error);
       });
   };
 }
@@ -1133,9 +1158,11 @@ export function putPlanActivityProcedure(procedure) {
       .then(() => {
         dispatch(putPlanActivityProcedureSuccess());
         dispatch(getPlanActivityProcedures());
+        notifySuccess('Standard Operating Procedure updated successfully');
       })
       .catch(error => {
         dispatch(putPlanActivityProcedureError(error));
+        notifyError(error);
       });
   };
 }
