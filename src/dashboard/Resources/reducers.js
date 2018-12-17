@@ -53,7 +53,7 @@ export const resourceStocks = (state = { data: [] }, action) => {
 export const stockToAdjust = (state = null, action) => {
   switch (action.type) {
     case types.SHOW_STOCK_ADJUSTMENT_FORM:
-      return action.payload.data;
+      return action.payload.data || {};
     case types.DISMISS_STOCK_ADJUSTMENT_FORM:
       return null;
     default:

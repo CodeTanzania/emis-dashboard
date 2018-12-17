@@ -136,6 +136,10 @@ class ResourceTable extends Component {
     this.props.showStockAdjustmentForm(item);
   };
 
+  handleOnNewStockBtnClicked = () => {
+    this.props.showStockAdjustmentForm();
+  };
+
   render() {
     const { stocks, loadingStocks } = this.props;
     const {
@@ -204,7 +208,11 @@ class ResourceTable extends Component {
             </FormItem>
           </Form>
           <div className={cx('stockTableActions')}>
-            <Button type="primary" icon="plus">
+            <Button
+              type="primary"
+              icon="plus"
+              onClick={this.handleOnNewStockBtnClicked}
+            >
               New Stock
             </Button>
           </div>

@@ -100,6 +100,13 @@ export const sendNotification = data =>
   Axios.post('/notifications', data).then(res => res.data);
 
 /**
+ * Create resource stock
+ * @param {Object} data - item data
+ */
+export const createResourceStock = data =>
+  Axios.post('/stocks', data).then(res => res.data);
+
+/**
  * Retrieve resource stocks
  * @param {Object} params - Query parameters
  */
