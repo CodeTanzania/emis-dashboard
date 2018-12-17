@@ -69,7 +69,7 @@ export default function Dashboard() {
           </Menu>
         </Sider>
         {/* content section */}
-        <Layout>
+        <Layout className={cx('hide-overflow')}>
           <Content className={cx('content')}>
             <Switch>
               <Route path="/plans" component={Plans} />

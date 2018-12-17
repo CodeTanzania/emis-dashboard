@@ -24,7 +24,7 @@ class UpdateIncidentType extends React.Component {
       visible: false,
     });
   };
-  
+
 
   render() {
     const { incidentType } = this.props;
@@ -43,7 +43,7 @@ class UpdateIncidentType extends React.Component {
           footer={null}
           width="50%"
         >
-          <IncidentTypeForm  onCancelButton={this.handleCancel} incidentType={incidentType[0]}/>;
+          <IncidentTypeForm onCancelButton={this.handleCancel} incidentType={incidentType[0]} />;
         </Modal>
       </div>
     );

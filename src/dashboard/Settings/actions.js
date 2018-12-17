@@ -11,11 +11,18 @@ export const FETCH_INCIDENT_TYPE_FAILURE =
 export const UPDATE_INCIDENT_TYPE = 'INCIDENTS_TYPE :UPDATE_INCIDENT_TYPE';
 export const SELECT_COLOR_AUTOFILL = 'INCIDENTS_TYPE :SELECT_COLOR_AUTOFILL';
 export const SEARCH_INCIDENT_TYPE = 'INCIDENTS_TYPE :SEARCH_INCIDENT_TYPE';
+export const SELECT_ACTIVE_MENU = 'SELECT_ACTIVE_MENU';
+
 
 /* Actions creater */
 
 export const fetchIncidentsType = () => ({
   // type: FETCH_INCIDENTS_TYPE_START,
+});
+
+export const getNavActive = activeItem => ({
+  type: SELECT_ACTIVE_MENU,
+  payload: { activeItem },
 });
 export const fetchIncidentsTypeSuccess = page => (
   dispatch,

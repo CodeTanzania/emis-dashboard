@@ -23,7 +23,7 @@ export default class CreateIncidentType extends React.Component {
       visible: false,
     });
   };
-  
+
 
   render() {
     const { visible } = this.state;
@@ -42,7 +42,7 @@ export default class CreateIncidentType extends React.Component {
           footer={null}
           width="50%"
         >
-          <IncidentTypeForm onCancelButton={this.handleCancel}/>;
+          <IncidentTypeForm onCancelButton={this.handleCancel} />;
         </Modal>
       </div>
     );
