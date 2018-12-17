@@ -1,0 +1,10 @@
+.ActivityDetailsHeader {
+  margin-right: 15px;
+}
+
+.ActivityDetailsHeader .subtitle {
+  font-size: 12px;
+  line-height: 20px;
+  color: #909090;
+  margin-bottom: 0;
+}

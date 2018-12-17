@@ -2,10 +2,10 @@ import { applyMiddleware, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension'; // eslint-disable-line import/no-extraneous-dependencies
 import { createEpicMiddleware } from 'redux-observable';
 import thunk from 'redux-thunk';
+import * as API from '../API';
+import rootEpic from './rootEpic';
 /* local dependencies */
 import rootReducer from './rootReducer';
-import rootEpic from './rootEpic';
-import API from '../API';
 
 /* local constants */
 const epicMiddleware = createEpicMiddleware({
@@ -27,14 +27,11 @@ const epicMiddleware = createEpicMiddleware({
 const configureStore = () => {
   const store = createStore(
     rootReducer,
-    // please read https://medium.com/@yeojz/redux-thunk-skipping-mocks-using-withextraargument-513d38d38554
-    // to understand why we use redux thunk with arguments
     composeWithDevTools(
       applyMiddleware(epicMiddleware, thunk.withExtraArgument({ API }))
     )
   );
 
-  // epicMiddleware.run(); add root epics here
   epicMiddleware.run(rootEpic);
 
   return store;

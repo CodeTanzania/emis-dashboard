@@ -1,0 +1,21 @@
+.PhaseActivities {
+  height: 100%;
+  overflow: hidden;
+}
+
+.PhaseActivities .header {
+  background: #fff;
+  padding-left: 10px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.PhaseActivities .ActionButton {
+  transform: rotate(90deg);
+  border: none;
+  font-size: 20px;
+  box-shadow: none;
+}
+
+.PhaseActivities .content {
+  padding-top: 20px;
+}

@@ -2,8 +2,8 @@
 import { AutoComplete, Button, Col, Divider, Icon, Input, Row } from 'antd';
 import React, { Component, Fragment } from 'react';
 import { from } from 'rxjs';
-import API from '../../../../../../common/API';
-import StakeholderForm from '../../../StakeholderForm';
+import { searchStakeholder } from '../../../../../../common/API';
+import StakeholderForm from '../../../StakeholderFormWrapper';
 import './styles.css';
 
 const { Option } = AutoComplete;
@@ -37,7 +37,7 @@ class AddPersonnelForm extends Component {
   handleChange = value => {
     this.setState({ input: value });
     if (value.length > 1) {
-      from(API.searchStakeholder(value)).subscribe(result => {
+      from(searchStakeholder(value)).subscribe(result => {
         this.setState({ hits: result.data });
       });
     }

@@ -1,3 +1,5 @@
+import isObject from 'lodash/isObject';
+
 /**
  * This function should items in the given list
  *
@@ -5,16 +7,21 @@
  * @name shuffleList
  *
  *
- * @param {any[]} list
+ * @param {*[]} list
  * @param {number} fromIndex
  * @param {number} toIndex
- * @returns {any[]} shuffled array
+ * @returns {*[]} shuffled array
  *
  * @version 0.1.0
  * @since 0.1.0
  */
 export default function shuffleList(list, fromIndex = 0, toIndex = 0) {
-  const newList = [...list]; // create a copy of the provided list
+  const newList = list.map(item => {
+    if (isObject(item)) {
+      return { ...item };
+    }
+    return item;
+  });
 
   if (fromIndex === toIndex) {
     return newList;

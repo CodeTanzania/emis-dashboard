@@ -5,24 +5,10 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { selectStakeholder } from '../../../../actions';
+import { renderNotificationPanel } from '../../../../../../common/components/NotificationPanel/actions';
 import styles from './styles.css';
 
 const cx = classNames.bind(styles);
-
-const actions = (
-  <div>
-    <div>
-      <Button icon="share-alt" className="b-0">
-        Share
-      </Button>
-    </div>
-    <div>
-      <Button icon="hdd" className="b-0">
-        Archive
-      </Button>
-    </div>
-  </div>
-);
 
 /**
  * Render a single contact item component for contacts list
@@ -49,6 +35,7 @@ class StakeholderItem extends Component {
       _id: PropTypes.string,
     }),
     handleSelectStakeholder: PropTypes.func.isRequired,
+    renderNotificationPanel: PropTypes.func.isRequired,
   };
 
   //  set default
@@ -61,9 +48,13 @@ class StakeholderItem extends Component {
     handleSelectStakeholder(stakeholder);
   };
 
+  handleClickNotify = stakeholder => {
+    this.props.renderNotificationPanel(stakeholder);
+  };
+
   render() {
     const { stakeholder, selectedStakeholder } = this.props;
-    const { name, phone, email, _id } = stakeholder;
+    const { name, mobile, email, _id } = stakeholder;
     const isSelected = selectedStakeholder
       ? selectedStakeholder._id === _id
       : false;
@@ -86,7 +77,28 @@ class StakeholderItem extends Component {
                 </strong>
               </Col>
               <Col xs={3}>
-                <Popover placement="bottom" trigger="click" content={actions}>
+                <Popover
+                  placement="bottom"
+                  trigger="hover"
+                  content={
+                    <div>
+                      <div>
+                        <Button
+                          icon="notification"
+                          onClick={() => this.handleClickNotify(stakeholder)}
+                          className="b-0"
+                        >
+                          Notify
+                        </Button>
+                      </div>
+                      <div>
+                        <Button icon="share-alt" className="b-0">
+                          Share
+                        </Button>
+                      </div>
+                    </div>
+                  }
+                >
                   <Button
                     icon="ellipsis"
                     className={cx('actionBtn', { isSelected })}
@@ -102,7 +114,7 @@ class StakeholderItem extends Component {
                   <div>
                     <Icon type="mobile" />
                     <span className={cx('infoItem', { isSelected })}>
-                      {phone}
+                      {mobile}
                     </span>
                   </div>
                 </Col>
@@ -131,5 +143,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { handleSelectStakeholder: selectStakeholder }
+  { handleSelectStakeholder: selectStakeholder, renderNotificationPanel }
 )(StakeholderItem);
