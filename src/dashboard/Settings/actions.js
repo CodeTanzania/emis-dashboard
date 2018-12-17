@@ -17,13 +17,13 @@ export const SEARCH_INCIDENT_TYPE = 'INCIDENTS_TYPE :SEARCH_INCIDENT_TYPE';
 export const fetchIncidentsType = () => ({
   // type: FETCH_INCIDENTS_TYPE_START,
 });
-export const fetchIncidentsTypeSuccess = (page) => (
+export const fetchIncidentsTypeSuccess = page => (
   dispatch,
   getState,
   { API }
 ) => {
   dispatch({ type: FETCH_INCIDENTS_TYPE_START });
-  API.getIncidentType(page )
+  API.getIncidentType(page)
     .then(result =>
       dispatch({
         type: FETCH_INCIDENTS_TYPE_SUCCESS,

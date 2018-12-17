@@ -16,7 +16,7 @@ import SettingsLayout from './components/SettingsLayout';
  */
 export default function Settings() {
   return (
-    <Layout style={{overflow:'hidden'}}>
+    <Layout style={{ overflow: 'hidden' }}>
       <Header title="Settings" />
       <SettingsLayout />
     </Layout>
