@@ -56,7 +56,7 @@ class MapNav extends React.Component {
     ),
     activatedNav: PropTypes.func,
     clickedIncident: PropTypes.func,
-    handleCancel:PropTypes.func,
+    onCloseDetail: PropTypes.func,
   };
 
   static defaultProps = {
@@ -65,7 +65,7 @@ class MapNav extends React.Component {
     activatedNav: null,
     clickedIncident: null,
     incidents: [],
-    handleCancel:null,
+    onCloseDetail: null,
   };
 
   constructor() {
@@ -81,7 +81,12 @@ class MapNav extends React.Component {
   };
 
   render() {
-    const { newIncidentButton, currentMenu, onCloseDetail, IncidentSelected } = this.props;
+    const {
+      newIncidentButton,
+      currentMenu,
+      onCloseDetail,
+      IncidentSelected,
+    } = this.props;
     const { hideNav } = this.state;
 
     const showNavContent = currentNav => {
@@ -131,7 +136,7 @@ class MapNav extends React.Component {
               <div>{showNavContent(currentMenu)}</div>
             </div>
           ) : (
-            <IncidentDetails  handleCancel={onCloseDetail}/>
+            <IncidentDetails handleCancel={onCloseDetail} />
           )}
         </div>
       </div>

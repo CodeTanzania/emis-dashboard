@@ -9,7 +9,7 @@ export function incidentToGeojson(incident) {
     areas,
     remarks,
     tags,
-    type :incidenttype,
+    type: incidenttype,
     description,
     startedAt,
     endedAt,

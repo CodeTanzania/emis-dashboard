@@ -89,7 +89,7 @@ class Incidents extends React.Component {
     handleIncidents: PropTypes.func,
     getIncident: PropTypes.func,
     setIncidentAction: PropTypes.func,
-    currentMenu:PropTypes.string.isRequired
+    currentMenu: PropTypes.string.isRequired,
   };
 
   static defaultProps = {
@@ -99,8 +99,6 @@ class Incidents extends React.Component {
     handleIncidentActions: null,
     handleActiveNav: null,
     setIncidentAction: null,
-    currentMenu:null,
-
   };
 
   constructor() {
@@ -247,10 +245,8 @@ class Incidents extends React.Component {
   };
 
   onClose = () => {
-    console.log('clicked');
-    // this.map.removeLayer(this.selectedLayer);
     this.map.addLayer(this.incidentLayer);
-  }
+  };
 
   onClickIncident = e => {
     const {
@@ -258,7 +254,7 @@ class Incidents extends React.Component {
       handleActiveNav,
       incidentsAction,
       setIncidentAction,
-      currentMenu
+      currentMenu,
     } = this.props;
     const id = get(e, 'target.feature.properties._id');
     incidentsAction.filter(incidentAction => {
@@ -287,7 +283,6 @@ class Incidents extends React.Component {
             newIncidentButton={this.onclickNewIncidentButton}
             clickedIncident={this.onSelectIncident}
             onCloseDetail={this.onClose}
-
           />
         ) : null}
         <LeafletMap center={position} zoom={zoom} ref={this.mapRef}>
@@ -320,8 +315,7 @@ const mapStateToProps = state => ({
   incidentsAction: state.incidents.incidentActionsData
     ? state.incidents.incidentActionsData
     : [],
-    currentMenu: state.activeNav && state.activeNav.activeItem,
-
+  currentMenu: state.activeNav && state.activeNav.activeItem,
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -4,15 +4,16 @@ import { convertIsoDate } from '../../../../../../common/lib/mapUtil';
 import './styles.css';
 
 export default function IncidentDetailsContent({ selected }) {
-  const { 
-    event, 
+  const {
+    event,
     type,
     number,
-     startedAt, 
-     endedAt, 
-     description, 
-     areas,
-      causes } = selected;
+    startedAt,
+    endedAt,
+    description,
+    areas,
+    causes,
+  } = selected;
 
   const { name } = type;
 
@@ -22,10 +23,10 @@ export default function IncidentDetailsContent({ selected }) {
         Situation Analysis
       </h3>
       <div className="IncidentDetailContent p-20">
-      <span>
-            <strong>Incident number:</strong>
-          </span>{' '}
-          {number} <br />
+        <span>
+          <strong>Incident number:</strong>
+        </span>{' '}
+        {number} <br />
         <span>
           <strong>Incident Name:</strong>
         </span>{' '}
@@ -48,7 +49,8 @@ export default function IncidentDetailsContent({ selected }) {
         ) : null}
         <span>
           <strong>Source:</strong>
-        </span>{' '}{causes.map(cause => cause)} <br />
+        </span>{' '}
+        {causes.map(cause => cause)} <br />
         <span>
           <strong>Description:</strong>
         </span>
@@ -61,7 +63,9 @@ export default function IncidentDetailsContent({ selected }) {
         <div className="IncidentDetailLocation p-l-10">
           <span>
             <strong>Region:</strong>
-          </span>{areas.map(area => area)}<br />
+          </span>
+          {areas.map(area => area)}
+          <br />
           <span>
             <strong>District:</strong>
           </span>

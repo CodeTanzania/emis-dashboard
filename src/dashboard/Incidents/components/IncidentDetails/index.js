@@ -31,7 +31,7 @@ class IncidentDetails extends React.Component {
       description: PropTypes.string.isRequired,
       startedAt: PropTypes.string.isRequired,
       endedAt: PropTypes.string.isRequired,
-      number:PropTypes.string,
+      number: PropTypes.string,
     }).isRequired,
   };
 
@@ -51,7 +51,15 @@ class IncidentDetails extends React.Component {
 
   render() {
     const { selected } = this.props;
-    const { event, number, type = {}, startedAt, endedAt, causes, areas } = selected;
+    const {
+      event,
+      number,
+      type = {},
+      startedAt,
+      endedAt,
+      causes,
+      areas,
+    } = selected;
 
     const { name } = type;
     return (
@@ -60,15 +68,14 @@ class IncidentDetails extends React.Component {
           <h3 className="p-l-10">{event}</h3>
         </div>
         <div className="IncidentDetail p-20">
-        <span>
+          <span>
             <strong>Incident number:</strong>
           </span>{' '}
           {number} <br />
-        <span>
+          <span>
             <strong>Type:</strong>
           </span>{' '}
           {name} <br />
-
           <span>
             <strong>Reported date:</strong>
           </span>
@@ -83,7 +90,8 @@ class IncidentDetails extends React.Component {
           ) : null}
           <span>
             <strong>Source:</strong>
-          </span>{' '}{causes.map(cause => cause)} <br />
+          </span>{' '}
+          {causes.map(cause => cause)} <br />
           <span>
             <strong>Location:</strong>
           </span>
@@ -91,7 +99,9 @@ class IncidentDetails extends React.Component {
           <div className="IncidentLocation p-l-10">
             <span>
               <strong>Region:</strong>
-            </span>{' '}{areas.map(area => area)} <br /><br />
+            </span>{' '}
+            {areas.map(area => area)} <br />
+            <br />
           </div>
           <span>
             <strong>Impact:</strong>

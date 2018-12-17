@@ -67,7 +67,10 @@ class IncidentGeneralDetails extends React.Component {
     };
     return (
       <Layout className="IncidentGeneralDetails">
-        <Sider className="IncidentDetailSider" style={{flex:'0 0 250px', width:'250px', maxWidth:'250px'}}>
+        <Sider
+          className="IncidentDetailSider"
+          style={{ flex: '0 0 250px', width: '250px', maxWidth: '250px' }}
+        >
           <Menu
             onClick={this.handleClick}
             mode="inline"

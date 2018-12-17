@@ -61,22 +61,18 @@ class IncidentForm extends React.Component {
       );
     });
 
-    renderAreas = incidents =>
-    incidents.map(({ areas }) => {
-      return (
-        areas.map(area => {
-          return (
-         <Option key={area} value={area}>
+  renderAreas = incidents =>
+    incidents.map(({ areas }) =>
+      areas.map(area => (
+        <Option key={area} value={area}>
           {area}
         </Option>
-          )
-        }
-      )
-      )
-    });
+      ))
+    );
+
   handleSubmit = e => {
     e.preventDefault();
-    const { location, newIncidentAdded, onCancelButton, } = this.props;
+    const { location, newIncidentAdded, onCancelButton } = this.props;
     this.props.form.validateFieldsAndScroll((err, fieldsValue) => {
       if (!err) {
         const { geometry } = location;
