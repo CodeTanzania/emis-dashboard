@@ -27,7 +27,7 @@ const cx = classnames.bind(styles);
 export default function Dashboard() {
   return (
     <Layout className={cx('full-view-height')}>
-      <Sider trigger={null} collapsible collapsed className={cx('sider')}>
+      <Sider trigger={null} collapsed className={cx('sider')}>
         {/* application logo */}
         <img src={logo} alt="logo" className={cx('logo')} />
         {/* end application logo */}
