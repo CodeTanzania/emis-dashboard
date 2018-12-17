@@ -1,15 +1,161 @@
 import merge from 'lodash/merge';
-import * as Actions from '../actions';
+import * as ActionTypes from '../constants';
 import {
   planActivities,
   planActivityProcedures,
+  planActivityProcedureSchema,
+  planActivitySchema,
   plans,
+  planSchema,
   selectedPlan,
   selectedPlanActivity,
   selectedPlanActivityProcedure,
 } from '../reducers';
 
 describe('Plan:Reducers', () => {
+  describe('planSchema', () => {
+    it('should return default state when no initial state is provided', () => {
+      expect(planSchema(undefined, {})).toBeNull();
+    });
+
+    it('should return previous state when given invalid action type', () => {
+      const previousState = {};
+      expect(
+        planSchema(previousState, {
+          type: null,
+        })
+      ).toEqual(previousState);
+    });
+
+    it(`should handle ${
+      ActionTypes.SET_PLAN_SCHEMA
+    } when previous state is null`, () => {
+      const previousState = null;
+
+      const action = {
+        type: ActionTypes.SET_PLAN_SCHEMA,
+        payload: {
+          data: { type: 'Schema' },
+        },
+      };
+
+      expect(planSchema(previousState, action)).toEqual(action.payload.data);
+    });
+
+    it(`should handle ${
+      ActionTypes.SET_PLAN_SCHEMA
+    } when previous state is not null`, () => {
+      const previousState = { type: 'Test Schema' };
+
+      const action = {
+        type: ActionTypes.SET_PLAN_SCHEMA,
+        payload: {
+          data: { type: 'Schema' },
+        },
+      };
+
+      expect(planSchema(previousState, action)).toEqual(action.payload.data);
+    });
+  });
+
+  describe('planActivitySchema', () => {
+    it('should return default state when no initial state is provided', () => {
+      expect(planSchema(undefined, {})).toBeNull();
+    });
+
+    it('should return previous state when given invalid action type', () => {
+      const previousState = {};
+      expect(
+        planActivitySchema(previousState, {
+          type: null,
+        })
+      ).toEqual(previousState);
+    });
+
+    it(`should handle ${
+      ActionTypes.SET_PLAN_ACTIVITY_SCHEMA
+    } when previous state is null`, () => {
+      const previousState = null;
+
+      const action = {
+        type: ActionTypes.SET_PLAN_ACTIVITY_SCHEMA,
+        payload: {
+          data: { type: 'Schema' },
+        },
+      };
+
+      expect(planActivitySchema(previousState, action)).toEqual(
+        action.payload.data
+      );
+    });
+
+    it(`should handle ${
+      ActionTypes.SET_PLAN_ACTIVITY_SCHEMA
+    } when previous state is not null`, () => {
+      const previousState = { type: 'Test Schema' };
+
+      const action = {
+        type: ActionTypes.SET_PLAN_ACTIVITY_SCHEMA,
+        payload: {
+          data: { type: 'Schema' },
+        },
+      };
+
+      expect(planActivitySchema(previousState, action)).toEqual(
+        action.payload.data
+      );
+    });
+  });
+
+  describe('planActivityProcedureSchema', () => {
+    it('should return default state when no initial state is provided', () => {
+      expect(planActivityProcedureSchema(undefined, {})).toBeNull();
+    });
+
+    it('should return previous state when given invalid action type', () => {
+      const previousState = {};
+      expect(
+        planActivityProcedureSchema(previousState, {
+          type: null,
+        })
+      ).toEqual(previousState);
+    });
+
+    it(`should handle ${
+      ActionTypes.SET_PLAN_ACTIVITY_PROCEDURE_SCHEMA
+    } when previous state is null`, () => {
+      const previousState = null;
+
+      const action = {
+        type: ActionTypes.SET_PLAN_ACTIVITY_PROCEDURE_SCHEMA,
+        payload: {
+          data: { type: 'Schema' },
+        },
+      };
+
+      expect(planActivityProcedureSchema(previousState, action)).toEqual(
+        action.payload.data
+      );
+    });
+
+    it(`should handle ${
+      ActionTypes.SET_PLAN_ACTIVITY_PROCEDURE_SCHEMA
+    } when previous state is not null`, () => {
+      const previousState = { type: 'Test Schema' };
+
+      const action = {
+        type: ActionTypes.SET_PLAN_ACTIVITY_PROCEDURE_SCHEMA,
+        payload: {
+          data: { type: 'Schema' },
+        },
+      };
+
+      expect(planActivityProcedureSchema(previousState, action)).toEqual(
+        action.payload.data
+      );
+    });
+  });
+
   describe('plans', () => {
     let previousState = null;
 
@@ -43,19 +189,19 @@ describe('Plan:Reducers', () => {
       ).toEqual(previousState);
     });
 
-    it(`should handle ${Actions.GET_PLANS_START}`, () => {
+    it(`should handle ${ActionTypes.GET_PLANS_START}`, () => {
       const nextState = {
         ...previousState,
         loading: true,
       };
-      expect(plans(previousState, { type: Actions.GET_PLANS_START })).toEqual(
-        nextState
-      );
+      expect(
+        plans(previousState, { type: ActionTypes.GET_PLANS_START })
+      ).toEqual(nextState);
     });
 
-    it(`should handle ${Actions.GET_PLANS_SUCCESS}`, () => {
+    it(`should handle ${ActionTypes.GET_PLANS_SUCCESS}`, () => {
       const action = {
-        type: Actions.GET_PLANS_SUCCESS,
+        type: ActionTypes.GET_PLANS_SUCCESS,
         payload: {
           data: [{ name: 'Floods', incidentType: 'Hurricane' }],
         },
@@ -75,7 +221,7 @@ describe('Plan:Reducers', () => {
       expect(plans(previousState, action)).toEqual(nextState);
     });
 
-    it(`should handle ${Actions.GET_PLANS_ERROR}`, () => {
+    it(`should handle ${ActionTypes.GET_PLANS_ERROR}`, () => {
       const error = {
         status: 404,
         code: 404,
@@ -88,7 +234,7 @@ describe('Plan:Reducers', () => {
       };
 
       const action = {
-        type: Actions.GET_PLANS_ERROR,
+        type: ActionTypes.GET_PLANS_ERROR,
         payload: { data: error },
         error: true,
       };
@@ -101,22 +247,22 @@ describe('Plan:Reducers', () => {
       expect(plans(previousState, action)).toEqual(expectedState);
     });
 
-    it(`should handle ${Actions.OPEN_PLAN_FORM}`, () => {
-      const action = { type: Actions.OPEN_PLAN_FORM };
+    it(`should handle ${ActionTypes.OPEN_PLAN_FORM}`, () => {
+      const action = { type: ActionTypes.OPEN_PLAN_FORM };
       const expectedState = { ...previousState, showPlanForm: true };
 
       expect(plans(previousState, action)).toEqual(expectedState);
     });
 
-    it(`should handle ${Actions.POST_PLAN_START}`, () => {
-      const action = { type: Actions.POST_PLAN_START };
+    it(`should handle ${ActionTypes.POST_PLAN_START}`, () => {
+      const action = { type: ActionTypes.POST_PLAN_START };
       const expectedState = { ...previousState, posting: true };
 
       expect(plans(previousState, action)).toEqual(expectedState);
     });
 
-    it(`should handle ${Actions.POST_PLAN_SUCCESS}`, () => {
-      const action = { type: Actions.POST_PLAN_SUCCESS };
+    it(`should handle ${ActionTypes.POST_PLAN_SUCCESS}`, () => {
+      const action = { type: ActionTypes.POST_PLAN_SUCCESS };
       const expectedState = {
         ...previousState,
         posting: false,
@@ -126,7 +272,7 @@ describe('Plan:Reducers', () => {
       expect(plans(previousState, action)).toEqual(expectedState);
     });
 
-    it(`should handle ${Actions.POST_PLAN_ERROR}`, () => {
+    it(`should handle ${ActionTypes.POST_PLAN_ERROR}`, () => {
       const error = {
         status: 404,
         code: 404,
@@ -139,7 +285,7 @@ describe('Plan:Reducers', () => {
       };
 
       const action = {
-        type: Actions.POST_PLAN_ERROR,
+        type: ActionTypes.POST_PLAN_ERROR,
         payload: { data: error },
       };
       const expectedState = {
@@ -151,8 +297,8 @@ describe('Plan:Reducers', () => {
       expect(plans(previousState, action)).toEqual(expectedState);
     });
 
-    it(`should handle ${Actions.PUT_PLAN_START}`, () => {
-      const action = { type: Actions.PUT_PLAN_START };
+    it(`should handle ${ActionTypes.PUT_PLAN_START}`, () => {
+      const action = { type: ActionTypes.PUT_PLAN_START };
       const expectedState = {
         ...previousState,
         posting: true,
@@ -161,8 +307,8 @@ describe('Plan:Reducers', () => {
       expect(plans(previousState, action)).toEqual(expectedState);
     });
 
-    it(`should handle ${Actions.PUT_PLAN_SUCCESS}`, () => {
-      const action = { type: Actions.PUT_PLAN_SUCCESS };
+    it(`should handle ${ActionTypes.PUT_PLAN_SUCCESS}`, () => {
+      const action = { type: ActionTypes.PUT_PLAN_SUCCESS };
       previousState = { ...previousState, posting: true, showPlanForm: true };
       const expectedState = {
         ...previousState,
@@ -173,7 +319,7 @@ describe('Plan:Reducers', () => {
       expect(plans(previousState, action)).toEqual(expectedState);
     });
 
-    it(`should handle ${Actions.PUT_PLAN_ERROR}`, () => {
+    it(`should handle ${ActionTypes.PUT_PLAN_ERROR}`, () => {
       previousState = { ...previousState, showPlanForm: true };
       const error = {
         status: 404,
@@ -187,7 +333,7 @@ describe('Plan:Reducers', () => {
       };
 
       const action = {
-        type: Actions.PUT_PLAN_ERROR,
+        type: ActionTypes.PUT_PLAN_ERROR,
         payload: { data: error },
         error: true,
       };
@@ -201,8 +347,8 @@ describe('Plan:Reducers', () => {
       expect(plans(previousState, action)).toEqual(expectedState);
     });
 
-    it(`should handle ${Actions.CLOSE_PLAN_FORM}`, () => {
-      const action = { type: Actions.CLOSE_PLAN_FORM };
+    it(`should handle ${ActionTypes.CLOSE_PLAN_FORM}`, () => {
+      const action = { type: ActionTypes.CLOSE_PLAN_FORM };
       previousState = { ...previousState, showPlanForm: true };
       const expectedState = { ...previousState, showPlanForm: false };
 
@@ -210,10 +356,10 @@ describe('Plan:Reducers', () => {
     });
 
     it(`should handle ${
-      Actions.UPDATE_PLAN_FILTERS
+      ActionTypes.UPDATE_PLAN_FILTERS
     } when no filters set`, () => {
       const action = {
-        type: Actions.UPDATE_PLAN_FILTERS,
+        type: ActionTypes.UPDATE_PLAN_FILTERS,
         payload: { data: { incidentTypes: ['deddeed'] } },
       };
 
@@ -225,14 +371,14 @@ describe('Plan:Reducers', () => {
     });
 
     it(`should handle ${
-      Actions.UPDATE_PLAN_FILTERS
+      ActionTypes.UPDATE_PLAN_FILTERS
     } when filters are set`, () => {
       previousState = merge(previousState, {
         filters: { incidentTypes: ['dedddd'] },
       });
 
       const action = {
-        type: Actions.UPDATE_PLAN_FILTERS,
+        type: ActionTypes.UPDATE_PLAN_FILTERS,
         payload: { data: { owners: ['deddeed'] } },
       };
 
@@ -244,14 +390,14 @@ describe('Plan:Reducers', () => {
     });
 
     it(`should handle ${
-      Actions.RESET_PLAN_FILTERS
+      ActionTypes.RESET_PLAN_FILTERS
     } when a single filter is active`, () => {
       previousState = merge(previousState, {
         filters: { incidentTypes: ['dedddd'], owners: ['cdddedd'] },
       });
 
       const action = {
-        type: Actions.RESET_PLAN_FILTERS,
+        type: ActionTypes.RESET_PLAN_FILTERS,
         payload: { data: 'owners' },
       };
 
@@ -265,14 +411,14 @@ describe('Plan:Reducers', () => {
     });
 
     it(`should handle ${
-      Actions.RESET_PLAN_FILTERS
+      ActionTypes.RESET_PLAN_FILTERS
     } when a multiple filters are active`, () => {
       previousState = merge(previousState, {
         filters: { incidentTypes: ['dedddd'], owners: ['cdddedd'] },
       });
 
       const action = {
-        type: Actions.RESET_PLAN_FILTERS,
+        type: ActionTypes.RESET_PLAN_FILTERS,
         payload: { data: 'owners' },
       };
       const filters = Object.assign({}, previousState.filters, {
@@ -302,11 +448,11 @@ describe('Plan:Reducers', () => {
     });
 
     it(`should handle ${
-      Actions.SELECT_PLAN
+      ActionTypes.SELECT_PLAN
     } when previous state is null`, () => {
       const previousState = null;
       const action = {
-        type: Actions.SELECT_PLAN,
+        type: ActionTypes.SELECT_PLAN,
         payload: {
           data: { name: 'Flood' },
         },
@@ -316,11 +462,11 @@ describe('Plan:Reducers', () => {
     });
 
     it(`should handle ${
-      Actions.SELECT_PLAN
+      ActionTypes.SELECT_PLAN
     } when previous state is not null`, () => {
       const previousState = { name: 'Earthquake', family: ['Natural'] };
       const action = {
-        type: Actions.SELECT_PLAN,
+        type: ActionTypes.SELECT_PLAN,
         payload: {
           data: { name: 'Flood' },
         },
@@ -355,17 +501,17 @@ describe('Plan:Reducers', () => {
       expect(planActivities(previousState, {})).toEqual(previousState);
     });
 
-    it(`should handle ${Actions.GET_PLAN_ACTIVITIES_START}`, () => {
+    it(`should handle ${ActionTypes.GET_PLAN_ACTIVITIES_START}`, () => {
       const expectedState = { ...previousState, loading: true };
       const action = {
-        type: Actions.GET_PLAN_ACTIVITIES_START,
+        type: ActionTypes.GET_PLAN_ACTIVITIES_START,
       };
       expect(planActivities(previousState, action)).toEqual(expectedState);
     });
 
-    it(`should handle ${Actions.GET_PLAN_ACTIVITIES_SUCCESS}`, () => {
+    it(`should handle ${ActionTypes.GET_PLAN_ACTIVITIES_SUCCESS}`, () => {
       const action = {
-        type: Actions.GET_PLAN_ACTIVITIES_SUCCESS,
+        type: ActionTypes.GET_PLAN_ACTIVITIES_SUCCESS,
         payload: {
           data: {
             Mitigation: [{ name: 'Mitigation' }],
@@ -392,7 +538,7 @@ describe('Plan:Reducers', () => {
       expect(planActivities(previousState, action)).toEqual(expectedState);
     });
 
-    it(`should handle ${Actions.GET_PLAN_ACTIVITIES_ERROR}`, () => {
+    it(`should handle ${ActionTypes.GET_PLAN_ACTIVITIES_ERROR}`, () => {
       const error = {
         status: 404,
         code: 404,
@@ -405,7 +551,7 @@ describe('Plan:Reducers', () => {
       };
 
       const action = {
-        type: Actions.GET_PLAN_ACTIVITIES_ERROR,
+        type: ActionTypes.GET_PLAN_ACTIVITIES_ERROR,
         payload: {
           data: error,
         },
@@ -421,15 +567,15 @@ describe('Plan:Reducers', () => {
       expect(planActivities(previousState, action)).toEqual(expectedState);
     });
 
-    it(`should handle ${Actions.POST_PLAN_ACTIVITY_START}`, () => {
-      const action = { type: Actions.POST_PLAN_ACTIVITY_START };
+    it(`should handle ${ActionTypes.POST_PLAN_ACTIVITY_START}`, () => {
+      const action = { type: ActionTypes.POST_PLAN_ACTIVITY_START };
       const expectedState = { ...previousState, posting: true };
 
       expect(planActivities(previousState, action)).toEqual(expectedState);
     });
 
-    it(`should handle ${Actions.POST_PLAN_ACTIVITY_SUCCESS}`, () => {
-      const action = { type: Actions.POST_PLAN_ACTIVITY_SUCCESS };
+    it(`should handle ${ActionTypes.POST_PLAN_ACTIVITY_SUCCESS}`, () => {
+      const action = { type: ActionTypes.POST_PLAN_ACTIVITY_SUCCESS };
       const expectedState = {
         ...previousState,
         posting: false,
@@ -439,7 +585,7 @@ describe('Plan:Reducers', () => {
       expect(planActivities(previousState, action)).toEqual(expectedState);
     });
 
-    it(`should handle ${Actions.POST_PLAN_ACTIVITY_ERROR}`, () => {
+    it(`should handle ${ActionTypes.POST_PLAN_ACTIVITY_ERROR}`, () => {
       const error = {
         status: 404,
         code: 404,
@@ -452,7 +598,7 @@ describe('Plan:Reducers', () => {
       };
 
       const action = {
-        type: Actions.POST_PLAN_ACTIVITY_ERROR,
+        type: ActionTypes.POST_PLAN_ACTIVITY_ERROR,
         payload: { data: error },
         error: true,
       };
@@ -466,8 +612,8 @@ describe('Plan:Reducers', () => {
       expect(planActivities(previousState, action)).toEqual(expectedState);
     });
 
-    it(`should handle ${Actions.PUT_PLAN_ACTIVITY_START}`, () => {
-      const action = { type: Actions.PUT_PLAN_ACTIVITY_START };
+    it(`should handle ${ActionTypes.PUT_PLAN_ACTIVITY_START}`, () => {
+      const action = { type: ActionTypes.PUT_PLAN_ACTIVITY_START };
       const expectedState = {
         ...previousState,
         posting: true,
@@ -476,8 +622,8 @@ describe('Plan:Reducers', () => {
       expect(planActivities(previousState, action)).toEqual(expectedState);
     });
 
-    it(`should handle ${Actions.PUT_PLAN_ACTIVITY_SUCCESS}`, () => {
-      const action = { type: Actions.PUT_PLAN_ACTIVITY_SUCCESS };
+    it(`should handle ${ActionTypes.PUT_PLAN_ACTIVITY_SUCCESS}`, () => {
+      const action = { type: ActionTypes.PUT_PLAN_ACTIVITY_SUCCESS };
       previousState = { ...previousState, posting: true };
       const expectedState = {
         ...previousState,
@@ -488,7 +634,7 @@ describe('Plan:Reducers', () => {
       expect(planActivities(previousState, action)).toEqual(expectedState);
     });
 
-    it(`should handle ${Actions.PUT_PLAN_ACTIVITY_ERROR}`, () => {
+    it(`should handle ${ActionTypes.PUT_PLAN_ACTIVITY_ERROR}`, () => {
       previousState = { ...previousState, showActivityForm: true };
       const error = {
         status: 404,
@@ -502,7 +648,7 @@ describe('Plan:Reducers', () => {
       };
 
       const action = {
-        type: Actions.PUT_PLAN_ACTIVITY_ERROR,
+        type: ActionTypes.PUT_PLAN_ACTIVITY_ERROR,
         payload: { data: error },
       };
 
@@ -515,15 +661,15 @@ describe('Plan:Reducers', () => {
       expect(planActivities(previousState, action)).toEqual(expectedState);
     });
 
-    it(`should handle ${Actions.OPEN_PLAN_ACTIVITY_FORM}`, () => {
-      const action = { type: Actions.OPEN_PLAN_ACTIVITY_FORM };
+    it(`should handle ${ActionTypes.OPEN_PLAN_ACTIVITY_FORM}`, () => {
+      const action = { type: ActionTypes.OPEN_PLAN_ACTIVITY_FORM };
       const expectedState = { ...previousState, showActivityForm: true };
 
       expect(planActivities(previousState, action)).toEqual(expectedState);
     });
 
-    it(`should handle ${Actions.CLOSE_PLAN_ACTIVITY_FORM}`, () => {
-      const action = { type: Actions.CLOSE_PLAN_ACTIVITY_FORM };
+    it(`should handle ${ActionTypes.CLOSE_PLAN_ACTIVITY_FORM}`, () => {
+      const action = { type: ActionTypes.CLOSE_PLAN_ACTIVITY_FORM };
       const expectedState = { ...previousState, showActivityForm: false };
 
       expect(planActivities(previousState, action)).toEqual(expectedState);
@@ -543,10 +689,10 @@ describe('Plan:Reducers', () => {
     });
 
     it(`should handle ${
-      Actions.SELECT_PLAN_ACTIVITY
+      ActionTypes.SELECT_PLAN_ACTIVITY
     } when previous state is null`, () => {
       const action = {
-        type: Actions.SELECT_PLAN_ACTIVITY,
+        type: ActionTypes.SELECT_PLAN_ACTIVITY,
         payload: { data: { name: 'Flood' } },
       };
       const previousState = null;
@@ -557,10 +703,10 @@ describe('Plan:Reducers', () => {
     });
 
     it(`should handle ${
-      Actions.SELECT_PLAN_ACTIVITY
+      ActionTypes.SELECT_PLAN_ACTIVITY
     } when previous state is not null`, () => {
       const action = {
-        type: Actions.SELECT_PLAN_ACTIVITY,
+        type: ActionTypes.SELECT_PLAN_ACTIVITY,
         payload: { data: { name: 'Flood' } },
       };
       const previousState = { name: 'CleanUp' };
@@ -594,8 +740,10 @@ describe('Plan:Reducers', () => {
       expect(planActivityProcedures(previousState, {})).toEqual(previousState);
     });
 
-    it(`should handle ${Actions.GET_PLAN_ACTIVITY_PROCEDURES_START}`, () => {
-      const action = { type: Actions.GET_PLAN_ACTIVITY_PROCEDURES_START };
+    it(`should handle ${
+      ActionTypes.GET_PLAN_ACTIVITY_PROCEDURES_START
+    }`, () => {
+      const action = { type: ActionTypes.GET_PLAN_ACTIVITY_PROCEDURES_START };
       const expectedState = { ...previousState, loading: true };
 
       expect(planActivityProcedures(previousState, action)).toEqual(
@@ -603,9 +751,11 @@ describe('Plan:Reducers', () => {
       );
     });
 
-    it(`should handle ${Actions.GET_PLAN_ACTIVITY_PROCEDURES_SUCCESS}`, () => {
+    it(`should handle ${
+      ActionTypes.GET_PLAN_ACTIVITY_PROCEDURES_SUCCESS
+    }`, () => {
       const action = {
-        type: Actions.GET_PLAN_ACTIVITY_PROCEDURES_SUCCESS,
+        type: ActionTypes.GET_PLAN_ACTIVITY_PROCEDURES_SUCCESS,
         payload: {
           data: [{ name: 'Clean this drain' }],
         },
@@ -627,9 +777,11 @@ describe('Plan:Reducers', () => {
       );
     });
 
-    it(`should handle ${Actions.GET_PLAN_ACTIVITY_PROCEDURES_ERROR}`, () => {
+    it(`should handle ${
+      ActionTypes.GET_PLAN_ACTIVITY_PROCEDURES_ERROR
+    }`, () => {
       const action = {
-        type: Actions.GET_PLAN_ACTIVITY_PROCEDURES_ERROR,
+        type: ActionTypes.GET_PLAN_ACTIVITY_PROCEDURES_ERROR,
         payload: {
           data: [{ name: 'Clean this drain' }],
         },
@@ -649,9 +801,11 @@ describe('Plan:Reducers', () => {
       );
     });
 
-    it(`should handle ${Actions.POST_PLAN_ACTIVITY_PROCEDURE_START}`, () => {
+    it(`should handle ${
+      ActionTypes.POST_PLAN_ACTIVITY_PROCEDURE_START
+    }`, () => {
       const action = {
-        type: Actions.POST_PLAN_ACTIVITY_PROCEDURE_START,
+        type: ActionTypes.POST_PLAN_ACTIVITY_PROCEDURE_START,
       };
 
       const expectedState = { ...previousState, posting: true };
@@ -661,9 +815,11 @@ describe('Plan:Reducers', () => {
       );
     });
 
-    it(`should handle ${Actions.POST_PLAN_ACTIVITY_PROCEDURE_SUCCESS}`, () => {
+    it(`should handle ${
+      ActionTypes.POST_PLAN_ACTIVITY_PROCEDURE_SUCCESS
+    }`, () => {
       const action = {
-        type: Actions.POST_PLAN_ACTIVITY_PROCEDURE_SUCCESS,
+        type: ActionTypes.POST_PLAN_ACTIVITY_PROCEDURE_SUCCESS,
       };
 
       previousState = { ...previousState, posting: true };
@@ -675,7 +831,9 @@ describe('Plan:Reducers', () => {
       );
     });
 
-    it(`should handle ${Actions.POST_PLAN_ACTIVITY_PROCEDURE_ERROR}`, () => {
+    it(`should handle ${
+      ActionTypes.POST_PLAN_ACTIVITY_PROCEDURE_ERROR
+    }`, () => {
       const error = {
         status: 404,
         code: 404,
@@ -688,7 +846,7 @@ describe('Plan:Reducers', () => {
       };
 
       const action = {
-        type: Actions.POST_PLAN_ACTIVITY_PROCEDURE_ERROR,
+        type: ActionTypes.POST_PLAN_ACTIVITY_PROCEDURE_ERROR,
         payload: { data: error },
         error: true,
       };
@@ -706,8 +864,8 @@ describe('Plan:Reducers', () => {
       );
     });
 
-    it(`should handle ${Actions.PUT_PLAN_ACTIVITY_PROCEDURE_START}`, () => {
-      const action = { type: Actions.PUT_PLAN_ACTIVITY_PROCEDURE_START };
+    it(`should handle ${ActionTypes.PUT_PLAN_ACTIVITY_PROCEDURE_START}`, () => {
+      const action = { type: ActionTypes.PUT_PLAN_ACTIVITY_PROCEDURE_START };
       const expectedState = {
         ...previousState,
         posting: true,
@@ -718,8 +876,10 @@ describe('Plan:Reducers', () => {
       );
     });
 
-    it(`should handle ${Actions.PUT_PLAN_ACTIVITY_PROCEDURE_SUCCESS}`, () => {
-      const action = { type: Actions.PUT_PLAN_ACTIVITY_PROCEDURE_SUCCESS };
+    it(`should handle ${
+      ActionTypes.PUT_PLAN_ACTIVITY_PROCEDURE_SUCCESS
+    }`, () => {
+      const action = { type: ActionTypes.PUT_PLAN_ACTIVITY_PROCEDURE_SUCCESS };
       previousState = {
         ...previousState,
         posting: true,
@@ -736,7 +896,7 @@ describe('Plan:Reducers', () => {
       );
     });
 
-    it(`should handle ${Actions.PUT_PLAN_ACTIVITY_PROCEDURE_ERROR}`, () => {
+    it(`should handle ${ActionTypes.PUT_PLAN_ACTIVITY_PROCEDURE_ERROR}`, () => {
       const error = {
         status: 404,
         code: 404,
@@ -749,7 +909,7 @@ describe('Plan:Reducers', () => {
       };
 
       const action = {
-        type: Actions.PUT_PLAN_ACTIVITY_PROCEDURE_ERROR,
+        type: ActionTypes.PUT_PLAN_ACTIVITY_PROCEDURE_ERROR,
         payload: { data: error },
         error: true,
       };
@@ -771,8 +931,8 @@ describe('Plan:Reducers', () => {
       );
     });
 
-    it(`should handle ${Actions.OPEN_PLAN_ACTIVITY_PROCEDURE_FORM}`, () => {
-      const action = { type: Actions.OPEN_PLAN_ACTIVITY_PROCEDURE_FORM };
+    it(`should handle ${ActionTypes.OPEN_PLAN_ACTIVITY_PROCEDURE_FORM}`, () => {
+      const action = { type: ActionTypes.OPEN_PLAN_ACTIVITY_PROCEDURE_FORM };
       const expectedState = {
         ...previousState,
         showProcedureForm: true,
@@ -783,8 +943,10 @@ describe('Plan:Reducers', () => {
       );
     });
 
-    it(`should handle ${Actions.CLOSE_PLAN_ACTIVITY_PROCEDURE_FORM}`, () => {
-      const action = { type: Actions.CLOSE_PLAN_ACTIVITY_PROCEDURE_FORM };
+    it(`should handle ${
+      ActionTypes.CLOSE_PLAN_ACTIVITY_PROCEDURE_FORM
+    }`, () => {
+      const action = { type: ActionTypes.CLOSE_PLAN_ACTIVITY_PROCEDURE_FORM };
       previousState = { ...previousState, showProcedureForm: true };
       const expectedState = {
         ...previousState,
@@ -810,10 +972,10 @@ describe('Plan:Reducers', () => {
     });
 
     it(`should handle ${
-      Actions.SELECT_PLAN_ACTIVITY_PROCEDURE
+      ActionTypes.SELECT_PLAN_ACTIVITY_PROCEDURE
     } when previous state is null`, () => {
       const action = {
-        type: Actions.SELECT_PLAN_ACTIVITY_PROCEDURE,
+        type: ActionTypes.SELECT_PLAN_ACTIVITY_PROCEDURE,
         payload: { data: { name: 'Test' } },
       };
 
@@ -823,10 +985,10 @@ describe('Plan:Reducers', () => {
     });
 
     it(`should handle ${
-      Actions.SELECT_PLAN_ACTIVITY_PROCEDURE
+      ActionTypes.SELECT_PLAN_ACTIVITY_PROCEDURE
     } when previous state is not null`, () => {
       const action = {
-        type: Actions.SELECT_PLAN_ACTIVITY_PROCEDURE,
+        type: ActionTypes.SELECT_PLAN_ACTIVITY_PROCEDURE,
         payload: { data: { name: 'Test' } },
       };
       const previousState = { name: 'CleanUp', age: 10 };

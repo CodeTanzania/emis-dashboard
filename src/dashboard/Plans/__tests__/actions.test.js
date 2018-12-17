@@ -2,6 +2,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import * as API from '../../../common/API';
 import * as Actions from '../actions';
+import * as ActionTypes from '../constants';
 
 jest.mock('../../../common/API');
 
@@ -10,54 +11,67 @@ const mockStore = configureMockStore(middlewares);
 
 describe('Plans:Module', () => {
   describe('Plans:Actions Creators', () => {
-    it(`should create an action of type ${Actions.SELECT_PLAN}`, () => {
+    it(`should create an action of type ${ActionTypes.SELECT_PLAN}`, () => {
       expect(Actions.selectPlan({})).toEqual({
-        type: Actions.SELECT_PLAN,
+        type: ActionTypes.SELECT_PLAN,
         payload: { data: {} },
       });
     });
 
-    it(`should create an action of type ${Actions.UPDATE_PLAN_FILTERS}`, () => {
+    it(`should create an action of type ${ActionTypes.SET_PLAN_SCHEMA}`, () => {
+      expect(Actions.setPlanSchema({})).toEqual({
+        type: ActionTypes.SET_PLAN_SCHEMA,
+        payload: { data: {} },
+      });
+    });
+
+    it(`should create an action of type ${
+      ActionTypes.UPDATE_PLAN_FILTERS
+    }`, () => {
       expect(Actions.updatePlanFilters({})).toEqual({
-        type: Actions.UPDATE_PLAN_FILTERS,
+        type: ActionTypes.UPDATE_PLAN_FILTERS,
         payload: {
           data: {},
         },
       });
     });
 
-    it(`should create an action of type ${Actions.RESET_PLAN_FILTERS}`, () => {
+    it(`should create an action of type ${
+      ActionTypes.RESET_PLAN_FILTERS
+    }`, () => {
       expect(Actions.resetPlanFilters('owners')).toEqual({
-        type: Actions.RESET_PLAN_FILTERS,
+        type: ActionTypes.RESET_PLAN_FILTERS,
         payload: {
           data: 'owners',
         },
       });
     });
 
-    it(`should create an action of type ${Actions.OPEN_PLAN_FORM}`, () => {
+    it(`should create an action of type ${ActionTypes.OPEN_PLAN_FORM}`, () => {
       expect(Actions.openPlanForm()).toEqual({
-        type: Actions.OPEN_PLAN_FORM,
+        type: ActionTypes.OPEN_PLAN_FORM,
       });
     });
 
-    it(`should create an action of type ${Actions.CLOSE_PLAN_FORM}`, () => {
+    it(`should create an action of type ${ActionTypes.CLOSE_PLAN_FORM}`, () => {
       expect(Actions.closePlanForm()).toEqual({
-        type: Actions.CLOSE_PLAN_FORM,
+        type: ActionTypes.CLOSE_PLAN_FORM,
       });
     });
 
-    it(`should create an action of type ${Actions.GET_PLANS_START}`, () => {
+    it(`should create an action of type ${ActionTypes.GET_PLANS_START}`, () => {
       expect(Actions.getPlansStart()).toEqual({
-        type: Actions.GET_PLANS_START,
+        type: ActionTypes.GET_PLANS_START,
       });
     });
 
-    it(`should create an action of type ${Actions.GET_PLANS_SUCCESS}`, () => {
+    it(`should create an action of type ${
+      ActionTypes.GET_PLANS_SUCCESS
+    }`, () => {
       const plans = [];
 
       expect(Actions.getPlansSuccess(plans)).toEqual({
-        type: Actions.GET_PLANS_SUCCESS,
+        type: ActionTypes.GET_PLANS_SUCCESS,
         payload: {
           data: plans,
         },
@@ -68,7 +82,7 @@ describe('Plans:Module', () => {
       });
 
       expect(Actions.getPlansSuccess(plans, 2, 40)).toEqual({
-        type: Actions.GET_PLANS_SUCCESS,
+        type: ActionTypes.GET_PLANS_SUCCESS,
         payload: {
           data: plans,
         },
@@ -79,11 +93,11 @@ describe('Plans:Module', () => {
       });
     });
 
-    it(`should create an action of type ${Actions.GET_PLANS_ERROR}`, () => {
+    it(`should create an action of type ${ActionTypes.GET_PLANS_ERROR}`, () => {
       const error = new Error();
 
       expect(Actions.getPlansError(error)).toEqual({
-        type: Actions.GET_PLANS_ERROR,
+        type: ActionTypes.GET_PLANS_ERROR,
         payload: {
           data: error,
         },
@@ -91,43 +105,47 @@ describe('Plans:Module', () => {
       });
     });
 
-    it(`should create an action of type ${Actions.POST_PLAN_START}`, () => {
+    it(`should create an action of type ${ActionTypes.POST_PLAN_START}`, () => {
       expect(Actions.postPlanStart()).toEqual({
-        type: Actions.POST_PLAN_START,
+        type: ActionTypes.POST_PLAN_START,
       });
     });
 
-    it(`should create an action of type ${Actions.POST_PLAN_SUCCESS}`, () => {
+    it(`should create an action of type ${
+      ActionTypes.POST_PLAN_SUCCESS
+    }`, () => {
       expect(Actions.postPlanSuccess()).toEqual({
-        type: Actions.POST_PLAN_SUCCESS,
+        type: ActionTypes.POST_PLAN_SUCCESS,
       });
     });
 
-    it(`should create an action of type ${Actions.POST_PLAN_ERROR}`, () => {
+    it(`should create an action of type ${ActionTypes.POST_PLAN_ERROR}`, () => {
       const error = new Error();
       expect(Actions.postPlanError(error)).toEqual({
-        type: Actions.POST_PLAN_ERROR,
+        type: ActionTypes.POST_PLAN_ERROR,
         payload: { data: error },
         error: true,
       });
     });
 
-    it(`should create an action of type ${Actions.PUT_PLAN_START}`, () => {
+    it(`should create an action of type ${ActionTypes.PUT_PLAN_START}`, () => {
       expect(Actions.putPlanStart()).toEqual({
-        type: Actions.PUT_PLAN_START,
+        type: ActionTypes.PUT_PLAN_START,
       });
     });
 
-    it(`should create an action of type ${Actions.PUT_PLAN_SUCCESS}`, () => {
+    it(`should create an action of type ${
+      ActionTypes.PUT_PLAN_SUCCESS
+    }`, () => {
       expect(Actions.putPlanSuccess()).toEqual({
-        type: Actions.PUT_PLAN_SUCCESS,
+        type: ActionTypes.PUT_PLAN_SUCCESS,
       });
     });
 
-    it(`should create an action of type ${Actions.PUT_PLAN_ERROR}`, () => {
+    it(`should create an action of type ${ActionTypes.PUT_PLAN_ERROR}`, () => {
       const error = new Error();
       expect(Actions.putPlanError(error)).toEqual({
-        type: Actions.PUT_PLAN_ERROR,
+        type: ActionTypes.PUT_PLAN_ERROR,
         payload: { data: error },
         error: true,
       });
@@ -136,10 +154,18 @@ describe('Plans:Module', () => {
 
   describe('Activities:Actions Creators', () => {
     it(`should create an action of type ${
-      Actions.SELECT_PLAN_ACTIVITY
+      ActionTypes.SET_PLAN_ACTIVITY_SCHEMA
+    }`, () => {
+      expect(Actions.setPlanActivitySchema({})).toEqual({
+        type: ActionTypes.SET_PLAN_ACTIVITY_SCHEMA,
+        payload: { data: {} },
+      });
+    });
+    it(`should create an action of type ${
+      ActionTypes.SELECT_PLAN_ACTIVITY
     }`, () => {
       expect(Actions.selectPlanActivity({})).toEqual({
-        type: Actions.SELECT_PLAN_ACTIVITY,
+        type: ActionTypes.SELECT_PLAN_ACTIVITY,
         payload: {
           data: {},
         },
@@ -147,36 +173,36 @@ describe('Plans:Module', () => {
     });
 
     it(`should create an action of type ${
-      Actions.OPEN_PLAN_ACTIVITY_FORM
+      ActionTypes.OPEN_PLAN_ACTIVITY_FORM
     }`, () => {
       expect(Actions.openPlanActivityForm()).toEqual({
-        type: Actions.OPEN_PLAN_ACTIVITY_FORM,
+        type: ActionTypes.OPEN_PLAN_ACTIVITY_FORM,
       });
     });
 
     it(`should create an action of type ${
-      Actions.CLOSE_PLAN_ACTIVITY_FORM
+      ActionTypes.CLOSE_PLAN_ACTIVITY_FORM
     }`, () => {
       expect(Actions.closePlanActivityForm()).toEqual({
-        type: Actions.CLOSE_PLAN_ACTIVITY_FORM,
+        type: ActionTypes.CLOSE_PLAN_ACTIVITY_FORM,
       });
     });
 
     it(`should create an action of type ${
-      Actions.GET_PLAN_ACTIVITIES_START
+      ActionTypes.GET_PLAN_ACTIVITIES_START
     }`, () => {
       expect(Actions.getPlanActivitiesStart()).toEqual({
-        type: Actions.GET_PLAN_ACTIVITIES_START,
+        type: ActionTypes.GET_PLAN_ACTIVITIES_START,
       });
     });
 
     it(`should create an action of type ${
-      Actions.GET_PLAN_ACTIVITIES_SUCCESS
+      ActionTypes.GET_PLAN_ACTIVITIES_SUCCESS
     }`, () => {
       const activities = [];
 
       expect(Actions.getPlanActivitiesSuccess(activities, 1, 200)).toEqual({
-        type: Actions.GET_PLAN_ACTIVITIES_SUCCESS,
+        type: ActionTypes.GET_PLAN_ACTIVITIES_SUCCESS,
         payload: {
           data: activities,
         },
@@ -187,7 +213,7 @@ describe('Plans:Module', () => {
       });
 
       expect(Actions.getPlanActivitiesSuccess(activities)).toEqual({
-        type: Actions.GET_PLAN_ACTIVITIES_SUCCESS,
+        type: ActionTypes.GET_PLAN_ACTIVITIES_SUCCESS,
         payload: {
           data: activities,
         },
@@ -199,12 +225,12 @@ describe('Plans:Module', () => {
     });
 
     it(`should create an action of type ${
-      Actions.GET_PLAN_ACTIVITIES_ERROR
+      ActionTypes.GET_PLAN_ACTIVITIES_ERROR
     }`, () => {
       const error = new Error();
 
       expect(Actions.getPlanActivitiesError(error)).toEqual({
-        type: Actions.GET_PLAN_ACTIVITIES_ERROR,
+        type: ActionTypes.GET_PLAN_ACTIVITIES_ERROR,
         payload: {
           data: error,
         },
@@ -213,27 +239,27 @@ describe('Plans:Module', () => {
     });
 
     it(`should create an action of type ${
-      Actions.POST_PLAN_ACTIVITY_START
+      ActionTypes.POST_PLAN_ACTIVITY_START
     }`, () => {
       expect(Actions.postPlanActivityStart()).toEqual({
-        type: Actions.POST_PLAN_ACTIVITY_START,
+        type: ActionTypes.POST_PLAN_ACTIVITY_START,
       });
     });
 
     it(`should create an action of type ${
-      Actions.POST_PLAN_ACTIVITY_SUCCESS
+      ActionTypes.POST_PLAN_ACTIVITY_SUCCESS
     }`, () => {
       expect(Actions.postPlanActivitySuccess()).toEqual({
-        type: Actions.POST_PLAN_ACTIVITY_SUCCESS,
+        type: ActionTypes.POST_PLAN_ACTIVITY_SUCCESS,
       });
     });
 
     it(`should create an action of type ${
-      Actions.POST_PLAN_ACTIVITY_ERROR
+      ActionTypes.POST_PLAN_ACTIVITY_ERROR
     }`, () => {
       const error = new Error();
       expect(Actions.postPlanActivityError(error)).toEqual({
-        type: Actions.POST_PLAN_ACTIVITY_ERROR,
+        type: ActionTypes.POST_PLAN_ACTIVITY_ERROR,
         payload: {
           data: error,
         },
@@ -242,27 +268,27 @@ describe('Plans:Module', () => {
     });
 
     it(`should create an action of type ${
-      Actions.PUT_PLAN_ACTIVITY_START
+      ActionTypes.PUT_PLAN_ACTIVITY_START
     }`, () => {
       expect(Actions.putPlanActivityStart()).toEqual({
-        type: Actions.PUT_PLAN_ACTIVITY_START,
+        type: ActionTypes.PUT_PLAN_ACTIVITY_START,
       });
     });
 
     it(`should create an action of type ${
-      Actions.PUT_PLAN_ACTIVITY_SUCCESS
+      ActionTypes.PUT_PLAN_ACTIVITY_SUCCESS
     }`, () => {
       expect(Actions.putPlanActivitySuccess()).toEqual({
-        type: Actions.PUT_PLAN_ACTIVITY_SUCCESS,
+        type: ActionTypes.PUT_PLAN_ACTIVITY_SUCCESS,
       });
     });
 
     it(`should create an action of type ${
-      Actions.PUT_PLAN_ACTIVITY_ERROR
+      ActionTypes.PUT_PLAN_ACTIVITY_ERROR
     }`, () => {
       const error = new Error();
       expect(Actions.putPlanActivityError(error)).toEqual({
-        type: Actions.PUT_PLAN_ACTIVITY_ERROR,
+        type: ActionTypes.PUT_PLAN_ACTIVITY_ERROR,
         payload: {
           data: error,
         },
@@ -273,44 +299,52 @@ describe('Plans:Module', () => {
 
   describe('Procedures(SOP):Actions Creators', () => {
     it(`should create an action of type ${
-      Actions.SELECT_PLAN_ACTIVITY_PROCEDURE
+      ActionTypes.SET_PLAN_ACTIVITY_PROCEDURE_SCHEMA
     }`, () => {
-      expect(Actions.selectPlanActivityProcedure({})).toEqual({
-        type: Actions.SELECT_PLAN_ACTIVITY_PROCEDURE,
+      expect(Actions.setPlanActivityProcedureSchema({})).toEqual({
+        type: ActionTypes.SET_PLAN_ACTIVITY_PROCEDURE_SCHEMA,
         payload: { data: {} },
       });
     });
     it(`should create an action of type ${
-      Actions.OPEN_PLAN_ACTIVITY_PROCEDURE_FORM
+      ActionTypes.SELECT_PLAN_ACTIVITY_PROCEDURE
+    }`, () => {
+      expect(Actions.selectPlanActivityProcedure({})).toEqual({
+        type: ActionTypes.SELECT_PLAN_ACTIVITY_PROCEDURE,
+        payload: { data: {} },
+      });
+    });
+    it(`should create an action of type ${
+      ActionTypes.OPEN_PLAN_ACTIVITY_PROCEDURE_FORM
     }`, () => {
       expect(Actions.openPlanActivityProcedureForm()).toEqual({
-        type: Actions.OPEN_PLAN_ACTIVITY_PROCEDURE_FORM,
+        type: ActionTypes.OPEN_PLAN_ACTIVITY_PROCEDURE_FORM,
       });
     });
     it(`should create an action of type ${
-      Actions.CLOSE_PLAN_ACTIVITY_PROCEDURE_FORM
+      ActionTypes.CLOSE_PLAN_ACTIVITY_PROCEDURE_FORM
     }`, () => {
       expect(Actions.closePlanActivityProcedureForm()).toEqual({
-        type: Actions.CLOSE_PLAN_ACTIVITY_PROCEDURE_FORM,
+        type: ActionTypes.CLOSE_PLAN_ACTIVITY_PROCEDURE_FORM,
       });
     });
     it(`should create an action of type ${
-      Actions.GET_PLAN_ACTIVITY_PROCEDURES_START
+      ActionTypes.GET_PLAN_ACTIVITY_PROCEDURES_START
     }`, () => {
       expect(Actions.getPlanActivityProceduresStart()).toEqual({
-        type: Actions.GET_PLAN_ACTIVITY_PROCEDURES_START,
+        type: ActionTypes.GET_PLAN_ACTIVITY_PROCEDURES_START,
       });
     });
 
     it(`should create an action of type ${
-      Actions.GET_PLAN_ACTIVITY_PROCEDURES_SUCCESS
+      ActionTypes.GET_PLAN_ACTIVITY_PROCEDURES_SUCCESS
     }`, () => {
       const procedures = [];
 
       expect(
         Actions.getPlanActivityProceduresSuccess(procedures, 1, 200)
       ).toEqual({
-        type: Actions.GET_PLAN_ACTIVITY_PROCEDURES_SUCCESS,
+        type: ActionTypes.GET_PLAN_ACTIVITY_PROCEDURES_SUCCESS,
         payload: {
           data: procedures,
         },
@@ -322,12 +356,12 @@ describe('Plans:Module', () => {
     });
 
     it(`should create an action of type ${
-      Actions.GET_PLAN_ACTIVITY_PROCEDURES_ERROR
+      ActionTypes.GET_PLAN_ACTIVITY_PROCEDURES_ERROR
     }`, () => {
       const error = new Error();
 
       expect(Actions.getPlanActivityProceduresError(error)).toEqual({
-        type: Actions.GET_PLAN_ACTIVITY_PROCEDURES_ERROR,
+        type: ActionTypes.GET_PLAN_ACTIVITY_PROCEDURES_ERROR,
         payload: {
           data: error,
         },
@@ -336,28 +370,28 @@ describe('Plans:Module', () => {
     });
 
     it(`should create an action of type ${
-      Actions.POST_PLAN_ACTIVITY_PROCEDURES_START
+      ActionTypes.POST_PLAN_ACTIVITY_PROCEDURES_START
     }`, () => {
       expect(Actions.postPlanActivityProcedureStart()).toEqual({
-        type: Actions.POST_PLAN_ACTIVITY_PROCEDURE_START,
+        type: ActionTypes.POST_PLAN_ACTIVITY_PROCEDURE_START,
       });
     });
 
     it(`should create an action of type ${
-      Actions.POST_PLAN_ACTIVITY_PROCEDURES_SUCCESS
+      ActionTypes.POST_PLAN_ACTIVITY_PROCEDURES_SUCCESS
     }`, () => {
       expect(Actions.postPlanActivityProcedureSuccess()).toEqual({
-        type: Actions.POST_PLAN_ACTIVITY_PROCEDURE_SUCCESS,
+        type: ActionTypes.POST_PLAN_ACTIVITY_PROCEDURE_SUCCESS,
       });
     });
 
     it(`should create an action of type ${
-      Actions.POST_PLAN_ACTIVITY_PROCEDURE_ERROR
+      ActionTypes.POST_PLAN_ACTIVITY_PROCEDURE_ERROR
     }`, () => {
       const error = new Error();
 
       expect(Actions.postPlanActivityProcedureError(error)).toEqual({
-        type: Actions.POST_PLAN_ACTIVITY_PROCEDURE_ERROR,
+        type: ActionTypes.POST_PLAN_ACTIVITY_PROCEDURE_ERROR,
         payload: {
           data: error,
         },
@@ -366,28 +400,28 @@ describe('Plans:Module', () => {
     });
 
     it(`should create an action of type ${
-      Actions.PUT_PLAN_ACTIVITY_PROCEDURE_START
+      ActionTypes.PUT_PLAN_ACTIVITY_PROCEDURE_START
     }`, () => {
       expect(Actions.putPlanActivityProcedureStart()).toEqual({
-        type: Actions.PUT_PLAN_ACTIVITY_PROCEDURE_START,
+        type: ActionTypes.PUT_PLAN_ACTIVITY_PROCEDURE_START,
       });
     });
 
     it(`should create an action of type ${
-      Actions.PUT_PLAN_ACTIVITY_PROCEDURE_SUCCESS
+      ActionTypes.PUT_PLAN_ACTIVITY_PROCEDURE_SUCCESS
     }`, () => {
       expect(Actions.putPlanActivityProcedureSuccess()).toEqual({
-        type: Actions.PUT_PLAN_ACTIVITY_PROCEDURE_SUCCESS,
+        type: ActionTypes.PUT_PLAN_ACTIVITY_PROCEDURE_SUCCESS,
       });
     });
 
     it(`should create an action of type ${
-      Actions.PUT_PLAN_ACTIVITY_PROCEDURE_ERROR
+      ActionTypes.PUT_PLAN_ACTIVITY_PROCEDURE_ERROR
     }`, () => {
       const error = new Error();
 
       expect(Actions.putPlanActivityProcedureError(error)).toEqual({
-        type: Actions.PUT_PLAN_ACTIVITY_PROCEDURE_ERROR,
+        type: ActionTypes.PUT_PLAN_ACTIVITY_PROCEDURE_ERROR,
         payload: {
           data: error,
         },
@@ -398,7 +432,7 @@ describe('Plans:Module', () => {
 
   describe('Thunks', () => {
     it(`should dispatch an action of type ${
-      Actions.GET_PLANS_SUCCESS
+      ActionTypes.GET_PLANS_SUCCESS
     } when fetching plans is successfully when filters are null`, () => {
       const store = mockStore({
         plans: {
@@ -422,9 +456,9 @@ describe('Plans:Module', () => {
       });
 
       const expectedActions = [
-        { type: Actions.GET_PLANS_START },
+        { type: ActionTypes.GET_PLANS_START },
         {
-          type: Actions.GET_PLANS_SUCCESS,
+          type: ActionTypes.GET_PLANS_SUCCESS,
           payload: {
             data: [],
           },
@@ -440,7 +474,7 @@ describe('Plans:Module', () => {
       });
     });
     it(`should dispatch an action of type ${
-      Actions.GET_PLANS_SUCCESS
+      ActionTypes.GET_PLANS_SUCCESS
     } when fetching plans is successfully when filters are set`, () => {
       const store = mockStore({
         plans: {
@@ -464,9 +498,9 @@ describe('Plans:Module', () => {
       });
 
       const expectedActions = [
-        { type: Actions.GET_PLANS_START },
+        { type: ActionTypes.GET_PLANS_START },
         {
-          type: Actions.GET_PLANS_SUCCESS,
+          type: ActionTypes.GET_PLANS_SUCCESS,
           payload: {
             data: [],
           },
@@ -483,7 +517,7 @@ describe('Plans:Module', () => {
     });
 
     it(`should dispatch an action of type ${
-      Actions.GET_PLANS_ERROR
+      ActionTypes.GET_PLANS_ERROR
     } when fetching plans fails`, () => {
       const error = {
         status: 404,
@@ -506,9 +540,9 @@ describe('Plans:Module', () => {
       });
 
       const expectedActions = [
-        { type: Actions.GET_PLANS_START },
+        { type: ActionTypes.GET_PLANS_START },
         {
-          type: Actions.GET_PLANS_ERROR,
+          type: ActionTypes.GET_PLANS_ERROR,
           payload: {
             data: error,
           },
@@ -525,7 +559,7 @@ describe('Plans:Module', () => {
     });
 
     it(`should dispatch an action of type ${
-      Actions.POST_PLAN_SUCCESS
+      ActionTypes.POST_PLAN_SUCCESS
     } when updating activity is successfully`, () => {
       // mock API call
       API.postPlan.mockResolvedValueOnce({});
@@ -548,11 +582,11 @@ describe('Plans:Module', () => {
       });
 
       const expectedActions = [
-        { type: Actions.POST_PLAN_START },
-        { type: Actions.POST_PLAN_SUCCESS },
-        { type: Actions.GET_PLANS_START },
+        { type: ActionTypes.POST_PLAN_START },
+        { type: ActionTypes.POST_PLAN_SUCCESS },
+        { type: ActionTypes.GET_PLANS_START },
         {
-          type: Actions.GET_PLANS_SUCCESS,
+          type: ActionTypes.GET_PLANS_SUCCESS,
           payload: {
             data: [],
           },
@@ -569,7 +603,7 @@ describe('Plans:Module', () => {
     });
 
     it(`should dispatch an action of type ${
-      Actions.POST_PLAN_ERROR
+      ActionTypes.POST_PLAN_ERROR
     } when updating activity fails`, () => {
       const error = {
         status: 404,
@@ -593,9 +627,9 @@ describe('Plans:Module', () => {
       });
 
       const expectedActions = [
-        { type: Actions.POST_PLAN_START },
+        { type: ActionTypes.POST_PLAN_START },
         {
-          type: Actions.POST_PLAN_ERROR,
+          type: ActionTypes.POST_PLAN_ERROR,
           payload: { data: error },
           error: true,
         },
@@ -610,7 +644,7 @@ describe('Plans:Module', () => {
     });
 
     it(`should dispatch an action of type ${
-      Actions.PUT_PLAN_SUCCESS
+      ActionTypes.PUT_PLAN_SUCCESS
     } when updating activity is successfully`, () => {
       // mock API call
       API.putPlan.mockResolvedValueOnce({});
@@ -633,11 +667,11 @@ describe('Plans:Module', () => {
       });
 
       const expectedActions = [
-        { type: Actions.PUT_PLAN_START },
-        { type: Actions.PUT_PLAN_SUCCESS },
-        { type: Actions.GET_PLANS_START },
+        { type: ActionTypes.PUT_PLAN_START },
+        { type: ActionTypes.PUT_PLAN_SUCCESS },
+        { type: ActionTypes.GET_PLANS_START },
         {
-          type: Actions.GET_PLANS_SUCCESS,
+          type: ActionTypes.GET_PLANS_SUCCESS,
           payload: {
             data: [],
           },
@@ -654,7 +688,7 @@ describe('Plans:Module', () => {
     });
 
     it(`should dispatch an action of type ${
-      Actions.PUT_PLAN_SUCCESS
+      ActionTypes.PUT_PLAN_SUCCESS
     } when updating activity is successfully`, () => {
       const error = {
         status: 404,
@@ -680,8 +714,12 @@ describe('Plans:Module', () => {
       });
 
       const expectedActions = [
-        { type: Actions.PUT_PLAN_START },
-        { type: Actions.PUT_PLAN_ERROR, payload: { data: error }, error: true },
+        { type: ActionTypes.PUT_PLAN_START },
+        {
+          type: ActionTypes.PUT_PLAN_ERROR,
+          payload: { data: error },
+          error: true,
+        },
       ];
 
       return store.dispatch(Actions.putPlan({})).then(() => {
@@ -690,7 +728,7 @@ describe('Plans:Module', () => {
     });
 
     it(`should dispatch an action of type ${
-      Actions.GET_PLAN_ACTIVITIES_SUCCESS
+      ActionTypes.GET_PLAN_ACTIVITIES_SUCCESS
     } when fetching plan activities is successfully`, () => {
       const store = mockStore({
         plans: {
@@ -704,9 +742,9 @@ describe('Plans:Module', () => {
       });
 
       const expectedActions = [
-        { type: Actions.GET_PLAN_ACTIVITIES_START },
+        { type: ActionTypes.GET_PLAN_ACTIVITIES_START },
         {
-          type: Actions.GET_PLAN_ACTIVITIES_SUCCESS,
+          type: ActionTypes.GET_PLAN_ACTIVITIES_SUCCESS,
           payload: {
             data: {},
           },
@@ -733,7 +771,7 @@ describe('Plans:Module', () => {
     });
 
     it(`should dispatch an action of type ${
-      Actions.GET_PLAN_ACTIVITIES_ERROR
+      ActionTypes.GET_PLAN_ACTIVITIES_ERROR
     } when fetching plan activities fails`, () => {
       const error = {
         status: 404,
@@ -758,9 +796,9 @@ describe('Plans:Module', () => {
       });
 
       const expectedActions = [
-        { type: Actions.GET_PLAN_ACTIVITIES_START },
+        { type: ActionTypes.GET_PLAN_ACTIVITIES_START },
         {
-          type: Actions.GET_PLAN_ACTIVITIES_ERROR,
+          type: ActionTypes.GET_PLAN_ACTIVITIES_ERROR,
           payload: {
             data: error,
           },
@@ -777,7 +815,7 @@ describe('Plans:Module', () => {
     });
 
     it(`should dispatch an action of type ${
-      Actions.POST_PLAN_ACTIVITY_SUCCESS
+      ActionTypes.POST_PLAN_ACTIVITY_SUCCESS
     } when updating activity is successfully`, () => {
       // mock API call
       API.postPlanActivity.mockResolvedValueOnce({});
@@ -801,11 +839,11 @@ describe('Plans:Module', () => {
       });
 
       const expectedActions = [
-        { type: Actions.POST_PLAN_ACTIVITY_START },
-        { type: Actions.POST_PLAN_ACTIVITY_SUCCESS },
-        { type: Actions.GET_PLAN_ACTIVITIES_START },
+        { type: ActionTypes.POST_PLAN_ACTIVITY_START },
+        { type: ActionTypes.POST_PLAN_ACTIVITY_SUCCESS },
+        { type: ActionTypes.GET_PLAN_ACTIVITIES_START },
         {
-          type: Actions.GET_PLAN_ACTIVITIES_SUCCESS,
+          type: ActionTypes.GET_PLAN_ACTIVITIES_SUCCESS,
           payload: {
             data: {},
           },
@@ -822,7 +860,7 @@ describe('Plans:Module', () => {
     });
 
     it(`should dispatch an action of type ${
-      Actions.POST_PLAN_ACTIVITY_ERROR
+      ActionTypes.POST_PLAN_ACTIVITY_ERROR
     } when updating activity fails`, () => {
       const error = {
         status: 404,
@@ -847,9 +885,9 @@ describe('Plans:Module', () => {
       });
 
       const expectedActions = [
-        { type: Actions.POST_PLAN_ACTIVITY_START },
+        { type: ActionTypes.POST_PLAN_ACTIVITY_START },
         {
-          type: Actions.POST_PLAN_ACTIVITY_ERROR,
+          type: ActionTypes.POST_PLAN_ACTIVITY_ERROR,
           payload: { data: error },
           error: true,
         },
@@ -864,7 +902,7 @@ describe('Plans:Module', () => {
     });
 
     it(`should dispatch an action of type ${
-      Actions.PUT_PLAN_ACTIVITY_SUCCESS
+      ActionTypes.PUT_PLAN_ACTIVITY_SUCCESS
     } when updating activity is successfully`, () => {
       const store = mockStore({
         selectedPlanActivity: {
@@ -880,11 +918,11 @@ describe('Plans:Module', () => {
       });
 
       const expectedActions = [
-        { type: Actions.PUT_PLAN_ACTIVITY_START },
-        { type: Actions.PUT_PLAN_ACTIVITY_SUCCESS },
-        { type: Actions.GET_PLAN_ACTIVITIES_START },
+        { type: ActionTypes.PUT_PLAN_ACTIVITY_START },
+        { type: ActionTypes.PUT_PLAN_ACTIVITY_SUCCESS },
+        { type: ActionTypes.GET_PLAN_ACTIVITIES_START },
         {
-          type: Actions.GET_PLAN_ACTIVITIES_SUCCESS,
+          type: ActionTypes.GET_PLAN_ACTIVITIES_SUCCESS,
           payload: { data: {} },
           meta: { page: 1, total: 200 },
         },
@@ -906,7 +944,7 @@ describe('Plans:Module', () => {
     });
 
     it(`should dispatch an action of type ${
-      Actions.PUT_PLAN_ACTIVITY_ERROR
+      ActionTypes.PUT_PLAN_ACTIVITY_ERROR
     } when updating activity is successfully`, () => {
       const store = mockStore({
         selectedPlanActivity: {
@@ -933,9 +971,9 @@ describe('Plans:Module', () => {
       };
 
       const expectedActions = [
-        { type: Actions.PUT_PLAN_ACTIVITY_START },
+        { type: ActionTypes.PUT_PLAN_ACTIVITY_START },
         {
-          type: Actions.PUT_PLAN_ACTIVITY_ERROR,
+          type: ActionTypes.PUT_PLAN_ACTIVITY_ERROR,
           payload: { data: error },
           error: true,
         },
@@ -950,16 +988,16 @@ describe('Plans:Module', () => {
     });
 
     it(`should dispatch an action of type ${
-      Actions.GET_PLAN_ACTIVITY_PROCEDURES_SUCCESS
+      ActionTypes.GET_PLAN_ACTIVITY_PROCEDURES_SUCCESS
     } when fetching procedures is successfully`, () => {
       const store = mockStore({
         selectedPlanActivity: { _id: 'ededsd' },
       });
 
       const expectedActions = [
-        { type: Actions.GET_PLAN_ACTIVITY_PROCEDURES_START },
+        { type: ActionTypes.GET_PLAN_ACTIVITY_PROCEDURES_START },
         {
-          type: Actions.GET_PLAN_ACTIVITY_PROCEDURES_SUCCESS,
+          type: ActionTypes.GET_PLAN_ACTIVITY_PROCEDURES_SUCCESS,
           payload: { data: [] },
           meta: { page: 1, total: 200 },
         },
@@ -980,7 +1018,7 @@ describe('Plans:Module', () => {
     });
 
     it(`should dispatch an action of type ${
-      Actions.GET_PLAN_ACTIVITY_PROCEDURES_ERROR
+      ActionTypes.GET_PLAN_ACTIVITY_PROCEDURES_ERROR
     } when fetching procedures fails`, () => {
       const store = mockStore({
         selectedPlanActivity: { _id: 'ededsd' },
@@ -998,9 +1036,9 @@ describe('Plans:Module', () => {
       };
 
       const expectedActions = [
-        { type: Actions.GET_PLAN_ACTIVITY_PROCEDURES_START },
+        { type: ActionTypes.GET_PLAN_ACTIVITY_PROCEDURES_START },
         {
-          type: Actions.GET_PLAN_ACTIVITY_PROCEDURES_ERROR,
+          type: ActionTypes.GET_PLAN_ACTIVITY_PROCEDURES_ERROR,
           payload: { data: error },
           error: true,
         },
@@ -1015,7 +1053,7 @@ describe('Plans:Module', () => {
     });
 
     it(`should dispatch an action of type ${
-      Actions.POST_PLAN_ACTIVITY_PROCEDURE_SUCCESS
+      ActionTypes.POST_PLAN_ACTIVITY_PROCEDURE_SUCCESS
     } when updating procedure is successfully`, () => {
       const store = mockStore({
         selectedPlanActivity: {
@@ -1028,11 +1066,11 @@ describe('Plans:Module', () => {
       });
 
       const expectedActions = [
-        { type: Actions.POST_PLAN_ACTIVITY_PROCEDURE_START },
-        { type: Actions.POST_PLAN_ACTIVITY_PROCEDURE_SUCCESS },
-        { type: Actions.GET_PLAN_ACTIVITY_PROCEDURES_START },
+        { type: ActionTypes.POST_PLAN_ACTIVITY_PROCEDURE_START },
+        { type: ActionTypes.POST_PLAN_ACTIVITY_PROCEDURE_SUCCESS },
+        { type: ActionTypes.GET_PLAN_ACTIVITY_PROCEDURES_START },
         {
-          type: Actions.GET_PLAN_ACTIVITY_PROCEDURES_SUCCESS,
+          type: ActionTypes.GET_PLAN_ACTIVITY_PROCEDURES_SUCCESS,
           payload: { data: [] },
           meta: { page: 1, total: 200 },
         },
@@ -1054,7 +1092,7 @@ describe('Plans:Module', () => {
     });
 
     it(`should dispatch an action of type ${
-      Actions.POST_PLAN_ACTIVITY_PROCEDURE_ERROR
+      ActionTypes.POST_PLAN_ACTIVITY_PROCEDURE_ERROR
     } when updating procedure is successfully`, () => {
       const store = mockStore({
         selectedPlanActivity: {
@@ -1078,9 +1116,9 @@ describe('Plans:Module', () => {
       };
 
       const expectedActions = [
-        { type: Actions.POST_PLAN_ACTIVITY_PROCEDURE_START },
+        { type: ActionTypes.POST_PLAN_ACTIVITY_PROCEDURE_START },
         {
-          type: Actions.POST_PLAN_ACTIVITY_PROCEDURE_ERROR,
+          type: ActionTypes.POST_PLAN_ACTIVITY_PROCEDURE_ERROR,
           payload: { data: error },
           error: true,
         },
@@ -1095,7 +1133,7 @@ describe('Plans:Module', () => {
     });
 
     it(`should dispatch an action of type ${
-      Actions.PUT_PLAN_ACTIVITY_PROCEDURE_SUCCESS
+      ActionTypes.PUT_PLAN_ACTIVITY_PROCEDURE_SUCCESS
     } when updating procedure is successfully`, () => {
       const store = mockStore({
         selectedPlanActivity: {
@@ -1108,11 +1146,11 @@ describe('Plans:Module', () => {
       });
 
       const expectedActions = [
-        { type: Actions.PUT_PLAN_ACTIVITY_PROCEDURE_START },
-        { type: Actions.PUT_PLAN_ACTIVITY_PROCEDURE_SUCCESS },
-        { type: Actions.GET_PLAN_ACTIVITY_PROCEDURES_START },
+        { type: ActionTypes.PUT_PLAN_ACTIVITY_PROCEDURE_START },
+        { type: ActionTypes.PUT_PLAN_ACTIVITY_PROCEDURE_SUCCESS },
+        { type: ActionTypes.GET_PLAN_ACTIVITY_PROCEDURES_START },
         {
-          type: Actions.GET_PLAN_ACTIVITY_PROCEDURES_SUCCESS,
+          type: ActionTypes.GET_PLAN_ACTIVITY_PROCEDURES_SUCCESS,
           payload: { data: [] },
           meta: { page: 1, total: 200 },
         },
@@ -1134,7 +1172,7 @@ describe('Plans:Module', () => {
     });
 
     it(`should dispatch an action of type ${
-      Actions.PUT_PLAN_ACTIVITY_PROCEDURE_ERROR
+      ActionTypes.PUT_PLAN_ACTIVITY_PROCEDURE_ERROR
     } when updating procedure is successfully`, () => {
       const error = {
         status: 404,
@@ -1158,9 +1196,9 @@ describe('Plans:Module', () => {
       });
 
       const expectedActions = [
-        { type: Actions.PUT_PLAN_ACTIVITY_PROCEDURE_START },
+        { type: ActionTypes.PUT_PLAN_ACTIVITY_PROCEDURE_START },
         {
-          type: Actions.PUT_PLAN_ACTIVITY_PROCEDURE_ERROR,
+          type: ActionTypes.PUT_PLAN_ACTIVITY_PROCEDURE_ERROR,
           payload: { data: error },
           error: true,
         },
@@ -1170,6 +1208,101 @@ describe('Plans:Module', () => {
       API.putPlanActivityProcedure.mockRejectedValueOnce(error);
 
       return store.dispatch(Actions.putPlanActivityProcedure()).then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+    });
+
+    it(`should dispatch an action of type [${ActionTypes.GET_PLANS_SUCCESS},${
+      ActionTypes.SET_PLAN_SCHEMA
+    },${ActionTypes.SET_PLAN_ACTIVITY_SCHEMA},${
+      ActionTypes.SET_PLAN_ACTIVITY_PROCEDURE_SCHEMA
+    }] when fetching plans is successfully when filters are null`, () => {
+      const store = mockStore({
+        plans: {
+          data: [],
+          filters: {
+            incidentTypes: null,
+            owners: null,
+            boundaries: null,
+          },
+        },
+      });
+
+      // mock API calls
+      API.setupPlan.mockResolvedValueOnce({
+        planSchema: {},
+        procedureSchema: {},
+        activitySchema: {},
+        plans: {
+          data: [],
+          pages: 2,
+          total: 200,
+          page: 1,
+        },
+      });
+
+      const expectedActions = [
+        { type: ActionTypes.GET_PLANS_START },
+        { type: ActionTypes.SET_PLAN_SCHEMA, payload: { data: {} } },
+        { type: ActionTypes.SET_PLAN_ACTIVITY_SCHEMA, payload: { data: {} } },
+        {
+          type: ActionTypes.SET_PLAN_ACTIVITY_PROCEDURE_SCHEMA,
+          payload: { data: {} },
+        },
+        {
+          type: ActionTypes.GET_PLANS_SUCCESS,
+          payload: {
+            data: [],
+          },
+          meta: {
+            page: 1,
+            total: 200,
+          },
+        },
+      ];
+
+      return store.dispatch(Actions.setupPlan()).then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+    });
+
+    it(`should dispatch an action of type ${
+      ActionTypes.GET_PLANS_ERROR
+    } when setting up plans fails`, () => {
+      const error = {
+        status: 404,
+        code: 404,
+        name: 'Error',
+        message: 'Not Found',
+        developerMessage: 'Not Found',
+        userMessage: 'Not Found',
+        error: 'Error',
+        error_description: 'Not Found',
+      };
+
+      const store = mockStore({
+        selectedPlanActivity: {
+          _id: 'deded',
+          plan: {
+            _id: '29032jdd',
+          },
+          incidentType: { _id: 'ededed' },
+        },
+      });
+
+      const expectedActions = [
+        { type: ActionTypes.GET_PLANS_START },
+        {
+          type: ActionTypes.GET_PLANS_ERROR,
+          payload: { data: error },
+          error: true,
+        },
+      ];
+
+      // mock API call
+      API.setupPlan.mockRejectedValueOnce(error);
+
+      return store.dispatch(Actions.setupPlan()).then(() => {
         expect(store.getActions()).toEqual(expectedActions);
       });
     });

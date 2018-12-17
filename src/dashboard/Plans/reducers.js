@@ -37,12 +37,18 @@ import {
   SELECT_PLAN,
   SELECT_PLAN_ACTIVITY,
   SELECT_PLAN_ACTIVITY_PROCEDURE,
+  SET_PLAN_ACTIVITY_PROCEDURE_SCHEMA,
+  SET_PLAN_ACTIVITY_SCHEMA,
+  SET_PLAN_SCHEMA,
   UPDATE_PLAN_FILTERS,
-} from './actions';
+} from './constants';
 
 /**
  * Store keys added by the reducers in this file
  *
+ * planSchema: Object
+ * planActivitySchema: Object
+ * planActivityProcedureSchema: Object
  * plans: Object
  * selectedPlan: Object
  * planActivities: Object
@@ -95,6 +101,29 @@ const defaultProceduresState = {
  * Plan Reducers
  *------------------------------------------------------------------------------
  */
+
+/**
+ * Plan schema reducer
+ *
+ * @function
+ * @name planSchema
+ *
+ * @param {Object} state={} - Initial state
+ * @param {Object} action - Redux action object
+ * @param {string} action.type - Action type
+ * @param {Object} action.payload - Action payload
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function planSchema(state = null, action) {
+  switch (action.type) {
+    case SET_PLAN_SCHEMA:
+      return { ...action.payload.data };
+    default:
+      return state;
+  }
+}
 
 /**
  * Plans reducer
@@ -278,6 +307,29 @@ export function planActivities(state = defaultPlanActivitiesState, action) {
 }
 
 /**
+ * Plan Activity schema reducer
+ *
+ * @function
+ * @name planActivitySchema
+ *
+ * @param {Object} state={} - Initial state
+ * @param {Object} action - Redux action object
+ * @param {string} action.type - Action type
+ * @param {Object} action.payload - Action payload
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function planActivitySchema(state = null, action) {
+  switch (action.type) {
+    case SET_PLAN_ACTIVITY_SCHEMA:
+      return { ...action.payload.data };
+    default:
+      return state;
+  }
+}
+
+/**
  * selectedPlanActivity reducer
  *
  * @function
@@ -295,6 +347,29 @@ export function selectedPlanActivity(state = null, action) {
     case SELECT_PLAN_ACTIVITY: {
       return { ...action.payload.data };
     }
+    default:
+      return state;
+  }
+}
+
+/**
+ * Plan Activity Procedure schema reducer
+ *
+ * @function
+ * @name planActivityProcedureSchema
+ *
+ * @param {Object} state={} - Initial state
+ * @param {Object} action - Redux action object
+ * @param {string} action.type - Action type
+ * @param {Object} action.payload - Action payload
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function planActivityProcedureSchema(state = null, action) {
+  switch (action.type) {
+    case SET_PLAN_ACTIVITY_PROCEDURE_SCHEMA:
+      return { ...action.payload.data };
     default:
       return state;
   }

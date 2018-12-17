@@ -154,6 +154,19 @@ export const loadResourceAdjustmentSchema = () =>
   Axios.get('/adjustments/schema').then(response => response.data);
 
 /**
+ * Get Plan schema from the API
+ *
+ * @function
+ * @name getPlanSchema
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function getPlanSchema() {
+  return Axios.get('/plans/schema');
+}
+
+/**
  * Get Plans from the API
  *
  * @function
@@ -221,6 +234,19 @@ export function delPlan(plan) {
 }
 
 /**
+ * Get Plan activity schema from the API
+ *
+ * @function
+ * @name getPlanActivitySchema
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function getPlanActivitySchema() {
+  return Axios.get('/activities/schema');
+}
+
+/**
  * Get Plans Activities from the API
  *
  * @function
@@ -238,6 +264,32 @@ export function getPlanActivities(planId, page = 1) {
     params: {
       page,
       limit: 100, // for testing purpose remove this after testing
+      filter: {
+        plan: planId,
+      },
+    },
+  });
+}
+
+/**
+ * Get Plan Activities per phase from the API
+ *
+ * @function
+ * @name getPlanPhaseActivities
+ *
+ * @param {string} planId - Plan unique ID
+ * @param {string} phase - phase name
+ * @param {number} page - page to retrieve results from
+ * @returns {Promise}
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function getPlanPhaseActivities(planId, phase, page = 1) {
+  return Axios.get(`/activities`, {
+    params: {
+      page,
+      phase,
       filter: {
         plan: planId,
       },
@@ -275,6 +327,19 @@ export function postPlanActivity(activity) {
  */
 export function putPlanActivity(activity) {
   return Axios.put(`/activities/${activity._id}`, JSON.stringify(activity)); //eslint-disable-line
+}
+
+/**
+ * Get Plan Activity Procedure schema from the API
+ *
+ * @function
+ * @name getPlanActivityProcedureSchema
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function getPlanActivityProcedureSchema() {
+  return Axios.get('/procedures/schema');
 }
 
 /**
@@ -433,4 +498,32 @@ export function getFeatures(params = {}) {
  */
 export function getQuestionnaires(params = {}) {
   return Axios.get(`/questionnaires`, { params });
+}
+
+/**
+ * Get in parallel the setup configs for plan from the API
+ * This function will be called during application initialization only
+ *
+ * @function setup
+ * @name setupPlan
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function setupPlan() {
+  return axios
+    .all([
+      getPlanSchema(),
+      getPlanActivitySchema(),
+      getPlanActivityProcedureSchema(),
+      getPlans(),
+    ])
+    .then(
+      axios.spread((planSchema, activitySchema, procedureSchema, plans) => ({
+        planSchema: planSchema.data,
+        activitySchema: activitySchema.data,
+        procedureSchema: procedureSchema.data,
+        plans: plans.data,
+      }))
+    );
 }

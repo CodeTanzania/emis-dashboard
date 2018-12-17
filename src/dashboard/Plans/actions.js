@@ -1,130 +1,77 @@
 import groupBy from 'lodash/groupBy';
 import isEmpty from 'lodash/isEmpty';
 import merge from 'lodash/merge';
+import {
+  CLOSE_PLAN_ACTIVITY_FORM,
+  CLOSE_PLAN_ACTIVITY_PROCEDURE_FORM,
+  CLOSE_PLAN_FORM,
+  GET_PLANS_ERROR,
+  GET_PLANS_START,
+  GET_PLANS_SUCCESS,
+  GET_PLAN_ACTIVITIES_ERROR,
+  GET_PLAN_ACTIVITIES_START,
+  GET_PLAN_ACTIVITIES_SUCCESS,
+  GET_PLAN_ACTIVITY_PROCEDURES_ERROR,
+  GET_PLAN_ACTIVITY_PROCEDURES_START,
+  GET_PLAN_ACTIVITY_PROCEDURES_SUCCESS,
+  OPEN_PLAN_ACTIVITY_FORM,
+  OPEN_PLAN_ACTIVITY_PROCEDURE_FORM,
+  OPEN_PLAN_FORM,
+  POST_PLAN_ACTIVITY_ERROR,
+  POST_PLAN_ACTIVITY_PROCEDURE_ERROR,
+  POST_PLAN_ACTIVITY_PROCEDURE_START,
+  POST_PLAN_ACTIVITY_PROCEDURE_SUCCESS,
+  POST_PLAN_ACTIVITY_START,
+  POST_PLAN_ACTIVITY_SUCCESS,
+  POST_PLAN_ERROR,
+  POST_PLAN_START,
+  POST_PLAN_SUCCESS,
+  PUT_PLAN_ACTIVITY_ERROR,
+  PUT_PLAN_ACTIVITY_PROCEDURE_ERROR,
+  PUT_PLAN_ACTIVITY_PROCEDURE_START,
+  PUT_PLAN_ACTIVITY_PROCEDURE_SUCCESS,
+  PUT_PLAN_ACTIVITY_START,
+  PUT_PLAN_ACTIVITY_SUCCESS,
+  PUT_PLAN_ERROR,
+  PUT_PLAN_START,
+  PUT_PLAN_SUCCESS,
+  RESET_PLAN_FILTERS,
+  SELECT_PLAN,
+  SELECT_PLAN_ACTIVITY,
+  SELECT_PLAN_ACTIVITY_PROCEDURE,
+  SET_PLAN_ACTIVITY_PROCEDURE_SCHEMA,
+  SET_PLAN_ACTIVITY_SCHEMA,
+  SET_PLAN_SCHEMA,
+  UPDATE_PLAN_FILTERS,
+} from './constants';
 import { notifyError, notifySuccess } from './helpers';
-
-/*
- *------------------------------------------------------------------------------
- * Plan action types
- *------------------------------------------------------------------------------
- */
-
-/* fetch action types */
-export const GET_PLANS_START = 'GET_PLANS_START';
-export const GET_PLANS_SUCCESS = 'GET_PLANS_SUCCESS';
-export const GET_PLANS_ERROR = 'GET_PLANS_ERROR';
-
-/* add action types */
-export const POST_PLAN_START = 'POST_PLAN_START';
-export const POST_PLAN_SUCCESS = 'POST_PLAN_SUCCESS';
-export const POST_PLAN_ERROR = 'POST_PLAN_ERROR';
-
-/* edit action types */
-export const PUT_PLAN_START = 'PUT_PLAN_START';
-export const PUT_PLAN_SUCCESS = 'PUT_PLAN_SUCCESS';
-export const PUT_PLAN_ERROR = 'PUT_PLAN_ERROR';
-
-/* delete action types */
-export const DELETE_PLAN_START = 'DELETE_PLAN_START';
-export const DELETE_PLAN_SUCCESS = 'DELETE_PLAN_SUCCESS';
-export const DELETE_PLAN_ERROR = 'DELETE_PLAN_ERROR';
-
-/* select action types */
-export const SELECT_PLAN = 'SELECT_PLAN';
-
-/* form handling action types */
-export const OPEN_PLAN_FORM = 'OPEN_PLAN_FORM';
-export const CLOSE_PLAN_FORM = 'CLOSE_PLAN_FORM';
-
-/*
- *------------------------------------------------------------------------------
- * Plan activity action types
- *------------------------------------------------------------------------------
- */
-
-/* get/fetch actions types */
-export const GET_PLAN_ACTIVITIES_START = 'GET_PLAN_ACTIVITIES_START';
-export const GET_PLAN_ACTIVITIES_SUCCESS = 'GET_PLAN_ACTIVITIES_SUCCESS';
-export const GET_PLAN_ACTIVITIES_ERROR = 'GET_PLAN_ACTIVITIES_ERROR';
-
-/* post action types */
-export const POST_PLAN_ACTIVITY_START = 'POST_PLAN_ACTIVITY_START';
-export const POST_PLAN_ACTIVITY_SUCCESS = 'POST_PLAN_ACTIVITY_SUCCESS';
-export const POST_PLAN_ACTIVITY_ERROR = 'POST_PLAN_ACTIVITY_ERROR';
-
-/* edit action types */
-export const PUT_PLAN_ACTIVITY_START = 'PUT_PLAN_ACTIVITY_START';
-export const PUT_PLAN_ACTIVITY_SUCCESS = 'PUT_PLAN_ACTIVITY_SUCCESS';
-export const PUT_PLAN_ACTIVITY_ERROR = 'PUT_PLAN_ACTIVITY_ERROR';
-
-/* select action types */
-export const SELECT_PLAN_ACTIVITY = 'SELECT_PLAN_ACTIVITY';
-
-/* handling filtering plans */
-export const UPDATE_PLAN_FILTERS = 'UPDATE_PLAN_FILTERS';
-export const RESET_PLAN_FILTERS = 'RESET_PLAN_FILTERS';
-
-/* form handling action types */
-export const OPEN_PLAN_ACTIVITY_FORM = 'OPEN_PLAN_ACTIVITY_FORM';
-export const CLOSE_PLAN_ACTIVITY_FORM = 'CLOSE_PLAN_ACTIVITY_FORM';
-
-/*
- *------------------------------------------------------------------------------
- * Plan activity Procedures action types
- *------------------------------------------------------------------------------
- */
-
-/* get/fetch actions types */
-export const GET_PLAN_ACTIVITY_PROCEDURES_START =
-  'GET_PLAN_ACTIVITY_PROCEDURES_START';
-export const GET_PLAN_ACTIVITY_PROCEDURES_SUCCESS =
-  'GET_PLAN_ACTIVITY_PROCEDURES_SUCCESS';
-export const GET_PLAN_ACTIVITY_PROCEDURES_ERROR =
-  'GET_PLAN_ACTIVITY_PROCEDURES_ERROR';
-
-/* post action types */
-export const POST_PLAN_ACTIVITY_PROCEDURES_START =
-  'POST_PLAN_ACTIVITY_PROCEDURES_START';
-export const POST_PLAN_ACTIVITY_PROCEDURES_SUCCESS =
-  'POST_PLAN_ACTIVITY_PROCEDURES_SUCCESS';
-export const POST_PLAN_ACTIVITY_PROCEDURES_ERROR =
-  'POST_PLAN_ACTIVITY_PROCEDURES_ERROR';
-
-export const POST_PLAN_ACTIVITY_PROCEDURE_START =
-  'POST_PLAN_ACTIVITY_PROCEDURE_START';
-export const POST_PLAN_ACTIVITY_PROCEDURE_SUCCESS =
-  'POST_PLAN_ACTIVITY_PROCEDURE_SUCCESS';
-export const POST_PLAN_ACTIVITY_PROCEDURE_ERROR =
-  'POST_PLAN_ACTIVITY_PROCEDURE_ERROR';
-
-/* put action types */
-export const PUT_PLAN_ACTIVITY_PROCEDURES_START =
-  'PUT_PLAN_ACTIVITY_PROCEDURES_START';
-export const PUT_PLAN_ACTIVITY_PROCEDURES_SUCCESS =
-  'PUT_PLAN_ACTIVITY_PROCEDURES_SUCCESS';
-export const PUT_PLAN_ACTIVITY_PROCEDURES_ERROR =
-  'PUT_PLAN_ACTIVITY_PROCEDURES_ERROR';
-export const PUT_PLAN_ACTIVITY_PROCEDURE_START =
-  'PUT_PLAN_ACTIVITY_PROCEDURE_START';
-export const PUT_PLAN_ACTIVITY_PROCEDURE_SUCCESS =
-  'PUT_PLAN_ACTIVITY_PROCEDURE_SUCCESS';
-export const PUT_PLAN_ACTIVITY_PROCEDURE_ERROR =
-  'PUT_PLAN_ACTIVITY_PROCEDURE_ERROR';
-
-/* select action types */
-export const SELECT_PLAN_ACTIVITY_PROCEDURE = 'SELECT_PLAN_ACTIVITY_PROCEDURE';
-
-/* form handling action types */
-export const OPEN_PLAN_ACTIVITY_PROCEDURE_FORM =
-  'OPEN_PLAN_ACTIVITY_PROCEDURE_FORM';
-export const CLOSE_PLAN_ACTIVITY_PROCEDURE_FORM =
-  'CLOSE_PLAN_ACTIVITY_PROCEDURE_FORM';
 
 /*
  *------------------------------------------------------------------------------
  * Plan action creators
  *------------------------------------------------------------------------------
  */
+
+/**
+ * Action dispatched when setting the plan schema to the store
+ *
+ * @function
+ * @name setPlanSchema
+ *
+ * @param {Object} schema
+ * @returns {Object} - Redux action
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function setPlanSchema(schema) {
+  return {
+    type: SET_PLAN_SCHEMA,
+    payload: {
+      data: schema,
+    },
+  };
+}
 
 /**
  * Action dispatched when a plan is selected
@@ -449,6 +396,27 @@ export function closePlanActivityForm() {
 }
 
 /**
+ * Action dispatched when setting the plan activity schema to the store
+ *
+ * @function
+ * @name setPlanActivitySchema
+ *
+ * @param {Object} schema
+ * @returns {Object} - Redux action
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function setPlanActivitySchema(schema) {
+  return {
+    type: SET_PLAN_ACTIVITY_SCHEMA,
+    payload: {
+      data: schema,
+    },
+  };
+}
+
+/**
  * Action dispatched when fetching plan activities from API
  *
  * @function
@@ -625,6 +593,27 @@ export function putPlanActivityError(error) {
       data: error,
     },
     error: true,
+  };
+}
+
+/**
+ * Action dispatched when setting the plan activity procedure schema to the store
+ *
+ * @function
+ * @name setPlanActivityProcedureSchema
+ *
+ * @param {Object} schema
+ * @returns {Object} - Redux action
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function setPlanActivityProcedureSchema(schema) {
+  return {
+    type: SET_PLAN_ACTIVITY_PROCEDURE_SCHEMA,
+    payload: {
+      data: schema,
+    },
   };
 }
 
@@ -1162,6 +1151,34 @@ export function putPlanActivityProcedure(procedure) {
       })
       .catch(error => {
         dispatch(putPlanActivityProcedureError(error));
+        notifyError(error);
+      });
+  };
+}
+
+/**
+ * A Thunk function which performs asynchronous setting up plans configs
+ *
+ * @function
+ * @name setupPlan
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function setupPlan() {
+  return (dispatch, getState, { API }) => {
+    dispatch(getPlansStart());
+
+    return API.setupPlan()
+      .then(data => {
+        const { planSchema, activitySchema, procedureSchema, plans } = data;
+        dispatch(setPlanSchema(planSchema));
+        dispatch(setPlanActivitySchema(activitySchema));
+        dispatch(setPlanActivityProcedureSchema(procedureSchema));
+        dispatch(getPlansSuccess(plans.data, plans.page, plans.total));
+      })
+      .catch(error => {
+        dispatch(getPlansError(error));
         notifyError(error);
       });
   };
