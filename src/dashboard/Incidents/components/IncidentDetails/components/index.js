@@ -8,6 +8,7 @@ import { getNavActive } from '../../../actions';
 import IncidentDetailsContent from './IncidentDetailContents';
 import IncidentAssessiment from './IncidentAssessiment';
 import IncidentActionTaken from './IncidentAction';
+import IncidentAgencies from './IncidentAgencies';
 
 const { Content } = Layout;
 
@@ -53,7 +54,7 @@ class IncidentGeneralDetails extends React.Component {
           return <IncidentActionTaken />;
         }
         case 'agencies': {
-          return <h3>hello agencies</h3>;
+          return <IncidentAgencies />;
         }
         case 'resource': {
           return <h3>resource</h3>;
@@ -78,10 +79,10 @@ class IncidentGeneralDetails extends React.Component {
             className="siderDetails"
           >
             <Menu.Item key="list">Situation Analysis</Menu.Item>
-            <Menu.Item key="assessment">Assessment</Menu.Item>
             <Menu.Item key="actions">Action Taken</Menu.Item>
             <Menu.Item key="agencies">Responding agencies</Menu.Item>
             <Menu.Item key="resource">Resource needed</Menu.Item>
+            <Menu.Item key="assessment">Assessment</Menu.Item>
             <Menu.Item key="recomandation">Recomendation</Menu.Item>
           </Menu>
         </Sider>
