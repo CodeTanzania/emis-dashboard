@@ -78,6 +78,18 @@ export default function Dashboard() {
                 <span>Resources</span>
               </NavLink>
             </Menu.Item>
+            {/* alerts menu */}
+            <Menu.Item key="5">
+              <a
+                href="https://emis-web-alerts.herokuapp.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Icon type="warning" theme="outlined" className="f-25" />
+                <span>Alerts</span>
+              </a>
+            </Menu.Item>
+            {/* end alerts menu */}
           </Menu>
         </Sider>
         {/* content section */}
