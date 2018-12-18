@@ -183,6 +183,7 @@ class ResourceTable extends Component {
                 onChange={this.handleSelectItem}
                 notFoundContent={searchingItems ? <Spin size="small" /> : null}
                 value={filters.item}
+                allowClear
               >
                 {itemOpts}
               </Select>
@@ -202,6 +203,7 @@ class ResourceTable extends Component {
                 onChange={this.handleSelectOwner}
                 notFoundContent={searchingOwners ? <Spin size="small" /> : null}
                 value={filters.owner}
+                allowClear
               >
                 {ownerOpts}
               </Select>
