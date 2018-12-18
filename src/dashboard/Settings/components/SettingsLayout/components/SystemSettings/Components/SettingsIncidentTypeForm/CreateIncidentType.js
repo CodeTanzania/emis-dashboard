@@ -9,7 +9,7 @@ export default class CreateIncidentType extends React.Component {
     this.state = {
       visible: false,
     };
-    this.onCancelButton = this.handleCancel.bind(this)
+    this.onCancelButton = this.handleCancel.bind(this);
   }
 
   showModal = () => {
@@ -23,7 +23,6 @@ export default class CreateIncidentType extends React.Component {
       visible: false,
     });
   };
-
 
   render() {
     const { visible } = this.state;

@@ -1,16 +1,36 @@
 import React from 'react';
 import { Icon, Modal } from 'antd';
+import PropTypes from 'prop-types';
 
-import IncidentTypeForm from './IncidentTypeForm';
 import { connect } from 'react-redux';
+import IncidentTypeForm from './IncidentTypeForm';
 
 class UpdateIncidentType extends React.Component {
+  /* props validations for SettingsLayout */
+  static propTypes = {
+    incidentType: PropTypes.arrayOf(
+      PropTypes.shape({
+        event: PropTypes.string,
+        nature: PropTypes.string.isRequired,
+        family: PropTypes.string.isRequired,
+        code: PropTypes.string.isRequired,
+        cap: PropTypes.string.isRequired,
+        color: PropTypes.string,
+        _id: PropTypes.string,
+      }).isRequired
+    ),
+  };
+
+  static defaultProps = {
+    incidentType: null,
+  };
+
   constructor(props) {
     super(props);
     this.state = {
       visible: false,
     };
-    this.onCancelButton = this.handleCancel.bind(this)
+    this.onCancelButton = this.handleCancel.bind(this);
   }
 
   showModal = () => {
@@ -24,7 +44,6 @@ class UpdateIncidentType extends React.Component {
       visible: false,
     });
   };
-
 
   render() {
     const { incidentType } = this.props;
@@ -43,7 +62,11 @@ class UpdateIncidentType extends React.Component {
           footer={null}
           width="50%"
         >
-          <IncidentTypeForm onCancelButton={this.handleCancel} incidentType={incidentType[0]} />;
+          <IncidentTypeForm
+            onCancelButton={this.handleCancel}
+            incidentType={incidentType[0]}
+          />
+          ;
         </Modal>
       </div>
     );

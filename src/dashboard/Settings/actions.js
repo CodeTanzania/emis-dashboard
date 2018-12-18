@@ -13,7 +13,6 @@ export const SELECT_COLOR_AUTOFILL = 'INCIDENTS_TYPE :SELECT_COLOR_AUTOFILL';
 export const SEARCH_INCIDENT_TYPE = 'INCIDENTS_TYPE :SEARCH_INCIDENT_TYPE';
 export const SELECT_ACTIVE_MENU = 'SELECT_ACTIVE_MENU';
 
-
 /* Actions creater */
 
 export const fetchIncidentsType = () => ({

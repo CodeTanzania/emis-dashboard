@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 
 const { SubMenu } = Menu;
 
-class SidebarSettings extends React.Component {ZZ
+class SidebarSettings extends React.Component {
   handleClick = e => {
     console.log('click ', e);
   };

@@ -38,7 +38,7 @@ class SettingsLayout extends React.Component {
   static propTypes = {
     incidentType: PropTypes.arrayOf(
       PropTypes.shape({
-        name: PropTypes.string,
+        event: PropTypes.string,
         nature: PropTypes.string.isRequired,
         family: PropTypes.string.isRequired,
         code: PropTypes.string.isRequired,

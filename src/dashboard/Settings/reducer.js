@@ -98,4 +98,3 @@ export function activeMenu(state = { activeItem: 'incidentType' }, action) {
       return state;
   }
 }
-

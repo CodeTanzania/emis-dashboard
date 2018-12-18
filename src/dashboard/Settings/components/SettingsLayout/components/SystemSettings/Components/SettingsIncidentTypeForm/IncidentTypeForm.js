@@ -7,7 +7,7 @@ import { ChromePicker } from 'react-color';
 import {
   addIncidentType,
   selectColorAutofill,
-  updateIncidentTypeSuccess
+  updateIncidentTypeSuccess,
 } from '../../../../../../actions';
 
 import '../../styles.css';
@@ -20,7 +20,6 @@ class IncidentTypeForm extends Component {
     super(props);
     const { incidentType } = this.props;
     this.state = {
-      visible: false,
       background: `${incidentType}`,
     };
   }
@@ -28,15 +27,15 @@ class IncidentTypeForm extends Component {
   componentDidMount() {
     const { incidentType, form } = this.props;
     if (incidentType) {
-        const formFields = Object.keys(form.getFieldsValue());
-        const fieldsValues = {};
-        formFields.forEach(field => {
-            fieldsValues[field] = incidentType[field];
-            return fieldsValues[field];
-        });
-        form.setFieldsValue(fieldsValues);
+      const formFields = Object.keys(form.getFieldsValue());
+      const fieldsValues = {};
+      formFields.forEach(field => {
+        fieldsValues[field] = incidentType[field];
+        return fieldsValues[field];
+      });
+      form.setFieldsValue(fieldsValues);
     }
-}
+  }
 
   handleSubmit = e => {
     e.preventDefault();
@@ -59,22 +58,16 @@ class IncidentTypeForm extends Component {
             this.createIncidentType(data);
           }
         }
-        
       }
     );
   };
 
-  handleCancel = () => {
-    this.setState({
-      visible: false,
-    });
-  };
   /**
    * Create incidentType helper function
    */
   createIncidentType = data => {
     this.setState({ submitting: true });
-    const { newIncidentTpeAdd,onCancelButton } = this.props;
+    const { newIncidentTpeAdd, onCancelButton } = this.props;
     newIncidentTpeAdd(data);
     if (data.error) {
       this.setState({ submitting: false });
@@ -84,7 +77,6 @@ class IncidentTypeForm extends Component {
   };
 
   handleOnClickIncidentType = () => {
-    this.setState({ visible: true });
     const { incidentType, form } = this.props;
     if (incidentType) {
       const formFields = Object.keys(form.getFieldsValue());
@@ -99,16 +91,14 @@ class IncidentTypeForm extends Component {
     }
   };
 
-
   incidentTypeEdit = (incidentTypeId, updates) => {
-    const { incidentTypeUpdate,onCancelButton } = this.props;
+    const { incidentTypeUpdate, onCancelButton } = this.props;
     incidentTypeUpdate(incidentTypeId, updates);
     this.setState({ submitting: false });
     message.success('Incidenttype updated successfull');
     onCancelButton();
   };
 
- 
   onClick = () => {
     const { colorSelected, form } = this.props;
     form.setFieldsValue({
@@ -125,7 +115,7 @@ class IncidentTypeForm extends Component {
   };
 
   render() {
-    const { form,onCancelButton} = this.props;
+    const { form, onCancelButton } = this.props;
     const { submitting, background } = this.state;
     const { getFieldDecorator, getFieldValue } = form;
 
@@ -237,22 +227,22 @@ class IncidentTypeForm extends Component {
               </Select>
             )}
           </FormItem>
-          <Divider /> 
+          <Divider />
           {getFieldValue('prevColor') === '' ? (
-              <FormItem {...formItemLayout} label="Color code">
-                {getFieldDecorator('color')(<Input placeholder="Color code" />)}
-              </FormItem>
-            ) : (
-              <FormItem {...formItemLayout} label="Color code">
-                {getFieldDecorator('color')(<Input placeholder="Color code" />)}
-              </FormItem>
-            )}
-            <FormItem {...formItemLayout} label="Pick color">
-              <ChromePicker
-                color={background}
-                onChangeComplete={this.handleChangeComplete}
-              />
-            </FormItem>    
+            <FormItem {...formItemLayout} label="Color code">
+              {getFieldDecorator('color')(<Input placeholder="Color code" />)}
+            </FormItem>
+          ) : (
+            <FormItem {...formItemLayout} label="Color code">
+              {getFieldDecorator('color')(<Input placeholder="Color code" />)}
+            </FormItem>
+          )}
+          <FormItem {...formItemLayout} label="Pick color">
+            <ChromePicker
+              color={background}
+              onChangeComplete={this.handleChangeComplete}
+            />
+          </FormItem>
           <FormItem {...tailFormItemLayout}>
             <Row>
               <Col span={4} offset={14}>
