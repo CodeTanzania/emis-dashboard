@@ -11,7 +11,6 @@ import {
   GET_INCIDENT_ACTION_ERROR,
   POST_INCIDENT_SUCCESS,
   FILTER_INCIDENT_BY_DATE,
-  SET_FILTER_INCIDENTTYPE,
 } from './actions';
 
 /**
@@ -89,11 +88,6 @@ export function incidents(state = initialState, action) {
       return {
         ...state,
         data: [action.payload.incident, ...state.data],
-      };
-    case SET_FILTER_INCIDENTTYPE:
-      return {
-        ...state,
-        data: [action.payload.filteredIncident, ...state.data],
       };
     default:
       return state;

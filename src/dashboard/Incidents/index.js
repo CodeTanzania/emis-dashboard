@@ -140,7 +140,7 @@ class Incidents extends React.Component {
   }
 
   mapLayers = () => {
-    L.control.layers(baseMaps, {}, { position: 'topleft' }).addTo(this.map);
+    L.control.layers(baseMaps, {}, { position: 'bottomleft' }).addTo(this.map);
   };
 
   DisplayMarkers = () => {

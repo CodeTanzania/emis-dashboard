@@ -19,7 +19,9 @@ export const POST_INCIDENT_START = 'POST_INCIDENT_START';
 export const POST_INCIDENT_SUCCESS = 'POST_INCIDENT_SUCCESS';
 export const POST_INCIDENT_ERROR = 'POST_INCIDENT_ERROR';
 export const FILTER_INCIDENT_BY_DATE = 'FILTER_INCIDENT_BY_DATE';
-export const SET_FILTER_INCIDENTTYPE = 'SET_FILTER_INCIDENTTYPE';
+export const SEARCH_INCIDENT_START = 'SEARCH_INCIDENT_START';
+export const SEARCH_INCIDENT_ERROR = 'SEARCH_INCIDENT_ERROR';
+
 
 /* Actions creater */
 
@@ -88,11 +90,6 @@ export const filterIncidentByDate = selectedDate => ({
   payload: { selectedDate },
 });
 
-export const filterByIncidentType = filteredIncident => ({
-  type: SET_FILTER_INCIDENTTYPE,
-  payload: { filteredIncident },
-});
-
 export const createIncidentStart = () => ({
   type: POST_INCIDENT_START,
 });
@@ -102,6 +99,15 @@ export const createIncidentFail = message => ({
   payload: {
     message,
   },
+});
+
+export const searchIncidentStart = () => ({
+  type: SEARCH_INCIDENT_START,
+});
+
+export const searchIncidentError = message => ({
+  type: SEARCH_INCIDENT_ERROR,
+  payload: { message },
 });
 
 export const getIncidentsSuccess = () => (dispatch, getState, { API }) => {
@@ -173,3 +179,23 @@ export const activeIncidentAction = (incidentId = null) => (
     })
     .catch(error => dispatch(setIncidentActionError(error)));
 };
+
+export const searchIncident = (searchData) => (dispatch,getState, {API}) =>{
+  
+  dispatch(searchIncidentStart());
+  API.searchIncidents(searchData)
+  .then(results => {
+    const { data: receivedIncidents } = results;
+    const data = receivedIncidents.map(result => {
+      const epicentre = incidentToGeojson(result);
+
+      return { ...result, epicentre };
+    });
+
+    dispatch({
+      type: GET_INCIDENTS_SUCCESS,
+      payload: { data: { ...results, data } },
+    });
+  })
+   .catch(error => dispatch(searchIncidentError(error)));
+}

@@ -1,6 +1,15 @@
 .IncidentDetails{
-    margin-top: 15px;
     height: 98vh;
+    width: 380px;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 1000;
+    background-color:white;
+    width: 380px;
+    overflow-x: hidden
 }
 .IncidentName {
 border-bottom: 1px solid #e8e8ee

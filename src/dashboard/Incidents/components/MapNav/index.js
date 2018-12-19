@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Menu, List } from 'antd';
+import { Button, List,Input, Row, Col, Layout,  } from 'antd';
 import { connect } from 'react-redux';
-import './styles.css';
-import { bindActionCreators } from 'redux';
-import { getNavActive } from '../../actions';
 import IncidentFilter from '../IncidentFilter';
 import IncidentsList from '../IncidentsList';
 import IncidentDetails from '../IncidentDetails';
 
+import './styles.css';
+import { bindActionCreators } from 'redux';
+import { searchIncident } from '../../actions';
+
+const { Header, Content } = Layout;
+const {Search} = Input;
 /**
  * Map Navigation  Layout component
  * this navigations layout will show
@@ -23,7 +26,6 @@ import IncidentDetails from '../IncidentDetails';
 class MapNav extends React.Component {
   static propTypes = {
     newIncidentButton: PropTypes.func,
-    currentMenu: PropTypes.string,
     IncidentSelected: PropTypes.shape({
       name: PropTypes.string,
       incidentsTypeData: PropTypes.shape({
@@ -54,15 +56,12 @@ class MapNav extends React.Component {
         _id: PropTypes.string,
       }).isRequired
     ),
-    activatedNav: PropTypes.func,
     clickedIncident: PropTypes.func,
     onCloseDetail: PropTypes.func,
   };
 
   static defaultProps = {
     newIncidentButton: null,
-    currentMenu: '',
-    activatedNav: null,
     clickedIncident: null,
     incidents: [],
     onCloseDetail: null,
@@ -75,88 +74,80 @@ class MapNav extends React.Component {
     };
   }
 
-  handleClick = data => {
-    const { activatedNav } = this.props;
-    activatedNav(data.key);
-  };
+  onSearchIncident = (searchData) => {
+      const {handleSearchIncident} = this.props;
+      handleSearchIncident(searchData)
+  }
 
   render() {
     const {
       newIncidentButton,
-      currentMenu,
       onCloseDetail,
       IncidentSelected,
-    } = this.props;
+      clickedIncident,
+      incidents } = this.props;
+
     const { hideNav } = this.state;
 
-    const showNavContent = currentNav => {
-      const { clickedIncident, incidents } = this.props;
-      switch (currentNav) {
-        case 'list': {
-          return (
-            <div>
-              <IncidentFilter />
-              <List
-                className="IncidentList"
-                itemLayout="horizontal"
-                dataSource={incidents}
-                renderItem={incident => (
-                  <IncidentsList
-                    clickedIncidentList={clickedIncident}
-                    incidentsList={incident}
-                  />
-                )}
-              />
-            </div>
-          );
-        }
-        default:
-          return false;
-      }
-    };
-
     return !hideNav ? (
-      <div>
-        <div className="topNav">
-          {!IncidentSelected ? (
-            <div>
-              {' '}
-              <div className="MapNav">
-                <Button type="primary" onClick={newIncidentButton}>
-                  + New Incident
-                </Button>
-              </div>
-              <Menu
-                onClick={this.handleClick}
-                selectedKeys={[currentMenu]}
-                mode="horizontal"
-              >
-                <Menu.Item key="list">Incidents</Menu.Item>
-              </Menu>
-              <div>{showNavContent(currentMenu)}</div>
+      <Fragment>
+        {!IncidentSelected ? (
+          <div>
+            <div className="topNav">
+              <Row>
+                <Col span={17}>
+                  <IncidentFilter />
+                </Col>
+                <Col span={6} offset={1}>
+                  <Button type="primary" onClick={newIncidentButton}>
+                    + New Incident
+              </Button>
+                </Col>
+              </Row>
             </div>
-          ) : (
+            <Layout className="MapNav">
+              <Header className='MapNavHeader' >
+                <h3> List of Recorded Incidents</h3>
+              </Header>
+              <Content>
+                <Search
+                  placeholder="Search incident"
+                  onSearch={value => this.onSearchIncident(value)}
+                  enterButton
+                  className="MapNavSearch"
+                />
+                <List
+                  className="IncidentList"
+                  itemLayout="horizontal"
+                  dataSource={incidents}
+                  renderItem={incident => (
+                    <IncidentsList
+                      clickedIncidentList={clickedIncident}
+                      incidentsList={incident}
+                    />
+                  )}
+                />
+              </Content>
+            </Layout>
+          </div>
+        ) : (
             <IncidentDetails handleCancel={onCloseDetail} />
           )}
-        </div>
-      </div>
+      </Fragment>
     ) : null;
   }
 }
 const mapStateToProps = state => ({
   incidents:
     state.incidents.data && state.incidents.data ? state.incidents.data : [],
-  currentMenu: state.activeNav && state.activeNav.activeItem,
   IncidentSelected: state.selectedIncident.incident
     ? state.selectedIncident.incident
     : null,
 });
 
-const mapDispachToProps = dispatch => ({
-  activatedNav: bindActionCreators(getNavActive, dispatch),
-});
-
+const mapDispatchToProps = dispatch => ({
+  handleSearchIncident : bindActionCreators(searchIncident, dispatch)
+})
 export default connect(
   mapStateToProps,
-  mapDispachToProps
-)(MapNav);
+  mapDispatchToProps)(MapNav);

@@ -189,6 +189,10 @@ const API = {
     Axios.get(`${INCIDENT_ACTIONS_API}/actions/${incidentId}`).then(
       res => res.data
     ),
+
+ searchIncidents: searchValue =>
+  Axios.get(`${INCIDENTS_API}/incidents?q=${searchValue}`)
+  .then(res => res.data)
 };
 
 export default API;

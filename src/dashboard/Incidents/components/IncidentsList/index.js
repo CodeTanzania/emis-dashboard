@@ -67,7 +67,7 @@ class IncidentsList extends React.Component {
               <Col xs={20}>
                 <span
                   role="link"
-                  className={cx('f-600 f-15', 'name')}
+                  className={cx('name')}
                   onClick={this.onClick}
                   onKeyDown={this.onClick}
                   tabIndex="0"

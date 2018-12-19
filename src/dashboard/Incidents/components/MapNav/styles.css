@@ -1,15 +1,6 @@
 
 .MapNav {
-    position: absolute;
-    left: 210px;
-    top: 10px;
-    z-index: 1000;
-    height: auto;
-    overflow: hidden;
-    font-size: 12px
-}
-.topNav{
-    /* margin: 10px 10px 0 0; */
+    width: 380px;
     display: flex;
     flex-direction: column;
     position: absolute;
@@ -19,7 +10,18 @@
     background-color:white;
     width: 380px;
     overflow-x: hidden
+    
 }
+.topNav {
+    position: absolute;
+    left: 150px;
+    top: 10px;
+    z-index: 1000;
+    height: auto;
+    overflow: hidden;
+    font-size: 12px
+}
+
 .filterNav {
     position: absolute;
     top: 54px;
@@ -34,7 +36,19 @@
         background-color: white;
         display: flex;  
         flex-direction: column;
-        height: 83vh;
+        height: 86vh;
         overflow-y: auto;
        border-top: 1px solid #e8e8e8;
+}
+.MapNavSearch{
+ border-bottom:1px solid #e8e8e8;
+ margin: 15px 0 15px 20px;
+  width:90%;
+}
+.MapNavHeader {
+    height: auto;
+    line-height: 44px;
+    border-bottom: 1px solid #e8e8e8;
+    background-color: #ffffff;
+     text-transform: uppercase;
 }
