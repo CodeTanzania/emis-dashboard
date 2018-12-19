@@ -61,7 +61,7 @@ const getColumns = handleAdjustClick => [
 class ResourceTable extends Component {
   static propTypes = {
     getResourceStocks: PropTypes.func.isRequired,
-    showAdjustStockForm: PropTypes.func.isRequired,
+    showStockAdjustmentForm: PropTypes.func.isRequired,
     stocks: PropTypes.shape({
       data: PropTypes.arrayOf(PropTypes.object),
     }).isRequired,
@@ -133,7 +133,11 @@ class ResourceTable extends Component {
   };
 
   handleAdjustClick = item => {
-    this.props.showAdjustStockForm(item);
+    this.props.showStockAdjustmentForm(item);
+  };
+
+  handleOnNewStockBtnClicked = () => {
+    this.props.showStockAdjustmentForm();
   };
 
   render() {
@@ -179,6 +183,7 @@ class ResourceTable extends Component {
                 onChange={this.handleSelectItem}
                 notFoundContent={searchingItems ? <Spin size="small" /> : null}
                 value={filters.item}
+                allowClear
               >
                 {itemOpts}
               </Select>
@@ -198,13 +203,18 @@ class ResourceTable extends Component {
                 onChange={this.handleSelectOwner}
                 notFoundContent={searchingOwners ? <Spin size="small" /> : null}
                 value={filters.owner}
+                allowClear
               >
                 {ownerOpts}
               </Select>
             </FormItem>
           </Form>
           <div className={cx('stockTableActions')}>
-            <Button type="primary" icon="plus">
+            <Button
+              type="primary"
+              icon="plus"
+              onClick={this.handleOnNewStockBtnClicked}
+            >
               New Stock
             </Button>
           </div>

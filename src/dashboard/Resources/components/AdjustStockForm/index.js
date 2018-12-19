@@ -1,5 +1,9 @@
 import { connect } from 'react-redux';
-import { cancelAdjustStock, setResourceAdjustmentSchema } from '../../actions';
+import {
+  dismissStockAdjustmentForm,
+  setResourceAdjustmentSchema,
+  getResourceStocks,
+} from '../../actions';
 import AdjustStockForm from './AdjustStockForm';
 
 const mapStateToProps = state => ({
@@ -8,8 +12,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  cancelAdjustStock,
+  dismissStockAdjustmentForm,
   setResourceAdjustmentSchema,
+  getResourceStocks,
 };
 
 export default connect(

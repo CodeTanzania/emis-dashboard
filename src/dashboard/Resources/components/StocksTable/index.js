@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { getResourceStocks, showAdjustStockForm } from '../../actions';
+import { getResourceStocks, showStockAdjustmentForm } from '../../actions';
 import StocksTable from './StocksTable';
 
 const mapStateToProps = state => ({
@@ -8,7 +8,7 @@ const mapStateToProps = state => ({
 });
 const mapDispatchToProps = {
   getResourceStocks,
-  showAdjustStockForm,
+  showStockAdjustmentForm,
 };
 
 export default connect(

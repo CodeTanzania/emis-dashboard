@@ -6,6 +6,7 @@ import { Modal, Form, Select, Input, InputNumber, Switch, message } from 'antd';
 import {
   loadResourceItemSchema,
   createResourceItem,
+  updateResourceItem,
 } from '../../../../common/API';
 
 const FormItem = Form.Item;
@@ -25,6 +26,7 @@ class ItemForm extends Component {
     }),
     dismissItemForm: PropTypes.func.isRequired,
     setResourceSchema: PropTypes.func.isRequired,
+    getResourceItems: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -64,7 +66,7 @@ class ItemForm extends Component {
   }
 
   handleSaveItem = () => {
-    const { form } = this.props;
+    const { form, item } = this.props;
     form.validateFields(errors => {
       if (errors) {
         // There is the validation error, quit save
@@ -73,17 +75,36 @@ class ItemForm extends Component {
       const fields = form.getFieldsValue();
       const data = { ...fields };
       this.setState({ saving: true });
-      createResourceItem(data)
-        .then(() => {
-          // TODO refresh resource items
-          this.props.form.resetFields();
-          this.setState({ saving: false });
-          message.success(`${data.name} successfully saved`);
-        })
-        .catch(() => {
-          this.setState({ saving: false });
-          message.error(`${data.name} cannot be saved`);
-        });
+      if (item._id) {
+        // it's an update
+        updateResourceItem(item._id, data)
+          .then(() => {
+            // TODO refresh resource items
+            this.props.form.resetFields();
+            this.setState({ saving: false });
+            message.success(`${data.name} successfully updated`);
+            this.props.dismissItemForm();
+            this.props.getResourceItems();
+          })
+          .catch(() => {
+            this.setState({ saving: false });
+            message.error(`${data.name} cannot be updated`);
+          });
+      } else {
+        createResourceItem(data)
+          .then(() => {
+            // TODO refresh resource items
+            this.props.form.resetFields();
+            this.setState({ saving: false });
+            message.success(`${data.name} successfully created`);
+            this.props.dismissItemForm();
+            this.props.getResourceItems();
+          })
+          .catch(() => {
+            this.setState({ saving: false });
+            message.error(`${data.name} cannot be created`);
+          });
+      }
     });
   };
 
