@@ -1,12 +1,16 @@
-import { List } from 'antd';
+import { List, Spin } from 'antd';
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getIncidentstype } from '../../../../../../actions';
+import { fetchIncidentsTypeSuccess } from '../../../../../../actions';
 /* import component */
 import IncidentTypeListFooter from './components/IncidentTypeListFooter';
 import IncidentTypeItem from './components/IncidentTypeItemList';
+import styles from './styles.css';
+
+const cx = classNames.bind(styles);
 
 /**
  * IncidentType list component
@@ -19,24 +23,62 @@ import IncidentTypeItem from './components/IncidentTypeItemList';
  */
 
 class IncidentType extends React.Component {
+  static propTypes = {
+    getIncidentstypeTrigger: PropTypes.func,
+    incidentsType: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string,
+        nature: PropTypes.string.isRequired,
+        family: PropTypes.string.isRequired,
+        code: PropTypes.string.isRequired,
+        cap: PropTypes.string.isRequired,
+        description: PropTypes.string,
+        color: PropTypes.string,
+        _id: PropTypes.string,
+      }).isRequired
+    ),
+    loading: PropTypes.bool.isRequired,
+  };
+
+  static defaultProps = {
+    getIncidentstypeTrigger: () => {},
+    incidentsType: [],
+  };
+
   componentDidMount() {
     const { getIncidentstypeTrigger } = this.props;
     getIncidentstypeTrigger();
   }
 
   render() {
-    const { incidentsType } = this.props;
+    const { incidentsType, loading } = this.props;
 
     return (
-      <div className="content scrollable">
-        <List
-          itemLayout="horizontal"
-          dataSource={incidentsType}
-          renderItem={incidentType => (
-            <IncidentTypeItem incidentSelected={incidentType} />
-          )}
-        />
-        <IncidentTypeListFooter />
+      <div
+        className="content scrollable"
+        style={{
+          background: '#fff',
+          height: '100%',
+          overflowY: 'auto',
+          paddingBottom: '50px',
+        }}
+      >
+        {loading ? (
+          <div className={cx('loading')}>
+            <Spin />
+          </div>
+        ) : (
+          <div>
+            <List
+              itemLayout="horizontal"
+              dataSource={incidentsType}
+              renderItem={incidentType => (
+                <IncidentTypeItem incidentSelected={incidentType} />
+              )}
+            />
+            <IncidentTypeListFooter />
+          </div>
+        )}
       </div>
     );
   }
@@ -44,36 +86,17 @@ class IncidentType extends React.Component {
 
 const mapStateToProps = state => ({
   incidentsType: state.incidentsType.data,
+  loading: state.incidentsType.isLoading,
 });
 
 const mapDispatchToProps = dispatch => ({
-  getIncidentstypeTrigger: bindActionCreators(getIncidentstype, dispatch),
+  getIncidentstypeTrigger: bindActionCreators(
+    fetchIncidentsTypeSuccess,
+    dispatch
+  ),
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(IncidentType);
-
-const incidentsTypePropTypes = PropTypes.shape({
-  name: PropTypes.string,
-  nature: PropTypes.string.isRequired,
-  family: PropTypes.string.isRequired,
-  code: PropTypes.shape({
-    given: PropTypes.string,
-    cap: PropTypes.string.isRequired,
-  }).isRequired,
-  description: PropTypes.string,
-  color: PropTypes.string,
-  _id: PropTypes.string,
-}).isRequired;
-
-IncidentType.propTypes = {
-  getIncidentstypeTrigger: PropTypes.func,
-  incidentsType: PropTypes.arrayOf(incidentsTypePropTypes),
-};
-
-IncidentType.defaultProps = {
-  getIncidentstypeTrigger: () => {},
-  incidentsType: [],
-};

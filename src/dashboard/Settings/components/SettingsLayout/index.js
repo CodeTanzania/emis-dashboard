@@ -1,7 +1,7 @@
 import classnames from 'classnames';
-import React, { Fragment } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import { Button, Col, Input, Row, Layout, Checkbox } from 'antd';
+import { Button, Col, Input, Row, Layout } from 'antd';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 
@@ -10,11 +10,11 @@ import SidebarSettings from './components/SidebarSettings';
 import ColHeader from '../../../../common/components/ColHeader';
 import IncidentType from './components/SystemSettings/Components/SettingsIncidentTypeList';
 import IncidentDetails from './components/SystemSettings/Components/SettingsIncidentTypeDetails';
-import AddNewIncidentType from './components/SystemSettings/Components/SettingsIncidentTypeForm/AddNewIncidentTypeForm';
-import EditIncidentTypeForm from './components/SystemSettings/Components/SettingsIncidentTypeForm/EditIncidentTypeForm';
+import CreateIncidentType from './components/SystemSettings/Components/SettingsIncidentTypeForm/CreateIncidentType';
+import UpdateIncidentType from './components/SystemSettings/Components/SettingsIncidentTypeForm/UpdateIncidentTYpe';
 
 /* load styles */
-import styles from './SettingsLayout.css';
+import styles from './styles.css';
 
 /* local constants */
 const { Content } = Layout;
@@ -34,6 +34,27 @@ const cx = classnames.bind(styles);
  */
 
 class SettingsLayout extends React.Component {
+  /* props validations for SettingsLayout */
+  static propTypes = {
+    incidentType: PropTypes.arrayOf(
+      PropTypes.shape({
+        event: PropTypes.string,
+        nature: PropTypes.string.isRequired,
+        family: PropTypes.string.isRequired,
+        code: PropTypes.string.isRequired,
+        cap: PropTypes.string.isRequired,
+        color: PropTypes.string,
+        _id: PropTypes.string,
+      }).isRequired
+    ),
+    searchIncidentTypeValue: PropTypes.func,
+  };
+
+  static defaultProps = {
+    incidentType: null,
+    searchIncidentTypeValue: null,
+  };
+
   onSearch = searchValue => {
     const { searchIncidentTypeValue } = this.props;
     searchIncidentTypeValue(searchValue);
@@ -43,61 +64,55 @@ class SettingsLayout extends React.Component {
     const { incidentType } = this.props;
 
     return (
-      <Fragment>
-        <Layout
-          style={{
-            background: '#fff',
-            borderTop: '1px solid #e6e6e6',
-          }}
-        >
-          <Row>
-            <Col span={4} className={cx('section')}>
-              <ColHeader className={cx('SettingLayoutContentHeader')} />
-              <Content className={cx('SettingLayoutContent')}>
-                <SidebarSettings title="System" />
-              </Content>
-            </Col>
-            <Col span={6} className={cx('section')}>
-              <ColHeader className={cx('SettingLayoutContentHeader')}>
-                <Row type="flex" justify="space-around">
-                  <Col span={1}>
-                    <Checkbox />
-                  </Col>
-                  <Col span={19}>
-                    <Search
-                      placeholder="Search here"
-                      style={{ width: '100%' }}
-                      onSearch={value => this.onSearch(value)}
-                      enterButton={<Button icon="search" />}
-                    />
-                  </Col>
-                </Row>
-              </ColHeader>
-              <Content className={cx('SettingLayoutContent')}>
-                <IncidentType />
-              </Content>
-            </Col>
-            <Col span={14} className={cx('section')}>
-              <ColHeader className={cx('SettingLayoutContentHeader')}>
-                <Row>
-                  <Col span={1}>
-                    <AddNewIncidentType />
-                  </Col>
-                  <Col span={1}>
-                    <EditIncidentTypeForm incidentType={incidentType[0]} />
-                  </Col>
-                  <Col span={21}>
-                    <h3>Basic Information</h3>
-                  </Col>
-                </Row>
-              </ColHeader>
-              <Content className={cx('SettingLayoutContent')}>
-                <IncidentDetails incidentType={incidentType} />
-              </Content>
-            </Col>
-          </Row>
-        </Layout>
-      </Fragment>
+      <Layout
+        style={{
+          background: '#fff',
+        }}
+      >
+        <Row>
+          <Col span={4} className={cx('section')}>
+            <ColHeader className={cx('SettingLayoutContentHeader')} />
+            <Content className={cx('SettingLayoutContent')}>
+              <SidebarSettings title="System" />
+            </Content>
+          </Col>
+          <Col span={6} className={cx('section')}>
+            <ColHeader className={cx('SettingLayoutContentHeader')}>
+              <Row type="flex" justify="space-around">
+                <Col span={19}>
+                  <Search
+                    placeholder="Search here"
+                    style={{ width: '100%' }}
+                    onSearch={value => this.onSearch(value)}
+                    enterButton={<Button icon="search" />}
+                  />
+                </Col>
+              </Row>
+            </ColHeader>
+            <Content className={cx('SettingLayoutContent')}>
+              <IncidentType />
+            </Content>
+          </Col>
+          <Col span={14} className={cx('section')}>
+            <ColHeader className={cx('SettingLayoutContentHeader')}>
+              <Row>
+                <Col span={1}>
+                  <CreateIncidentType />
+                </Col>
+                <Col span={1}>
+                  <UpdateIncidentType />
+                </Col>
+                <Col span={21}>
+                  <h3>Basic Information</h3>
+                </Col>
+              </Row>
+            </ColHeader>
+            <Content className={cx('SettingLayoutContent')}>
+              <IncidentDetails incidentType={incidentType} />
+            </Content>
+          </Col>
+        </Row>
+      </Layout>
     );
   }
 }
@@ -117,27 +132,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(SettingsLayout);
-
-/* props validations for SettingsLayout */
-const incidentTypePropTypes = PropTypes.shape({
-  name: PropTypes.string,
-  nature: PropTypes.string.isRequired,
-  family: PropTypes.string.isRequired,
-  code: PropTypes.shape({
-    given: PropTypes.string,
-    cap: PropTypes.string.isRequired,
-  }).isRequired,
-  description: PropTypes.string,
-  color: PropTypes.string,
-  _id: PropTypes.string,
-}).isRequired;
-
-SettingsLayout.propTypes = {
-  incidentType: PropTypes.arrayOf(incidentTypePropTypes),
-  searchIncidentTypeValue: PropTypes.func,
-};
-
-SettingsLayout.defaultProps = {
-  incidentType: null,
-  searchIncidentTypeValue: null,
-};

@@ -12,6 +12,9 @@
 .full-view-height {
   height: 100vh;
 }
+  .hide-overflow {
+    overflow: hidden;
+}
 
 .logo {
   display: block;

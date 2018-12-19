@@ -1,0 +1,31 @@
+.IncidentTypedescription {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    overflow-wrap: break-word;
+    width: 50%;
+    align-self: flex-end;
+}
+
+.IncidentTypeItemMeta p {
+    font-size: 12px;
+    color: rgb(144, 144, 144);
+}
+
+.name {
+    cursor: pointer;
+}
+.section{
+    border-right: 1px solid #cccccc
+}
+.IncidentTypeItemDescription {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-spacing: initial;
+    height: 40px;
+    word-break: break-all;
+    padding-right: 7px;
+}
+.IncidentTypeDescription p{
+    margin-bottom: 0em;
+}
