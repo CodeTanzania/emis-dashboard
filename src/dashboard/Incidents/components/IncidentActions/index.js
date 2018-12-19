@@ -1,5 +1,5 @@
 import React from 'react';
-import {} from 'antd';
+import { } from 'antd';
 import PropTypes from 'prop-types';
 import './styles.css';
 

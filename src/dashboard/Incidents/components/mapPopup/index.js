@@ -10,8 +10,8 @@ export default function popupContent(props) {
                 <tbody>
                   <tr><td>Incident</td><td id="popupData">${name}</td></tr>
                   <tr><td>Type</td><td id="popupData">${
-                    incidentType.name
-                  }</td></tr>
+    incidentType.name
+    }</td></tr>
                   <tr><td>Time of Call</td><td id="popupData">${startedAt}</td></tr>
                   <tr><td>Description</td><td id="popupData"> ${description}</td></tr>
                 </tbody></table>

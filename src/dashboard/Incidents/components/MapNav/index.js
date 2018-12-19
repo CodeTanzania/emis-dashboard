@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { Button, List,Input, Row, Col, Layout,  } from 'antd';
+import { Button, List, Input, Row, Col, Layout, } from 'antd';
 import { connect } from 'react-redux';
 import IncidentFilter from '../IncidentFilter';
 import IncidentsList from '../IncidentsList';
@@ -11,7 +11,7 @@ import { bindActionCreators } from 'redux';
 import { searchIncident } from '../../actions';
 
 const { Header, Content } = Layout;
-const {Search} = Input;
+const { Search } = Input;
 /**
  * Map Navigation  Layout component
  * this navigations layout will show
@@ -75,8 +75,8 @@ class MapNav extends React.Component {
   }
 
   onSearchIncident = (searchData) => {
-      const {handleSearchIncident} = this.props;
-      handleSearchIncident(searchData)
+    const { handleSearchIncident } = this.props;
+    handleSearchIncident(searchData)
   }
 
   render() {
@@ -146,7 +146,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  handleSearchIncident : bindActionCreators(searchIncident, dispatch)
+  handleSearchIncident: bindActionCreators(searchIncident, dispatch)
 })
 export default connect(
   mapStateToProps,

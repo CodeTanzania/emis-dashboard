@@ -180,22 +180,22 @@ export const activeIncidentAction = (incidentId = null) => (
     .catch(error => dispatch(setIncidentActionError(error)));
 };
 
-export const searchIncident = (searchData) => (dispatch,getState, {API}) =>{
-  
+export const searchIncident = (searchData) => (dispatch, getState, { API }) => {
+
   dispatch(searchIncidentStart());
   API.searchIncidents(searchData)
-  .then(results => {
-    const { data: receivedIncidents } = results;
-    const data = receivedIncidents.map(result => {
-      const epicentre = incidentToGeojson(result);
+    .then(results => {
+      const { data: receivedIncidents } = results;
+      const data = receivedIncidents.map(result => {
+        const epicentre = incidentToGeojson(result);
 
-      return { ...result, epicentre };
-    });
+        return { ...result, epicentre };
+      });
 
-    dispatch({
-      type: GET_INCIDENTS_SUCCESS,
-      payload: { data: { ...results, data } },
-    });
-  })
-   .catch(error => dispatch(searchIncidentError(error)));
+      dispatch({
+        type: GET_INCIDENTS_SUCCESS,
+        payload: { data: { ...results, data } },
+      });
+    })
+    .catch(error => dispatch(searchIncidentError(error)));
 }

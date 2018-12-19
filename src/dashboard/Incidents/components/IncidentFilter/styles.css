@@ -1,40 +1,36 @@
-
 .IncidentFilter {
     display: flex;
     flex-direction: column;
     padding: 1px;
     background-color: white;
-    }
-    
-    .IncidentFilter .ant-calendar-picker {
-        flex: 1; 
-    }
-    
-    .IncidentFilter .ant-checkbox-group {
-        display: flex;
-        flex-direction: column;
-    }
-    
-    .IncidentFilterDates {
-    
-        margin: 4px 15px 20px 0px;
-    }
-    
-    
-    .IncidentFilter .ant-collapse {
-        flex: 1;
-    }
-    
-    .IncidentFilter .ant-checkbox-group {
-        padding: 20px 0 10px 10px;
-    }
-    
-    .IncidentFilter .ant-checkbox-wrapper + .ant-checkbox-wrapper {
-        margin-left: 0;
-    }
-    
-    .IncidentFilter .ant-checkbox-wrapper {
-        display: flex;
-        margin: 0 0 10px 0;
-    }
-    
+}
+
+.IncidentFilter .ant-calendar-picker {
+    flex: 1;
+}
+
+.IncidentFilter .ant-checkbox-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.IncidentFilterDates {
+    margin: 4px 15px 20px 0px;
+}
+
+.IncidentFilter .ant-collapse {
+    flex: 1;
+}
+
+.IncidentFilter .ant-checkbox-group {
+    padding: 20px 0 10px 10px;
+}
+
+.IncidentFilter .ant-checkbox-wrapper+.ant-checkbox-wrapper {
+    margin-left: 0;
+}
+
+.IncidentFilter .ant-checkbox-wrapper {
+    display: flex;
+    margin: 0 0 10px 0;
+}

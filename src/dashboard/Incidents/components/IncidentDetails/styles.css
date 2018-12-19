@@ -1,4 +1,4 @@
-.IncidentDetails{
+.IncidentDetails {
     height: 98vh;
     width: 380px;
     display: flex;
@@ -7,46 +7,51 @@
     right: 0;
     top: 0;
     z-index: 1000;
-    background-color:white;
+    background-color: white;
     width: 380px;
     overflow-x: hidden
 }
+
 .IncidentName {
-border-bottom: 1px solid #e8e8ee
+    border-bottom: 1px solid #e8e8ee
 }
 
 .IncidentDetail.p-20 span {
     padding-right: 15px;
 }
-.IncidentDetail.p-20{
+
+.IncidentDetail.p-20 {
     line-height: 1.7;
 }
-.IncidentLocation.p-l-10,
-.IncidentImpact.p-l-10{
+
+.IncidentLocation.p-l-10, .IncidentImpact.p-l-10 {
     padding: 5px 0 0 20px;
 }
-.IncidentLocation.p-l-10 span,
-.IncidentImpact.p-l-10 span{
+
+.IncidentLocation.p-l-10 span, .IncidentImpact.p-l-10 span {
     line-height: 1.4;
     padding-right: 25px;
 }
-.ReadMore{
-    margin: 30px 0 0 15px  ;
 
+.ReadMore {
+    margin: 30px 0 0 15px;
 }
-.IncidentDetailsDrawer{
+
+.IncidentDetailsDrawer {
     padding: 0;
     overflow: hidden;
 }
+
 .ant-drawer-body {
     padding: 0px;
     height: 100vh;
-
 }
+
 .IncidentDetailSider {
     background-color: #fff;
     border-right: 1px solid #e0e0e0;
-  }
-  .IncidentGeneralDetails{
-      height: 100vh;
-  }
+}
+
+.IncidentGeneralDetails {
+    height: 100vh;
+}
