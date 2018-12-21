@@ -81,10 +81,10 @@ export default function Dashboard() {
             </Menu.Item>
             {/* alerts menu */}
             <Menu.Item key="5">
-            <NavLink to="/alerts">
-            <Icon type="warning" className="f-25" />
-            <span>Alerts</span>
-            </NavLink>
+              <NavLink to="/alerts">
+                <Icon type="warning" className="f-25" />
+                <span>Alerts</span>
+              </NavLink>
             </Menu.Item>
             {/* end alerts menu */}
           </Menu>
@@ -96,7 +96,7 @@ export default function Dashboard() {
               <Route path="/plans" component={Plans} />
               <Route path="/stakeholders" exact component={Stakeholders} />
               <Route path="/resources" exact component={Resources} />
-              <Route path="/alerts" exact component={Alerts}/>
+              <Route path="/alerts" exact component={Alerts} />
               <Route path="/settings/incidentType" exact component={Settings} />
             </Switch>
           </Content>

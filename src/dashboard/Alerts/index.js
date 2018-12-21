@@ -1,5 +1,3 @@
-
-
 import { connect } from 'react-redux';
 import React from 'react';
 import * as ReactLeaflet from 'react-leaflet';
@@ -8,7 +6,7 @@ import 'leaflet/dist/leaflet.css';
 import './styles.css';
 
 // constants
-const { Map: LeafletMap, TileLayer } = ReactLeaflet
+const { Map: LeafletMap, TileLayer } = ReactLeaflet;
 
 /**
  * Alerts Base Layout component
@@ -21,33 +19,26 @@ const { Map: LeafletMap, TileLayer } = ReactLeaflet
  * @version 0.1.0
  * @since 0.1.0
  */
-  function Alerts({ center, zoom}) {
-    return (
-        <div id="alerts-map" className="Alerts">
-            <LeafletMap
-                center={center}
-                zoom={zoom}
-            >
-                <TileLayer
-                    attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                    url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
-                />
-
-            </LeafletMap>
-        </div>
-    )
+function Alerts({ center, zoom }) {
+  return (
+    <div id="alerts-map" className="Alerts">
+      <LeafletMap center={center} zoom={zoom}>
+        <TileLayer
+          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
+        />
+      </LeafletMap>
+    </div>
+  );
 }
-
 
 Alerts.propTypes = {
-    center: PropTypes.arrayOf(
-        PropTypes.string
-    ),
-    zoom: PropTypes.string
-}
+  center: PropTypes.arrayOf(PropTypes.string).isRequired,
+  zoom: PropTypes.string.isRequired,
+};
 const mapStateToProps = state => ({
-    center: state.alertsMap.center,
-    zoom: state.alertsMap.zoom,
-  });
+  center: state.alertsMap.center,
+  zoom: state.alertsMap.zoom,
+});
 
-  export default connect(mapStateToProps)(Alerts)
+export default connect(mapStateToProps)(Alerts);
