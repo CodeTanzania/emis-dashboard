@@ -8,7 +8,6 @@ import 'leaflet/dist/leaflet.css';
 import './styles.css';
 
 // constants
-
 const { Map: LeafletMap, TileLayer } = ReactLeaflet
 
 /**
