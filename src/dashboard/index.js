@@ -5,6 +5,7 @@ import { NavLink, Route, Switch } from 'react-router-dom';
 import logo from '../logo.svg';
 import Plans from './Plans';
 import Stakeholders from './Stakeholders';
+import Alerts from './Alerts';
 import Settings from './Settings';
 import Resources from './Resources';
 import NotificationPanel from '../common/components/NotificationPanel';
@@ -80,14 +81,10 @@ export default function Dashboard() {
             </Menu.Item>
             {/* alerts menu */}
             <Menu.Item key="5">
-              <a
-                href="https://emis-web-alerts.herokuapp.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Icon type="warning" theme="outlined" className="f-25" />
+              <NavLink to="/alerts">
+                <Icon type="warning" className="f-25" />
                 <span>Alerts</span>
-              </a>
+              </NavLink>
             </Menu.Item>
             {/* end alerts menu */}
           </Menu>
@@ -99,6 +96,7 @@ export default function Dashboard() {
               <Route path="/plans" component={Plans} />
               <Route path="/stakeholders" exact component={Stakeholders} />
               <Route path="/resources" exact component={Resources} />
+              <Route path="/alerts" exact component={Alerts} />
               <Route path="/settings/incidentType" exact component={Settings} />
             </Switch>
           </Content>
