@@ -145,8 +145,8 @@ export function getAlerts() {
     return API.getAlerts()
       .then(({ data: res }) => {
         const alertsPoints = alertsToGeoJson(res.data);
-        dispatch(storeMapPoints(alertsPoints));
         dispatch(getAlertsSuccess(res.data, res.page, res.total));
+        dispatch(storeMapPoints(alertsPoints));
       })
       .catch(err => dispatch(getAlertsError(err)));
   };

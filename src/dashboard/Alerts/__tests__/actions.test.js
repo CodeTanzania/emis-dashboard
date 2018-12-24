@@ -67,4 +67,53 @@ describe('Alerts: Module', () => {
       });
     });
   });
+
+  describe(`Thunks`, () => {
+    it(`should dispatch an actions of type ${Actions.STORE_MAP_POINTS} and ${
+      Actions.GET_ALERTS_SUCCESS
+    } when fetching alerts is successfully`, () => {
+      const store = mockStore({
+        alerts: {
+          data: [],
+        },
+        alertsMap: {
+          points: [],
+        },
+      });
+
+      // mock API calls
+      API.getAlerts.mockResolvedValueOnce({
+        data: {
+          data: [],
+          pages: 2,
+          total: 200,
+          page: 1,
+        },
+      });
+
+      const expectedActions = [
+        { type: Actions.GET_ALERTS_START },
+        {
+          type: Actions.GET_ALERTS_SUCCESS,
+          payload: {
+            data: [],
+          },
+          meta: {
+            page: 1,
+            total: 200,
+          },
+        },
+        {
+          type: Actions.STORE_MAP_POINTS,
+          payload: {
+            data: [],
+          },
+        },
+      ];
+
+      return store.dispatch(Actions.getAlerts()).then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+    });
+  });
 });
