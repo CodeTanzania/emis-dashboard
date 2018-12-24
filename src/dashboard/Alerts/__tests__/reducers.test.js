@@ -9,6 +9,7 @@ describe('Alerts:reducers', () => {
       previousState = {
         center: [-6.179, 35.754],
         zoom: 7,
+        points: [],
       };
     });
 
@@ -22,7 +23,15 @@ describe('Alerts:reducers', () => {
 
     beforeEach(() => {
       /* create initial state for Alerts */
-      previousState = {};
+      previousState = {
+        data: [],
+        page: 1,
+        total: 0,
+        selected: null,
+        loading: false,
+        filters: {},
+        error: null,
+      };
     });
 
     it('should return default state when no initial alert state is provided', () => {
