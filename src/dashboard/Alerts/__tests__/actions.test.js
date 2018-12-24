@@ -2,7 +2,6 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import * as API from '../../../common/API';
 import * as Actions from '../actions';
-import { Action } from 'rxjs/internal/scheduler/Action';
 
 jest.mock('../../../common/API');
 
@@ -16,43 +15,56 @@ describe('Alerts: Module', () => {
         type: Actions.GET_ALERTS_START,
       });
     });
-  });
 
-  it(`should create an action of type ${Actions.GET_ALERTS_SUCCESS}`, () => {
-    const alerts = [];
+    it(`should create an action of type ${Actions.GET_ALERTS_SUCCESS}`, () => {
+      const alerts = [];
 
-    expect(Actions.getAlertsSuccess(alerts)).toEqual({
-      type: Actions.GET_ALERTS_SUCCESS,
-      payload: {
-        data: alerts,
-      },
-      meta: {
-        page: 1,
-        total: 0,
-      },
+      expect(Actions.getAlertsSuccess(alerts)).toEqual({
+        type: Actions.GET_ALERTS_SUCCESS,
+        payload: {
+          data: alerts,
+        },
+        meta: {
+          page: 1,
+          total: 0,
+        },
+      });
+
+      expect(Actions.getAlertsSuccess(alerts, 2, 40)).toEqual({
+        type: Actions.GET_ALERTS_SUCCESS,
+        payload: {
+          data: alerts,
+        },
+        meta: {
+          page: 2,
+          total: 40,
+        },
+      });
     });
 
-    expect(Actions.getAlertsSuccess(alerts, 2, 40)).toEqual({
-      type: Actions.GET_ALERTS_SUCCESS,
-      payload: {
-        data: alerts,
-      },
-      meta: {
-        page: 2,
-        total: 40,
-      },
+    it(`should create an action of type ${Actions.GET_ALERTS_ERROR}`, () => {
+      const error = new Error();
+
+      expect(Actions.getAlertsError(error)).toEqual({
+        type: Actions.GET_ALERTS_ERROR,
+        payload: {
+          data: error,
+        },
+        error: true,
+      });
     });
   });
 
-  it(`should create an action of type ${Actions.GET_ALERTS_ERROR}`, () => {
-    const error = new Error();
+  describe('AlertsMap: Action Creators', () => {
+    it(`should create an action of type ${Actions.STORE_MAP_POINTS}`, () => {
+      const alertPoints = [];
 
-    expect(Actions.getAlertsError(error)).toEqual({
-      type: Actions.GET_ALERTS_ERROR,
-      payload: {
-        data: error,
-      },
-      error: true,
+      expect(Actions.storeMapPoints(alertPoints)).toEqual({
+        type: Actions.STORE_MAP_POINTS,
+        payload: {
+          data: alertPoints,
+        },
+      });
     });
   });
 });
