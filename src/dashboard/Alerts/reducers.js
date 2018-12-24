@@ -12,17 +12,18 @@ import {
  * }
  */
 
-/* initial state Alerts Map state */
+/* initial Alerts Map state */
 const defaultAlertsMapState = {
   center: [-6.179, 35.754],
   zoom: 7,
 };
 
-/* initial state Alerts state */
+/* initial Alerts state */
 const defaultAlertsState = {
   data: [],
   page: 1,
   total: 0,
+  selected: null,
   loading: false,
   filters: {},
   error: null,
