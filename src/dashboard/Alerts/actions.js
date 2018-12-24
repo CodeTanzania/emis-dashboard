@@ -104,7 +104,7 @@ export function getAlerts() {
   return (dispatch, getState, { API }) => {
     dispatch(getAlertsStart());
 
-    return API.etAlerts()
+    return API.getAlerts()
       .then(({ data: res }) =>
         dispatch(getAlertsSuccess(res.data, res.page, res.total))
       )

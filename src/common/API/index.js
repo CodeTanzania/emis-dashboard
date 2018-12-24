@@ -498,7 +498,7 @@ export function getQuestionnaires(params = {}) {
  * @since 0.1.0
  */
 export function getAlerts(params = {}) {
-  return Axios.get('/alers', {
+  return Axios.get('/alerts', {
     params,
   });
 }

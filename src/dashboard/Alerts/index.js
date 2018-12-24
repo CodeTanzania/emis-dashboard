@@ -3,6 +3,7 @@ import React from 'react';
 import * as ReactLeaflet from 'react-leaflet';
 import PropTypes from 'prop-types';
 import MapControls from './components/MapControls';
+import { getAlerts } from './actions';
 import 'leaflet/dist/leaflet.css';
 import './styles.css';
 
@@ -20,27 +21,48 @@ const { Map: LeafletMap, TileLayer } = ReactLeaflet;
  * @version 0.1.0
  * @since 0.1.0
  */
-function Alerts({ center, zoom }) {
-  return (
-    <div id="alerts-map" className="Alerts">
-      <LeafletMap center={center} zoom={zoom} zoomControl={false}>
-        <MapControls />
-        <TileLayer
-          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-          url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
-        />
-      </LeafletMap>
-    </div>
-  );
+class Alerts extends React.Component {
+  componentDidMount() {
+    const { getAllAlerts } = this.props;
+    getAllAlerts();
+  }
+
+  render() {
+    const { center, zoom } = this.props;
+
+    return (
+      <div id="alerts-map" className="Alerts">
+        <LeafletMap center={center} zoom={zoom} zoomControl={false}>
+          <MapControls />
+          <TileLayer
+            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+            url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
+          />
+        </LeafletMap>
+      </div>
+    );
+  }
 }
 
-Alerts.propTypes = {
-  center: PropTypes.arrayOf(PropTypes.number).isRequired,
-  zoom: PropTypes.number.isRequired,
-};
 const mapStateToProps = state => ({
   center: state.alertsMap.center,
   zoom: state.alertsMap.zoom,
 });
 
-export default connect(mapStateToProps)(Alerts);
+const mapDispatchToProps = {
+  getAllAlerts: getAlerts,
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Alerts);
+
+Alerts.propTypes = {
+  center: PropTypes.arrayOf(PropTypes.number).isRequired,
+  zoom: PropTypes.number.isRequired,
+  getAllAlerts: PropTypes.func,
+};
+
+Alerts.defaultProps = {
+  getAllAlerts: () => {},
+};
