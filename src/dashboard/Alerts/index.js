@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import React from 'react';
 import * as ReactLeaflet from 'react-leaflet';
 import PropTypes from 'prop-types';
+import MapControls from './components/MapControls';
 import 'leaflet/dist/leaflet.css';
 import './styles.css';
 
@@ -22,7 +23,8 @@ const { Map: LeafletMap, TileLayer } = ReactLeaflet;
 function Alerts({ center, zoom }) {
   return (
     <div id="alerts-map" className="Alerts">
-      <LeafletMap center={center} zoom={zoom}>
+      <LeafletMap center={center} zoom={zoom} zoomControl={false}>
+        <MapControls />
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
@@ -33,8 +35,8 @@ function Alerts({ center, zoom }) {
 }
 
 Alerts.propTypes = {
-  center: PropTypes.arrayOf(PropTypes.string).isRequired,
-  zoom: PropTypes.string.isRequired,
+  center: PropTypes.arrayOf(PropTypes.number).isRequired,
+  zoom: PropTypes.number.isRequired,
 };
 const mapStateToProps = state => ({
   center: state.alertsMap.center,
