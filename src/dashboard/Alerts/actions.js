@@ -26,12 +26,9 @@ export const GET_ALERTS_ERROR = 'GET_ALERTS_ERROR';
  * @version 0.1.0
  * @since 0.1.0
  */
-export function getAlertsStart(isGettingAlerts = false) {
+export function getAlertsStart() {
   return {
     type: GET_ALERTS_START,
-    payload: {
-      data: isGettingAlerts,
-    },
   };
 }
 
