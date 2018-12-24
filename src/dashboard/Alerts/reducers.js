@@ -2,6 +2,7 @@ import {
   GET_ALERTS_START,
   GET_ALERTS_SUCCESS,
   GET_ALERTS_ERROR,
+  STORE_MAP_POINTS,
 } from './actions';
 
 /**
@@ -16,6 +17,7 @@ import {
 const defaultAlertsMapState = {
   center: [-6.179, 35.754],
   zoom: 7,
+  points: [],
 };
 
 /* initial Alerts state */
@@ -52,6 +54,10 @@ const defaultAlertsState = {
  */
 export function alertsMap(state = defaultAlertsMapState, action) {
   switch (action.type) {
+    case STORE_MAP_POINTS:
+      return Object.assign({}, state, {
+        points: action.payload.data,
+      });
     default:
       return state;
   }
