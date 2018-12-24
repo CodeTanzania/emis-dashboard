@@ -16,7 +16,7 @@
  * @version 0.1.0
  * @since 0.1.0
  */
-const generateGeoJsonPoint = (geometry, properties) => ({
+export const generateGeoJsonPoint = (geometry, properties) => ({
   type: 'Feature',
   properties,
   geometry,
