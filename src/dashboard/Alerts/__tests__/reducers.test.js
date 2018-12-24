@@ -25,6 +25,21 @@ describe('Alerts:reducers', () => {
         })
       ).toEqual(previousState);
     });
+
+    it(`should handle ${Actions.STORE_MAP_POINTS}`, () => {
+      const alertMapPoints = [];
+
+      const action = {
+        type: Actions.STORE_MAP_POINTS,
+        payload: { data: alertMapPoints },
+      };
+
+      const expectedState = {
+        ...previousState,
+      };
+
+      expect(alertsMap(previousState, action)).toEqual(expectedState);
+    });
   });
 
   describe('alerts', () => {
