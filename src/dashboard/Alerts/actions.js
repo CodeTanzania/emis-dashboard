@@ -82,3 +82,32 @@ export function getAlertsError(error) {
     error: true,
   };
 }
+
+/*
+ * -----------------------------------------------------------------------------
+ * Thunks
+ * -----------------------------------------------------------------------------
+ */
+
+/**
+ * A Thunk function which perform asynchronous fetching of alerts from the API
+ *
+ * @function
+ * @name getPlans
+ *
+ * @param {Object} params - Params to pass to the API client
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function getAlerts() {
+  return (dispatch, getState, { API }) => {
+    dispatch(getAlertsStart());
+
+    return API.etAlerts()
+      .then(({ data: res }) =>
+        dispatch(getAlertsSuccess(res.data, res.page, res.total))
+      )
+      .catch(err => dispatch(getAlertsError(err)));
+  };
+}
