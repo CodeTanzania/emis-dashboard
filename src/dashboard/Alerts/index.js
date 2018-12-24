@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import React from 'react';
 import * as ReactLeaflet from 'react-leaflet';
 import PropTypes from 'prop-types';
-import MapControls from './components/MapControls';
+import AlertsDrawSupport from './components/AlertsDrawSupport';
 import { getAlerts } from './actions';
 import 'leaflet/dist/leaflet.css';
 import './styles.css';
@@ -15,7 +15,7 @@ const { Map: LeafletMap, TileLayer } = ReactLeaflet;
  * This layout has a map for alerts view
  * and will be used for viewing alerts and alert details
  *
- * @function
+ * @class
  * @name Alerts
  *
  * @version 0.1.0
@@ -33,7 +33,7 @@ class Alerts extends React.Component {
     return (
       <div id="alerts-map" className="Alerts">
         <LeafletMap center={center} zoom={zoom} zoomControl={false}>
-          <MapControls />
+          <AlertsDrawSupport />
           <TileLayer
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"

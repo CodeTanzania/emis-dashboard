@@ -1,3 +1,5 @@
+import { alertsToGeoJson } from './helpers';
+
 /*
  *------------------------------------------------------------------------------
  * Alerts action types
@@ -8,6 +10,14 @@
 export const GET_ALERTS_START = 'GET_ALERTS_START';
 export const GET_ALERTS_SUCCESS = 'GET_ALERTS_SUCCESS';
 export const GET_ALERTS_ERROR = 'GET_ALERTS_ERROR';
+
+/*
+ *------------------------------------------------------------------------------
+ * Map action types
+ *------------------------------------------------------------------------------
+ */
+
+export const STORE_MAP_POINTS = 'STORE_ALERTS_AS_MAP_POINTS';
 
 /*
  *------------------------------------------------------------------------------
@@ -84,6 +94,34 @@ export function getAlertsError(error) {
 }
 
 /*
+ *------------------------------------------------------------------------------
+ * Map action creators
+ *------------------------------------------------------------------------------
+ */
+
+/**
+ * Action dispatched when alerts have been converted to map points
+ *
+ * @function
+ * @name storeMapPoints
+ *
+ * @param {Array} alerts
+ *
+ * @returns {Object} - Redux action
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function storeMapPoints(points) {
+  return {
+    type: STORE_MAP_POINTS,
+    payload: {
+      data: points,
+    },
+  };
+}
+
+/*
  * -----------------------------------------------------------------------------
  * Thunks
  * -----------------------------------------------------------------------------
@@ -105,9 +143,11 @@ export function getAlerts() {
     dispatch(getAlertsStart());
 
     return API.getAlerts()
-      .then(({ data: res }) =>
-        dispatch(getAlertsSuccess(res.data, res.page, res.total))
-      )
+      .then(({ data: res }) => {
+        const alertsPoints = alertsToGeoJson(res.data);
+        dispatch(getAlertsSuccess(res.data, res.page, res.total));
+        dispatch(storeMapPoints(alertsPoints));
+      })
       .catch(err => dispatch(getAlertsError(err)));
   };
 }
