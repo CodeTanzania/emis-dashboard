@@ -478,3 +478,27 @@ export function getFeatures(params = {}) {
 export function getQuestionnaires(params = {}) {
   return Axios.get(`/questionnaires`, { params });
 }
+
+/*
+ * -----------------------------------------------------------------------------
+ * Alerts API client
+ * -----------------------------------------------------------------------------
+ */
+
+/**
+ * Get Alerts from the API
+ *
+ * @function
+ * @name getAlerts
+ *
+ * @param {Object} params - URL params to be sent to the API
+ * @returns {Promise}
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function getAlerts(params = {}) {
+  return Axios.get('/alerts', {
+    params,
+  });
+}

@@ -1,3 +1,10 @@
+import {
+  GET_ALERTS_START,
+  GET_ALERTS_SUCCESS,
+  GET_ALERTS_ERROR,
+  STORE_MAP_POINTS,
+} from './actions';
+
 /**
  * Store keys added by the reducers in this file
  *
@@ -6,14 +13,23 @@
  * }
  */
 
-/* initial state Alerts Map state */
+/* initial Alerts Map state */
 const defaultAlertsMapState = {
   center: [-6.179, 35.754],
   zoom: 7,
+  points: [],
 };
 
-/* initial state Alerts state */
-const defaultAlertsState = {};
+/* initial Alerts state */
+const defaultAlertsState = {
+  data: [],
+  page: 1,
+  total: 0,
+  selected: null,
+  loading: false,
+  filters: {},
+  error: null,
+};
 
 /*
  *------------------------------------------------------------------------------
@@ -38,6 +54,10 @@ const defaultAlertsState = {};
  */
 export function alertsMap(state = defaultAlertsMapState, action) {
   switch (action.type) {
+    case STORE_MAP_POINTS:
+      return Object.assign({}, state, {
+        points: action.payload.data,
+      });
     default:
       return state;
   }
@@ -66,6 +86,22 @@ export function alertsMap(state = defaultAlertsMapState, action) {
  */
 export function alerts(state = defaultAlertsState, action) {
   switch (action.type) {
+    case GET_ALERTS_START:
+      return Object.assign({}, state, {
+        loading: true,
+      });
+    case GET_ALERTS_SUCCESS:
+      return Object.assign({}, state, {
+        data: [...action.payload.data],
+        page: action.meta.page,
+        total: action.meta.total,
+        loading: false,
+      });
+    case GET_ALERTS_ERROR:
+      return Object.assign({}, state, {
+        error: action.payload.data,
+        loading: false,
+      });
     default:
       return state;
   }
