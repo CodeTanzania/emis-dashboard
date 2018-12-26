@@ -36,9 +36,9 @@ export const generateGeoJsonPoint = (geometry, properties) => ({
  * @since 0.1.0
  */
 export function alertToGeoJson(alert, type) {
-  const { centroid, _id: id } = alert;
+  const { centroid, _id: id, event, expectedAt } = alert;
   if (type === 'Point') {
-    const properties = { id };
+    const properties = { id, event, expectedAt };
     const point = generateGeoJsonPoint(centroid, properties);
     return point;
   }
