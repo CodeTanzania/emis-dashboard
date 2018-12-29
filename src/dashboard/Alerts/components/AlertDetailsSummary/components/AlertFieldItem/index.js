@@ -4,10 +4,11 @@ import {
   formatAlertFieldType,
   formatAlertFieldTypeValue,
 } from '../../../../helpers';
+import './styles.css';
 
 function AlertFieldItem({ value, property }) {
   return (
-    <div>
+    <div className="AlertFieldItem">
       <div>{formatAlertFieldType(property)}:</div>
       <div>{formatAlertFieldTypeValue(property, value)}</div>
     </div>

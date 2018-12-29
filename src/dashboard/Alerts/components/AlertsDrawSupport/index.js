@@ -3,6 +3,10 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import MapPointsDrawSupport from '../../../components/MapPointsDrawSupport';
 import { getSelectedAlertFromState } from '../../actions';
+import {
+  isoDateToHumanReadableDate,
+  formatAlertFieldType,
+} from '../../helpers';
 
 /**
  * Wrraper component for Supporting of Alerts drawing shapes
@@ -30,7 +34,9 @@ class AlertsDrawSupport extends React.Component {
     layer
       .on({ click: () => selectAlert(id) })
       .bindTooltip(
-        `<div><div><strong>Event:</strong> ${event}</div><div><strong>Expected At</strong>: ${expectedAt}</div></div>`
+        `<div><div><strong>Event:</strong> ${event}</div><div><strong>${formatAlertFieldType(
+          'expectedAt'
+        )}</strong>: ${isoDateToHumanReadableDate(expectedAt)}</div></div>`
       )
       .openTooltip();
   };

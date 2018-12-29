@@ -106,14 +106,14 @@ export function formatAlertFieldType(fieldType) {
       return ' ALERT DESCRIPTION';
     }
     case 'reportedAt': {
-      return 'WHEN WAS REPORTED';
+      return ' WAS REPORTED ON';
     }
     case 'expectedAt': {
-      return 'WHEN IS EXPECTED';
+      return ' IS EXPECTED ON';
     }
 
     case 'expiredAt': {
-      return 'WHEN WILL EXPIRE';
+      return ' WILL EXPIRE ON';
     }
 
     case 'source': {
