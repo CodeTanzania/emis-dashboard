@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import MapPointsDrawSupport from '../../../components/MapPointsDrawSupport';
+import MapPointsDrawSupport from '../../../../common/components/MapPointsDrawSupport';
 import { getSelectedAlertFromState } from '../../actions';
 import {
   isoDateToHumanReadableDate,
