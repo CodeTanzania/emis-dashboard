@@ -9,8 +9,8 @@ import {
 } from '../../helpers';
 
 /**
- * Wrraper component for Supporting of Alerts drawing shapes
- * on map (Eg. Polygons, Cirles and Points)
+ * Wrraper component for Supporting  drawing of Alerts shapes (Eg. Polygons, Cirles and Points)
+ * on map
  * This component must be Child of map component to enable its children
  * to access map context
  *
@@ -26,13 +26,21 @@ class AlertsDrawSupport extends React.Component {
     this.onEachFeature = this.onEachFeature.bind(this);
   }
 
+  onMarkerClicked = id => {
+    const { selectAlert } = this.props;
+    selectAlert(id);
+  };
+
   onEachFeature = (feature, layer) => {
     const {
       properties: { event, expectedAt, id },
     } = feature;
-    const { selectAlert } = this.props;
     layer
-      .on({ click: () => selectAlert(id) })
+      .on({
+        click: () => {
+          this.onMarkerClicked(id);
+        },
+      })
       .bindTooltip(
         `<div><div><strong>Event:</strong> ${event}</div><div><strong>${formatAlertFieldType(
           'expectedAt'
@@ -42,9 +50,11 @@ class AlertsDrawSupport extends React.Component {
   };
 
   render() {
-    const { points } = this.props;
+    const { points, selected } = this.props;
+    const isShowPoints = !selected;
     return (
       <MapPointsDrawSupport
+        isShowPoints={isShowPoints}
         points={points}
         onEachFeature={this.onEachFeature}
       />
@@ -54,6 +64,7 @@ class AlertsDrawSupport extends React.Component {
 
 const mapStateToProps = state => ({
   points: state.alertsMap.points,
+  selected: state.alerts.selected,
 });
 
 const mapDispatchToProps = {
@@ -67,6 +78,14 @@ export default connect(
 
 AlertsDrawSupport.propTypes = {
   selectAlert: PropTypes.func,
+  selected: PropTypes.shape({
+    headline: PropTypes.string,
+    reportedAt: PropTypes.string,
+    expectedAt: PropTypes.string,
+    expiredAt: PropTypes.string,
+    instruction: PropTypes.string,
+    source: PropTypes.string,
+  }),
   points: PropTypes.arrayOf(
     PropTypes.shape({
       type: PropTypes.string,
@@ -83,5 +102,6 @@ AlertsDrawSupport.propTypes = {
 
 AlertsDrawSupport.defaultProps = {
   points: [],
+  selected: null,
   selectAlert: () => {},
 };

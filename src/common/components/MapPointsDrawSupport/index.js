@@ -24,8 +24,12 @@ class MapPointsDrawSupport extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { points } = this.props;
-    const { points: prevPoints } = prevProps;
+    const { points, isShowPoints } = this.props;
+    const { points: prevPoints, isShowPoints: prevIsShowPoints } = prevProps;
+
+    if (isShowPoints !== prevIsShowPoints && !isShowPoints) {
+      this.map.removeLayer(this.pointsLayer);
+    }
 
     if (points !== prevPoints) {
       this.showPoints(points);
@@ -69,9 +73,11 @@ MapPointsDrawSupport.propTypes = {
   leaflet: PropTypes.shape({
     map: PropTypes.object.isRequired,
   }).isRequired,
+  isShowPoints: PropTypes.bool,
 };
 
 MapPointsDrawSupport.defaultProps = {
   points: [],
+  isShowPoints: true,
   onEachFeature: () => {},
 };
