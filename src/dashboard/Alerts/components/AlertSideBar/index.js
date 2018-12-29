@@ -26,7 +26,7 @@ function AlertSideBar({ selectedAlert }) {
           <Menu.Item key="details">Details</Menu.Item>
         )}
       </Menu>
-      <div>{renderMenuContents('details')}</div>
+      <div className="contents">{renderMenuContents('details')}</div>
     </div>
   );
 }

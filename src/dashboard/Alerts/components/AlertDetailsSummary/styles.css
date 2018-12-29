@@ -1,0 +1,11 @@
+.AlertDetailsSummary {
+  display: flex;
+}
+
+.AlertDetailsSummary .Contents {
+width: 95%;
+}
+
+.AlertDetailsSummary .Close {
+width: 5%;
+}
