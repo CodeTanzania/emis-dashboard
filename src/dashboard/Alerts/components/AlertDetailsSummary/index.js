@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getSelectedAlertFromState } from '../../actions';
 import { get } from 'lodash';
 import { Icon, Tooltip } from 'antd';
+import { getSelectedAlertFromState } from '../../actions';
 import AlertFieldItem from './components/AlertFieldItem';
 import './styles.css';
 
@@ -15,6 +15,7 @@ const detailsKeys = [
   'instruction',
   'source',
 ];
+
 function AlertDetailsSummary({ selectedAlert, close }) {
   const onClickClose = () => close();
   const renderAlertField = keys =>
