@@ -27,14 +27,26 @@ class MapPointsDrawSupport extends React.Component {
     const { points, isShowPoints } = this.props;
     const { points: prevPoints, isShowPoints: prevIsShowPoints } = prevProps;
 
-    if (isShowPoints !== prevIsShowPoints && !isShowPoints) {
-      this.map.removeLayer(this.pointsLayer);
+    if (isShowPoints !== prevIsShowPoints) {
+      this.updatePointsLayer(isShowPoints);
     }
 
     if (points !== prevPoints) {
       this.showPoints(points);
     }
   }
+
+  hidePointsLayer = () => this.map.removeLayer(this.pointsLayer);
+
+  showPointsLayer = () => this.pointsLayer.addTo(this.map);
+
+  updatePointsLayer = isShowPoints => {
+    if (isShowPoints && !this.map.hasLayer(this.pointsLayer)) {
+      this.showPointsLayer();
+    } else if (!isShowPoints && this.map.hasLayer(this.pointsLayer)) {
+      this.hidePointsLayer();
+    }
+  };
 
   showPoints = points => {
     const { onEachFeature } = this.props;
