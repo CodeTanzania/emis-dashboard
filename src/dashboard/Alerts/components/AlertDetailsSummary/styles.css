@@ -1,0 +1,16 @@
+.AlertDetailsSummary {
+  display: flex;
+}
+
+.AlertDetailsSummary .Contents {
+width: 95%;
+padding: 0 14px 0 0;
+}
+
+.AlertDetailsSummary .Close {
+width: 5%;
+}
+
+.AlertDetailsSummary .Close .anticon {
+font-size: 24px;
+}

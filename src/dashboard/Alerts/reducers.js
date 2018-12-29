@@ -3,6 +3,7 @@ import {
   GET_ALERTS_SUCCESS,
   GET_ALERTS_ERROR,
   STORE_MAP_POINTS,
+  SET_SELECTED_ALERT,
 } from './actions';
 
 /**
@@ -101,6 +102,10 @@ export function alerts(state = defaultAlertsState, action) {
       return Object.assign({}, state, {
         error: action.payload.data,
         loading: false,
+      });
+    case SET_SELECTED_ALERT:
+      return Object.assign({}, state, {
+        selected: action.payload.data,
       });
     default:
       return state;

@@ -10,6 +10,7 @@ import { alertsToGeoJson } from './helpers';
 export const GET_ALERTS_START = 'GET_ALERTS_START';
 export const GET_ALERTS_SUCCESS = 'GET_ALERTS_SUCCESS';
 export const GET_ALERTS_ERROR = 'GET_ALERTS_ERROR';
+export const SET_SELECTED_ALERT = 'SET_SELECTED_ALERT';
 
 /*
  *------------------------------------------------------------------------------
@@ -48,7 +49,7 @@ export function getAlertsStart() {
  * @function
  * @name getAlertsSuccess
  *
- * @param {Object[]} plans - Array of alerts from API
+ * @param {Object[]} alerts - Array of alerts from API
  * @param {number} page - page the results is from
  * @param {number} total - total number of alerts in the API
  *
@@ -66,6 +67,28 @@ export function getAlertsSuccess(alerts, page = 1, total = 0) {
     meta: {
       page,
       total,
+    },
+  };
+}
+
+/**
+ * Action dispatched when alert marker is clicked on map
+ *
+ * @function
+ * @name setSelectedAlert
+ *
+ * @param {Object} alert - selected alert
+ *
+ * @returns {Object} - Redux action
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function setSelectedAlert(selected) {
+  return {
+    type: SET_SELECTED_ALERT,
+    payload: {
+      data: selected,
     },
   };
 }
@@ -131,7 +154,7 @@ export function storeMapPoints(points) {
  * A Thunk function which perform asynchronous fetching of alerts from the API
  *
  * @function
- * @name getPlans
+ * @name getAlerts
  *
  * @param {Object} params - Params to pass to the API client
  *
@@ -149,5 +172,32 @@ export function getAlerts() {
         dispatch(storeMapPoints(alertsPoints));
       })
       .catch(err => dispatch(getAlertsError(err)));
+  };
+}
+
+/**
+ * A Thunk function which which uses alert id to find alert object from array of alerts
+ * stored in state
+ *
+ * @function
+ * @name getSelectedAlertFromState
+ *
+ * @param {string} selectedAlertId - Id of alert selected
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function getSelectedAlertFromState(selectedAlertId = null) {
+  return (dispatch, getState) => {
+    if (selectedAlertId === null) {
+      dispatch(setSelectedAlert(null));
+    } else {
+      const state = getState();
+      const {
+        alerts: { data },
+      } = state;
+      const alert = data.find(({ _id }) => selectedAlertId === _id);
+      dispatch(setSelectedAlert(alert));
+    }
   };
 }

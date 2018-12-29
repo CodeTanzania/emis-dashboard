@@ -2,6 +2,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import * as API from '../../../common/API';
 import * as Actions from '../actions';
+import { alert } from '../../../common/data/alertTestData';
 
 jest.mock('../../../common/API');
 
@@ -13,6 +14,15 @@ describe('Alerts: Module', () => {
     it(`should create an action of type ${Actions.GET_ALERTS_START}`, () => {
       expect(Actions.getAlertsStart()).toEqual({
         type: Actions.GET_ALERTS_START,
+      });
+    });
+
+    it(`should create an action of type ${Actions.SET_SELECTED_ALERT}`, () => {
+      expect(Actions.setSelectedAlert(alert)).toEqual({
+        type: Actions.SET_SELECTED_ALERT,
+        payload: {
+          data: alert,
+        },
       });
     });
 
@@ -69,7 +79,63 @@ describe('Alerts: Module', () => {
   });
 
   describe(`Thunks`, () => {
-    it(`should dispatch an actions of type ${Actions.STORE_MAP_POINTS} and ${
+    it(`should dispatch an action of type ${
+      Actions.SET_SELECTED_ALERT
+    }`, () => {
+      const store = mockStore({
+        alerts: {
+          data: [alert],
+          selected: null,
+        },
+        alertsMap: {
+          points: [],
+        },
+      });
+
+      const selectedAlertId = '5c188aecb470d100048dd5fe';
+
+      const expectedActions = [
+        {
+          type: Actions.SET_SELECTED_ALERT,
+          payload: {
+            data: alert,
+          },
+        },
+      ];
+
+      store.dispatch(Actions.getSelectedAlertFromState(selectedAlertId));
+      expect(store.getActions()).toEqual(expectedActions);
+    });
+
+    it(`should dispatch an action of type ${
+      Actions.SET_SELECTED_ALERT
+    } when selected alert id is null`, () => {
+      const store = mockStore({
+        alerts: {
+          data: [alert],
+          selected: null,
+        },
+        alertsMap: {
+          points: [],
+        },
+      });
+
+      const selectedAlertId = null;
+
+      const expectedActions = [
+        {
+          type: Actions.SET_SELECTED_ALERT,
+          payload: {
+            data: null,
+          },
+        },
+      ];
+
+      store.dispatch(Actions.getSelectedAlertFromState(selectedAlertId));
+      expect(store.getActions()).toEqual(expectedActions);
+    });
+
+    it(`should dispatch  actions of type ${Actions.STORE_MAP_POINTS} and ${
       Actions.GET_ALERTS_SUCCESS
     } when fetching alerts is successfully`, () => {
       const store = mockStore({
