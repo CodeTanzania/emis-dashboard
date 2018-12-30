@@ -1,13 +1,13 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { Button, List, Input, Row, Col, Layout, } from 'antd';
+import { bindActionCreators } from 'redux';
+import { Button, List, Input, Row, Col, Layout } from 'antd';
 import { connect } from 'react-redux';
 import IncidentFilter from '../IncidentFilter';
 import IncidentsList from '../IncidentsList';
 import IncidentDetails from '../IncidentDetails';
 
 import './styles.css';
-import { bindActionCreators } from 'redux';
 import { searchIncident } from '../../actions';
 
 const { Header, Content } = Layout;
@@ -36,8 +36,8 @@ class MapNav extends React.Component {
         _id: PropTypes.string,
       }),
       description: PropTypes.string,
-      startedAt: PropTypes.instanceOf(Date),
-      endedAt: PropTypes.instanceOf(Date),
+      startedAt: PropTypes.string,
+      endedAt: PropTypes.string,
       _id: PropTypes.string,
     }).isRequired,
     incidents: PropTypes.arrayOf(
@@ -51,13 +51,14 @@ class MapNav extends React.Component {
           _id: PropTypes.string,
         }),
         description: PropTypes.string.isRequired,
-        startedAt: PropTypes.instanceOf(Date),
-        endedAt: PropTypes.instanceOf(Date),
+        startedAt: PropTypes.string,
+        endedAt: PropTypes.string,
         _id: PropTypes.string,
       }).isRequired
     ),
     clickedIncident: PropTypes.func,
     onCloseDetail: PropTypes.func,
+    handleSearchIncident: PropTypes.func,
   };
 
   static defaultProps = {
@@ -65,6 +66,7 @@ class MapNav extends React.Component {
     clickedIncident: null,
     incidents: [],
     onCloseDetail: null,
+    handleSearchIncident: null,
   };
 
   constructor() {
@@ -74,10 +76,10 @@ class MapNav extends React.Component {
     };
   }
 
-  onSearchIncident = (searchData) => {
+  onSearchIncident = searchData => {
     const { handleSearchIncident } = this.props;
-    handleSearchIncident(searchData)
-  }
+    handleSearchIncident(searchData);
+  };
 
   render() {
     const {
@@ -85,7 +87,8 @@ class MapNav extends React.Component {
       onCloseDetail,
       IncidentSelected,
       clickedIncident,
-      incidents } = this.props;
+      incidents,
+    } = this.props;
 
     const { hideNav } = this.state;
 
@@ -101,12 +104,12 @@ class MapNav extends React.Component {
                 <Col span={6} offset={1}>
                   <Button type="primary" onClick={newIncidentButton}>
                     + New Incident
-              </Button>
+                  </Button>
                 </Col>
               </Row>
             </div>
             <Layout className="MapNav">
-              <Header className='MapNavHeader' >
+              <Header className="MapNavHeader">
                 <h3> List of Recorded Incidents</h3>
               </Header>
               <Content>
@@ -146,8 +149,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  handleSearchIncident: bindActionCreators(searchIncident, dispatch)
-})
+  handleSearchIncident: bindActionCreators(searchIncident, dispatch),
+});
 export default connect(
   mapStateToProps,
-  mapDispatchToProps)(MapNav);
+  mapDispatchToProps
+)(MapNav);

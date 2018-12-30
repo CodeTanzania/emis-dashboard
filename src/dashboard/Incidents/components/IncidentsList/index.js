@@ -22,22 +22,20 @@ const cx = classNames.bind(styles);
 class IncidentsList extends React.Component {
   static propTypes = {
     getIncident: PropTypes.func,
-    incidentsList: PropTypes.arrayOf(
-      PropTypes.shape({
+    incidentsList: PropTypes.shape({
+      name: PropTypes.string,
+      incidentsTypeData: PropTypes.shape({
         name: PropTypes.string,
-        incidentsTypeData: PropTypes.shape({
-          name: PropTypes.string,
-          nature: PropTypes.string.isRequired,
-          family: PropTypes.string.isRequired,
-          color: PropTypes.string,
-          _id: PropTypes.string,
-        }),
-        description: PropTypes.string.isRequired,
-        startedAt: PropTypes.instanceOf(Date),
-        endedAt: PropTypes.instanceOf(Date),
+        nature: PropTypes.string.isRequired,
+        family: PropTypes.string.isRequired,
+        color: PropTypes.string,
         _id: PropTypes.string,
-      }).isRequired
-    ),
+      }),
+      description: PropTypes.string.isRequired,
+      startedAt: PropTypes.string,
+      endedAt: PropTypes.string,
+      _id: PropTypes.string,
+    }),
     clickedIncidentList: PropTypes.func,
   };
 

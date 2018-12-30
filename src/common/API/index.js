@@ -190,9 +190,10 @@ const API = {
       res => res.data
     ),
 
- searchIncidents: searchValue =>
-  Axios.get(`${INCIDENTS_API}/incidents?q=${searchValue}`)
-  .then(res => res.data)
+  searchIncidents: searchValue =>
+    Axios.get(`${INCIDENTS_API}/incidents?q=${searchValue}`).then(
+      res => res.data
+    ),
 };
 
 export default API;

@@ -14,19 +14,6 @@ const { Content } = Layout;
 
 class IncidentGeneralDetails extends React.Component {
   static propTypes = {
-    incidentSelected: PropTypes.shape({
-      event: PropTypes.string.isRequired,
-      incidentType: PropTypes.shape({
-        name: PropTypes.string.isRequired,
-        nature: PropTypes.string.isRequired,
-        family: PropTypes.string.isRequired,
-        color: PropTypes.string,
-        _id: PropTypes.string,
-      }).isRequired,
-      description: PropTypes.string.isRequired,
-      startedAt: PropTypes.string.isRequired,
-      endedAt: PropTypes.string.isRequired,
-    }).isRequired,
     activatedNav: PropTypes.func,
     currentMenu: PropTypes.string.isRequired,
   };
@@ -41,11 +28,11 @@ class IncidentGeneralDetails extends React.Component {
   };
 
   render() {
-    const { currentMenu, incidentSelected } = this.props;
+    const { currentMenu } = this.props;
     const showNavContent = currentNav => {
       switch (currentNav) {
         case 'list': {
-          return <IncidentDetailsContent selected={incidentSelected} />;
+          return <IncidentDetailsContent />;
         }
         case 'assessment': {
           return <IncidentAssessiment />;
@@ -105,9 +92,6 @@ class IncidentGeneralDetails extends React.Component {
 
 const mapStateToProps = state => ({
   currentMenu: state.activeNav && state.activeNav.activeItem,
-  incidentSelected: state.selectedIncident.incident
-    ? state.selectedIncident.incident
-    : [],
 });
 
 const mapDispachToProps = dispatch => ({

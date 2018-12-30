@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { convertIsoDate } from '../../../../../../common/lib/mapUtil';
+
 import './styles.css';
 
-export default function IncidentDetailsContent({ selected }) {
+function IncidentDetailsContent({ incidentSelected }) {
   const {
     event,
     type,
@@ -13,7 +15,7 @@ export default function IncidentDetailsContent({ selected }) {
     description,
     areas,
     causes,
-  } = selected;
+  } = incidentSelected;
 
   const { name } = type;
 
@@ -88,8 +90,19 @@ export default function IncidentDetailsContent({ selected }) {
   );
 }
 
+const mapStateToProps = state => ({
+  incidentSelected: state.selectedIncident.incident
+    ? state.selectedIncident.incident
+    : [],
+});
+
+export default connect(
+  mapStateToProps,
+  ''
+)(IncidentDetailsContent);
+
 IncidentDetailsContent.propTypes = {
-  selected: PropTypes.shape({
+  incidentSelected: PropTypes.shape({
     event: PropTypes.string.isRequired,
     incidentType: PropTypes.shape({
       name: PropTypes.string.isRequired,
@@ -97,7 +110,7 @@ IncidentDetailsContent.propTypes = {
       family: PropTypes.string.isRequired,
       color: PropTypes.string,
       _id: PropTypes.string,
-    }).isRequired,
+    }),
     description: PropTypes.string.isRequired,
     startedAt: PropTypes.string.isRequired,
     endedAt: PropTypes.string.isRequired,
@@ -105,5 +118,5 @@ IncidentDetailsContent.propTypes = {
 };
 
 IncidentDetailsContent.defaultProps = {
-  selected: {},
+  incidentSelected: {},
 };

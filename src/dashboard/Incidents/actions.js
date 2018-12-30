@@ -22,7 +22,6 @@ export const FILTER_INCIDENT_BY_DATE = 'FILTER_INCIDENT_BY_DATE';
 export const SEARCH_INCIDENT_START = 'SEARCH_INCIDENT_START';
 export const SEARCH_INCIDENT_ERROR = 'SEARCH_INCIDENT_ERROR';
 
-
 /* Actions creater */
 
 export const getIncidentsStart = () => ({
@@ -180,8 +179,7 @@ export const activeIncidentAction = (incidentId = null) => (
     .catch(error => dispatch(setIncidentActionError(error)));
 };
 
-export const searchIncident = (searchData) => (dispatch, getState, { API }) => {
-
+export const searchIncident = searchData => (dispatch, getState, { API }) => {
   dispatch(searchIncidentStart());
   API.searchIncidents(searchData)
     .then(results => {
@@ -198,4 +196,4 @@ export const searchIncident = (searchData) => (dispatch, getState, { API }) => {
       });
     })
     .catch(error => dispatch(searchIncidentError(error)));
-}
+};

@@ -42,7 +42,7 @@ export default function Dashboard() {
           {/* end plan menu */}
           {/* incident menu */}
           <Menu.Item key="2">
-            <NavLink to="/incidents">
+            <NavLink to="/incidents/map">
               <Icon type="heat-map" theme="outlined" className="f-25" />
               <span>Incidents</span>
             </NavLink>
@@ -79,7 +79,7 @@ export default function Dashboard() {
         <Content className={cx('content')}>
           <Switch>
             <Route path="/plans" component={Plans} />
-            <Route path="/incidents" exact component={Incidents} />
+            <Route path="/incidents" component={Incidents} />
             <Route path="/stakeholders" exact component={Stakeholders} />
             <Route path="/settings/incidentType" exact component={Settings} />
           </Switch>
