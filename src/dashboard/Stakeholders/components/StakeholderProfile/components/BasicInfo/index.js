@@ -1,8 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Avatar, Button } from 'antd';
+import classNames from 'classnames';
 import InfoLineItem from './components/InfoLineItem';
+import styles from './styles.css';
 
+const cx = classNames.bind(styles);
 /**
  * Contact information component
  * Render basic information about the contact
@@ -16,34 +19,36 @@ import InfoLineItem from './components/InfoLineItem';
 export default function BasicInfo({ stakeholder, onClickEdit }) {
   const {
     name,
-    phone,
+    mobile,
     email,
     fax,
     phases,
-    ownership,
+    role,
     physicalAddress,
     postalAddress,
     website,
   } = stakeholder;
   return (
-    <div style={{ padding: '20px' }}>
-      <div style={{ display: 'flex' }}>
-        <div style={{ width: '100px', marginRight: '20px' }}>
+    <div className={cx('stakeholderBasicInfo')}>
+      <div className={cx('summary')}>
+        <div className={cx('avatar')}>
           <Avatar shape="square" size={100} icon="user" />
         </div>
-        <div style={{ flex: '1' }}>
-          <h3 style={{ marginBottom: '7px' }}>{name}</h3>
-          <InfoLineItem label="Ownership" value={ownership} />
+        <div className={cx('info')}>
+          <h3 className={cx('name')}>{name}</h3>
+          <InfoLineItem label="Role" value={role && role.name} />
           <InfoLineItem label="Phases" value={phases} />
         </div>
         <div>
-          <Button icon="edit" onClick={() => onClickEdit()} />
+          <Button icon="edit" onClick={() => onClickEdit()}>
+            Edit Profile
+          </Button>
         </div>
       </div>
-      <InfoLineItem label="Phone" value={phone} block />
+      <InfoLineItem label="Phone" value={mobile} block />
       <InfoLineItem label="Email" value={email} block />
       <InfoLineItem label="Fax" value={fax} block />
-      <InfoLineItem label="Address" value={physicalAddress} block />
+      <InfoLineItem label="Physical Address" value={physicalAddress} block />
       <InfoLineItem label="Postal Address" value={postalAddress} block />
       <InfoLineItem label="Web" value={website} block />
     </div>
@@ -57,10 +62,6 @@ BasicInfo.propTypes = {
     email: PropTypes.string,
     physicalAddress: PropTypes.string,
     fax: PropTypes.string,
-  }),
+  }).isRequired,
   onClickEdit: PropTypes.func.isRequired,
-};
-
-BasicInfo.defaultProps = {
-  stakeholder: {},
 };

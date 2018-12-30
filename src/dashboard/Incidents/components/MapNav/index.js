@@ -134,8 +134,8 @@ class MapNav extends React.Component {
             </Layout>
           </div>
         ) : (
-            <IncidentDetails handleCancel={onCloseDetail} />
-          )}
+          <IncidentDetails handleCancel={onCloseDetail} />
+        )}
       </Fragment>
     ) : null;
   }

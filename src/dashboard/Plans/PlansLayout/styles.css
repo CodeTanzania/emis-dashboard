@@ -1,0 +1,26 @@
+.PlansLayout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.PlansLayout .header {
+  background: #fff;
+  padding-left: 10px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.PlansLayout .content {
+  background: #fff;
+  flex: 1 0;
+  overflow-y: auto;
+}
+
+.PlansLayout .listCardContainer {
+  margin: 15px;
+}
+
+.PlansLayout .pagination {
+  padding-top: 20px;
+}

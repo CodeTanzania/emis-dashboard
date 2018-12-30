@@ -10,8 +10,8 @@ import SidebarSettings from './components/SidebarSettings';
 import ColHeader from '../../../../common/components/ColHeader';
 import IncidentType from './components/SystemSettings/Components/SettingsIncidentTypeList';
 import IncidentDetails from './components/SystemSettings/Components/SettingsIncidentTypeDetails';
-import IncidentTypeForm from './components/SystemSettings/Components/SettingsIncidentTypeForm/IncidentTypeForm';
-import EditIncidentTypeForm from './components/SystemSettings/Components/SettingsIncidentTypeForm/EditIncidentTypeForm';
+import CreateIncidentType from './components/SystemSettings/Components/SettingsIncidentTypeForm/CreateIncidentType';
+import UpdateIncidentType from './components/SystemSettings/Components/SettingsIncidentTypeForm/UpdateIncidentTYpe';
 
 /* load styles */
 import styles from './styles.css';
@@ -38,7 +38,7 @@ class SettingsLayout extends React.Component {
   static propTypes = {
     incidentType: PropTypes.arrayOf(
       PropTypes.shape({
-        name: PropTypes.string,
+        event: PropTypes.string,
         nature: PropTypes.string.isRequired,
         family: PropTypes.string.isRequired,
         code: PropTypes.string.isRequired,
@@ -67,7 +67,6 @@ class SettingsLayout extends React.Component {
       <Layout
         style={{
           background: '#fff',
-          borderTop: '1px solid #e6e6e6',
         }}
       >
         <Row>
@@ -98,10 +97,10 @@ class SettingsLayout extends React.Component {
             <ColHeader className={cx('SettingLayoutContentHeader')}>
               <Row>
                 <Col span={1}>
-                  <IncidentTypeForm />
+                  <CreateIncidentType />
                 </Col>
                 <Col span={1}>
-                  <EditIncidentTypeForm incidentType={incidentType[0]} />
+                  <UpdateIncidentType />
                 </Col>
                 <Col span={21}>
                   <h3>Basic Information</h3>

@@ -8,22 +8,46 @@ import {
   GET_STAKEHOLDERS_ERROR,
   GET_STAKEHOLDERS_SUCCESS,
   SELECT_STAKEHOLDER,
-  UPDATE_STAKEHOLDER,
+  UPDATE_STAKEHOLDER_START,
+  UPDATE_STAKEHOLDER_SUCCESS,
+  UPDATE_STAKEHOLDER_ERROR,
   TOGGLE_STAKEHOLDER_FILTER,
   RESET_STAKEHOLDER_FILTERS,
+  SHOW_STAKEHOLDER_FORM,
 } from './actions';
 
 import { buildUIFilters, updateFilterItem, resetFilters } from './helpers';
 
+/**
+ * State shape
+{
+  stakeholders: Object
+    stakeholders.data: Object[], // contain the stakeholders returned by the API
+    stakeholders.total: number, // total number of stakeholders returned
+    stakeholders.isLoading: boolean, // check if stakeholders fetching in progress
+    stakeholders.init: boolean, // check if stakeholders UI booted
+    stakeholders.error: Object, // set if stakeholder init or fetch failed
+    stakeholders.selected: Object, // keep track of the selected stakeholder in UI stakeholders list
+    stakeholders.filters: Object[], // keep track of stakeholder UI filters and their status
+    stakeholders.schema: Object, // stakeholder schema definition,
+    stakeholders.predRoles: Object[] // predefined roles
+    stakeholders.form: Object // monitor the stakeholder form 
+    updatingStakeholder: boolean
+}
+ */
+
 // initial stakeholders state
 const initialState = {
-  data: [], // contain the stakeholders returned by the API
-  total: 0, // total number of stakeholders returned
-  isLoading: false, // check if stakeholders fetching in progress
-  init: false, // check if stakeholders UI booted
-  error: null, // set if stakeholder init or fetch failed
-  selected: null, // keep track of the selected stakeholder in UI stakeholders list
-  filters: [], // keep track of stakeholder UI filters and their status
+  data: [],
+  total: 0,
+  isLoading: false,
+  init: false,
+  error: null,
+  selected: null,
+  filters: [],
+  schema: null,
+  predRoles: null,
+  form: null,
 };
 
 /**
@@ -36,7 +60,14 @@ export default function stakeholders(state = initialState, action) {
     case INIT_STAKEHOLDERS_START:
       return { ...state, init: true };
     case INIT_STAKEHOLDERS_SUCCESS: {
-      const { filters, data, total, page } = action.payload.data;
+      const {
+        filters,
+        schema,
+        data,
+        total,
+        page,
+        predRoles,
+      } = action.payload.data;
       const uiFilters = buildUIFilters(filters);
       return {
         ...state,
@@ -49,6 +80,8 @@ export default function stakeholders(state = initialState, action) {
         data,
         total,
         page,
+        schema,
+        predRoles,
       };
     }
     case INIT_STAKEHOLDERS_ERROR:
@@ -98,8 +131,12 @@ export default function stakeholders(state = initialState, action) {
       return {
         ...state,
         data: [action.payload.data, ...state.data],
+        selected: action.payload.data,
       };
-    case UPDATE_STAKEHOLDER: {
+
+    case UPDATE_STAKEHOLDER_START:
+      return { ...state, updatingStakeholder: true };
+    case UPDATE_STAKEHOLDER_SUCCESS: {
       const data = [...state.data]; // grab stakeholder array
       const stakeholder = action.payload.data; // grab stakeholder
       const foundIndex = data.findIndex(item => item._id === stakeholder._id);
@@ -108,13 +145,30 @@ export default function stakeholders(state = initialState, action) {
         ...state,
         data,
         selected: stakeholder,
+        updatingStakeholder: false,
       };
     }
+    case UPDATE_STAKEHOLDER_ERROR:
+      return {
+        ...state,
+        error: action.payload.data,
+        updatingStakeholder: false,
+      };
     case RESET_STAKEHOLDER_FILTERS: {
       const filters = resetFilters(state.filters);
       return { ...state, filters };
     }
-
+    case SHOW_STAKEHOLDER_FORM: {
+      const { drawerOptions, stakeholder } = action.payload.data;
+      return {
+        ...state,
+        form: {
+          show: true,
+          drawerOptions,
+          stakeholder,
+        },
+      };
+    }
     default:
       return state;
   }

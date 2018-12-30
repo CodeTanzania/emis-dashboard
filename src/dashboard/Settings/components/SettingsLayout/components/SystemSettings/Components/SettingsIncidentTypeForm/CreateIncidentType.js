@@ -9,6 +9,7 @@ export default class CreateIncidentType extends React.Component {
     this.state = {
       visible: false,
     };
+    this.onCancelButton = this.handleCancel.bind(this);
   }
 
   showModal = () => {
@@ -34,13 +35,13 @@ export default class CreateIncidentType extends React.Component {
           onClick={this.showModal}
         />
         <Modal
-          title="Settings: Edit Incident-Type"
+          title="Settings: Create new Incident-Type"
           visible={visible}
           onCancel={this.handleCancel}
           footer={null}
           width="50%"
         >
-          <IncidentTypeForm />;
+          <IncidentTypeForm onCancelButton={this.handleCancel} />;
         </Modal>
       </div>
     );

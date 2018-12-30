@@ -5,6 +5,7 @@ import {
   UPDATE_INCIDENT_TYPE,
   SELECT_COLOR_AUTOFILL,
   FETCH_INCIDENT_TYPE_FAILURE,
+  SELECT_ACTIVE_MENU,
 } from './actions';
 
 /**
@@ -30,7 +31,7 @@ const initialState = {
   error: null,
 };
 
-export default function incidentsType(state = initialState, action) {
+export function incidentsType(state = initialState, action) {
   switch (action.type) {
     case FETCH_INCIDENTS_TYPE_START:
       return {
@@ -81,6 +82,18 @@ export default function incidentsType(state = initialState, action) {
         colorSelected: action.payload.colorSelected,
       };
 
+    default:
+      return state;
+  }
+}
+
+export function activeMenu(state = { activeItem: 'incidentType' }, action) {
+  switch (action.type) {
+    case SELECT_ACTIVE_MENU:
+      return {
+        ...state,
+        ...action.payload,
+      };
     default:
       return state;
   }

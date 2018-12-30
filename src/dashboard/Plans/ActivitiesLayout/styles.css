@@ -1,0 +1,40 @@
+.PlanActivitiesLayout {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.PlanActivitiesLayout .header {
+  background: #fff;
+  padding: 0 10px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.PlanActivitiesLayout .muted {
+  font-size: 11px;
+  color: #909090;
+}
+
+.PlanActivitiesLayout .exportButton {
+  margin-left: 8px;
+}
+
+.PlanActivitiesLayout .content {
+  background: #fff;
+  flex: 1 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.PlanActivitiesLayout .sectionLayout {
+  height: 100%;
+}
+
+.PlanActivitiesLayout .section {
+  height: 100%;
+}
+
+.PlanActivitiesLayout .section-b-r {
+  border-right: 1px solid #e0e0e0;
+}

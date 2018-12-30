@@ -54,7 +54,15 @@ class IncidentType extends React.Component {
     const { incidentsType, loading } = this.props;
 
     return (
-      <div className="content scrollable">
+      <div
+        className="content scrollable"
+        style={{
+          background: '#fff',
+          height: '100%',
+          overflowY: 'auto',
+          paddingBottom: '50px',
+        }}
+      >
         {loading ? (
           <div className={cx('loading')}>
             <Spin />
