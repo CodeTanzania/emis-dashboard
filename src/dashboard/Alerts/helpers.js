@@ -18,7 +18,9 @@ import moment from 'moment';
  * @since 0.1.0
  */
 export function isoDateToHumanReadableDate(isoFormattDate) {
-  return moment(isoFormattDate).format('dddd, MMMM Do YYYY, h:mm:ss a');
+  return moment(isoFormattDate)
+    .utc()
+    .format('dddd, MMMM Do YYYY, h:mm:ss a');
 }
 
 /**
