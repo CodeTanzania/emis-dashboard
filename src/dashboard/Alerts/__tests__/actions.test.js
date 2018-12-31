@@ -2,7 +2,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import * as API from '../../../common/API';
 import * as Actions from '../actions';
-import { alert, polygon } from '../../../common/data/alertTestData';
+import { alert, polygons } from '../../../common/data/alertTestData';
 
 jest.mock('../../../common/API');
 
@@ -69,10 +69,10 @@ describe('Alerts: Module', () => {
     it(`should create an action of type ${
       Actions.SET_SELECTED_GEOJSON
     }`, () => {
-      expect(Actions.setSelectedGeoJson(polygon)).toEqual({
+      expect(Actions.setSelectedGeoJson(polygons)).toEqual({
         type: Actions.SET_SELECTED_GEOJSON,
         payload: {
-          data: polygon,
+          data: polygons,
         },
       });
     });
@@ -89,9 +89,9 @@ describe('Alerts: Module', () => {
   });
 
   describe(`Thunks`, () => {
-    it(`should dispatch an action of type ${
-      Actions.SET_SELECTED_ALERT
-    }`, () => {
+    it(`should dispatch  actions of type ${Actions.SET_SELECTED_ALERT} and ${
+      Actions.SET_SELECTED_GEOJSON
+    } `, () => {
       const store = mockStore({
         alerts: {
           data: [alert],
@@ -111,14 +111,20 @@ describe('Alerts: Module', () => {
             data: alert,
           },
         },
+        {
+          type: Actions.SET_SELECTED_GEOJSON,
+          payload: {
+            data: polygons,
+          },
+        },
       ];
 
       store.dispatch(Actions.getSelectedAlertFromState(selectedAlertId));
       expect(store.getActions()).toEqual(expectedActions);
     });
 
-    it(`should dispatch an action of type ${
-      Actions.SET_SELECTED_ALERT
+    it(`should dispatch  actions of type ${Actions.SET_SELECTED_ALERT} and ${
+      Actions.SET_SELECTED_GEOJSON
     } when selected alert id is null`, () => {
       const store = mockStore({
         alerts: {
@@ -137,6 +143,12 @@ describe('Alerts: Module', () => {
           type: Actions.SET_SELECTED_ALERT,
           payload: {
             data: null,
+          },
+        },
+        {
+          type: Actions.SET_SELECTED_GEOJSON,
+          payload: {
+            data: [],
           },
         },
       ];

@@ -4,6 +4,7 @@ import {
   GET_ALERTS_ERROR,
   STORE_MAP_POINTS,
   SET_SELECTED_ALERT,
+  SET_SELECTED_GEOJSON,
 } from './actions';
 
 /**
@@ -19,6 +20,7 @@ const defaultAlertsMapState = {
   center: [-6.179, 35.754],
   zoom: 7,
   points: [],
+  shapes: [],
 };
 
 /* initial Alerts state */
@@ -58,6 +60,10 @@ export function alertsMap(state = defaultAlertsMapState, action) {
     case STORE_MAP_POINTS:
       return Object.assign({}, state, {
         points: action.payload.data,
+      });
+    case SET_SELECTED_GEOJSON:
+      return Object.assign({}, state, {
+        shapes: action.payload.data,
       });
     default:
       return state;

@@ -48,4 +48,5 @@ export const polygon = {
   },
 };
 
+export const polygons = [polygon];
 export const alerts = [alert];

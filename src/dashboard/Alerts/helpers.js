@@ -44,6 +44,25 @@ export const generateGeoJsonPoint = (geometry, properties) => ({
 });
 
 /**
+ * Generates a GeoJSON Polygon
+ *
+ * @function
+ * @name generateGeoJsonPoint
+ *
+ * @param {Object} geomentry
+ * @param {Object} properties
+ *
+ * @returns {Object} GeoJSON feature
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export const generateGeoJsonPolygon = (geometry, properties = {}) => ({
+  type: 'Feature',
+  properties,
+  geometry,
+});
+
+/**
  * Converts Alert Object to GeoJSON object
  *
  * @function
@@ -57,11 +76,15 @@ export const generateGeoJsonPoint = (geometry, properties) => ({
  * @since 0.1.0
  */
 export function alertToGeoJson(alert, type) {
-  const { centroid, _id: id, event, expectedAt } = alert;
+  const { centroid, _id: id, event, expectedAt, geometry } = alert;
   if (type === 'Point') {
     const properties = { id, event, expectedAt };
     const point = generateGeoJsonPoint(centroid, properties);
     return point;
+  }
+  if (type === 'Polygon') {
+    const polygon = generateGeoJsonPolygon(geometry);
+    return polygon;
   }
 
   return null;

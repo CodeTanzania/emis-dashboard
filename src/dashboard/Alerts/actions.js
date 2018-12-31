@@ -1,4 +1,4 @@
-import { alertsToGeoJson } from './helpers';
+import { alertsToGeoJson, alertToGeoJson } from './helpers';
 
 /*
  *------------------------------------------------------------------------------
@@ -158,7 +158,7 @@ export function storeMapPoints(points) {
  * @version 0.1.0
  * @since 0.1.0
  */
-export function setSelectedGeoJson(geoJson) {
+export function setSelectedGeoJson(geoJson = []) {
   return {
     type: SET_SELECTED_GEOJSON,
     payload: {
@@ -214,13 +214,16 @@ export function getSelectedAlertFromState(selectedAlertId = null) {
   return (dispatch, getState) => {
     if (selectedAlertId === null) {
       dispatch(setSelectedAlert(null));
+      dispatch(setSelectedGeoJson());
     } else {
       const state = getState();
       const {
         alerts: { data },
       } = state;
       const alert = data.find(({ _id }) => selectedAlertId === _id);
+      const polygon = alertToGeoJson(alert, 'Polygon');
       dispatch(setSelectedAlert(alert));
+      dispatch(setSelectedGeoJson([polygon]));
     }
   };
 }
