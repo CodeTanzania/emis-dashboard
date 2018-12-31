@@ -3,7 +3,7 @@ import * as Helpers from '../helpers';
 describe(`Helpers`, () => {
   it(`tests isoDateToHumanReadableDate`, () => {
     const isoDate = '2018-07-18T15:00:00.000Z';
-    const expected = 'Wednesday, July 18th 2018, 6:00:00 pm';
+    const expected = 'Wednesday, July 18th 2018, 3:00:00 pm';
     expect(Helpers.isoDateToHumanReadableDate(isoDate)).toBe(expected);
   });
 
@@ -16,7 +16,7 @@ describe(`Helpers`, () => {
   it('test formatAlertFieldTypeValue', () => {
     const fieldType = 'reportedAt';
     const fieldValue = '2018-07-18T15:00:00.000Z';
-    const expected = 'Wednesday, July 18th 2018, 6:00:00 pm';
+    const expected = 'Wednesday, July 18th 2018, 3:00:00 pm';
     expect(Helpers.formatAlertFieldTypeValue(fieldType, fieldValue)).toBe(
       expected
     );
