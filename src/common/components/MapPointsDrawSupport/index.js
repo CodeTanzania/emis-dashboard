@@ -20,6 +20,7 @@ import L from 'leaflet';
 class MapPointsDrawSupport extends React.Component {
   componentDidMount() {
     this.map = this.props.leaflet.map;
+    this.initializePointsLayer();
     L.control.zoom({ position: 'bottomleft' }).addTo(this.map);
   }
 
@@ -32,7 +33,7 @@ class MapPointsDrawSupport extends React.Component {
     }
 
     if (points !== prevPoints) {
-      this.showPoints(points);
+      this.addDataToPointsLayer(points);
     }
   }
 
@@ -48,7 +49,7 @@ class MapPointsDrawSupport extends React.Component {
     }
   };
 
-  showPoints = points => {
+  initializePointsLayer = () => {
     const { onEachFeature } = this.props;
     const DefaultIcon = L.icon({
       iconUrl: icon,
@@ -58,6 +59,9 @@ class MapPointsDrawSupport extends React.Component {
     this.pointsLayer = L.geoJSON([], {
       onEachFeature,
     }).addTo(this.map);
+  };
+
+  addDataToPointsLayer = points => {
     this.pointsLayer.addData(points);
   };
 
