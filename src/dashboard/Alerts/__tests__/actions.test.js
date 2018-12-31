@@ -67,6 +67,27 @@ describe('Alerts: Module', () => {
 
   describe('AlertsMap: Action Creators', () => {
     it(`should create an action of type ${
+      Actions.SET_SHOW_SELECTED_GEOJSON
+    }`, () => {
+      expect(Actions.setShowSelectedGeojson(true)).toEqual({
+        type: Actions.SET_SHOW_SELECTED_GEOJSON,
+        payload: {
+          data: true,
+        },
+      });
+    });
+
+    it(`should create an action of type ${
+      Actions.SET_SHOWPOINTS_VALUE
+    }`, () => {
+      expect(Actions.setShowPiontsValue(true)).toEqual({
+        type: Actions.SET_SHOWPOINTS_VALUE,
+        payload: {
+          data: true,
+        },
+      });
+    });
+    it(`should create an action of type ${
       Actions.SET_SELECTED_GEOJSON
     }`, () => {
       expect(Actions.setSelectedGeoJson(polygons)).toEqual({
@@ -154,6 +175,50 @@ describe('Alerts: Module', () => {
       ];
 
       store.dispatch(Actions.getSelectedAlertFromState(selectedAlertId));
+      expect(store.getActions()).toEqual(expectedActions);
+    });
+
+    it(`should dispatch an action of type ${
+      Actions.SET_SHOW_SELECTED_GEOJSON
+    }`, () => {
+      const store = mockStore({
+        alertsMap: {
+          showShapes: false,
+        },
+      });
+
+      const expectedActions = [
+        {
+          type: Actions.SET_SHOW_SELECTED_GEOJSON,
+          payload: {
+            data: true,
+          },
+        },
+      ];
+
+      store.dispatch(Actions.showSeleteAlertShape(true));
+      expect(store.getActions()).toEqual(expectedActions);
+    });
+
+    it(`should dispatch an action of type ${
+      Actions.SET_SHOWPOINTS_VALUE
+    }`, () => {
+      const store = mockStore({
+        alertsMap: {
+          showPoints: false,
+        },
+      });
+
+      const expectedActions = [
+        {
+          type: Actions.SET_SHOWPOINTS_VALUE,
+          payload: {
+            data: true,
+          },
+        },
+      ];
+
+      store.dispatch(Actions.showAlertPoints(true));
       expect(store.getActions()).toEqual(expectedActions);
     });
 

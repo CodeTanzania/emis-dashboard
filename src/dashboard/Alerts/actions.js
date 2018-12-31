@@ -11,7 +11,6 @@ export const GET_ALERTS_START = 'GET_ALERTS_START';
 export const GET_ALERTS_SUCCESS = 'GET_ALERTS_SUCCESS';
 export const GET_ALERTS_ERROR = 'GET_ALERTS_ERROR';
 export const SET_SELECTED_ALERT = 'SET_SELECTED_ALERT';
-export const SET_SELECTED_GEOJSON = 'SET_SELECTED_GEOJSON';
 
 /*
  *------------------------------------------------------------------------------
@@ -20,6 +19,9 @@ export const SET_SELECTED_GEOJSON = 'SET_SELECTED_GEOJSON';
  */
 
 export const STORE_MAP_POINTS = 'STORE_ALERTS_AS_MAP_POINTS';
+export const SET_SHOWPOINTS_VALUE = 'SET_SHOWPOINTS_VALUE';
+export const SET_SELECTED_GEOJSON = 'SET_SELECTED_GEOJSON';
+export const SET_SHOW_SELECTED_GEOJSON = 'SET_SHOW_SELECTED_GEOJSON';
 
 /*
  *------------------------------------------------------------------------------
@@ -146,6 +148,50 @@ export function storeMapPoints(points) {
 }
 
 /**
+ * Action dispatched to toggle show pointLayer on map
+ *
+ * @function
+ * @name showPointsLayer
+ *
+ * @param {boolean} showPoints
+ *
+ * @returns {Object} - Redux action
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function setShowPiontsValue(showPoints) {
+  return {
+    type: SET_SHOWPOINTS_VALUE,
+    payload: {
+      data: showPoints,
+    },
+  };
+}
+
+/**
+ * Action dispatched to toggle show polygonsLayer on map
+ *
+ * @function
+ * @name setShowSelectedGeojson
+ *
+ * @param {boolean} showPoints
+ *
+ * @returns {Object} - Redux action
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function setShowSelectedGeojson(showPolygons) {
+  return {
+    type: SET_SHOW_SELECTED_GEOJSON,
+    payload: {
+      data: showPolygons,
+    },
+  };
+}
+
+/**
  * Action dispatched when alert marker is clicked on map
  *
  * @function
@@ -193,6 +239,7 @@ export function getAlerts() {
         const alertsPoints = alertsToGeoJson(res.data);
         dispatch(getAlertsSuccess(res.data, res.page, res.total));
         dispatch(storeMapPoints(alertsPoints));
+        dispatch(setShowPiontsValue(true));
       })
       .catch(err => dispatch(getAlertsError(err)));
   };
@@ -225,5 +272,39 @@ export function getSelectedAlertFromState(selectedAlertId = null) {
       dispatch(setSelectedAlert(alert));
       dispatch(setSelectedGeoJson([polygon]));
     }
+  };
+}
+
+/**
+ *Thunk function that toggles show of alert points layer
+ *
+ * @function
+ * @name showAlertPoints
+ *
+ * @param {boolean} showPoints - flag for show/hide alerts
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function showAlertPoints(showPoints) {
+  return dispatch => {
+    dispatch(setShowPiontsValue(showPoints));
+  };
+}
+
+/**
+ *Thunk function that  toggles show of alert points layer
+ *
+ * @function
+ * @name showSeleteAlertShape
+ *
+ * @param {boolean} showShapes - flag for show/hide alerts
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function showSeleteAlertShape(showShapes) {
+  return dispatch => {
+    dispatch(setShowSelectedGeojson(showShapes));
   };
 }

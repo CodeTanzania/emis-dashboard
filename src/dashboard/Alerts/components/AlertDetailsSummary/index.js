@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { get } from 'lodash';
 import { Icon, Tooltip } from 'antd';
-import { getSelectedAlertFromState } from '../../actions';
+import { getSelectedAlertFromState, showAlertPoints } from '../../actions';
 import AlertFieldItem from './components/AlertFieldItem';
 import './styles.css';
 
@@ -16,8 +16,11 @@ const detailsKeys = [
   'source',
 ];
 
-function AlertDetailsSummary({ selectedAlert, close }) {
-  const onClickClose = () => close();
+function AlertDetailsSummary({ selectedAlert, close, onClickShowPoints }) {
+  const onClickClose = () => {
+    onClickShowPoints(true);
+    close();
+  };
   const renderAlertField = keys =>
     keys.map(key => (
       <AlertFieldItem
@@ -40,6 +43,7 @@ function AlertDetailsSummary({ selectedAlert, close }) {
 
 const mapDispatchToProps = {
   close: getSelectedAlertFromState,
+  onClickShowPoints: showAlertPoints,
 };
 
 export default connect(
@@ -48,6 +52,7 @@ export default connect(
 )(AlertDetailsSummary);
 
 AlertDetailsSummary.propTypes = {
+  onClickShowPoints: PropTypes.func,
   selectedAlert: PropTypes.shape({
     headline: PropTypes.string,
     reportedAt: PropTypes.string,
@@ -62,4 +67,5 @@ AlertDetailsSummary.propTypes = {
 AlertDetailsSummary.defaultProps = {
   selectedAlert: null,
   close: () => {},
+  onClickShowPoints: () => {},
 };

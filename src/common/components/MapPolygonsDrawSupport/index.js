@@ -73,12 +73,10 @@ MapPolygonsDrawSupport.propTypes = {
   polygons: PropTypes.arrayOf(
     PropTypes.shape({
       type: PropTypes.string,
-      properties: PropTypes.shape({
-        id: PropTypes.string,
-      }),
+      properties: PropTypes.object,
       geometry: PropTypes.shape({
         type: PropTypes.string,
-        coordinates: PropTypes.arrayOf(PropTypes.number),
+        coordinates: PropTypes.array,
       }),
     })
   ),

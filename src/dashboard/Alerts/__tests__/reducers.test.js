@@ -13,6 +13,8 @@ describe('Alerts:reducers', () => {
         zoom: 7,
         points: [],
         shapes: [],
+        showPoints: false,
+        showShapes: false,
       };
     });
 
@@ -26,6 +28,34 @@ describe('Alerts:reducers', () => {
           type: null,
         })
       ).toEqual(previousState);
+    });
+
+    it(`should handle ${Actions.SET_SHOWPOINTS_VALUE}`, () => {
+      const action = {
+        type: Actions.SET_SHOWPOINTS_VALUE,
+        payload: { data: true },
+      };
+      const showPoints = true;
+
+      const expectedState = {
+        ...previousState,
+        showPoints,
+      };
+      expect(alertsMap(previousState, action)).toEqual(expectedState);
+    });
+
+    it(`should handle ${Actions.SET_SHOW_SELECTED_GEOJSON}`, () => {
+      const action = {
+        type: Actions.SET_SHOW_SELECTED_GEOJSON,
+        payload: { data: true },
+      };
+      const showShapes = true;
+
+      const expectedState = {
+        ...previousState,
+        showShapes,
+      };
+      expect(alertsMap(previousState, action)).toEqual(expectedState);
     });
 
     it(`should handle ${Actions.SET_SELECTED_GEOJSON}`, () => {
