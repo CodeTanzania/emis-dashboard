@@ -1,0 +1,13 @@
+.AlertSideBar {
+margin: 10px 10px 0 0;
+z-index: 1000;
+width: 20vw;
+position: absolute;
+right: 0;
+
+}
+
+.AlertSideBar .contents {
+  padding: 14px;
+  background-color: white;
+}

@@ -3,6 +3,7 @@ import React from 'react';
 import * as ReactLeaflet from 'react-leaflet';
 import PropTypes from 'prop-types';
 import AlertsDrawSupport from './components/AlertsDrawSupport';
+import AlertSideBar from './components/AlertSideBar';
 import { getAlerts } from './actions';
 import 'leaflet/dist/leaflet.css';
 import './styles.css';
@@ -32,6 +33,7 @@ class Alerts extends React.Component {
 
     return (
       <div id="alerts-map" className="Alerts">
+        <AlertSideBar />
         <LeafletMap center={center} zoom={zoom} zoomControl={false}>
           <AlertsDrawSupport />
           <TileLayer

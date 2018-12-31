@@ -33,12 +33,15 @@ class MapPointsDrawSupport extends React.Component {
   }
 
   showPoints = points => {
+    const { onEachFeature } = this.props;
     const DefaultIcon = L.icon({
       iconUrl: icon,
       shadowUrl: iconShadow,
     });
     L.Marker.prototype.options.icon = DefaultIcon;
-    this.pointsLayer = L.geoJSON().addTo(this.map);
+    this.pointsLayer = L.geoJSON([], {
+      onEachFeature,
+    }).addTo(this.map);
     this.pointsLayer.addData(points);
   };
 
@@ -50,6 +53,7 @@ class MapPointsDrawSupport extends React.Component {
 export default withLeaflet(MapPointsDrawSupport);
 
 MapPointsDrawSupport.propTypes = {
+  onEachFeature: PropTypes.func,
   points: PropTypes.arrayOf(
     PropTypes.shape({
       type: PropTypes.string,
@@ -69,4 +73,5 @@ MapPointsDrawSupport.propTypes = {
 
 MapPointsDrawSupport.defaultProps = {
   points: [],
+  onEachFeature: () => {},
 };
