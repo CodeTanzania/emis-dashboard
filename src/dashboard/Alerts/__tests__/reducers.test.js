@@ -1,5 +1,6 @@
 import * as Actions from '../actions';
 import { alertsMap, alerts } from '../reducers';
+import { polygons } from '../../../common/data/alertTestData';
 
 describe('Alerts:reducers', () => {
   describe('alertsMap', () => {
@@ -11,6 +12,9 @@ describe('Alerts:reducers', () => {
         center: [-6.179, 35.754],
         zoom: 7,
         points: [],
+        shapes: [],
+        showPoints: false,
+        showShapes: false,
       };
     });
 
@@ -26,6 +30,48 @@ describe('Alerts:reducers', () => {
       ).toEqual(previousState);
     });
 
+    it(`should handle ${Actions.SET_SHOWPOINTS_VALUE}`, () => {
+      const action = {
+        type: Actions.SET_SHOWPOINTS_VALUE,
+        payload: { data: true },
+      };
+      const showPoints = true;
+
+      const expectedState = {
+        ...previousState,
+        showPoints,
+      };
+      expect(alertsMap(previousState, action)).toEqual(expectedState);
+    });
+
+    it(`should handle ${Actions.SET_SHOW_SELECTED_GEOJSON}`, () => {
+      const action = {
+        type: Actions.SET_SHOW_SELECTED_GEOJSON,
+        payload: { data: true },
+      };
+      const showShapes = true;
+
+      const expectedState = {
+        ...previousState,
+        showShapes,
+      };
+      expect(alertsMap(previousState, action)).toEqual(expectedState);
+    });
+
+    it(`should handle ${Actions.SET_SELECTED_GEOJSON}`, () => {
+      const action = {
+        type: Actions.SET_SELECTED_GEOJSON,
+        payload: { data: polygons },
+      };
+      const shapes = polygons;
+
+      const expectedState = {
+        ...previousState,
+        shapes,
+      };
+
+      expect(alertsMap(previousState, action)).toEqual(expectedState);
+    });
     it(`should handle ${Actions.STORE_MAP_POINTS}`, () => {
       const alertMapPoints = [];
 

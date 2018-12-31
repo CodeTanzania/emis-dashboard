@@ -2,15 +2,20 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import MapPointsDrawSupport from '../../../../common/components/MapPointsDrawSupport';
-import { getSelectedAlertFromState } from '../../actions';
+import MapPolygonsDrawSupport from '../../../../common/components/MapPolygonsDrawSupport';
+import {
+  getSelectedAlertFromState,
+  showSeleteAlertShape,
+  showAlertPoints,
+} from '../../actions';
 import {
   isoDateToHumanReadableDate,
   formatAlertFieldType,
 } from '../../helpers';
 
 /**
- * Wrraper component for Supporting of Alerts drawing shapes
- * on map (Eg. Polygons, Cirles and Points)
+ * Wrraper component for Supporting  drawing of Alerts shapes (Eg. Polygons, Cirles and Points)
+ * on map
  * This component must be Child of map component to enable its children
  * to access map context
  *
@@ -26,13 +31,23 @@ class AlertsDrawSupport extends React.Component {
     this.onEachFeature = this.onEachFeature.bind(this);
   }
 
+  onMarkerClicked = id => {
+    const { selectAlert, onClickShowPoints, onClickShowShapes } = this.props;
+    selectAlert(id);
+    onClickShowPoints(false);
+    onClickShowShapes(true);
+  };
+
   onEachFeature = (feature, layer) => {
     const {
       properties: { event, expectedAt, id },
     } = feature;
-    const { selectAlert } = this.props;
     layer
-      .on({ click: () => selectAlert(id) })
+      .on({
+        click: () => {
+          this.onMarkerClicked(id);
+        },
+      })
       .bindTooltip(
         `<div><div><strong>Event:</strong> ${event}</div><div><strong>${formatAlertFieldType(
           'expectedAt'
@@ -42,22 +57,31 @@ class AlertsDrawSupport extends React.Component {
   };
 
   render() {
-    const { points } = this.props;
+    const { points, shapes, showPoints, showShapes } = this.props;
     return (
-      <MapPointsDrawSupport
-        points={points}
-        onEachFeature={this.onEachFeature}
-      />
+      <React.Fragment>
+        <MapPointsDrawSupport
+          isShowPoints={showPoints}
+          points={points}
+          onEachFeature={this.onEachFeature}
+        />
+        <MapPolygonsDrawSupport isShowPolygons={showShapes} polygons={shapes} />
+      </React.Fragment>
     );
   }
 }
 
 const mapStateToProps = state => ({
   points: state.alertsMap.points,
+  shapes: state.alertsMap.shapes,
+  showPoints: state.alertsMap.showPoints,
+  showShapes: state.alertsMap.showShapes,
 });
 
 const mapDispatchToProps = {
   selectAlert: getSelectedAlertFromState,
+  onClickShowPoints: showAlertPoints,
+  onClickShowShapes: showSeleteAlertShape,
 };
 
 export default connect(
@@ -66,6 +90,20 @@ export default connect(
 )(AlertsDrawSupport);
 
 AlertsDrawSupport.propTypes = {
+  showPoints: PropTypes.bool.isRequired,
+  showShapes: PropTypes.bool.isRequired,
+  onClickShowPoints: PropTypes.func.isRequired,
+  onClickShowShapes: PropTypes.func.isRequired,
+  shapes: PropTypes.arrayOf(
+    PropTypes.shape({
+      type: PropTypes.string,
+      properties: PropTypes.object,
+      geometry: PropTypes.shape({
+        type: PropTypes.string,
+        coordinates: PropTypes.array,
+      }),
+    })
+  ),
   selectAlert: PropTypes.func,
   points: PropTypes.arrayOf(
     PropTypes.shape({
@@ -83,5 +121,6 @@ AlertsDrawSupport.propTypes = {
 
 AlertsDrawSupport.defaultProps = {
   points: [],
+  shapes: [],
   selectAlert: () => {},
 };
