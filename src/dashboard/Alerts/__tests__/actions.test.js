@@ -222,8 +222,10 @@ describe('Alerts: Module', () => {
       expect(store.getActions()).toEqual(expectedActions);
     });
 
-    it(`should dispatch  actions of type ${Actions.STORE_MAP_POINTS} and ${
+    it(`should dispatch  actions of type ${Actions.STORE_MAP_POINTS}, ${
       Actions.GET_ALERTS_SUCCESS
+    } and  ${
+      Actions.SET_SHOWPOINTS_VALUE
     } when fetching alerts is successfully`, () => {
       const store = mockStore({
         alerts: {
@@ -260,6 +262,12 @@ describe('Alerts: Module', () => {
           type: Actions.STORE_MAP_POINTS,
           payload: {
             data: [],
+          },
+        },
+        {
+          type: Actions.SET_SHOWPOINTS_VALUE,
+          payload: {
+            data: true,
           },
         },
       ];
