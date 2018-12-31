@@ -21,7 +21,6 @@ class MapPointsDrawSupport extends React.Component {
   componentDidMount() {
     this.map = this.props.leaflet.map;
     this.initializePointsLayer();
-    L.control.zoom({ position: 'bottomleft' }).addTo(this.map);
   }
 
   componentDidUpdate(prevProps) {
