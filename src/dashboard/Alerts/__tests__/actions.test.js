@@ -2,7 +2,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import * as API from '../../../common/API';
 import * as Actions from '../actions';
-import { alert } from '../../../common/data/alertTestData';
+import { alert, polygon } from '../../../common/data/alertTestData';
 
 jest.mock('../../../common/API');
 
@@ -66,6 +66,16 @@ describe('Alerts: Module', () => {
   });
 
   describe('AlertsMap: Action Creators', () => {
+    it(`should create an action of type ${
+      Actions.SET_SELECTED_GEOJSON
+    }`, () => {
+      expect(Actions.setSelectedGeoJson(polygon)).toEqual({
+        type: Actions.SET_SELECTED_GEOJSON,
+        payload: {
+          data: polygon,
+        },
+      });
+    });
     it(`should create an action of type ${Actions.STORE_MAP_POINTS}`, () => {
       const alertPoints = [];
 

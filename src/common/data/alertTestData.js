@@ -39,4 +39,13 @@ export const alert = {
   tags: ['tanzania', 'meteorological', 'actual', 'alert', 'inbound'],
 };
 
+export const polygon = {
+  type: 'Feature',
+  properties: {},
+  geometry: {
+    type: 'Polygon',
+    coordinates: [[[39.9, -4.6], [39.5, -4.5]]],
+  },
+};
+
 export const alerts = [alert];

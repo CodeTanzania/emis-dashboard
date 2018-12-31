@@ -11,6 +11,7 @@ export const GET_ALERTS_START = 'GET_ALERTS_START';
 export const GET_ALERTS_SUCCESS = 'GET_ALERTS_SUCCESS';
 export const GET_ALERTS_ERROR = 'GET_ALERTS_ERROR';
 export const SET_SELECTED_ALERT = 'SET_SELECTED_ALERT';
+export const SET_SELECTED_GEOJSON = 'SET_SELECTED_GEOJSON';
 
 /*
  *------------------------------------------------------------------------------
@@ -140,6 +141,28 @@ export function storeMapPoints(points) {
     type: STORE_MAP_POINTS,
     payload: {
       data: points,
+    },
+  };
+}
+
+/**
+ * Action dispatched when alert marker is clicked on map
+ *
+ * @function
+ * @name setSelectedGeoJson
+ *
+ * @param {Object} alertShape - shape to be drawn on map(Eg. Polygon or Cirlce)
+ *
+ * @returns {Object} - Redux action
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function setSelectedGeoJson(geoJson) {
+  return {
+    type: SET_SELECTED_GEOJSON,
+    payload: {
+      data: geoJson,
     },
   };
 }
