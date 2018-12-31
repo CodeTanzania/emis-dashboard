@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import MapPointsDrawSupport from '../../../../common/components/MapPointsDrawSupport';
+import MapPolygonsDrawSupport from '../../../../common/components/MapPolygonsDrawSupport';
 import { getSelectedAlertFromState } from '../../actions';
 import {
   isoDateToHumanReadableDate,
@@ -50,20 +51,27 @@ class AlertsDrawSupport extends React.Component {
   };
 
   render() {
-    const { points, selected } = this.props;
+    const { points, selected, shapes } = this.props;
     const isShowPoints = !selected;
     return (
-      <MapPointsDrawSupport
-        isShowPoints={isShowPoints}
-        points={points}
-        onEachFeature={this.onEachFeature}
-      />
+      <React.Fragment>
+        <MapPointsDrawSupport
+          isShowPoints={isShowPoints}
+          points={points}
+          onEachFeature={this.onEachFeature}
+        />
+        <MapPolygonsDrawSupport
+          isShowPolygons={!isShowPoints}
+          polygons={shapes}
+        />
+      </React.Fragment>
     );
   }
 }
 
 const mapStateToProps = state => ({
   points: state.alertsMap.points,
+  shapes: state.alertsMap.shapes,
   selected: state.alerts.selected,
 });
 
@@ -77,6 +85,13 @@ export default connect(
 )(AlertsDrawSupport);
 
 AlertsDrawSupport.propTypes = {
+  shapes: PropTypes.arrayOf(
+    PropTypes.shape({
+      type: PropTypes.string,
+      properties: PropTypes.object,
+      coordinates: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)),
+    })
+  ),
   selectAlert: PropTypes.func,
   selected: PropTypes.shape({
     headline: PropTypes.string,
@@ -102,6 +117,7 @@ AlertsDrawSupport.propTypes = {
 
 AlertsDrawSupport.defaultProps = {
   points: [],
+  shapes: [],
   selected: null,
   selectAlert: () => {},
 };
