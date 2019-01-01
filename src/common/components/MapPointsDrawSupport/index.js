@@ -20,19 +20,35 @@ import L from 'leaflet';
 class MapPointsDrawSupport extends React.Component {
   componentDidMount() {
     this.map = this.props.leaflet.map;
-    L.control.zoom({ position: 'bottomleft' }).addTo(this.map);
+    this.initializePointsLayer();
   }
 
   componentDidUpdate(prevProps) {
-    const { points } = this.props;
-    const { points: prevPoints } = prevProps;
+    const { points, isShowPoints } = this.props;
+    const { points: prevPoints, isShowPoints: prevIsShowPoints } = prevProps;
+
+    if (isShowPoints !== prevIsShowPoints) {
+      this.updatePointsLayer(isShowPoints);
+    }
 
     if (points !== prevPoints) {
-      this.showPoints(points);
+      this.addDataToPointsLayer(points);
     }
   }
 
-  showPoints = points => {
+  hidePointsLayer = () => this.map.removeLayer(this.pointsLayer);
+
+  showPointsLayer = () => this.pointsLayer.addTo(this.map);
+
+  updatePointsLayer = isShowPoints => {
+    if (isShowPoints && !this.map.hasLayer(this.pointsLayer)) {
+      this.showPointsLayer();
+    } else if (!isShowPoints && this.map.hasLayer(this.pointsLayer)) {
+      this.hidePointsLayer();
+    }
+  };
+
+  initializePointsLayer = () => {
     const { onEachFeature } = this.props;
     const DefaultIcon = L.icon({
       iconUrl: icon,
@@ -42,6 +58,9 @@ class MapPointsDrawSupport extends React.Component {
     this.pointsLayer = L.geoJSON([], {
       onEachFeature,
     }).addTo(this.map);
+  };
+
+  addDataToPointsLayer = points => {
     this.pointsLayer.addData(points);
   };
 
@@ -69,9 +88,11 @@ MapPointsDrawSupport.propTypes = {
   leaflet: PropTypes.shape({
     map: PropTypes.object.isRequired,
   }).isRequired,
+  isShowPoints: PropTypes.bool,
 };
 
 MapPointsDrawSupport.defaultProps = {
   points: [],
+  isShowPoints: true,
   onEachFeature: () => {},
 };

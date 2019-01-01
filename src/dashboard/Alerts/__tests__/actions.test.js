@@ -2,7 +2,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import * as API from '../../../common/API';
 import * as Actions from '../actions';
-import { alert } from '../../../common/data/alertTestData';
+import { alert, polygons } from '../../../common/data/alertTestData';
 
 jest.mock('../../../common/API');
 
@@ -66,6 +66,37 @@ describe('Alerts: Module', () => {
   });
 
   describe('AlertsMap: Action Creators', () => {
+    it(`should create an action of type ${
+      Actions.SET_SHOW_SELECTED_GEOJSON
+    }`, () => {
+      expect(Actions.setShowSelectedGeojson(true)).toEqual({
+        type: Actions.SET_SHOW_SELECTED_GEOJSON,
+        payload: {
+          data: true,
+        },
+      });
+    });
+
+    it(`should create an action of type ${
+      Actions.SET_SHOWPOINTS_VALUE
+    }`, () => {
+      expect(Actions.setShowPiontsValue(true)).toEqual({
+        type: Actions.SET_SHOWPOINTS_VALUE,
+        payload: {
+          data: true,
+        },
+      });
+    });
+    it(`should create an action of type ${
+      Actions.SET_SELECTED_GEOJSON
+    }`, () => {
+      expect(Actions.setSelectedGeoJson(polygons)).toEqual({
+        type: Actions.SET_SELECTED_GEOJSON,
+        payload: {
+          data: polygons,
+        },
+      });
+    });
     it(`should create an action of type ${Actions.STORE_MAP_POINTS}`, () => {
       const alertPoints = [];
 
@@ -79,9 +110,9 @@ describe('Alerts: Module', () => {
   });
 
   describe(`Thunks`, () => {
-    it(`should dispatch an action of type ${
-      Actions.SET_SELECTED_ALERT
-    }`, () => {
+    it(`should dispatch  actions of type ${Actions.SET_SELECTED_ALERT} and ${
+      Actions.SET_SELECTED_GEOJSON
+    } `, () => {
       const store = mockStore({
         alerts: {
           data: [alert],
@@ -101,14 +132,20 @@ describe('Alerts: Module', () => {
             data: alert,
           },
         },
+        {
+          type: Actions.SET_SELECTED_GEOJSON,
+          payload: {
+            data: polygons,
+          },
+        },
       ];
 
       store.dispatch(Actions.getSelectedAlertFromState(selectedAlertId));
       expect(store.getActions()).toEqual(expectedActions);
     });
 
-    it(`should dispatch an action of type ${
-      Actions.SET_SELECTED_ALERT
+    it(`should dispatch  actions of type ${Actions.SET_SELECTED_ALERT} and ${
+      Actions.SET_SELECTED_GEOJSON
     } when selected alert id is null`, () => {
       const store = mockStore({
         alerts: {
@@ -129,14 +166,66 @@ describe('Alerts: Module', () => {
             data: null,
           },
         },
+        {
+          type: Actions.SET_SELECTED_GEOJSON,
+          payload: {
+            data: [],
+          },
+        },
       ];
 
       store.dispatch(Actions.getSelectedAlertFromState(selectedAlertId));
       expect(store.getActions()).toEqual(expectedActions);
     });
 
-    it(`should dispatch  actions of type ${Actions.STORE_MAP_POINTS} and ${
+    it(`should dispatch an action of type ${
+      Actions.SET_SHOW_SELECTED_GEOJSON
+    }`, () => {
+      const store = mockStore({
+        alertsMap: {
+          showShapes: false,
+        },
+      });
+
+      const expectedActions = [
+        {
+          type: Actions.SET_SHOW_SELECTED_GEOJSON,
+          payload: {
+            data: true,
+          },
+        },
+      ];
+
+      store.dispatch(Actions.showSeleteAlertShape(true));
+      expect(store.getActions()).toEqual(expectedActions);
+    });
+
+    it(`should dispatch an action of type ${
+      Actions.SET_SHOWPOINTS_VALUE
+    }`, () => {
+      const store = mockStore({
+        alertsMap: {
+          showPoints: false,
+        },
+      });
+
+      const expectedActions = [
+        {
+          type: Actions.SET_SHOWPOINTS_VALUE,
+          payload: {
+            data: true,
+          },
+        },
+      ];
+
+      store.dispatch(Actions.showAlertPoints(true));
+      expect(store.getActions()).toEqual(expectedActions);
+    });
+
+    it(`should dispatch  actions of type ${Actions.STORE_MAP_POINTS}, ${
       Actions.GET_ALERTS_SUCCESS
+    } and  ${
+      Actions.SET_SHOWPOINTS_VALUE
     } when fetching alerts is successfully`, () => {
       const store = mockStore({
         alerts: {
@@ -173,6 +262,12 @@ describe('Alerts: Module', () => {
           type: Actions.STORE_MAP_POINTS,
           payload: {
             data: [],
+          },
+        },
+        {
+          type: Actions.SET_SHOWPOINTS_VALUE,
+          payload: {
+            data: true,
           },
         },
       ];

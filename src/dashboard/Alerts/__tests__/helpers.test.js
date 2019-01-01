@@ -43,7 +43,44 @@ describe(`Helpers`, () => {
     );
   });
 
-  it(`tests alertToGeoJson`, () => {
+  it('tests generateGeoJsonPolygon', () => {
+    const geometry = {
+      type: 'Polygon',
+      coordinates: [[1, 2], [3, 4]],
+    };
+
+    const expected = {
+      type: 'Feature',
+      geometry,
+      properties: {},
+    };
+
+    expect(Helpers.generateGeoJsonPolygon(geometry)).toEqual(expected);
+  });
+
+  it(`tests alertToGeoJson when type is Polygon`, () => {
+    const alert = {
+      geometry: {
+        type: 'Polygon',
+        coordinates: [[1, 2], [3, 4]],
+      },
+    };
+
+    const type = 'Polygon';
+
+    const expected = {
+      type: 'Feature',
+      geometry: {
+        type: 'Polygon',
+        coordinates: [[1, 2], [3, 4]],
+      },
+      properties: {},
+    };
+
+    expect(Helpers.alertToGeoJson(alert, type)).toEqual(expected);
+  });
+
+  it(`tests alertToGeoJson when type is Point`, () => {
     const alert = {
       centroid: {
         type: 'Point',
