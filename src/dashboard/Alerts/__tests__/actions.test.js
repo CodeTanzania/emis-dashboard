@@ -2,7 +2,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import * as API from '../../../common/API';
 import * as Actions from '../actions';
-import { alert, polygons } from '../../../common/data/alertTestData';
+import { alert, polygons, polygon } from '../../../common/data/alertTestData';
 
 jest.mock('../../../common/API');
 
@@ -66,6 +66,15 @@ describe('Alerts: Module', () => {
   });
 
   describe('AlertsMap: Action Creators', () => {
+    it(`should create an action of type ${Actions.SAVE_DRAWN_GEOMETRY}`, () => {
+      const { geometry } = polygon;
+      expect(Actions.saveDrawnGeometry(geometry)).toEqual({
+        type: Actions.SAVE_DRAWN_GEOMETRY,
+        payload: {
+          data: geometry,
+        },
+      });
+    });
     it(`should create an action of type ${
       Actions.SET_SHOW_SELECTED_GEOJSON
     }`, () => {
@@ -110,6 +119,24 @@ describe('Alerts: Module', () => {
   });
 
   describe(`Thunks`, () => {
+    it(`should dispatch action of type ${Actions.SAVE_DRAWN_GEOMETRY}`, () => {
+      const { geometry } = polygon;
+      const store = mockStore({
+        alertsMap: {
+          drawnGeometry: null,
+        },
+      });
+      const expectedActions = [
+        {
+          type: Actions.SAVE_DRAWN_GEOMETRY,
+          payload: {
+            data: geometry,
+          },
+        },
+      ];
+      store.dispatch(Actions.saveDrawnGeometry(geometry));
+      expect(store.getActions()).toEqual(expectedActions);
+    });
     it(`should dispatch  actions of type ${Actions.SET_SELECTED_ALERT} and ${
       Actions.SET_SELECTED_GEOJSON
     } `, () => {

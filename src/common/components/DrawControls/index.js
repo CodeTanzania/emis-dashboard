@@ -48,7 +48,8 @@ class DrawControls extends React.Component {
     this.map.on('draw:created', ({ layer }) => {
       const { onDrawCreated } = this.props;
       this.drawnItems.addLayer(layer);
-      onDrawCreated(layer);
+      const geoJson = layer.toGeoJSON();
+      onDrawCreated(geoJson);
     });
   };
 

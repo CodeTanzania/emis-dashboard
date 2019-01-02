@@ -7,9 +7,8 @@ class AlertMapControls extends React.Component {
     this.onDrawCreated = this.onDrawCreated.bind(this);
   }
 
-  onDrawCreated = layer => {
-    console.log('looking at drawn layer');
-    console.log(layer);
+  onDrawCreated = ({ geometry }) => {
+    console.log(geometry);
   };
 
   render() {

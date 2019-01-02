@@ -8,7 +8,7 @@ const { TextArea } = Input;
 
 class NewAlertForm extends React.Component {
   handleSubmit = e => {
-    const { area, onClickSave, form, createAlert } = this.props;
+    const { area, form } = this.props;
 
     e.preventDefault();
     form.validateFieldsAndScroll((err, values) => {
@@ -38,8 +38,7 @@ class NewAlertForm extends React.Component {
           source: 'testing',
           area: 'testing',
         };
-        createAlert(payload);
-        onClickSave();
+        console.log(payload);
       }
     });
   };
@@ -104,7 +103,7 @@ class NewAlertForm extends React.Component {
 
     return (
       <div className="NewAlertForm">
-        <Form>
+        <Form onSubmit={this.handleSubmit}>
           <FormItem {...formItemLayout} label="Event">
             {getFieldDecorator('event', {
               rules: [
