@@ -134,7 +134,7 @@ describe('Alerts: Module', () => {
           },
         },
       ];
-      store.dispatch(Actions.saveDrawnGeometry(geometry));
+      store.dispatch(Actions.saveDrawnGeometryOperation(geometry));
       expect(store.getActions()).toEqual(expectedActions);
     });
     it(`should dispatch  actions of type ${Actions.SET_SELECTED_ALERT} and ${

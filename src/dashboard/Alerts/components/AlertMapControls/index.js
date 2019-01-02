@@ -1,4 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { saveDrawnGeometryOperation } from '../../actions';
 import DrawControls from '../../../../common/components/DrawControls';
 
 class AlertMapControls extends React.Component {
@@ -8,7 +11,8 @@ class AlertMapControls extends React.Component {
   }
 
   onDrawCreated = ({ geometry }) => {
-    console.log(geometry);
+    const { saveGeometry } = this.props;
+    saveGeometry(geometry);
   };
 
   render() {
@@ -16,4 +20,18 @@ class AlertMapControls extends React.Component {
   }
 }
 
-export default AlertMapControls;
+const mapDispatchToProps = {
+  saveGeometry: saveDrawnGeometryOperation,
+};
+export default connect(
+  null,
+  mapDispatchToProps
+)(AlertMapControls);
+
+AlertMapControls.propTypes = {
+  saveGeometry: PropTypes.func,
+};
+
+AlertMapControls.defaultProps = {
+  saveGeometry: () => {},
+};

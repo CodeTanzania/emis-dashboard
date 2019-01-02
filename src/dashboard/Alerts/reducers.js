@@ -7,6 +7,7 @@ import {
   SET_SELECTED_GEOJSON,
   SET_SHOW_SELECTED_GEOJSON,
   SET_SHOWPOINTS_VALUE,
+  SAVE_DRAWN_GEOMETRY,
 } from './actions';
 
 /**
@@ -23,6 +24,7 @@ const defaultAlertsMapState = {
   zoom: 7,
   points: [],
   shapes: [],
+  drawnGeometry: null,
   showPoints: false,
   showShapes: false,
 };
@@ -76,6 +78,10 @@ export function alertsMap(state = defaultAlertsMapState, action) {
     case SET_SHOWPOINTS_VALUE:
       return Object.assign({}, state, {
         showPoints: action.payload.data,
+      });
+    case SAVE_DRAWN_GEOMETRY:
+      return Object.assign({}, state, {
+        drawnGeometry: action.payload.data,
       });
     default:
       return state;
