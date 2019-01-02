@@ -20,33 +20,12 @@ class IncidentFilter extends React.Component {
     handleIncidents: null,
   };
 
-  componentDidMount() {
-    // const { handleIncidents } = this.props;
-    // handleIncidents();
-  }
-
   onDateChangeChange = dateString => {
     const { handleDateFilter, handleIncidents } = this.props;
     const formatedDate = dateString.map(date => date.toISOString());
     handleDateFilter(formatedDate);
     handleIncidents();
   };
-
-  // visibilityFilter = () =>{
-  //   console.log("clicked")
-  //   const {incidents} = this.props;
-  //    incidents.filter(incident =>{
-  //   const {incidentType} = incident;
-  //     if (incidentType.family === 'Biological'){
-  //       console.log('get it');
-  //       console.log(incident)
-  //       return incident
-  //     }
-  //     else {
-  //       return null
-  //     }
-  //   });
-  // }
 
   render() {
     return (
@@ -69,7 +48,6 @@ class IncidentFilter extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  // filters: state.filter,
   incidents: state.incidents.data ? state.incidents.data : [],
 });
 

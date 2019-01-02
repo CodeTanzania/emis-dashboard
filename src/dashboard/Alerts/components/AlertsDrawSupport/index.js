@@ -35,7 +35,7 @@ class AlertsDrawSupport extends React.Component {
     const { selectAlert, onClickShowPoints, onClickShowShapes } = this.props;
     selectAlert(id);
     onClickShowPoints(false);
-    onClickShowShapes(true);
+    onClickShowShapes(false);
   };
 
   onEachFeature = (feature, layer) => {

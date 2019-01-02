@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import styles from './styles.css';
 import { getSelectedIncident } from '../../actions';
-import { convertIsoDate } from '../../../../common/lib/mapUtil';
+import { convertIsoDate } from '../../helpers';
 /**
  * Render a single contact item component for contacts list
  *
@@ -36,25 +36,21 @@ class IncidentsList extends React.Component {
       endedAt: PropTypes.string,
       _id: PropTypes.string,
     }),
-    clickedIncidentList: PropTypes.func,
   };
 
   static defaultProps = {
-    clickedIncidentList: null,
     getIncident: null,
     incidentsList: [],
   };
 
-  onClick = () => {
-    const { getIncident, incidentsList, clickedIncidentList } = this.props;
+  onClickIncident = () => {
+    const { getIncident, incidentsList } = this.props;
     const { _id: selectedId } = incidentsList;
     getIncident(selectedId);
-    clickedIncidentList(incidentsList);
   };
 
   render() {
     const { incidentsList } = this.props;
-
     const { event, startedAt, endedAt, areas } = incidentsList;
     return (
       <List.Item className={cx('p-l-20')}>
@@ -66,8 +62,8 @@ class IncidentsList extends React.Component {
                 <span
                   role="link"
                   className={cx('name')}
-                  onClick={this.onClick}
-                  onKeyDown={this.onClick}
+                  onClick={this.onClickIncident}
+                  onKeyDown={this.onClickIncident}
                   tabIndex="0"
                   title="Click to view more"
                 >

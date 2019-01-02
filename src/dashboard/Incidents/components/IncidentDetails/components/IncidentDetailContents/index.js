@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { convertIsoDate } from '../../../../../../common/lib/mapUtil';
+import { convertIsoDate } from '../../../../helpers';
 
 import './styles.css';
 

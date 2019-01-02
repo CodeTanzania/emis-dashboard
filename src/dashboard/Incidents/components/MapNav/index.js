@@ -56,14 +56,12 @@ class MapNav extends React.Component {
         _id: PropTypes.string,
       }).isRequired
     ),
-    clickedIncident: PropTypes.func,
     onCloseDetail: PropTypes.func,
     handleSearchIncident: PropTypes.func,
   };
 
   static defaultProps = {
     newIncidentButton: null,
-    clickedIncident: null,
     incidents: [],
     onCloseDetail: null,
     handleSearchIncident: null,
@@ -86,7 +84,6 @@ class MapNav extends React.Component {
       newIncidentButton,
       onCloseDetail,
       IncidentSelected,
-      clickedIncident,
       incidents,
     } = this.props;
 
@@ -124,10 +121,7 @@ class MapNav extends React.Component {
                   itemLayout="horizontal"
                   dataSource={incidents}
                   renderItem={incident => (
-                    <IncidentsList
-                      clickedIncidentList={clickedIncident}
-                      incidentsList={incident}
-                    />
+                    <IncidentsList incidentsList={incident} />
                   )}
                 />
               </Content>

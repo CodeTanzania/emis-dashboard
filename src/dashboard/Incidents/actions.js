@@ -1,4 +1,4 @@
-import { incidentToGeojson } from '../../common/lib/mapUtil'; /* const actions */
+import { incidentToGeojson } from './helpers'; /* const actions */
 
 /* Actions for the incident */
 export const CREATE_INCIDENT_TYPE_SUCCESS = 'INCIDENTS:CREATE_INCIDENT_TYPE';

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import './styles.css';
 import { connect } from 'react-redux';
 import { Button } from 'antd';
-import { convertIsoDate } from '../../../../common/lib/mapUtil';
+import { convertIsoDate } from '../../helpers';
 /**
  * Incident details Layout component
  * this component contain detailed

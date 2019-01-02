@@ -356,58 +356,55 @@ export function getPlanActivityProcedures(activityId, page = 1) {
   });
 }
 
+/* API for Incidents */
 
-  /* API for Incidents */
+export function getIncidents({ incidentDateFilter } = {}) {
+  const filter = generateFiter(incidentDateFilter);
+  const params = { filter, limit: 100 };
+  const url = Axios.get(`${INCIDENTS_API}/incidents`, {
+    params,
+  }).then(response => response.data);
+  return url;
+}
 
- export function getIncidents({ incidentDateFilter } = {}){
-    const filter = generateFiter(incidentDateFilter);
-    const params = { filter, limit: 100 };
-    const url = Axios.get(`${INCIDENTS_API}/incidents`, {
-      params,
-    }).then(response => response.data);
-    return url;
-  }
+/* Api for recording new incident */
+export function createIncident(data) {
+  const url = `${INCIDENTS_API}/incidents`;
+  const config = {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: {
+      'content-type': 'application/json',
+    },
+  };
+  return fetch(url, config).then(res => res.json());
+}
 
-  /* Api for recording new incident */
-  export function createIncident (data) {
-    const url = `${INCIDENTS_API}/incidents`;
-    const config = {
-      method: 'POST',
-      body: JSON.stringify(data),
-      headers: {
-        'content-type': 'application/json',
-      },
-    };
-    return fetch(url, config).then(res => res.json());
-  }
+/* Api for displaying incident by Id */
+export function getIncidentById(incidentId) {
+  const url = Axios.get(`${INCIDENTS_API}/incidents/${incidentId}`).then(
+    res => res.data
+  );
+  return url;
+}
 
-  /* Api for displaying incident by Id */
- export function getIncidentById (incidentId) {
-    const url = Axios.get(`${INCIDENTS_API}/incidents/${incidentId}`).then(
-      res => res.data
-    );
-    return url;
-  }
+export function getIncidentsActions() {
+  const params = { limit: 100 };
+  const url = Axios.get(`/actions`, {
+    params,
+  }).then(response => response.data);
+  return url;
+}
 
- export function getIncidentsActions () {
-    const params = { limit: 100 };
-    const url = Axios.get(`/actions`, {
-      params,
-    }).then(response => response.data);
-    return url;
-  }
+export function getIncidentActionById(incidentId) {
+  Axios.get(`/actions/${incidentId}`).then(res => res.data);
+}
 
- export function getIncidentActionById (incidentId) {
-    Axios.get(`/actions/${incidentId}`).then(
-      res => res.data
-    )
-    }
-
- export function searchIncidents (searchValue){
+export function searchIncidents(searchValue) {
   return Axios.get(`${INCIDENTS_API}/incidents?q=${searchValue}`).then(
-      res => res.data
-    )
-    }
+    res => res.data
+  );
+}
 
 /**
  * Post Standard Operating procedure(SOP) to the API
