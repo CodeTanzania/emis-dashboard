@@ -229,14 +229,6 @@ describe('Alerts: Module', () => {
       });
     });
 
-
-
-
-
-
-
-
-
     it(`should dispatch action of type ${Actions.SAVE_DRAWN_GEOMETRY}`, () => {
       const { geometry } = polygon;
       const store = mockStore({

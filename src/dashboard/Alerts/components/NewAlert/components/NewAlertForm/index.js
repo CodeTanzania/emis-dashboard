@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Form, Input, Select, Button, DatePicker } from 'antd';
+import { postAlert } from '../../../../actions';
 import './styles.css';
 
 const FormItem = Form.Item;
@@ -10,6 +11,7 @@ const { TextArea } = Input;
 
 class NewAlertForm extends React.Component {
   static propTypes = {
+    createAlert: PropTypes.func,
     geometry: PropTypes.shape({
       type: PropTypes.string,
       coordinates: PropTypes.array,
@@ -18,10 +20,11 @@ class NewAlertForm extends React.Component {
 
   static defaultProps = {
     geometry: {},
+    createAlert: () => {},
   };
 
   handleSubmit = e => {
-    const { geometry, form } = this.props;
+    const { geometry, form, createAlert } = this.props;
 
     e.preventDefault();
     form.validateFieldsAndScroll((err, values) => {
@@ -51,13 +54,17 @@ class NewAlertForm extends React.Component {
           source: 'testing',
           area: 'testing',
         };
-        console.log(payload);
+        createAlert(payload);
       }
     });
   };
 
   renderSelectOptions = options =>
-    options.map(option => <Option value={option}>{option}</Option>);
+    options.map(option => (
+      <Option key={option} value={option}>
+        {option}
+      </Option>
+    ));
 
   render() {
     const { form } = this.props;
@@ -294,4 +301,11 @@ const mapStateToProps = state => ({
   geometry: state.alertsMap.drawnGeometry,
 });
 
-export default connect(mapStateToProps)(WrappedNewAlertForm);
+const mapDispatchToProps = {
+  createAlert: postAlert,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(WrappedNewAlertForm);
