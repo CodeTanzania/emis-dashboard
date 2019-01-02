@@ -1,17 +1,11 @@
 import { connect } from 'react-redux';
 import React from 'react';
-import * as ReactLeaflet from 'react-leaflet';
+import { Route, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import AlertsDrawSupport from './components/AlertsDrawSupport';
-import AlertSideBar from './components/AlertSideBar';
-import AlertDrawControls from './components/AlertMapControls';
 import { getAlerts } from './actions';
 import 'leaflet/dist/leaflet.css';
 import './styles.css';
-import AlertNavBar from './components/AlertNavBar';
-
-// constants
-const { Map: LeafletMap, TileLayer } = ReactLeaflet;
+import AlertsHome from './components/AlertsHome';
 
 /**
  * Alerts Base Layout component
@@ -25,50 +19,39 @@ const { Map: LeafletMap, TileLayer } = ReactLeaflet;
  * @since 0.1.0
  */
 class Alerts extends React.Component {
+  static propTypes = {
+    getAllAlerts: PropTypes.func,
+    match: PropTypes.shape({
+      url: PropTypes.string,
+    }).isRequired,
+  };
+
+  static defaultProps = {
+    getAllAlerts: () => {},
+  };
+
   componentDidMount() {
     const { getAllAlerts } = this.props;
     getAllAlerts();
   }
 
   render() {
-    const { center, zoom } = this.props;
+    const { match } = this.props;
 
     return (
       <div id="alerts-map" className="Alerts">
-        <AlertSideBar />
-        <AlertNavBar />
-        <LeafletMap center={center} zoom={zoom} zoomControl={false}>
-          <AlertsDrawSupport />
-          <AlertDrawControls />
-          <TileLayer
-            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-            url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
-          />
-        </LeafletMap>
+        <Switch>
+          <Route exact path={`${match.url}`} component={AlertsHome} />
+        </Switch>
       </div>
     );
   }
 }
 
-const mapStateToProps = state => ({
-  center: state.alertsMap.center,
-  zoom: state.alertsMap.zoom,
-});
-
 const mapDispatchToProps = {
   getAllAlerts: getAlerts,
 };
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(Alerts);
-
-Alerts.propTypes = {
-  center: PropTypes.arrayOf(PropTypes.number).isRequired,
-  zoom: PropTypes.number.isRequired,
-  getAllAlerts: PropTypes.func,
-};
-
-Alerts.defaultProps = {
-  getAllAlerts: () => {},
-};
