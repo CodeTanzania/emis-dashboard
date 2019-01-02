@@ -502,3 +502,19 @@ export function getAlerts(params = {}) {
     params,
   });
 }
+
+/**
+ * Create a new alert to the API
+ *
+ * @function
+ * @name postAlert
+ *
+ * @param {Object} plan - Alert object to be persisted
+ * @returns {Promise}
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function postAlert(alert) {
+  return Axios.post('/alerts', alert);
+}

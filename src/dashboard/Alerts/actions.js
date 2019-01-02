@@ -12,6 +12,11 @@ export const GET_ALERTS_SUCCESS = 'GET_ALERTS_SUCCESS';
 export const GET_ALERTS_ERROR = 'GET_ALERTS_ERROR';
 export const SET_SELECTED_ALERT = 'SET_SELECTED_ALERT';
 
+/* add action types */
+export const POST_ALERT_START = 'POST_ALERT_START';
+export const POST_ALERT_SUCCESS = 'POST_ALERT_SUCCESS';
+export const POST_ALERT_ERROR = 'POST_ALERT_ERROR';
+
 /*
  *------------------------------------------------------------------------------
  * Map action types
@@ -113,6 +118,62 @@ export function setSelectedAlert(selected) {
 export function getAlertsError(error) {
   return {
     type: GET_ALERTS_ERROR,
+    payload: {
+      data: error,
+    },
+    error: true,
+  };
+}
+
+/**
+ * Action dispatched when posting alert to the API
+ *
+ * @function
+ * @name postAlertStart
+ *
+ * @returns {Object} - Redux action
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function postAlertStart() {
+  return {
+    type: POST_ALERT_START,
+  };
+}
+
+/**
+ * Action dispatched when posting alert to the API is successful
+ *
+ * @function
+ * @name postAlertSuccess
+ *
+ * @returns {Object} - Redux action
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function postAlertSuccess() {
+  return {
+    type: POST_ALERT_SUCCESS,
+  };
+}
+
+/**
+ * Action dispatched when posting alert to the API fails
+ *
+ * @function
+ * @name postAlertError
+ *
+ * @param {Error} error - Error object when posting ALERTs fails
+ * @returns {Object} - Redux action
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function postAlertError(error) {
+  return {
+    type: POST_ALERT_ERROR,
     payload: {
       data: error,
     },
@@ -265,6 +326,31 @@ export function getAlerts() {
         dispatch(setShowPiontsValue(true));
       })
       .catch(err => dispatch(getAlertsError(err)));
+  };
+}
+
+/**
+ * A Thunk function which performs asynchronous creating alert into the API
+ *
+ * @function
+ * @name postAlert
+ *
+ * @param {Object} Alert - Alert object
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function postAlert(Alert) {
+  return (dispatch, getState, { API }) => {
+    dispatch(postAlertStart());
+    return API.postAlert(Alert)
+      .then(() => {
+        dispatch(postAlertSuccess());
+        dispatch(getAlerts());
+      })
+      .catch(error => {
+        dispatch(postAlertError(error));
+      });
   };
 }
 

@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { Form, Input, Select, Button, DatePicker } from 'antd';
 import './styles.css';
 
@@ -7,8 +9,19 @@ const { Option } = Select;
 const { TextArea } = Input;
 
 class NewAlertForm extends React.Component {
+  static propTypes = {
+    geometry: PropTypes.shape({
+      type: PropTypes.string,
+      coordinates: PropTypes.array,
+    }),
+  };
+
+  static defaultProps = {
+    geometry: {},
+  };
+
   handleSubmit = e => {
-    const { area, form } = this.props;
+    const { geometry, form } = this.props;
 
     e.preventDefault();
     form.validateFieldsAndScroll((err, values) => {
@@ -34,7 +47,7 @@ class NewAlertForm extends React.Component {
           severity,
           certainty,
           instruction: instructions,
-          geometry: area,
+          geometry,
           source: 'testing',
           area: 'testing',
         };
@@ -277,5 +290,8 @@ class NewAlertForm extends React.Component {
 }
 
 const WrappedNewAlertForm = Form.create()(NewAlertForm);
+const mapStateToProps = state => ({
+  geometry: state.alertsMap.drawnGeometry,
+});
 
-export default WrappedNewAlertForm;
+export default connect(mapStateToProps)(WrappedNewAlertForm);
