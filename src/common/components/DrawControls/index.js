@@ -8,8 +8,26 @@ import { withLeaflet } from 'react-leaflet';
 class DrawControls extends React.Component {
   componentDidMount() {
     this.map = this.props.leaflet.map;
+    const { isHideControls } = this.props;
     this.initializeDrawControls();
+    this.toggoleShowDrawControls(isHideControls);
   }
+
+  componentDidUpdate(prevProps) {
+    const { isHideControls } = this.props;
+    const { isHideControls: prevIsHideControls } = prevProps;
+    if (isHideControls !== prevIsHideControls) {
+      this.toggoleShowDrawControls(isHideControls);
+    }
+  }
+
+  toggoleShowDrawControls = isHideControls => {
+    if (isHideControls) {
+      this.drawControl.remove();
+    } else {
+      this.map.addControl(this.drawControl);
+    }
+  };
 
   initializeDrawControls = () => {
     this.drawnItems = new L.FeatureGroup();
@@ -26,7 +44,12 @@ class DrawControls extends React.Component {
         featureGroup: this.drawnItems,
       },
     });
-    this.map.addControl(this.drawControl);
+
+    this.map.on('draw:created', ({ layer }) => {
+      const { onDrawCreated } = this.props;
+      this.drawnItems.addLayer(layer);
+      onDrawCreated(layer);
+    });
   };
 
   render() {
@@ -40,4 +63,11 @@ DrawControls.propTypes = {
   leaflet: PropTypes.shape({
     map: PropTypes.object.isRequired,
   }).isRequired,
+  isHideControls: PropTypes.bool,
+  onDrawCreated: PropTypes.func,
+};
+
+DrawControls.defaultProps = {
+  isHideControls: false,
+  onDrawCreated: () => {},
 };

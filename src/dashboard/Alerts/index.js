@@ -8,6 +8,7 @@ import AlertDrawControls from './components/AlertMapControls';
 import { getAlerts } from './actions';
 import 'leaflet/dist/leaflet.css';
 import './styles.css';
+import AlertNavBar from './components/AlertNavBar';
 
 // constants
 const { Map: LeafletMap, TileLayer } = ReactLeaflet;
@@ -35,6 +36,7 @@ class Alerts extends React.Component {
     return (
       <div id="alerts-map" className="Alerts">
         <AlertSideBar />
+        <AlertNavBar />
         <LeafletMap center={center} zoom={zoom} zoomControl={false}>
           <AlertsDrawSupport />
           <AlertDrawControls />
