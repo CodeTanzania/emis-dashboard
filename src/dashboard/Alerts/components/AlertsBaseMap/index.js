@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import * as ReactLeaflet from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
 // constants
 const { Map: LeafletMap, TileLayer } = ReactLeaflet;
 
@@ -23,7 +22,7 @@ AlertBaseMap.propTypes = {
   center: PropTypes.arrayOf(PropTypes.number).isRequired,
   zoom: PropTypes.number.isRequired,
   zoomControl: PropTypes.bool,
-  children: PropTypes.arrayOf(PropTypes.element).isRequired,
+  children: PropTypes.element.isRequired,
 };
 
 AlertBaseMap.defaultProps = {

@@ -2,15 +2,15 @@ import React from 'react';
 import { Button, Icon } from 'antd';
 import { Link } from 'react-router-dom';
 
-function NewAlertButton() {
+function BackButton() {
   return (
     <Button type="primary">
-      <Link to="/alerts/new">
-        <Icon type="plus" style={{ fontSize: 16 }} />
-        New Alert
+      <Link to="/alerts">
+        <Icon type="left" style={{ fontSize: 16 }} />
+        Back
       </Link>
     </Button>
   );
 }
 
-export default NewAlertButton;
+export default BackButton;

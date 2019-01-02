@@ -6,6 +6,7 @@ import { getAlerts } from './actions';
 import 'leaflet/dist/leaflet.css';
 import './styles.css';
 import AlertsHome from './components/AlertsHome';
+import NewAlert from './components/NewAlert';
 
 /**
  * Alerts Base Layout component
@@ -42,6 +43,7 @@ class Alerts extends React.Component {
       <div id="alerts-map" className="Alerts">
         <Switch>
           <Route exact path={`${match.url}`} component={AlertsHome} />
+          <Route path={`${match.url}/new`} component={NewAlert} />
         </Switch>
       </div>
     );
