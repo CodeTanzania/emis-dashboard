@@ -89,8 +89,8 @@ class IncidentsList extends React.Component {
   }
 }
 const mapStateToProps = state => ({
-  selected: state.selectedIncident.incident
-    ? state.selectedIncident.incident
+  selected: state.incidents.incident
+    ? state.incidents.incident
     : [],
 });
 const mapDispatchToProps = dispatch => ({

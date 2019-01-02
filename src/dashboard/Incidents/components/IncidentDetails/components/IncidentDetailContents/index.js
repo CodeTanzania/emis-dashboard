@@ -91,8 +91,8 @@ function IncidentDetailsContent({ incidentSelected }) {
 }
 
 const mapStateToProps = state => ({
-  incidentSelected: state.selectedIncident.incident
-    ? state.selectedIncident.incident
+  incidentSelected: state.incidents.incident
+    ? state.incidents.incident
     : [],
 });
 

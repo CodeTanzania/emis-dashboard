@@ -143,8 +143,8 @@ class MapNav extends React.Component {
 const mapStateToProps = state => ({
   incidents:
     state.incidents.data && state.incidents.data ? state.incidents.data : [],
-  IncidentSelected: state.selectedIncident.incident
-    ? state.selectedIncident.incident
+  IncidentSelected: state.incidents.incident
+    ? state.incidents.incident
     : null,
 });
 

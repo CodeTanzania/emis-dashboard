@@ -33,10 +33,11 @@ const initialState = {
   page: 1,
   total: 0,
   incidentActionsData: [],
+  incident: null,
+
 };
 
 const initialselectedState = {
-  incident: null,
   incidentAction: null,
 };
 
@@ -89,6 +90,11 @@ export function incidents(state = initialState, action) {
         ...state,
         data: [action.payload.incident, ...state.data],
       };
+      case SELECT_INCIDENT_SUCCESS:
+      return {
+        ...state,
+        incident: action.payload.data,
+      };
     default:
       return state;
   }
@@ -96,11 +102,6 @@ export function incidents(state = initialState, action) {
 
 export function selectedIncident(state = initialselectedState, action) {
   switch (action.type) {
-    case SELECT_INCIDENT_SUCCESS:
-      return {
-        ...state,
-        incident: action.payload.data,
-      };
     case GET_INCIDENT_ACTION_SUCCESS:
       return {
         ...state,

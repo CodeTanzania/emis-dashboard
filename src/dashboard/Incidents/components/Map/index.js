@@ -311,8 +311,8 @@ class IncidentMap extends React.Component {
 const mapStateToProps = state => ({
   incidents:
     state.incidents.data && state.incidents.data ? state.incidents.data : [],
-  selected: state.selectedIncident.incident
-    ? state.selectedIncident.incident
+  selected: state.incidents.incident
+    ? state.incidents.incident
     : [],
   incidentsAction: state.incidents.incidentActionsData
     ? state.incidents.incidentActionsData

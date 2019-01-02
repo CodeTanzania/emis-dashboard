@@ -1,10 +1,12 @@
 import React from 'react';
-import { Layout, Menu } from 'antd';
+import { Link } from 'react-router-dom';
+import { Layout, Menu, Icon } from 'antd';
 import Sider from 'antd/lib/layout/Sider';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { getNavActive } from '../../../actions';
+
 import IncidentDetailsContent from './IncidentDetailContents';
 import IncidentAssessiment from './IncidentAssessiment';
 import IncidentActionTaken from './IncidentAction';
@@ -22,6 +24,7 @@ class IncidentGeneralDetails extends React.Component {
     activatedNav: null,
   };
 
+ 
   handleClick = data => {
     const { activatedNav } = this.props;
     activatedNav(data.key);
@@ -83,7 +86,24 @@ class IncidentGeneralDetails extends React.Component {
           }}
         >
           {' '}
-          <Content>{showNavContent(currentMenu)}</Content>
+          <Content>
+            <span style={{
+              float: 'right',
+              position: 'relative',
+              right: '20px',
+              top: '10px',
+            }}>
+           <Link to="/incidents/map">
+              <Icon type="close" style={{
+              fontSize:'20px',
+              cursor:'pointer',
+              color: '#333'
+            }}
+            />
+            </Link>
+            </span>
+            {showNavContent(currentMenu)}
+          </Content>
         </Layout>
       </Layout>
     );
