@@ -330,6 +330,33 @@ export function getAlerts() {
 }
 
 /**
+ * A Thunk function which perform asynchronous fetching of an alert from the API
+ *
+ * @function
+ * @name getAlert
+ *
+ * @param {Object} params - Params to pass to the API client
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function getAlertOperation(id) {
+  return (dispatch, getState, { API }) =>
+    // dispatch(getAlertsStart());
+
+    API.getAlert(id)
+      .then(({ data }) => {
+        // dispatch(getAlertsSuccess(res.data, res.page, res.total));
+        // dispatch(storeMapPoints(alertsPoints));
+        // dispatch(setShowPiontsValue(true));
+        const polygon = alertToGeoJson(data, 'Polygon');
+        dispatch(setSelectedAlert(data));
+        dispatch(setSelectedGeoJson([polygon]));
+      })
+      .catch(err => dispatch(getAlertsError(err)));
+}
+
+/**
  * A Thunk function which performs asynchronous creating alert into the API
  *
  * @function

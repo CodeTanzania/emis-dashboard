@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import MapPointsDrawSupport from '../../../../common/components/MapPointsDrawSupport';
 import MapPolygonsDrawSupport from '../../../../common/components/MapPolygonsDrawSupport';
@@ -32,10 +33,8 @@ class AlertsDrawSupport extends React.Component {
   }
 
   onMarkerClicked = id => {
-    const { selectAlert, onClickShowPoints, onClickShowShapes } = this.props;
-    selectAlert(id);
-    onClickShowPoints(false);
-    onClickShowShapes(true);
+    const { history } = this.props;
+    history.push(`/alerts/${id}`);
   };
 
   onEachFeature = (feature, layer) => {
@@ -87,13 +86,11 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(AlertsDrawSupport);
+)(withRouter(AlertsDrawSupport));
 
 AlertsDrawSupport.propTypes = {
   showPoints: PropTypes.bool.isRequired,
   showShapes: PropTypes.bool.isRequired,
-  onClickShowPoints: PropTypes.func.isRequired,
-  onClickShowShapes: PropTypes.func.isRequired,
   shapes: PropTypes.arrayOf(
     PropTypes.shape({
       type: PropTypes.string,
