@@ -91,9 +91,7 @@ function IncidentDetailsContent({ incidentSelected }) {
 }
 
 const mapStateToProps = state => ({
-  incidentSelected: state.incidents.incident
-    ? state.incidents.incident
-    : [],
+  incidentSelected: state.incidents.incident ? state.incidents.incident : [],
 });
 
 export default connect(

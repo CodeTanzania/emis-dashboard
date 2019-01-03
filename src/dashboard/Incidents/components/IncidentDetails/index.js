@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import './styles.css';
 import { connect } from 'react-redux';
-import { Button } from 'antd';
+import { Button, Row, Col } from 'antd';
 import { convertIsoDate } from '../../../../common/lib/mapUtil';
 /**
  * Incident details Layout component
@@ -92,18 +92,25 @@ function IncidentDetails({ selected }) {
           </span>
           12 <br />
         </div>
-        <Button type="primary" className="ReadMore">
-          <Link to="/incidents/details">Read more</Link>
-        </Button>
+        <Row>
+          <Col span={12}>
+            <Button type="danger" className="ReadMore">
+              Cancel
+            </Button>
+          </Col>
+          <Col span={12}>
+            <Button type="primary" className="ReadMore">
+              <Link to="/incidents/details">Read more</Link>
+            </Button>
+          </Col>
+        </Row>
       </div>
     </div>
   );
 }
 
 const mapStateToProps = state => ({
-  selected: state.incidents.incident
-    ? state.incidents.incident
-    : {},
+  selected: state.incidents.incident ? state.incidents.incident : {},
 });
 
 export default connect(

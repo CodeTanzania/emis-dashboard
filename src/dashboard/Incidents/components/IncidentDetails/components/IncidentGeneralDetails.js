@@ -24,7 +24,6 @@ class IncidentGeneralDetails extends React.Component {
     activatedNav: null,
   };
 
- 
   handleClick = data => {
     const { activatedNav } = this.props;
     activatedNav(data.key);
@@ -87,20 +86,24 @@ class IncidentGeneralDetails extends React.Component {
         >
           {' '}
           <Content>
-            <span style={{
-              float: 'right',
-              position: 'relative',
-              right: '20px',
-              top: '10px',
-            }}>
-           <Link to="/incidents/map">
-              <Icon type="close" style={{
-              fontSize:'20px',
-              cursor:'pointer',
-              color: '#333'
-            }}
-            />
-            </Link>
+            <span
+              style={{
+                float: 'right',
+                position: 'relative',
+                right: '20px',
+                top: '10px',
+              }}
+            >
+              <Link to="/incidents/map">
+                <Icon
+                  type="close"
+                  style={{
+                    fontSize: '20px',
+                    cursor: 'pointer',
+                    color: '#333',
+                  }}
+                />
+              </Link>
             </span>
             {showNavContent(currentMenu)}
           </Content>

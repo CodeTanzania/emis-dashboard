@@ -115,7 +115,6 @@ class IncidentMap extends React.Component {
     this.mapRef = React.createRef();
     this.onclickNewIncidentButton = this.onclickNewIncidentButton.bind(this);
     this.onCancelButton = this.onCancel.bind(this);
-    this.onCloseDetail = this.onClose.bind(this);
     this.onSelectIncident = this.showSelectedIncident.bind(this);
   }
 
@@ -246,7 +245,8 @@ class IncidentMap extends React.Component {
     this.map.closePopup();
   };
 
-  onClose = () => {
+  onCloseIncidentDetail = () => {
+    console.log('clickes');
     this.map.addLayer(this.incidentLayer);
   };
 
@@ -284,7 +284,6 @@ class IncidentMap extends React.Component {
           <MapNav
             newIncidentButton={this.onclickNewIncidentButton}
             clickedIncident={this.onSelectIncident}
-            onCloseDetail={this.onClose}
           />
         ) : null}
         <LeafletMap center={position} zoom={zoom} ref={this.mapRef}>
@@ -311,9 +310,7 @@ class IncidentMap extends React.Component {
 const mapStateToProps = state => ({
   incidents:
     state.incidents.data && state.incidents.data ? state.incidents.data : [],
-  selected: state.incidents.incident
-    ? state.incidents.incident
-    : [],
+  selected: state.incidents.incident ? state.incidents.incident : [],
   incidentsAction: state.incidents.incidentActionsData
     ? state.incidents.incidentActionsData
     : [],

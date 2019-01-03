@@ -57,7 +57,6 @@ class MapNav extends React.Component {
       }).isRequired
     ),
     clickedIncident: PropTypes.func,
-    onCloseDetail: PropTypes.func,
     handleSearchIncident: PropTypes.func,
   };
 
@@ -65,7 +64,6 @@ class MapNav extends React.Component {
     newIncidentButton: null,
     clickedIncident: null,
     incidents: [],
-    onCloseDetail: null,
     handleSearchIncident: null,
   };
 
@@ -84,7 +82,6 @@ class MapNav extends React.Component {
   render() {
     const {
       newIncidentButton,
-      onCloseDetail,
       IncidentSelected,
       clickedIncident,
       incidents,
@@ -134,7 +131,7 @@ class MapNav extends React.Component {
             </Layout>
           </div>
         ) : (
-          <IncidentDetails handleCancel={onCloseDetail} />
+          <IncidentDetails />
         )}
       </Fragment>
     ) : null;
@@ -143,9 +140,7 @@ class MapNav extends React.Component {
 const mapStateToProps = state => ({
   incidents:
     state.incidents.data && state.incidents.data ? state.incidents.data : [],
-  IncidentSelected: state.incidents.incident
-    ? state.incidents.incident
-    : null,
+  IncidentSelected: state.incidents.incident ? state.incidents.incident : null,
 });
 
 const mapDispatchToProps = dispatch => ({

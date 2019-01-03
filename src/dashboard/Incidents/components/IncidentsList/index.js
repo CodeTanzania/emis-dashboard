@@ -89,9 +89,7 @@ class IncidentsList extends React.Component {
   }
 }
 const mapStateToProps = state => ({
-  selected: state.incidents.incident
-    ? state.incidents.incident
-    : [],
+  selected: state.incidents.incident ? state.incidents.incident : [],
 });
 const mapDispatchToProps = dispatch => ({
   getIncident: bindActionCreators(getSelectedIncident, dispatch),

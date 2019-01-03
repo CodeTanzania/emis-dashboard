@@ -34,7 +34,6 @@ const initialState = {
   total: 0,
   incidentActionsData: [],
   incident: null,
-
 };
 
 const initialselectedState = {
@@ -90,7 +89,7 @@ export function incidents(state = initialState, action) {
         ...state,
         data: [action.payload.incident, ...state.data],
       };
-      case SELECT_INCIDENT_SUCCESS:
+    case SELECT_INCIDENT_SUCCESS:
       return {
         ...state,
         incident: action.payload.data,
