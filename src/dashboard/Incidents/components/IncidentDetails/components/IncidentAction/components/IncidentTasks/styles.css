@@ -1,0 +1,9 @@
+.IncidentTask {
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+  
+  .IncidentTaskDetail {
+    padding-left: 10px;
+  }
+  

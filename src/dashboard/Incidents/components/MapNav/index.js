@@ -39,7 +39,7 @@ class MapNav extends React.Component {
       startedAt: PropTypes.string,
       endedAt: PropTypes.string,
       _id: PropTypes.string,
-    }).isRequired,
+    }),
     incidents: PropTypes.arrayOf(
       PropTypes.shape({
         name: PropTypes.string,

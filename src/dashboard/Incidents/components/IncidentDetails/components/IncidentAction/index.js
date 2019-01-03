@@ -1,10 +1,23 @@
-import { Table, Button } from 'antd';
+import { Table, Button, Modal } from 'antd';
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { fetchIncidentTasks, getIncidentTaskById, } from '../../../../actions';
 
 import './styles.css';
+import IncidentTasks from './components/IncidentTasks';
+
+/**
+ * IncidentActionTaken perform
+ * specific action per incident
+ * 
+ *
+ * @class
+ * @name IncidentActionTaken
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
 
 class IncidentActionTaken extends React.Component {
   static propTypes = {
@@ -30,18 +43,19 @@ class IncidentActionTaken extends React.Component {
     getIncidentTask: PropTypes.func,
     getIncidentTasks: PropTypes.func,
   };
-static defaultProps = {
-  getIncidentTask: () => {},
-  getIncidentTasks: () => {},
-}
+  static defaultProps = {
+    getIncidentTask: () => { },
+    getIncidentTasks: () => { },
+  }
 
   state = {
     filteredInfo: null,
     sortedInfo: null,
+    visible: false,
   };
 
-  componentDidMount(){
-    const {getIncidentTasks} = this.props;
+  componentDidMount() {
+    const { getIncidentTasks } = this.props;
     getIncidentTasks()
   }
 
@@ -49,17 +63,6 @@ static defaultProps = {
     this.setState({
       filteredInfo: filters,
       sortedInfo: sorter,
-    });
-  };
-
-  clearFilters = () => {
-    this.setState({ filteredInfo: null });
-  };
-
-  clearAll = () => {
-    this.setState({
-      filteredInfo: null,
-      sortedInfo: null,
     });
   };
 
@@ -73,8 +76,8 @@ static defaultProps = {
   };
 
   handleIncidentTask = () => {
-    const {incidentAction,incidentsTasks, getIncidentTask } = this.props;
-    const {_id: id} = incidentAction;
+    const { incidentAction, incidentsTasks, getIncidentTask } = this.props;
+    const { _id: id } = incidentAction;
     incidentsTasks.filter(tasks => {
       const { action } = tasks;
       const { _id: actionId } = action;
@@ -87,47 +90,82 @@ static defaultProps = {
 
   }
 
+  showModal = () => {
+    this.setState({
+      visible: true,
+    });
+    this.handleIncidentTask();
+  }
+
+  handleOk = () => {
+    this.setState({
+      visible: false,
+    });
+  }
+
+  handleCancel = () => {
+    this.setState({
+      visible: false,
+    });
+  }
+
+
+  handleClickedAction = () => {
+    this.showModal()
+  }
+
   render() {
-    let { sortedInfo, filteredInfo } = this.state;
+    let { sortedInfo } = this.state;
     const { incidentAction } = this.props;
     sortedInfo = sortedInfo || {};
-    filteredInfo = filteredInfo || {};
-    const columns = [
+
+    const getActions = handleClickedAction => [
       {
         title: 'ActionName',
         dataIndex: 'name',
-        key: 'name',
-        filteredValue: filteredInfo.name || null,
-        onFilter: (value, record) => record.name.includes(value),
+
         sorter: (a, b) => a.name.length - b.name.length,
         sortOrder: sortedInfo.columnKey === 'name' && sortedInfo.order,
       },
       {
         title: 'Phases',
         dataIndex: 'phase',
-        key: 'phase',
         sorter: (a, b) => a.phase - b.phase,
         sortOrder: sortedInfo.columnKey === 'phase' && sortedInfo.order,
       },
       {
         title: 'Description',
         dataIndex: 'description',
-        key: 'description',
 
-        filteredValue: filteredInfo.description || null,
-        onFilter: (value, record) => record.description.includes(value),
         sorter: (a, b) => a.description.length - b.description.length,
         sortOrder: sortedInfo.columnKey === 'description' && sortedInfo.order,
       },
       {
         title: 'Status',
         dataIndex: 'status',
-        key: 'status',
+        render: () => (
+          <span>
+            Done
+          </span>
+        ),
 
-        filteredValue: filteredInfo.status || null,
-        onFilter: (value, record) => record.status.includes(value),
         sorter: (a, b) => a.status.length - b.status.length,
         sortOrder: sortedInfo.columnKey === 'status' && sortedInfo.order,
+      },
+      {
+        title: 'Tasks',
+        dataIndex: 'tasks',
+        render: () => (
+          <span>
+            <button
+              type="button"
+              className="link"
+              onClick={() => handleClickedAction()}
+            >
+              view tasks
+            </button>
+          </span>
+        )
       },
     ];
 
@@ -138,14 +176,21 @@ static defaultProps = {
         </h3>
         <div className="table-operations">
           <Button onClick={this.setAgeSort}>Sort phase</Button>
-          <Button onClick={this.handleIncidentTask}>Clear filters and sorters</Button>
         </div>
         <Table
-          columns={columns}
+          columns={getActions(this.handleClickedAction)}
           dataSource={[incidentAction]}
           onChange={this.handleChange}
           className="p-20"
         />
+        <Modal
+          title="INCIDENT TASKS "
+          visible={this.state.visible}
+          onOk={this.handleOk}
+          onCancel={this.handleCancel}
+        >
+        <IncidentTasks />
+        </Modal>
       </div>
     );
   }
@@ -159,8 +204,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  getIncidentTasks : fetchIncidentTasks,
+  getIncidentTasks: fetchIncidentTasks,
   getIncidentTask: getIncidentTaskById,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(IncidentActionTaken);
+
+
