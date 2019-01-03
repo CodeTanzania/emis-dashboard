@@ -1,6 +1,6 @@
 import * as Actions from '../actions';
 import { alertsMap, alerts } from '../reducers';
-import { polygons } from '../../../common/data/alertTestData';
+import { polygons, polygon } from '../../../common/data/alertTestData';
 
 describe('Alerts:reducers', () => {
   describe('alertsMap', () => {
@@ -13,6 +13,7 @@ describe('Alerts:reducers', () => {
         zoom: 7,
         points: [],
         shapes: [],
+        drawnGeometry: null,
         showPoints: false,
         showShapes: false,
       };
@@ -30,6 +31,22 @@ describe('Alerts:reducers', () => {
       ).toEqual(previousState);
     });
 
+    it(`should handle ${Actions.SAVE_DRAWN_GEOMETRY}`, () => {
+      const { geometry: drawnGeometry } = polygon;
+      const action = {
+        type: Actions.SAVE_DRAWN_GEOMETRY,
+        payload: {
+          data: drawnGeometry,
+        },
+      };
+
+      const expectedState = {
+        ...previousState,
+        drawnGeometry,
+      };
+
+      expect(alertsMap(previousState, action)).toEqual(expectedState);
+    });
     it(`should handle ${Actions.SET_SHOWPOINTS_VALUE}`, () => {
       const action = {
         type: Actions.SET_SHOWPOINTS_VALUE,

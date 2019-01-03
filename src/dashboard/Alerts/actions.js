@@ -12,6 +12,11 @@ export const GET_ALERTS_SUCCESS = 'GET_ALERTS_SUCCESS';
 export const GET_ALERTS_ERROR = 'GET_ALERTS_ERROR';
 export const SET_SELECTED_ALERT = 'SET_SELECTED_ALERT';
 
+/* add action types */
+export const POST_ALERT_START = 'POST_ALERT_START';
+export const POST_ALERT_SUCCESS = 'POST_ALERT_SUCCESS';
+export const POST_ALERT_ERROR = 'POST_ALERT_ERROR';
+
 /*
  *------------------------------------------------------------------------------
  * Map action types
@@ -22,6 +27,7 @@ export const STORE_MAP_POINTS = 'STORE_ALERTS_AS_MAP_POINTS';
 export const SET_SHOWPOINTS_VALUE = 'SET_SHOWPOINTS_VALUE';
 export const SET_SELECTED_GEOJSON = 'SET_SELECTED_GEOJSON';
 export const SET_SHOW_SELECTED_GEOJSON = 'SET_SHOW_SELECTED_GEOJSON';
+export const SAVE_DRAWN_GEOMETRY = 'SAVE_DRAWN_GEOMETRY';
 
 /*
  *------------------------------------------------------------------------------
@@ -119,6 +125,62 @@ export function getAlertsError(error) {
   };
 }
 
+/**
+ * Action dispatched when posting alert to the API
+ *
+ * @function
+ * @name postAlertStart
+ *
+ * @returns {Object} - Redux action
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function postAlertStart() {
+  return {
+    type: POST_ALERT_START,
+  };
+}
+
+/**
+ * Action dispatched when posting alert to the API is successful
+ *
+ * @function
+ * @name postAlertSuccess
+ *
+ * @returns {Object} - Redux action
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function postAlertSuccess() {
+  return {
+    type: POST_ALERT_SUCCESS,
+  };
+}
+
+/**
+ * Action dispatched when posting alert to the API fails
+ *
+ * @function
+ * @name postAlertError
+ *
+ * @param {Error} error - Error object when posting ALERTs fails
+ * @returns {Object} - Redux action
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function postAlertError(error) {
+  return {
+    type: POST_ALERT_ERROR,
+    payload: {
+      data: error,
+    },
+    error: true,
+  };
+}
+
 /*
  *------------------------------------------------------------------------------
  * Map action creators
@@ -165,6 +227,28 @@ export function setShowPiontsValue(showPoints) {
     type: SET_SHOWPOINTS_VALUE,
     payload: {
       data: showPoints,
+    },
+  };
+}
+
+/**
+ * Action dispatched to save drawn geometry on map
+ *
+ * @function
+ * @name saveDrawnGeometry
+ *
+ * @param {object} geometry
+ *
+ * @returns {Object} - Redux action
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function saveDrawnGeometry(geometry) {
+  return {
+    type: SAVE_DRAWN_GEOMETRY,
+    payload: {
+      data: geometry,
     },
   };
 }
@@ -246,6 +330,31 @@ export function getAlerts() {
 }
 
 /**
+ * A Thunk function which performs asynchronous creating alert into the API
+ *
+ * @function
+ * @name postAlert
+ *
+ * @param {Object} Alert - Alert object
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function postAlert(Alert) {
+  return (dispatch, getState, { API }) => {
+    dispatch(postAlertStart());
+    return API.postAlert(Alert)
+      .then(() => {
+        dispatch(postAlertSuccess());
+        dispatch(getAlerts());
+      })
+      .catch(error => {
+        dispatch(postAlertError(error));
+      });
+  };
+}
+
+/**
  * A Thunk function which which uses alert id to find alert object from array of alerts
  * stored in state
  *
@@ -306,5 +415,22 @@ export function showAlertPoints(showPoints) {
 export function showSeleteAlertShape(showShapes) {
   return dispatch => {
     dispatch(setShowSelectedGeojson(showShapes));
+  };
+}
+
+/**
+ *Thunk function that  saves drawn geometry to state
+ *
+ * @function
+ * @name saveDrawnGeometryOperation
+ *
+ * @param {object} geometry
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function saveDrawnGeometryOperation(geometry) {
+  return dispatch => {
+    dispatch(saveDrawnGeometry(geometry));
   };
 }
