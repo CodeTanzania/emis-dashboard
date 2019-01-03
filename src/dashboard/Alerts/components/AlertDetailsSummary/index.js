@@ -52,6 +52,9 @@ export default connect(
 )(withRouter(AlertDetailsSummary));
 
 AlertDetailsSummary.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
   selectedAlert: PropTypes.shape({
     headline: PropTypes.string,
     reportedAt: PropTypes.string,

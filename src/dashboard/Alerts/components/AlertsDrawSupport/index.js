@@ -27,6 +27,41 @@ import {
  * @since 0.1.0
  */
 class AlertsDrawSupport extends React.Component {
+  static propTypes = {
+    history: PropTypes.shape({
+      push: PropTypes.string,
+    }).isRequired,
+    showPoints: PropTypes.bool.isRequired,
+    showShapes: PropTypes.bool.isRequired,
+    shapes: PropTypes.arrayOf(
+      PropTypes.shape({
+        type: PropTypes.string,
+        properties: PropTypes.object,
+        geometry: PropTypes.shape({
+          type: PropTypes.string,
+          coordinates: PropTypes.array,
+        }),
+      })
+    ),
+    points: PropTypes.arrayOf(
+      PropTypes.shape({
+        type: PropTypes.string,
+        properties: PropTypes.shape({
+          id: PropTypes.string,
+        }),
+        geometry: PropTypes.shape({
+          type: PropTypes.string,
+          coordinates: PropTypes.arrayOf(PropTypes.number),
+        }),
+      })
+    ),
+  };
+
+  static defaultProps = {
+    points: [],
+    shapes: [],
+  };
+
   constructor(props) {
     super(props);
     this.onEachFeature = this.onEachFeature.bind(this);
@@ -87,37 +122,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(withRouter(AlertsDrawSupport));
-
-AlertsDrawSupport.propTypes = {
-  showPoints: PropTypes.bool.isRequired,
-  showShapes: PropTypes.bool.isRequired,
-  shapes: PropTypes.arrayOf(
-    PropTypes.shape({
-      type: PropTypes.string,
-      properties: PropTypes.object,
-      geometry: PropTypes.shape({
-        type: PropTypes.string,
-        coordinates: PropTypes.array,
-      }),
-    })
-  ),
-  selectAlert: PropTypes.func,
-  points: PropTypes.arrayOf(
-    PropTypes.shape({
-      type: PropTypes.string,
-      properties: PropTypes.shape({
-        id: PropTypes.string,
-      }),
-      geometry: PropTypes.shape({
-        type: PropTypes.string,
-        coordinates: PropTypes.arrayOf(PropTypes.number),
-      }),
-    })
-  ),
-};
-
-AlertsDrawSupport.defaultProps = {
-  points: [],
-  shapes: [],
-  selectAlert: () => {},
-};

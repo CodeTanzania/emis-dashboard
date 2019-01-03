@@ -22,11 +22,48 @@ import {
  * @since 0.1.0
  */
 class AlertDetails extends React.Component {
+  static propTypes = {
+    shapes: PropTypes.arrayOf(PropTypes.object).isRequired,
+    selectedAlert: PropTypes.shape({
+      _id: PropTypes.string,
+      source: PropTypes.string,
+      number: PropTypes.string,
+      status: PropTypes.string,
+      type: PropTypes.string,
+      scope: PropTypes.string,
+      category: PropTypes.string,
+      event: PropTypes.string,
+      response: PropTypes.string,
+      urgency: PropTypes.string,
+      severity: PropTypes.string,
+      certainty: PropTypes.string,
+      instruction: PropTypes.string,
+      area: PropTypes.string,
+      geometry: PropTypes.object,
+      centroid: PropTypes.object,
+      reportedAt: PropTypes.string,
+      direction: PropTypes.string,
+      color: PropTypes.string,
+      updatedAt: PropTypes.string,
+      createdAt: PropTypes.string,
+    }).isRequired,
+    getAlert: PropTypes.func,
+    center: PropTypes.arrayOf(PropTypes.number).isRequired,
+    zoom: PropTypes.number.isRequired,
+    match: PropTypes.shape({
+      params: PropTypes.shape({
+        id: PropTypes.string,
+      }),
+    }).isRequired,
+  };
+
+  static defaultProps = {
+    getAlert: () => {},
+  };
+
   componentDidMount() {
     const {
       getAlert,
-      showPoints,
-      showShape,
       match: {
         params: { id },
       },
@@ -66,8 +103,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(AlertDetails);
-
-AlertDetails.propTypes = {
-  center: PropTypes.arrayOf(PropTypes.number).isRequired,
-  zoom: PropTypes.number.isRequired,
-};
