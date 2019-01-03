@@ -17,7 +17,7 @@ import { convertIsoDate } from '../../../../common/lib/mapUtil';
  * @since 0.1.0
  */
 
-function IncidentDetails({ selected }) {
+function IncidentDetails({ selected, incidentAction }) {
   const {
     event,
     number,
@@ -27,6 +27,8 @@ function IncidentDetails({ selected }) {
     causes,
     areas,
   } = selected;
+
+  const {name: actionName, } = incidentAction
 
   const { name } = type;
   return (
@@ -71,6 +73,11 @@ function IncidentDetails({ selected }) {
           <br />
         </div>
         <span>
+          <strong>Action to be taken:</strong>
+        </span>{''}
+          {actionName}
+          <br/>
+        <span>
           <strong>Impact:</strong>
         </span>
         <br />
@@ -111,6 +118,7 @@ function IncidentDetails({ selected }) {
 
 const mapStateToProps = state => ({
   selected: state.incidents.incident ? state.incidents.incident : {},
+  incidentAction: state.selectedIncident.incidentAction ? state.selectedIncident.incidentAction :{}
 });
 
 export default connect(

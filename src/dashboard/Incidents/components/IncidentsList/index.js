@@ -1,12 +1,10 @@
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Col, List, Row } from 'antd';
 import classNames from 'classnames/bind';
-
-import React from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import styles from './styles.css';
-import { getSelectedIncident } from '../../actions';
+import { getSelectedIncident, activeIncidentAction } from '../../actions';
 import { convertIsoDate } from '../../../../common/lib/mapUtil';
 /**
  * Render a single contact item component for contacts list
@@ -46,8 +44,23 @@ class IncidentsList extends React.Component {
   };
 
   onClick = () => {
-    const { getIncident, incidentsList, clickedIncidentList } = this.props;
+    const {
+       getIncident,
+       incidentsList, 
+       setIncidentAction,
+       incidentsAction, 
+       clickedIncidentList }
+        = this.props;
     const { _id: selectedId } = incidentsList;
+    incidentsAction.filter(incidentAction => {
+      const { incident } = incidentAction;
+      const { _id: incidentId } = incident;
+      if (incidentId === selectedId) {
+        const { _id: actionId } = incidentAction;
+        return setIncidentAction(actionId);
+      }
+      return null;
+    });
     getIncident(selectedId);
     clickedIncidentList(incidentsList);
   };
@@ -90,10 +103,15 @@ class IncidentsList extends React.Component {
 }
 const mapStateToProps = state => ({
   selected: state.incidents.incident ? state.incidents.incident : [],
+  incidentsAction: state.incidents.incidentActionsData
+  ? state.incidents.incidentActionsData
+  : [],
 });
-const mapDispatchToProps = dispatch => ({
-  getIncident: bindActionCreators(getSelectedIncident, dispatch),
-});
+
+const mapDispatchToProps = {
+  getIncident:getSelectedIncident,
+  setIncidentAction: activeIncidentAction,
+};
 
 export default connect(
   mapStateToProps,

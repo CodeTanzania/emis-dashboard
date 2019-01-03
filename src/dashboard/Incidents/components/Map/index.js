@@ -12,7 +12,6 @@ import MapNav from '../MapNav';
 import {
   getIncidentsSuccess,
   getSelectedIncident,
-  getNavActive,
   getIncidentActions,
   activeIncidentAction,
 } from '../../actions';
@@ -87,11 +86,9 @@ class IncidentMap extends React.Component {
       })
     ).isRequired,
     handleIncidentActions: PropTypes.func,
-    handleActiveNav: PropTypes.func,
     handleIncidents: PropTypes.func,
     getIncident: PropTypes.func,
     setIncidentAction: PropTypes.func,
-    currentMenu: PropTypes.string.isRequired,
   };
 
   static defaultProps = {
@@ -99,7 +96,6 @@ class IncidentMap extends React.Component {
     handleIncidents: null,
     getIncident: null,
     handleIncidentActions: null,
-    handleActiveNav: null,
     setIncidentAction: null,
   };
 
@@ -253,10 +249,8 @@ class IncidentMap extends React.Component {
   onClickIncident = e => {
     const {
       getIncident,
-      handleActiveNav,
       incidentsAction,
       setIncidentAction,
-      currentMenu,
     } = this.props;
     const id = get(e, 'target.feature.properties._id');
     incidentsAction.filter(incidentAction => {
@@ -264,15 +258,14 @@ class IncidentMap extends React.Component {
       const { _id: incidentId } = incident;
       if (incidentId === id) {
         const { _id: actionId } = incidentAction;
+        console.log(incidentAction)
         return setIncidentAction(actionId);
       }
-
-      return console.log('Not found in this page');
+      return null;
     });
 
     getIncident(id);
     this.map.removeLayer(this.incidentLayer);
-    handleActiveNav(currentMenu);
   };
 
   render() {
@@ -314,13 +307,11 @@ const mapStateToProps = state => ({
   incidentsAction: state.incidents.incidentActionsData
     ? state.incidents.incidentActionsData
     : [],
-  currentMenu: state.activeNav && state.activeNav.activeItem,
 });
 
 const mapDispatchToProps = dispatch => ({
   handleIncidents: bindActionCreators(getIncidentsSuccess, dispatch),
   getIncident: bindActionCreators(getSelectedIncident, dispatch),
-  handleActiveNav: bindActionCreators(getNavActive, dispatch),
   handleIncidentActions: bindActionCreators(getIncidentActions, dispatch),
   setIncidentAction: bindActionCreators(activeIncidentAction, dispatch),
 });

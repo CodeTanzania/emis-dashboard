@@ -390,14 +390,14 @@ export function getIncidentById(incidentId) {
 
 export function getIncidentsActions() {
   const params = { limit: 100 };
-  const url = Axios.get(`/actions`, {
+  const url = Axios.get(`${INCIDENTS_API}/actions`, {
     params,
   }).then(response => response.data);
   return url;
 }
 
 export function getIncidentActionById(incidentId) {
-  Axios.get(`/actions/${incidentId}`).then(res => res.data);
+  return Axios.get(`${INCIDENTS_API}/actions/${incidentId}`).then(res => res.data);
 }
 
 export function searchIncidents(searchValue) {
