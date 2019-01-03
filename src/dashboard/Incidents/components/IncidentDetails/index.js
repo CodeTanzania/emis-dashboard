@@ -28,7 +28,7 @@ function IncidentDetails({ selected, incidentAction }) {
     areas,
   } = selected;
 
-  const {name: actionName, } = incidentAction
+  const { name: actionName } = incidentAction;
 
   const { name } = type;
   return (
@@ -74,9 +74,10 @@ function IncidentDetails({ selected, incidentAction }) {
         </div>
         <span>
           <strong>Action to be taken:</strong>
-        </span>{''}
-          {actionName}
-          <br/>
+        </span>
+        {''}
+        {actionName}
+        <br />
         <span>
           <strong>Impact:</strong>
         </span>
@@ -118,7 +119,9 @@ function IncidentDetails({ selected, incidentAction }) {
 
 const mapStateToProps = state => ({
   selected: state.incidents.incident ? state.incidents.incident : {},
-  incidentAction: state.selectedIncident.incidentAction ? state.selectedIncident.incidentAction :{}
+  incidentAction: state.selectedIncident.incidentAction
+    ? state.selectedIncident.incidentAction
+    : {},
 });
 
 export default connect(
@@ -140,5 +143,24 @@ IncidentDetails.propTypes = {
     startedAt: PropTypes.string.isRequired,
     endedAt: PropTypes.string.isRequired,
     number: PropTypes.string,
+  }).isRequired,
+  incidentAction: PropTypes.shape({
+    name: PropTypes.string,
+    description: PropTypes.string.isRequired,
+    phase: PropTypes.string.isRequired,
+    incident: PropTypes.shape({
+      event: PropTypes.string.isRequired,
+      startedAt: PropTypes.string,
+      endedAt: PropTypes.string,
+      _id: PropTypes.string,
+    }),
+    incidentType: PropTypes.shape({
+      name: PropTypes.string,
+      nature: PropTypes.string.isRequired,
+      family: PropTypes.string.isRequired,
+      color: PropTypes.string,
+      _id: PropTypes.string,
+    }),
+    _id: PropTypes.string,
   }).isRequired,
 };

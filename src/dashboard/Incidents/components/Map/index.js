@@ -66,7 +66,7 @@ class IncidentMap extends React.Component {
     }).isRequired,
     incidentsAction: PropTypes.arrayOf(
       PropTypes.shape({
-        event: PropTypes.string,
+        name: PropTypes.string,
         description: PropTypes.string.isRequired,
         phase: PropTypes.string.isRequired,
         incident: PropTypes.shape({
@@ -242,23 +242,17 @@ class IncidentMap extends React.Component {
   };
 
   onCloseIncidentDetail = () => {
-    console.log('clickes');
     this.map.addLayer(this.incidentLayer);
   };
 
   onClickIncident = e => {
-    const {
-      getIncident,
-      incidentsAction,
-      setIncidentAction,
-    } = this.props;
+    const { getIncident, incidentsAction, setIncidentAction } = this.props;
     const id = get(e, 'target.feature.properties._id');
     incidentsAction.filter(incidentAction => {
       const { incident } = incidentAction;
       const { _id: incidentId } = incident;
       if (incidentId === id) {
         const { _id: actionId } = incidentAction;
-        console.log(incidentAction)
         return setIncidentAction(actionId);
       }
       return null;

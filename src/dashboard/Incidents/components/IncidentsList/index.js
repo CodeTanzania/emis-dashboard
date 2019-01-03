@@ -34,23 +34,46 @@ class IncidentsList extends React.Component {
       endedAt: PropTypes.string,
       _id: PropTypes.string,
     }),
+    incidentsAction: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string,
+        description: PropTypes.string.isRequired,
+        phase: PropTypes.string.isRequired,
+        incident: PropTypes.shape({
+          event: PropTypes.string.isRequired,
+          startedAt: PropTypes.string,
+          endedAt: PropTypes.string,
+          _id: PropTypes.string,
+        }),
+        incidentType: PropTypes.shape({
+          name: PropTypes.string,
+          nature: PropTypes.string.isRequired,
+          family: PropTypes.string.isRequired,
+          color: PropTypes.string,
+          _id: PropTypes.string,
+        }),
+        _id: PropTypes.string,
+      })
+    ).isRequired,
     clickedIncidentList: PropTypes.func,
+    setIncidentAction: PropTypes.func,
   };
 
   static defaultProps = {
-    clickedIncidentList: null,
-    getIncident: null,
+    clickedIncidentList: () => {},
+    setIncidentAction: () => {},
+    getIncident: () => {},
     incidentsList: [],
   };
 
   onClick = () => {
     const {
-       getIncident,
-       incidentsList, 
-       setIncidentAction,
-       incidentsAction, 
-       clickedIncidentList }
-        = this.props;
+      getIncident,
+      incidentsList,
+      setIncidentAction,
+      incidentsAction,
+      clickedIncidentList,
+    } = this.props;
     const { _id: selectedId } = incidentsList;
     incidentsAction.filter(incidentAction => {
       const { incident } = incidentAction;
@@ -104,12 +127,12 @@ class IncidentsList extends React.Component {
 const mapStateToProps = state => ({
   selected: state.incidents.incident ? state.incidents.incident : [],
   incidentsAction: state.incidents.incidentActionsData
-  ? state.incidents.incidentActionsData
-  : [],
+    ? state.incidents.incidentActionsData
+    : [],
 });
 
 const mapDispatchToProps = {
-  getIncident:getSelectedIncident,
+  getIncident: getSelectedIncident,
   setIncidentAction: activeIncidentAction,
 };
 

@@ -397,7 +397,9 @@ export function getIncidentsActions() {
 }
 
 export function getIncidentActionById(incidentId) {
-  return Axios.get(`${INCIDENTS_API}/actions/${incidentId}`).then(res => res.data);
+  return Axios.get(`${INCIDENTS_API}/actions/${incidentId}`).then(
+    res => res.data
+  );
 }
 
 export function searchIncidents(searchValue) {
