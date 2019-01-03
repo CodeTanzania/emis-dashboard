@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import './styles.css';
+import { fetchIncidentTasks } from '../../../../actions';
 
 class IncidentActionTaken extends React.Component {
   static propTypes = {
@@ -32,6 +33,11 @@ class IncidentActionTaken extends React.Component {
     filteredInfo: null,
     sortedInfo: null,
   };
+
+  componentDidMount(){
+    const {getIncidentTasks} = this.props;
+    getIncidentTasks()
+  }
 
   handleChange = (pagination, filters, sorter) => {
     this.setState({
@@ -107,7 +113,7 @@ class IncidentActionTaken extends React.Component {
     return (
       <div>
         <h3 style={{ borderBottom: '1px solid #e8e8e8', padding: '9px' }}>
-          EIncident log
+          Incident Action log
         </h3>
         <div className="table-operations">
           <Button onClick={this.setAgeSort}>Sort phase</Button>
@@ -130,4 +136,8 @@ const mapStateToProps = state => ({
     : {},
 });
 
-export default connect(mapStateToProps)(IncidentActionTaken);
+const mapDispatchToProps = {
+  getIncidentTasks : fetchIncidentTasks
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(IncidentActionTaken);

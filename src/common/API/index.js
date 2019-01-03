@@ -402,11 +402,41 @@ export function getIncidentActionById(incidentId) {
   );
 }
 
+/**
+ * Get searching incidents from the API
+ *
+ * @function
+ * @name searchIncidents
+ *
+ * @param {Object} params - params object
+ * @returns {Promise}
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
 export function searchIncidents(searchValue) {
   return Axios.get(`${INCIDENTS_API}/incidents?q=${searchValue}`).then(
     res => res.data
   );
 }
+
+/**
+ * Get incident task from the API
+ *
+ * @function
+ * @name getIncidentTasks
+ *
+ * @param {Object} params - params object
+ * @returns {Promise}
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+
+ export function getIncidentTasks() {
+   const params = {limit:100}
+   return Axios.get(`${INCIDENTS_API}/tasks`, {params}).then(res => res.data);
+ }
 
 /**
  * Post Standard Operating procedure(SOP) to the API

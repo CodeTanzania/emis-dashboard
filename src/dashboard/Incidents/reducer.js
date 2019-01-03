@@ -11,6 +11,9 @@ import {
   GET_INCIDENT_ACTION_ERROR,
   POST_INCIDENT_SUCCESS,
   FILTER_INCIDENT_BY_DATE,
+  GET_TASKS_START,
+  GET_TASKS_SUCCESS,
+  GET_TASKS_ERROR,
 } from './actions';
 
 /**
@@ -38,6 +41,7 @@ const initialState = {
 
 const initialselectedState = {
   incidentAction: null,
+  incidentTasks: [],
 };
 
 const initialFilters = {
@@ -111,7 +115,20 @@ export function selectedIncident(state = initialselectedState, action) {
         ...state,
         error: action.payload,
       };
-
+    case GET_TASKS_START:
+      return {
+        ...state
+      };
+    case GET_TASKS_SUCCESS:
+      return {
+        ...state,
+        incidentTasks: action.payload.data,
+      };
+    case GET_TASKS_ERROR:
+      return {
+        ...state,
+        error: action.payload,
+      };
     default:
       return state;
   }
