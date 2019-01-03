@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Form, Input, Select, Button, DatePicker } from 'antd';
+import { Form, Input, Select, Button, DatePicker, Modal } from 'antd';
 import { postAlert } from '../../../../actions';
 import './styles.css';
 
@@ -9,6 +10,40 @@ const FormItem = Form.Item;
 const { Option } = Select;
 const { TextArea } = Input;
 
+/**
+ * Function that show a modal to
+ * remind user to draw area involved in alert
+ *
+ * @class
+ * @name error
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+function error() {
+  Modal.error({
+    title: 'Sorry you have not specified area involved in this Alert',
+    content: (
+      <div>
+        <p>
+          Inorder to Specify an area involved in this Alert kindly use the draw
+          controls to Draw an area involved in this alert
+        </p>
+      </div>
+    ),
+    onOk() {},
+  });
+}
+
+/**
+ * New Alert Form
+ *
+ * @class
+ * @name NewAlertForm
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
 class NewAlertForm extends React.Component {
   static propTypes = {
     createAlert: PropTypes.func,
@@ -24,7 +59,7 @@ class NewAlertForm extends React.Component {
   };
 
   handleSubmit = e => {
-    const { geometry, form, createAlert } = this.props;
+    const { geometry, form, createAlert, history } = this.props;
 
     e.preventDefault();
     form.validateFieldsAndScroll((err, values) => {
@@ -54,7 +89,12 @@ class NewAlertForm extends React.Component {
           source: 'testing',
           area: 'testing',
         };
-        createAlert(payload);
+        if (geometry) {
+          createAlert(payload);
+          history.push('/alerts');
+        } else {
+          error();
+        }
       }
     });
   };
@@ -308,4 +348,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(WrappedNewAlertForm);
+)(withRouter(WrappedNewAlertForm));

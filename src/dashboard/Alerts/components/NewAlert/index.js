@@ -8,7 +8,16 @@ import AlertBaseMap from '../AlertsBaseMap';
 import AlertMapDrawControls from '../AlertMapControls';
 import WrappedNewAlertForm from './components/NewAlertForm';
 
-function AlertsHome({ center, zoom }) {
+/**
+ * Component renders page for creating a new alert
+ *
+ * @function
+ * @name NewAlert
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+function NewAlert({ center, zoom }) {
   return (
     <React.Fragment>
       <AlertNavBar>
@@ -29,9 +38,9 @@ const mapStateToProps = state => ({
   zoom: state.alertsMap.zoom,
 });
 
-export default connect(mapStateToProps)(AlertsHome);
+export default connect(mapStateToProps)(NewAlert);
 
-AlertsHome.propTypes = {
+NewAlert.propTypes = {
   center: PropTypes.arrayOf(PropTypes.number).isRequired,
   zoom: PropTypes.number.isRequired,
 };

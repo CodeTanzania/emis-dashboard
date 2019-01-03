@@ -5,6 +5,16 @@ import 'leaflet-draw';
 import 'leaflet-draw/dist/leaflet.draw.css';
 import { withLeaflet } from 'react-leaflet';
 
+/**
+ * Controls for Drawing shapes on Map
+ * Add leaflet draw controls on Map
+ *
+ * @class
+ * @name DrawControls
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
 class DrawControls extends React.Component {
   componentDidMount() {
     this.map = this.props.leaflet.map;

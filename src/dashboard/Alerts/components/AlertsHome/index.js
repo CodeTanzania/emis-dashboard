@@ -7,6 +7,15 @@ import AlertSideBar from '../AlertSideBar';
 import AlertBaseMap from '../AlertsBaseMap';
 import AlertsDrawSupport from '../AlertsDrawSupport';
 
+/**
+ * Component that layouts the Alert home page
+ *
+ * @function
+ * @name AlertsHome
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
 function AlertsHome({ center, zoom }) {
   return (
     <React.Fragment>

@@ -6,6 +6,8 @@ import PropTypes from 'prop-types';
 import { saveDrawnGeometryOperation } from '../../actions';
 import DrawControls from '../../../../common/components/DrawControls';
 
+// this constant contains the contents that will be
+// displayed inside leaflet  popup
 const popupContent = `<div>
 <div class="ant-modal-body">
     <h2>To create new Alert, Draw the area that is involved  in the Alert using the Draw Controls and Fill the Form</h2>
@@ -17,6 +19,14 @@ const popupContent = `<div>
 </div>
 </div>`;
 
+/**
+ *  Draw Control for Drawing Alert shapes
+ * @class
+ * @name AlertMapControls
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
 class AlertMapControls extends React.Component {
   static propTypes = {
     saveGeometry: PropTypes.func,

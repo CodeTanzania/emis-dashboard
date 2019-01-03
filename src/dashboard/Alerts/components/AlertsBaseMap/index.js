@@ -4,6 +4,17 @@ import * as ReactLeaflet from 'react-leaflet';
 // constants
 const { Map: LeafletMap, TileLayer } = ReactLeaflet;
 
+/**
+ * Base map for Alerts that can be reused accross
+ * components
+ * Renders openstreetmap
+ *
+ * @function
+ * @name AlertBaseMap
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
 function AlertBaseMap({ center, zoom, children, zoomControl }) {
   return (
     <LeafletMap center={center} zoom={zoom} zoomControl={zoomControl}>
