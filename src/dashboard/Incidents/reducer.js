@@ -14,6 +14,9 @@ import {
   GET_TASKS_START,
   GET_TASKS_SUCCESS,
   GET_TASKS_ERROR,
+  GET_TASK_START,
+  GET_TASK_SUCCESS,
+  GET_TASK_ERROR,
 } from './actions';
 
 /**
@@ -42,6 +45,7 @@ const initialState = {
 const initialselectedState = {
   incidentAction: null,
   incidentTasks: [],
+  incidentTask: null,
 };
 
 const initialFilters = {
@@ -56,7 +60,6 @@ export function incidents(state = initialState, action) {
         isLoading: true,
         error: null,
       };
-
     case GET_INCIDENTS_SUCCESS:
       return {
         data: action.payload.data.data,
@@ -129,6 +132,20 @@ export function selectedIncident(state = initialselectedState, action) {
         ...state,
         error: action.payload,
       };
+    case GET_TASK_START:
+      return {
+        ...state
+      };
+    case GET_TASK_SUCCESS:
+      return {
+        ...state,
+        incidentTask: action.payload.data,
+      };
+    case GET_TASK_ERROR:
+      return {
+        ...state,
+        error: action.payload,
+      };
     default:
       return state;
   }
@@ -157,3 +174,4 @@ export function filter(state = initialFilters, action) {
       return state;
   }
 }
+

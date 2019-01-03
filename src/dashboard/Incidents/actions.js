@@ -35,10 +35,15 @@ export const SELECT_ACTIVE_INCIDENT = 'SELECT_ACTIVE_INCIDENT';
 export const SEARCH_INCIDENT_START = 'SEARCH_INCIDENT_START';
 export const SEARCH_INCIDENT_ERROR = 'SEARCH_INCIDENT_ERROR';
 
-/* fetch incident tasks  */
+/* fetch incidents tasks  */
 export const GET_TASKS_START = 'GET_TASKS_START';
 export const GET_TASKS_SUCCESS = 'GET_TASKS_SUCCESS';
 export const GET_TASKS_ERROR = 'GET_TASKS_ERROR';
+
+/* fetch incident task  */
+export const GET_TASK_START = 'GET_TASK_START';
+export const GET_TASK_SUCCESS = 'GET_TASK_SUCCESS';
+export const GET_TASK_ERROR = 'GET_TASK_ERROR';
 
 
 /* Actions creater */
@@ -141,6 +146,20 @@ export const getTasksError = message => ({
   payload: { message },
 });
 
+export const getIncidentTaskStart = () => ({
+  type: GET_TASK_START,
+});
+
+export const getIncidentTaskSuccess = incidentTasks => ({
+  type: GET_TASK_SUCCESS,
+  payload: { data: incidentTasks },
+});
+
+export const getIncidentTaskError = message => ({
+  type: GET_TASK_ERROR,
+  payload: { message },
+});
+
 
 export const getIncidentsSuccess = () => (dispatch, getState, { API }) => {
   dispatch(getIncidentsStart());
@@ -229,4 +248,10 @@ export const fetchIncidentTasks = () => (dispatch, getState, { API }) => {
   dispatch(getTasksStart());
   API.getIncidentTasks().then(tasks => { dispatch(getTasksSuccess(tasks)) })
     .catch(error => dispatch(getTasksError(error)));
+}
+
+export const getIncidentTaskById = (incidentId) => (dispatch, getState, { API }) => {
+  dispatch(getIncidentTaskStart());
+  API.getIncidentTasksById(incidentId).then(tasks => { dispatch(getIncidentTaskSuccess(tasks)) })
+    .catch(error => dispatch(getIncidentTaskError(error)));
 }

@@ -2,9 +2,9 @@ import { Table, Button } from 'antd';
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { fetchIncidentTasks, getIncidentTaskById, } from '../../../../actions';
 
 import './styles.css';
-import { fetchIncidentTasks } from '../../../../actions';
 
 class IncidentActionTaken extends React.Component {
   static propTypes = {
@@ -27,7 +27,13 @@ class IncidentActionTaken extends React.Component {
       }),
       _id: PropTypes.string,
     }).isRequired,
+    getIncidentTask: PropTypes.func,
+    getIncidentTasks: PropTypes.func,
   };
+static defaultProps = {
+  getIncidentTask: () => {},
+  getIncidentTasks: () => {},
+}
 
   state = {
     filteredInfo: null,
@@ -65,6 +71,21 @@ class IncidentActionTaken extends React.Component {
       },
     });
   };
+
+  handleIncidentTask = () => {
+    const {incidentAction,incidentsTasks, getIncidentTask } = this.props;
+    const {_id: id} = incidentAction;
+    incidentsTasks.filter(tasks => {
+      const { action } = tasks;
+      const { _id: actionId } = action;
+      if (actionId === id) {
+        const { _id: taskId } = tasks;
+        return getIncidentTask(taskId);
+      }
+      return null;
+    });
+
+  }
 
   render() {
     let { sortedInfo, filteredInfo } = this.state;
@@ -117,7 +138,7 @@ class IncidentActionTaken extends React.Component {
         </h3>
         <div className="table-operations">
           <Button onClick={this.setAgeSort}>Sort phase</Button>
-          <Button onClick={this.clearAll}>Clear filters and sorters</Button>
+          <Button onClick={this.handleIncidentTask}>Clear filters and sorters</Button>
         </div>
         <Table
           columns={columns}
@@ -134,10 +155,12 @@ const mapStateToProps = state => ({
   incidentAction: state.selectedIncident.incidentAction
     ? state.selectedIncident.incidentAction
     : {},
+  incidentsTasks: state.selectedIncident.incidentTasks.data ? state.selectedIncident.incidentTasks.data : {}
 });
 
 const mapDispatchToProps = {
-  getIncidentTasks : fetchIncidentTasks
+  getIncidentTasks : fetchIncidentTasks,
+  getIncidentTask: getIncidentTaskById,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(IncidentActionTaken);
