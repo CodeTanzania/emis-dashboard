@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import AlertSideBar from '../AlertSideBar';
-import AlertDetailsSummary from '../AlertDetailsSummary';
+import AlertDetailsSummary from './components/AlertDetailsSummary';
 import MapPolygonsDrawSupport from '../../../../common/components/MapPolygonsDrawSupport';
 import MapPointsDrawSupport from '../../../../common/components/MapPointsDrawSupport';
 import AlertsBaseMap from '../AlertsBaseMap';

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { get } from 'lodash';
 import { Icon, Tooltip } from 'antd';
-import { getSelectedAlertFromState } from '../../actions';
+import { getSelectedAlertFromState } from '../../../../actions';
 import AlertFieldItem from './components/AlertFieldItem';
 import './styles.css';
 

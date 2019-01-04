@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {
   formatAlertFieldType,
   formatAlertFieldTypeValue,
-} from '../../../../helpers';
+} from '../../../../../../helpers';
 import './styles.css';
 
 function AlertFieldItem({ value, property }) {
