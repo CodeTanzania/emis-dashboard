@@ -9,6 +9,7 @@ import AlertBaseMap from '../AlertsBaseMap';
 import AlertFilters from './components/AlertFilters';
 import AlertsDrawSupport from '../AlertsDrawSupport';
 import AlertLegend from './components/AlertLegend';
+import Display from './components/Display';
 
 /**
  * Component that layouts the Alert home page
@@ -30,6 +31,7 @@ function AlertsHome({ center, zoom, loading }) {
       <AlertLegend />
       <AlertNavBar>
         <NewAlertButton />
+        <Display />
       </AlertNavBar>
       <AlertSideBar title="Filter">
         <AlertFilters />
