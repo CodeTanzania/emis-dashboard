@@ -6,6 +6,7 @@ import AlertNavBar from '../AlertNavBar';
 import NewAlertButton from './components/NewAlertButton';
 import AlertSideBar from '../AlertSideBar';
 import AlertBaseMap from '../AlertsBaseMap';
+import AlertFilters from './components/AlertFilters';
 import AlertsDrawSupport from '../AlertsDrawSupport';
 
 /**
@@ -29,7 +30,7 @@ function AlertsHome({ center, zoom, loading }) {
         <NewAlertButton />
       </AlertNavBar>
       <AlertSideBar title="Filter">
-        <div>This is filter contents</div>
+        <AlertFilters />
       </AlertSideBar>
       <AlertBaseMap center={center} zoom={zoom} zoomControl={false}>
         <AlertsDrawSupport />
