@@ -19,6 +19,7 @@ import { showMarkers, baseMaps } from '../../../../common/lib/mapUtil';
 
 import './styles.css';
 import 'leaflet-draw/dist/leaflet.draw.css';
+import { Spin } from 'antd';
 
 const { Map: LeafletMap, TileLayer, Popup } = ReactLeaflet;
 
@@ -245,6 +246,15 @@ class IncidentMap extends React.Component {
     this.map.addLayer(this.incidentLayer);
   };
 
+  getSpinValue = () => {
+    const { loading } = this.props;
+    let spin = false;
+    if (loading) {
+      spin = loading;
+    } 
+    return spin;
+  };
+
   onClickIncident = e => {
     const { getIncident, incidentsAction, setIncidentAction } = this.props;
     const id = get(e, 'target.feature.properties._id');
@@ -265,8 +275,12 @@ class IncidentMap extends React.Component {
   render() {
     const { position, zoom, showPopup, hideButton, area } = this.state;
     const { incidents } = this.props;
+    let spin = this.getSpinValue();
     return (
       <div>
+        <Spin spinning={spin} tip="Loading..."
+        size="large"
+        style={{ position: 'absolute', top: '25%', right: '5%' }}>
         {!hideButton ? (
           <MapNav
             newIncidentButton={this.onclickNewIncidentButton}
@@ -289,6 +303,7 @@ class IncidentMap extends React.Component {
             </Popup>
           ) : null}
         </LeafletMap>
+        </Spin>
       </div>
     );
   }
@@ -301,6 +316,7 @@ const mapStateToProps = state => ({
   incidentsAction: state.incidents.incidentActionsData
     ? state.incidents.incidentActionsData
     : [],
+  loading : state.incidents.isLoading,
 });
 
 const mapDispatchToProps = dispatch => ({

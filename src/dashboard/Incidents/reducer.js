@@ -17,6 +17,9 @@ import {
   GET_TASK_START,
   GET_TASK_SUCCESS,
   GET_TASK_ERROR,
+  SEARCH_INCIDENT_START,
+  SELECT_INCIDENT_START,
+  GET_INCIDENT_ACTION_START,
 } from './actions';
 
 /**
@@ -40,12 +43,14 @@ const initialState = {
   total: 0,
   incidentActionsData: [],
   incident: null,
+  isLoading: false,
 };
 
 const initialselectedState = {
   incidentAction: null,
   incidentTasks: [],
   incidentTask: null,
+  isLoadingData: false,
 };
 
 const initialFilters = {
@@ -96,10 +101,23 @@ export function incidents(state = initialState, action) {
         ...state,
         data: [action.payload.incident, ...state.data],
       };
+    case SELECT_INCIDENT_START:
+      return {
+        state,
+        isLoading: true
+      }
     case SELECT_INCIDENT_SUCCESS:
       return {
         ...state,
         incident: action.payload.data,
+        isLoading: false,
+
+      };
+    case SEARCH_INCIDENT_START:
+      return {
+        state,
+        isLoading: true,
+        error: null,
       };
     default:
       return state;
@@ -108,15 +126,22 @@ export function incidents(state = initialState, action) {
 
 export function selectedIncident(state = initialselectedState, action) {
   switch (action.type) {
+    case GET_INCIDENT_ACTION_START:
+    return {
+      ...state,
+      isLoadingData: true
+    };
     case GET_INCIDENT_ACTION_SUCCESS:
       return {
         ...state,
         incidentAction: action.payload.data,
+        isLoadingData: false
       };
     case GET_INCIDENT_ACTION_ERROR:
       return {
         ...state,
         error: action.payload,
+        isLoadingData: false
       };
     case GET_TASKS_START:
       return {
@@ -125,7 +150,7 @@ export function selectedIncident(state = initialselectedState, action) {
     case GET_TASKS_SUCCESS:
       return {
         ...state,
-        incidentTasks: action.payload.data,
+        incidentTasks: action.payload.data.data,
       };
     case GET_TASKS_ERROR:
       return {
@@ -135,16 +160,19 @@ export function selectedIncident(state = initialselectedState, action) {
     case GET_TASK_START:
       return {
         ...state,
+        isLoadingData: true,
       };
     case GET_TASK_SUCCESS:
       return {
         ...state,
         incidentTask: action.payload.data,
+        isLoadingData: false,
       };
     case GET_TASK_ERROR:
       return {
         ...state,
         error: action.payload,
+        isLoadingData: false,
       };
     default:
       return state;

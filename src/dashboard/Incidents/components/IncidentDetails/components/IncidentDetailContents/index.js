@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import {Spin} from 'antd';
 import { convertIsoDate } from '../../../../../../common/lib/mapUtil';
 
 import './styles.css';
 
-function IncidentDetailsContent({ incidentSelected }) {
+function IncidentDetailsContent({ incidentSelected, loading}) {
   const {
     event,
     type,
@@ -24,6 +25,11 @@ function IncidentDetailsContent({ incidentSelected }) {
       <h3 style={{ borderBottom: '1px solid #e8e8e8', padding: '9px' }}>
         Situation Analysis
       </h3>
+      {loading ? (
+          <div className='loading'>
+            <Spin />
+          </div>
+        ) : (
       <div className="IncidentDetailContent p-20">
         <span>
           <strong>Incident number:</strong>
@@ -86,12 +92,14 @@ function IncidentDetailsContent({ incidentSelected }) {
         </span>
         <br />
       </div>
+        )}
     </div>
   );
 }
 
 const mapStateToProps = state => ({
   incidentSelected: state.incidents.incident ? state.incidents.incident : [],
+  loading: state.incidents.isLoading,
 });
 
 export default connect(

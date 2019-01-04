@@ -1,8 +1,8 @@
-import { Table, Button, Modal } from 'antd';
+import { Table, Button, Modal, Spin } from 'antd';
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchIncidentTasks, getIncidentTaskById } from '../../../../actions';
+import { fetchIncidentTasks, getIncidentTaskById, activeIncidentAction } from '../../../../actions';
 
 import './styles.css';
 import IncidentTasks from './components/IncidentTasks';
@@ -67,11 +67,13 @@ class IncidentActionTaken extends React.Component {
     ).isRequired,
     getIncidentTask: PropTypes.func,
     getIncidentTasks: PropTypes.func,
+    activeIncidentAction: PropTypes.func
   };
 
   static defaultProps = {
     getIncidentTask: () => {},
     getIncidentTasks: () => {},
+    activeIncidentAction: ()=> {}
   };
 
   state = {
@@ -80,8 +82,10 @@ class IncidentActionTaken extends React.Component {
   };
 
   componentDidMount() {
-    const { getIncidentTasks } = this.props;
+    const { getIncidentTasks,setIncidentAction,incidentAction } = this.props;
+    const { _id: id } = incidentAction;
     getIncidentTasks();
+    setIncidentAction(id);
   }
 
   handleChange = (pagination, sorter) => {
@@ -138,7 +142,7 @@ class IncidentActionTaken extends React.Component {
 
   render() {
     let { sortedInfo } = this.state;
-    const { incidentAction } = this.props;
+    const { incidentAction, loadingAction } = this.props;
     sortedInfo = sortedInfo || {};
 
     const getActions = handleClickedAction => [
@@ -200,6 +204,8 @@ class IncidentActionTaken extends React.Component {
           dataSource={[incidentAction]}
           onChange={this.handleChange}
           className="p-20"
+          size='middle'
+          loading={loadingAction}
         />
         <Modal
           title="INCIDENT TASKS "
@@ -207,7 +213,12 @@ class IncidentActionTaken extends React.Component {
           onOk={this.handleOk}
           onCancel={this.handleCancel}
         >
-          <IncidentTasks />
+         {loadingAction ? (
+           <div className='loadingAction'>
+             <Spin />
+           </div>
+         ) : <IncidentTasks />
+         }
         </Modal>
       </div>
     );
@@ -218,14 +229,17 @@ const mapStateToProps = state => ({
   incidentAction: state.selectedIncident.incidentAction
     ? state.selectedIncident.incidentAction
     : {},
-  incidentsTasks: state.selectedIncident.incidentTasks.data
-    ? state.selectedIncident.incidentTasks.data
+  incidentsTasks: state.selectedIncident.incidentTasks
+    ? state.selectedIncident.incidentTasks
     : {},
+  loadingAction: state.selectedIncident.isLoadingData
 });
 
 const mapDispatchToProps = {
   getIncidentTasks: fetchIncidentTasks,
   getIncidentTask: getIncidentTaskById,
+  setIncidentAction: activeIncidentAction,
+
 };
 
 export default connect(
