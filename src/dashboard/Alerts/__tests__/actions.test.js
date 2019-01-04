@@ -32,12 +32,6 @@ describe('Alerts: Module', () => {
       });
     });
 
-    it(`should create an action of type ${Actions.GET_ALERTS_START}`, () => {
-      expect(Actions.getAlertsStart()).toEqual({
-        type: Actions.GET_ALERTS_START,
-      });
-    });
-
     it(`should create an action of type ${Actions.SET_SELECTED_ALERT}`, () => {
       expect(Actions.setSelectedAlert(alert)).toEqual({
         type: Actions.SET_SELECTED_ALERT,
@@ -47,19 +41,41 @@ describe('Alerts: Module', () => {
       });
     });
 
-    it(`should create an action of type ${Actions.GET_ALERTS_SUCCESS}`, () => {
-      const alerts = [];
+    it(`should create an action of type ${Actions.GET_ALERT_START}`, () => {
+      expect(Actions.getAlertStart()).toEqual({
+        type: Actions.GET_ALERT_START,
+      });
+    });
 
-      expect(Actions.getAlertsSuccess(alerts)).toEqual({
-        type: Actions.GET_ALERTS_SUCCESS,
+    it(`should create an action of type ${Actions.GET_ALERT_SUCCESS}`, () => {
+      expect(Actions.getAlertSuccess({})).toEqual({
+        type: Actions.GET_ALERT_SUCCESS,
         payload: {
-          data: alerts,
-        },
-        meta: {
-          page: 1,
-          total: 0,
+          data: {},
         },
       });
+    });
+
+    it(`should create an action of type ${Actions.GET_ALERT_ERROR}`, () => {
+      const error = new Error();
+
+      expect(Actions.getAlertError(error)).toEqual({
+        type: Actions.GET_ALERT_ERROR,
+        payload: {
+          data: error,
+        },
+        error: true,
+      });
+    });
+
+    it(`should create an action of type ${Actions.GET_ALERTS_START}`, () => {
+      expect(Actions.getAlertsStart()).toEqual({
+        type: Actions.GET_ALERTS_START,
+      });
+    });
+
+    it(`should create an action of type ${Actions.GET_ALERTS_SUCCESS}`, () => {
+      const alerts = [];
 
       expect(Actions.getAlertsSuccess(alerts, 2, 40)).toEqual({
         type: Actions.GET_ALERTS_SUCCESS,
