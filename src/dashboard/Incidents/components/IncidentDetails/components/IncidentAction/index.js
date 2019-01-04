@@ -2,7 +2,7 @@ import { Table, Button, Modal } from 'antd';
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchIncidentTasks, getIncidentTaskById, } from '../../../../actions';
+import { fetchIncidentTasks, getIncidentTaskById } from '../../../../actions';
 
 import './styles.css';
 import IncidentTasks from './components/IncidentTasks';
@@ -10,7 +10,7 @@ import IncidentTasks from './components/IncidentTasks';
 /**
  * IncidentActionTaken perform
  * specific action per incident
- * 
+ *
  *
  * @class
  * @name IncidentActionTaken
@@ -40,28 +40,52 @@ class IncidentActionTaken extends React.Component {
       }),
       _id: PropTypes.string,
     }).isRequired,
+    incidentsTasks: PropTypes.arrayOf(
+      PropTypes.shape({
+        incidentType: PropTypes.shape({
+          name: PropTypes.string,
+          nature: PropTypes.string.isRequired,
+          family: PropTypes.string.isRequired,
+          color: PropTypes.string,
+          _id: PropTypes.string,
+        }),
+        incident: PropTypes.shape({
+          event: PropTypes.string,
+          _id: PropTypes.string,
+        }),
+        action: PropTypes.shape({
+          name: PropTypes.string,
+          _id: PropTypes.string,
+        }),
+        name: PropTypes.string,
+        description: PropTypes.string,
+        phase: PropTypes.string,
+        number: PropTypes.number,
+        tags: PropTypes.array,
+        _id: PropTypes.string,
+      })
+    ).isRequired,
     getIncidentTask: PropTypes.func,
     getIncidentTasks: PropTypes.func,
   };
+
   static defaultProps = {
-    getIncidentTask: () => { },
-    getIncidentTasks: () => { },
-  }
+    getIncidentTask: () => {},
+    getIncidentTasks: () => {},
+  };
 
   state = {
-    filteredInfo: null,
     sortedInfo: null,
     visible: false,
   };
 
   componentDidMount() {
     const { getIncidentTasks } = this.props;
-    getIncidentTasks()
+    getIncidentTasks();
   }
 
-  handleChange = (pagination, filters, sorter) => {
+  handleChange = (pagination, sorter) => {
     this.setState({
-      filteredInfo: filters,
       sortedInfo: sorter,
     });
   };
@@ -87,32 +111,30 @@ class IncidentActionTaken extends React.Component {
       }
       return null;
     });
-
-  }
+  };
 
   showModal = () => {
     this.setState({
       visible: true,
     });
     this.handleIncidentTask();
-  }
+  };
 
   handleOk = () => {
     this.setState({
       visible: false,
     });
-  }
+  };
 
   handleCancel = () => {
     this.setState({
       visible: false,
     });
-  }
-
+  };
 
   handleClickedAction = () => {
-    this.showModal()
-  }
+    this.showModal();
+  };
 
   render() {
     let { sortedInfo } = this.state;
@@ -143,11 +165,7 @@ class IncidentActionTaken extends React.Component {
       {
         title: 'Status',
         dataIndex: 'status',
-        render: () => (
-          <span>
-            Done
-          </span>
-        ),
+        render: () => <span>Done</span>,
 
         sorter: (a, b) => a.status.length - b.status.length,
         sortOrder: sortedInfo.columnKey === 'status' && sortedInfo.order,
@@ -165,7 +183,7 @@ class IncidentActionTaken extends React.Component {
               view tasks
             </button>
           </span>
-        )
+        ),
       },
     ];
 
@@ -189,7 +207,7 @@ class IncidentActionTaken extends React.Component {
           onOk={this.handleOk}
           onCancel={this.handleCancel}
         >
-        <IncidentTasks />
+          <IncidentTasks />
         </Modal>
       </div>
     );
@@ -200,14 +218,17 @@ const mapStateToProps = state => ({
   incidentAction: state.selectedIncident.incidentAction
     ? state.selectedIncident.incidentAction
     : {},
-  incidentsTasks: state.selectedIncident.incidentTasks.data ? state.selectedIncident.incidentTasks.data : {}
+  incidentsTasks: state.selectedIncident.incidentTasks.data
+    ? state.selectedIncident.incidentTasks.data
+    : {},
 });
 
 const mapDispatchToProps = {
   getIncidentTasks: fetchIncidentTasks,
   getIncidentTask: getIncidentTaskById,
-}
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(IncidentActionTaken);
-
-
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(IncidentActionTaken);

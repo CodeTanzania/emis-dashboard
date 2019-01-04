@@ -45,7 +45,6 @@ export const GET_TASK_START = 'GET_TASK_START';
 export const GET_TASK_SUCCESS = 'GET_TASK_SUCCESS';
 export const GET_TASK_ERROR = 'GET_TASK_ERROR';
 
-
 /* Actions creater */
 export const getIncidentsStart = () => ({
   type: GET_INCIDENTS_START,
@@ -160,7 +159,6 @@ export const getIncidentTaskError = message => ({
   payload: { message },
 });
 
-
 export const getIncidentsSuccess = () => (dispatch, getState, { API }) => {
   dispatch(getIncidentsStart());
   const state = getState();
@@ -188,7 +186,10 @@ export const createIncidentSuccess = incident => (
   { API }
 ) => {
   dispatch(createIncidentStart);
-  API.createIncident(incident).then(() => { dispatch(getIncidentsSuccess()); })
+  API.createIncident(incident)
+    .then(() => {
+      dispatch(getIncidentsSuccess());
+    })
     .catch(error => dispatch(createIncidentFail(error)));
 };
 
@@ -202,14 +203,17 @@ export const getSelectedIncident = (incidentId = null) => (
     .then(incident => {
       const areaSelected = incidentToGeojson(incident);
       dispatch(selectIncidentSuccess({ ...incident, areaSelected }));
-    }).catch(error => dispatch(selectIncidentError(error)));
+    })
+    .catch(error => dispatch(selectIncidentError(error)));
 };
 
 export const getIncidentActions = () => (dispatch, getState, { API }) => {
   dispatch(getActionsStart());
-  API.getIncidentsActions().then(actions => {
-    dispatch(getActionsSuccess(actions));
-  }).catch(error => dispatch(getActionsError(error)));
+  API.getIncidentsActions()
+    .then(actions => {
+      dispatch(getActionsSuccess(actions));
+    })
+    .catch(error => dispatch(getActionsError(error)));
 };
 
 export const activeIncidentAction = (incidentId = null) => (
@@ -246,12 +250,22 @@ export const searchIncident = searchData => (dispatch, getState, { API }) => {
 
 export const fetchIncidentTasks = () => (dispatch, getState, { API }) => {
   dispatch(getTasksStart());
-  API.getIncidentTasks().then(tasks => { dispatch(getTasksSuccess(tasks)) })
+  API.getIncidentTasks()
+    .then(tasks => {
+      dispatch(getTasksSuccess(tasks));
+    })
     .catch(error => dispatch(getTasksError(error)));
-}
+};
 
-export const getIncidentTaskById = (incidentId) => (dispatch, getState, { API }) => {
+export const getIncidentTaskById = incidentId => (
+  dispatch,
+  getState,
+  { API }
+) => {
   dispatch(getIncidentTaskStart());
-  API.getIncidentTasksById(incidentId).then(tasks => { dispatch(getIncidentTaskSuccess(tasks)) })
+  API.getIncidentTasksById(incidentId)
+    .then(tasks => {
+      dispatch(getIncidentTaskSuccess(tasks));
+    })
     .catch(error => dispatch(getIncidentTaskError(error)));
-}
+};

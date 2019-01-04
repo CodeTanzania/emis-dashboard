@@ -434,12 +434,10 @@ export function searchIncidents(searchValue) {
  */
 
 export function getIncidentTasksById(tasksId) {
-  return Axios.get(`${INCIDENTS_API}/tasks/${tasksId}`).then(
-    res => res.data
-  );
+  return Axios.get(`${INCIDENTS_API}/tasks/${tasksId}`).then(res => res.data);
 }
 
- /**
+/**
  * Get incident task by id from the API
  *
  * @function
@@ -453,8 +451,8 @@ export function getIncidentTasksById(tasksId) {
  */
 
 export function getIncidentTasks() {
-  const params = {limit:100}
-  return Axios.get(`${INCIDENTS_API}/tasks`, {params}).then(res => res.data);
+  const params = { limit: 100 };
+  return Axios.get(`${INCIDENTS_API}/tasks`, { params }).then(res => res.data);
 }
 /**
  * Post Standard Operating procedure(SOP) to the API

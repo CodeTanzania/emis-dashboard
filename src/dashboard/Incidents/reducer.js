@@ -120,7 +120,7 @@ export function selectedIncident(state = initialselectedState, action) {
       };
     case GET_TASKS_START:
       return {
-        ...state
+        ...state,
       };
     case GET_TASKS_SUCCESS:
       return {
@@ -134,7 +134,7 @@ export function selectedIncident(state = initialselectedState, action) {
       };
     case GET_TASK_START:
       return {
-        ...state
+        ...state,
       };
     case GET_TASK_SUCCESS:
       return {
@@ -174,4 +174,3 @@ export function filter(state = initialFilters, action) {
       return state;
   }
 }
-

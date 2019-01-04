@@ -62,6 +62,7 @@ class MapNav extends React.Component {
 
   static defaultProps = {
     newIncidentButton: null,
+    IncidentSelected: {},
     clickedIncident: null,
     incidents: [],
     handleSearchIncident: null,
