@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Spin } from 'antd';
 import AlertSideBar from '../AlertSideBar';
 import AlertDetailsSummary from './components/AlertDetailsSummary';
 import MapPolygonsDrawSupport from '../../../../common/components/MapPolygonsDrawSupport';
@@ -24,6 +25,7 @@ import {
  */
 class AlertDetails extends React.Component {
   static propTypes = {
+    loading: PropTypes.bool.isRequired,
     shapes: PropTypes.arrayOf(PropTypes.object).isRequired,
     selectedAlert: PropTypes.shape({
       _id: PropTypes.string,
@@ -80,9 +82,14 @@ class AlertDetails extends React.Component {
   };
 
   render() {
-    const { center, zoom, shapes, selectedAlert } = this.props;
+    const { center, zoom, shapes, selectedAlert, loading } = this.props;
     return (
-      <React.Fragment>
+      <Spin
+        spinning={loading}
+        tip="Loading..."
+        size="large"
+        style={{ position: 'absolute', top: '25%', right: '5%' }}
+      >
         <AlertSideBar title="Details">
           <AlertDetailsSummary selectedAlert={selectedAlert} />
         </AlertSideBar>
@@ -93,7 +100,7 @@ class AlertDetails extends React.Component {
             <MapPointsDrawSupport points={shapes} />
           )}
         </AlertsBaseMap>
-      </React.Fragment>
+      </Spin>
     );
   }
 }
@@ -102,6 +109,7 @@ const mapStateToProps = state => ({
   shapes: state.alertsMap.shapes,
   center: state.alertsMap.center,
   zoom: state.alertsMap.zoom,
+  loading: state.alerts.loadingSelected,
   selectedAlert: state.alerts.selected,
 });
 
