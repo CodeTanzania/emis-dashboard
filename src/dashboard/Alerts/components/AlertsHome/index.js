@@ -8,6 +8,7 @@ import AlertSideBar from '../AlertSideBar';
 import AlertBaseMap from '../AlertsBaseMap';
 import AlertFilters from './components/AlertFilters';
 import AlertsDrawSupport from '../AlertsDrawSupport';
+import AlertLegend from './components/AlertLegend';
 
 /**
  * Component that layouts the Alert home page
@@ -26,6 +27,7 @@ function AlertsHome({ center, zoom, loading }) {
       size="large"
       style={{ position: 'absolute', top: '25%', right: '5%' }}
     >
+      <AlertLegend />
       <AlertNavBar>
         <NewAlertButton />
       </AlertNavBar>

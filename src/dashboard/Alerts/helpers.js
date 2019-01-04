@@ -193,3 +193,12 @@ export function formatAlertFieldTypeValue(fieldType, fieldValue) {
       return fieldValue;
   }
 }
+
+// data about severity colors
+export const severityColors = [
+  { property: 'Extreme', value: '#d72e29' },
+  { property: 'Severe', value: '#fe9901' },
+  { property: 'Moderate', value: '#ffff00' },
+  { property: 'Minor', value: '#88e729' },
+  { property: 'Unknown', value: '#3366ff' },
+];
