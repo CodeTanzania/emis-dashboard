@@ -13,15 +13,25 @@
 }
 
 .IncidentName {
-    border-bottom: 1px solid #e8e8ee
+    border-bottom: 1px solid #e8e8ee;
+    padding: 15px 0 0px 20px ;
+   
 }
-
-.IncidentDetail.p-20 span {
+.IncidentDetailHeader{
+    margin-bottom: 2px;
+    font-weight: 600;
+    padding-top: 10px;
+}
+.incidentDetailContent{
+    padding-left: 10px
+}
+.IncidentDetail span {
     padding-right: 15px;
 }
 
-.IncidentDetail.p-20 {
+.IncidentDetail {
     line-height: 1.7;
+    padding:  10px 0 0 20px;
 }
 
 .IncidentLocation.p-l-10, .IncidentImpact.p-l-10 {
