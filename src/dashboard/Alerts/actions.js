@@ -406,19 +406,17 @@ export function getAlerts() {
  * @since 0.1.0
  */
 export function getAlertOperation(id) {
-  return (dispatch, getState, { API }) =>
-    // dispatch(getAlertsStart());
+  return (dispatch, getState, { API }) => {
+    dispatch(getAlertStart());
 
-    API.getAlert(id)
+    return API.getAlert(id)
       .then(({ data }) => {
-        // dispatch(getAlertsSuccess(res.data, res.page, res.total));
-        // dispatch(storeMapPoints(alertsPoints));
-        // dispatch(setShowPiontsValue(true));
         const polygon = alertToGeoJson(data, 'Polygon');
-        dispatch(setSelectedAlert(data));
+        dispatch(getAlertSuccess(data));
         dispatch(setSelectedGeoJson([polygon]));
       })
-      .catch(err => dispatch(getAlertsError(err)));
+      .catch(err => dispatch(getAlertError(err)));
+  };
 }
 
 /**

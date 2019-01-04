@@ -375,11 +375,44 @@ describe('Alerts: Module', () => {
       expect(store.getActions()).toEqual(expectedActions);
     });
 
-    it(`should dispatch  actions of type ${Actions.STORE_MAP_POINTS}, ${
-      Actions.GET_ALERTS_SUCCESS
-    } and  ${
-      Actions.SET_SHOWPOINTS_VALUE
-    } when fetching alerts is successfully`, () => {
+    it(`should dispatch  actions of type ${
+      Actions.GET_ALERT_SUCCESS
+    } when fetch alert is successful`, () => {
+      const store = mockStore({
+        alerts: {
+          selected: null,
+          loading: false,
+        },
+        alertsMap: {
+          shapes: [],
+        },
+      });
+
+      // mock API calls
+      API.getAlert.mockResolvedValueOnce({ data: alert });
+
+      const expectedActions = [
+        { type: Actions.GET_ALERT_START },
+        {
+          type: Actions.GET_ALERT_SUCCESS,
+          payload: {
+            data: alert,
+          },
+        },
+        {
+          type: Actions.SET_SELECTED_GEOJSON,
+          payload: {
+            data: polygons,
+          },
+        },
+      ];
+
+      return store.dispatch(Actions.getAlertOperation('jkjlkkj')).then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+    });
+
+    it(`should dispatch  actions of type ${Actions.GET_ALERTS_SUCCESS}`, () => {
       const store = mockStore({
         alerts: {
           data: [],
