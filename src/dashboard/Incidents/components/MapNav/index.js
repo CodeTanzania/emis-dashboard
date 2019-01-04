@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { bindActionCreators } from 'redux';
-import { Button, List, Input, Row, Col, Layout } from 'antd';
+import { Button, List, Input, Row, Col, Layout, Icon } from 'antd';
 import { connect } from 'react-redux';
 import IncidentFilter from '../IncidentFilter';
 import IncidentsList from '../IncidentsList';
@@ -86,6 +85,8 @@ class MapNav extends React.Component {
       IncidentSelected,
       clickedIncident,
       incidents,
+      goBack,
+      hideButton,
     } = this.props;
 
     const { hideNav } = this.state;
@@ -95,17 +96,25 @@ class MapNav extends React.Component {
         {!IncidentSelected ? (
           <div>
             <div className="topNav">
+              {!hideButton ? (
               <Row>
                 <Col span={17}>
                   <IncidentFilter />
                 </Col>
                 <Col span={6} offset={1}>
-                  <Button type="primary" onClick={newIncidentButton}>
-                    + New Incident
-                  </Button>
+                <Button type="primary" onClick={newIncidentButton}>
+                  + New Incident
+                </Button>
                 </Col>
               </Row>
+              ) :( <Button type="primary" onClick={goBack}>
+                    <Icon  type='left' />Back Home
+                  </Button>
+              
+              )
+              }
             </div>
+            {!hideButton ? (
             <Layout className="MapNav">
               <Header className="MapNavHeader">
                 <h3> List of Recorded Incidents</h3>
@@ -130,6 +139,7 @@ class MapNav extends React.Component {
                 />
               </Content>
             </Layout>
+            ): null}
           </div>
         ) : (
           <IncidentDetails />
@@ -144,9 +154,9 @@ const mapStateToProps = state => ({
   IncidentSelected: state.incidents.incident ? state.incidents.incident : null,
 });
 
-const mapDispatchToProps = dispatch => ({
-  handleSearchIncident: bindActionCreators(searchIncident, dispatch),
-});
+const mapDispatchToProps = {
+  handleSearchIncident: searchIncident,
+};
 export default connect(
   mapStateToProps,
   mapDispatchToProps

@@ -3,7 +3,6 @@ import { get } from 'lodash';
 import L from 'leaflet';
 import * as ReactLeaflet from 'react-leaflet';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 
 import 'leaflet-draw';
@@ -125,7 +124,7 @@ class IncidentMap extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { incidents, selected } = this.props;
+    const { incidents, selected,  } = this.props;
     if (incidents !== prevProps.incidents) {
       this.incidentLayer.clearLayers();
       this.showAllIncidents(incidents);
@@ -133,8 +132,9 @@ class IncidentMap extends React.Component {
     if (selected && selected !== prevProps.selected) {
       this.showSelectedIncident(selected);
     } else if (selected !== prevProps.selected) {
-      this.map.removeLayer(this.selectedLayer);
+      this.map.removeLayer(this.incidentLayer);
     }
+
   }
 
   mapLayers = () => {
@@ -233,6 +233,7 @@ class IncidentMap extends React.Component {
     this.initDrawControls();
     this.map.on('draw:created', e => this.showDrawnItems(e));
     this.map.removeLayer(this.incidentLayer);
+
   };
 
   onCancel = () => {
@@ -240,10 +241,8 @@ class IncidentMap extends React.Component {
     this.map.removeLayer(this.drawnItems);
     this.setState({ hideButton: false });
     this.map.closePopup();
-  };
-
-  onCloseIncidentDetail = () => {
     this.map.addLayer(this.incidentLayer);
+
   };
 
   getSpinValue = () => {
@@ -281,12 +280,12 @@ class IncidentMap extends React.Component {
         <Spin spinning={spin} tip="Loading..."
         size="large"
         style={{ position: 'absolute', top: '25%', right: '5%' }}>
-        {!hideButton ? (
           <MapNav
+            hideButton={hideButton}
             newIncidentButton={this.onclickNewIncidentButton}
             clickedIncident={this.onSelectIncident}
+            goBack = {this.onCancelButton}
           />
-        ) : null}
         <LeafletMap center={position} zoom={zoom} ref={this.mapRef}>
           <TileLayer
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -319,12 +318,12 @@ const mapStateToProps = state => ({
   loading : state.incidents.isLoading,
 });
 
-const mapDispatchToProps = dispatch => ({
-  handleIncidents: bindActionCreators(getIncidentsSuccess, dispatch),
-  getIncident: bindActionCreators(getSelectedIncident, dispatch),
-  handleIncidentActions: bindActionCreators(getIncidentActions, dispatch),
-  setIncidentAction: bindActionCreators(activeIncidentAction, dispatch),
-});
+const mapDispatchToProps ={
+  handleIncidents: getIncidentsSuccess,
+  getIncident: getSelectedIncident,
+  handleIncidentActions: getIncidentActions,
+  setIncidentAction:activeIncidentAction, 
+};
 export default connect(
   mapStateToProps,
   mapDispatchToProps
