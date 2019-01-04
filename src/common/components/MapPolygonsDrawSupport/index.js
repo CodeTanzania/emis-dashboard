@@ -59,6 +59,7 @@ class MapPolygonsDrawSupport extends React.Component {
   addDataToPolygonsLayer = polygons => {
     this.polygonsLayer.clearLayers();
     this.polygonsLayer.addData(polygons);
+    this.map.flyToBounds(this.polygonsLayer.getBounds());
   };
 
   render() {
