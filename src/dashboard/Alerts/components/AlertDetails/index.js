@@ -90,9 +90,11 @@ class AlertDetails extends React.Component {
         size="large"
         style={{ position: 'absolute', top: '25%', right: '5%' }}
       >
-        <AlertSideBar title="Details">
-          <AlertDetailsSummary selectedAlert={selectedAlert} />
-        </AlertSideBar>
+        {selectedAlert ? (
+          <AlertSideBar title="Details">
+            <AlertDetailsSummary selectedAlert={selectedAlert} />
+          </AlertSideBar>
+        ) : null}
         <AlertsBaseMap center={center} zoom={zoom} zoomControl={false}>
           {this.arePolygons(shapes) ? (
             <MapPolygonsDrawSupport polygons={shapes} />
