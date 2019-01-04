@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import MapPointsDrawSupport from '../../../../common/components/MapPointsDrawSupport';
-import MapPolygonsDrawSupport from '../../../../common/components/MapPolygonsDrawSupport';
 import {
   getSelectedAlertFromState,
   showSeleteAlertShape,
@@ -32,17 +31,6 @@ class AlertsDrawSupport extends React.Component {
       push: PropTypes.string,
     }).isRequired,
     showPoints: PropTypes.bool.isRequired,
-    showShapes: PropTypes.bool.isRequired,
-    shapes: PropTypes.arrayOf(
-      PropTypes.shape({
-        type: PropTypes.string,
-        properties: PropTypes.object,
-        geometry: PropTypes.shape({
-          type: PropTypes.string,
-          coordinates: PropTypes.array,
-        }),
-      })
-    ),
     points: PropTypes.arrayOf(
       PropTypes.shape({
         type: PropTypes.string,
@@ -59,7 +47,6 @@ class AlertsDrawSupport extends React.Component {
 
   static defaultProps = {
     points: [],
-    shapes: [],
   };
 
   constructor(props) {
@@ -91,7 +78,7 @@ class AlertsDrawSupport extends React.Component {
   };
 
   render() {
-    const { points, shapes, showPoints, showShapes } = this.props;
+    const { points, showPoints } = this.props;
     return (
       <React.Fragment>
         <MapPointsDrawSupport
@@ -99,7 +86,6 @@ class AlertsDrawSupport extends React.Component {
           points={points}
           onEachFeature={this.onEachFeature}
         />
-        <MapPolygonsDrawSupport isShowPolygons={showShapes} polygons={shapes} />
       </React.Fragment>
     );
   }

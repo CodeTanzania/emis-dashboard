@@ -17,7 +17,12 @@ const { Map: LeafletMap, TileLayer } = ReactLeaflet;
  */
 function AlertBaseMap({ center, zoom, children, zoomControl }) {
   return (
-    <LeafletMap center={center} zoom={zoom} zoomControl={zoomControl}>
+    <LeafletMap
+      center={center}
+      zoom={zoom}
+      zoomControl={zoomControl}
+      closePopupOnClick={false}
+    >
       {children}
       <TileLayer
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'

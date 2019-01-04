@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import AlertSideBar from '../AlertSideBar';
 import AlertDetailsSummary from '../AlertDetailsSummary';
 import MapPolygonsDrawSupport from '../../../../common/components/MapPolygonsDrawSupport';
+import MapPointsDrawSupport from '../../../../common/components/MapPointsDrawSupport';
 import AlertsBaseMap from '../AlertsBaseMap';
 import {
   getAlertOperation,
@@ -71,6 +72,13 @@ class AlertDetails extends React.Component {
     getAlert(id);
   }
 
+  arePolygons = shapes => {
+    const polygon = shapes.filter(
+      ({ geometry }) => geometry.type !== 'Polygon'
+    );
+    return polygon.length === 0;
+  };
+
   render() {
     const { center, zoom, shapes, selectedAlert } = this.props;
     return (
@@ -79,7 +87,11 @@ class AlertDetails extends React.Component {
           <AlertDetailsSummary selectedAlert={selectedAlert} />
         </AlertSideBar>
         <AlertsBaseMap center={center} zoom={zoom} zoomControl={false}>
-          <MapPolygonsDrawSupport polygons={shapes} />
+          {this.arePolygons(shapes) ? (
+            <MapPolygonsDrawSupport polygons={shapes} />
+          ) : (
+            <MapPointsDrawSupport points={shapes} />
+          )}
         </AlertsBaseMap>
       </React.Fragment>
     );
