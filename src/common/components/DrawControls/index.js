@@ -49,6 +49,7 @@ class DrawControls extends React.Component {
         circlemarker: false,
         rectangle: false,
         marker: false,
+        circle: false,
       },
       edit: {
         featureGroup: this.drawnItems,

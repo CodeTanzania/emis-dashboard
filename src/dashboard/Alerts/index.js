@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import AlertDetails from './components/AlertDetails';
 import { getAlerts } from './actions';
 import 'leaflet/dist/leaflet.css';
 import './styles.css';
@@ -44,6 +45,7 @@ class Alerts extends React.Component {
         <Switch>
           <Route exact path={`${match.url}`} component={AlertsHome} />
           <Route path={`${match.url}/new`} component={NewAlert} />
+          <Route path={`${match.url}/:id`} component={AlertDetails} />
         </Switch>
       </div>
     );

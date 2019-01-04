@@ -116,6 +116,7 @@ describe('Alerts:reducers', () => {
         total: 0,
         selected: null,
         loading: false,
+        loadingSelected: false,
         filters: {},
         error: null,
       };
@@ -131,6 +132,58 @@ describe('Alerts:reducers', () => {
           type: null,
         })
       ).toEqual(previousState);
+    });
+
+    it(`should handle ${Actions.GET_ALERT_START}`, () => {
+      const nextState = {
+        ...previousState,
+        loadingSelected: true,
+      };
+      expect(alerts(previousState, { type: Actions.GET_ALERT_START })).toEqual(
+        nextState
+      );
+    });
+
+    it(`should handle ${Actions.GET_ALERT_SUCCESS}`, () => {
+      const action = {
+        type: Actions.GET_ALERT_SUCCESS,
+        payload: {
+          data: {},
+        },
+      };
+
+      const nextState = {
+        ...previousState,
+        selected: action.payload.data,
+      };
+
+      expect(alerts(previousState, action)).toEqual(nextState);
+    });
+
+    it(`should handle ${Actions.GET_ALERT_ERROR}`, () => {
+      const error = {
+        status: 404,
+        code: 404,
+        name: 'Error',
+        message: 'Not Found',
+        developerMessage: 'Not Found',
+        userMessage: 'Not Found',
+        error: 'Error',
+        error_description: 'Not Found',
+      };
+
+      const action = {
+        type: Actions.GET_ALERT_ERROR,
+        payload: { data: error },
+        error: true,
+      };
+
+      const expectedState = {
+        ...previousState,
+        error: action.payload.data,
+      };
+
+      expect(alerts(previousState, action)).toEqual(expectedState);
     });
 
     it(`should handle ${Actions.GET_ALERTS_START}`, () => {

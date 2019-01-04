@@ -32,12 +32,6 @@ describe('Alerts: Module', () => {
       });
     });
 
-    it(`should create an action of type ${Actions.GET_ALERTS_START}`, () => {
-      expect(Actions.getAlertsStart()).toEqual({
-        type: Actions.GET_ALERTS_START,
-      });
-    });
-
     it(`should create an action of type ${Actions.SET_SELECTED_ALERT}`, () => {
       expect(Actions.setSelectedAlert(alert)).toEqual({
         type: Actions.SET_SELECTED_ALERT,
@@ -47,19 +41,41 @@ describe('Alerts: Module', () => {
       });
     });
 
-    it(`should create an action of type ${Actions.GET_ALERTS_SUCCESS}`, () => {
-      const alerts = [];
+    it(`should create an action of type ${Actions.GET_ALERT_START}`, () => {
+      expect(Actions.getAlertStart()).toEqual({
+        type: Actions.GET_ALERT_START,
+      });
+    });
 
-      expect(Actions.getAlertsSuccess(alerts)).toEqual({
-        type: Actions.GET_ALERTS_SUCCESS,
+    it(`should create an action of type ${Actions.GET_ALERT_SUCCESS}`, () => {
+      expect(Actions.getAlertSuccess({})).toEqual({
+        type: Actions.GET_ALERT_SUCCESS,
         payload: {
-          data: alerts,
-        },
-        meta: {
-          page: 1,
-          total: 0,
+          data: {},
         },
       });
+    });
+
+    it(`should create an action of type ${Actions.GET_ALERT_ERROR}`, () => {
+      const error = new Error();
+
+      expect(Actions.getAlertError(error)).toEqual({
+        type: Actions.GET_ALERT_ERROR,
+        payload: {
+          data: error,
+        },
+        error: true,
+      });
+    });
+
+    it(`should create an action of type ${Actions.GET_ALERTS_START}`, () => {
+      expect(Actions.getAlertsStart()).toEqual({
+        type: Actions.GET_ALERTS_START,
+      });
+    });
+
+    it(`should create an action of type ${Actions.GET_ALERTS_SUCCESS}`, () => {
+      const alerts = [];
 
       expect(Actions.getAlertsSuccess(alerts, 2, 40)).toEqual({
         type: Actions.GET_ALERTS_SUCCESS,
@@ -229,24 +245,6 @@ describe('Alerts: Module', () => {
       });
     });
 
-    it(`should dispatch action of type ${Actions.SAVE_DRAWN_GEOMETRY}`, () => {
-      const { geometry } = polygon;
-      const store = mockStore({
-        alertsMap: {
-          drawnGeometry: null,
-        },
-      });
-      const expectedActions = [
-        {
-          type: Actions.SAVE_DRAWN_GEOMETRY,
-          payload: {
-            data: geometry,
-          },
-        },
-      ];
-      store.dispatch(Actions.saveDrawnGeometryOperation(geometry));
-      expect(store.getActions()).toEqual(expectedActions);
-    });
     it(`should dispatch  actions of type ${Actions.SET_SELECTED_ALERT} and ${
       Actions.SET_SELECTED_GEOJSON
     } `, () => {
@@ -359,11 +357,44 @@ describe('Alerts: Module', () => {
       expect(store.getActions()).toEqual(expectedActions);
     });
 
-    it(`should dispatch  actions of type ${Actions.STORE_MAP_POINTS}, ${
-      Actions.GET_ALERTS_SUCCESS
-    } and  ${
-      Actions.SET_SHOWPOINTS_VALUE
-    } when fetching alerts is successfully`, () => {
+    it(`should dispatch  actions of type ${
+      Actions.GET_ALERT_SUCCESS
+    } when fetch alert is successful`, () => {
+      const store = mockStore({
+        alerts: {
+          selected: null,
+          loading: false,
+        },
+        alertsMap: {
+          shapes: [],
+        },
+      });
+
+      // mock API calls
+      API.getAlert.mockResolvedValueOnce({ data: alert });
+
+      const expectedActions = [
+        { type: Actions.GET_ALERT_START },
+        {
+          type: Actions.GET_ALERT_SUCCESS,
+          payload: {
+            data: alert,
+          },
+        },
+        {
+          type: Actions.SET_SELECTED_GEOJSON,
+          payload: {
+            data: polygons,
+          },
+        },
+      ];
+
+      return store.dispatch(Actions.getAlertOperation('jkjlkkj')).then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+    });
+
+    it(`should dispatch  actions of type ${Actions.GET_ALERTS_SUCCESS}`, () => {
       const store = mockStore({
         alerts: {
           data: [],

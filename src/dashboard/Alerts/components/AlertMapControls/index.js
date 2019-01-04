@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withLeaflet } from 'react-leaflet';
 import L from 'leaflet';
 import PropTypes from 'prop-types';
-import { saveDrawnGeometryOperation } from '../../actions';
+import { saveDrawnGeometry } from '../../actions';
 import DrawControls from '../../../../common/components/DrawControls';
 
 // this constant contains the contents that will be
@@ -70,9 +70,12 @@ class AlertMapControls extends React.Component {
   }
 }
 
-const mapDispatchToProps = {
-  saveGeometry: saveDrawnGeometryOperation,
-};
+const mapDispatchToProps = dispatch => ({
+  saveGeometry(geometry) {
+    dispatch(saveDrawnGeometry(geometry));
+  },
+});
+
 export default connect(
   null,
   mapDispatchToProps

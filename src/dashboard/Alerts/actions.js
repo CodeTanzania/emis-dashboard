@@ -10,6 +10,9 @@ import { alertsToGeoJson, alertToGeoJson } from './helpers';
 export const GET_ALERTS_START = 'GET_ALERTS_START';
 export const GET_ALERTS_SUCCESS = 'GET_ALERTS_SUCCESS';
 export const GET_ALERTS_ERROR = 'GET_ALERTS_ERROR';
+export const GET_ALERT_START = 'GET_ALERT_START';
+export const GET_ALERT_SUCCESS = 'GET_ALERT_SUCCESS';
+export const GET_ALERT_ERROR = 'GET_ALERT_ERROR';
 export const SET_SELECTED_ALERT = 'SET_SELECTED_ALERT';
 
 /* add action types */
@@ -34,6 +37,68 @@ export const SAVE_DRAWN_GEOMETRY = 'SAVE_DRAWN_GEOMETRY';
  * Alerts action creators
  *------------------------------------------------------------------------------
  */
+
+/**
+ * Action dispatched to fetch alert from the API
+ *
+ * @function
+ * @name getAlertStart
+ *
+ * @returns {Object} - Redux action for fetching alerts
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function getAlertStart() {
+  return {
+    type: GET_ALERT_START,
+  };
+}
+
+/**
+ * Action dispatched when fetching alert from that API is successfully
+ *
+ * @function
+ * @name getAlertsSuccess
+ *
+ * @param {Object[]} alert - Object of alert from API
+ *
+ * @returns {Object} - Redux action
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function getAlertSuccess(alert) {
+  return {
+    type: GET_ALERT_SUCCESS,
+    payload: {
+      data: alert,
+    },
+  };
+}
+
+/**
+ * Action dispatched when fetching alert from that API fails
+ *
+ * @function
+ * @name getAlertError
+ *
+ * @param {Object} error - Error object when fetching alert fails
+ *
+ * @returns {Object} - Redux action
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function getAlertError(error) {
+  return {
+    type: GET_ALERT_ERROR,
+    payload: {
+      data: error,
+    },
+    error: true,
+  };
+}
 
 /**
  * Action dispatched to fetch alerts from the API
@@ -81,28 +146,6 @@ export function getAlertsSuccess(alerts, page = 1, total = 0) {
 }
 
 /**
- * Action dispatched when alert marker is clicked on map
- *
- * @function
- * @name setSelectedAlert
- *
- * @param {Object} alert - selected alert
- *
- * @returns {Object} - Redux action
- *
- * @version 0.1.0
- * @since 0.1.0
- */
-export function setSelectedAlert(selected) {
-  return {
-    type: SET_SELECTED_ALERT,
-    payload: {
-      data: selected,
-    },
-  };
-}
-
-/**
  * Action dispatched when fetching alerts from that API fails
  *
  * @function
@@ -122,6 +165,28 @@ export function getAlertsError(error) {
       data: error,
     },
     error: true,
+  };
+}
+
+/**
+ * Action dispatched when alert marker is clicked on map
+ *
+ * @function
+ * @name setSelectedAlert
+ *
+ * @param {Object} alert - selected alert
+ *
+ * @returns {Object} - Redux action
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function setSelectedAlert(selected) {
+  return {
+    type: SET_SELECTED_ALERT,
+    payload: {
+      data: selected,
+    },
   };
 }
 
@@ -330,6 +395,31 @@ export function getAlerts() {
 }
 
 /**
+ * A Thunk function which perform asynchronous fetching of an alert from the API
+ *
+ * @function
+ * @name getAlert
+ *
+ * @param {Object} params - Params to pass to the API client
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function getAlertOperation(id) {
+  return (dispatch, getState, { API }) => {
+    dispatch(getAlertStart());
+
+    return API.getAlert(id)
+      .then(({ data }) => {
+        const polygon = alertToGeoJson(data, 'Polygon');
+        dispatch(getAlertSuccess(data));
+        dispatch(setSelectedGeoJson([polygon]));
+      })
+      .catch(err => dispatch(getAlertError(err)));
+  };
+}
+
+/**
  * A Thunk function which performs asynchronous creating alert into the API
  *
  * @function
@@ -415,22 +505,5 @@ export function showAlertPoints(showPoints) {
 export function showSeleteAlertShape(showShapes) {
   return dispatch => {
     dispatch(setShowSelectedGeojson(showShapes));
-  };
-}
-
-/**
- *Thunk function that  saves drawn geometry to state
- *
- * @function
- * @name saveDrawnGeometryOperation
- *
- * @param {object} geometry
- *
- * @version 0.1.0
- * @since 0.1.0
- */
-export function saveDrawnGeometryOperation(geometry) {
-  return dispatch => {
-    dispatch(saveDrawnGeometry(geometry));
   };
 }

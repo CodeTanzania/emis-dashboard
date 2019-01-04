@@ -504,6 +504,22 @@ export function getAlerts(params = { limit: 100 }) {
 }
 
 /**
+ * Get an Alert from the API
+ *
+ * @function
+ * @name getAlert
+ *
+ * @param {Object} id - Id of an Alert
+ * @returns {Promise}
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function getAlert(id) {
+  return Axios.get(`/alerts/${id}`);
+}
+
+/**
  * Create a new alert to the API
  *
  * @function
