@@ -245,24 +245,6 @@ describe('Alerts: Module', () => {
       });
     });
 
-    it(`should dispatch action of type ${Actions.SAVE_DRAWN_GEOMETRY}`, () => {
-      const { geometry } = polygon;
-      const store = mockStore({
-        alertsMap: {
-          drawnGeometry: null,
-        },
-      });
-      const expectedActions = [
-        {
-          type: Actions.SAVE_DRAWN_GEOMETRY,
-          payload: {
-            data: geometry,
-          },
-        },
-      ];
-      store.dispatch(Actions.saveDrawnGeometryOperation(geometry));
-      expect(store.getActions()).toEqual(expectedActions);
-    });
     it(`should dispatch  actions of type ${Actions.SET_SELECTED_ALERT} and ${
       Actions.SET_SELECTED_GEOJSON
     } `, () => {

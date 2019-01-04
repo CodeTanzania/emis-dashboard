@@ -507,20 +507,3 @@ export function showSeleteAlertShape(showShapes) {
     dispatch(setShowSelectedGeojson(showShapes));
   };
 }
-
-/**
- *Thunk function that  saves drawn geometry to state
- *
- * @function
- * @name saveDrawnGeometryOperation
- *
- * @param {object} geometry
- *
- * @version 0.1.0
- * @since 0.1.0
- */
-export function saveDrawnGeometryOperation(geometry) {
-  return dispatch => {
-    dispatch(saveDrawnGeometry(geometry));
-  };
-}
