@@ -57,12 +57,15 @@ class MapNav extends React.Component {
     ),
     clickedIncident: PropTypes.func,
     handleSearchIncident: PropTypes.func,
+    goBack: PropTypes.func,
+    hideButton: PropTypes.bool.isRequired,
   };
 
   static defaultProps = {
     newIncidentButton: null,
     IncidentSelected: {},
     clickedIncident: null,
+    goBack: () => {},
     incidents: [],
     handleSearchIncident: null,
   };
@@ -97,49 +100,49 @@ class MapNav extends React.Component {
           <div>
             <div className="topNav">
               {!hideButton ? (
-              <Row>
-                <Col span={17}>
-                  <IncidentFilter />
-                </Col>
-                <Col span={6} offset={1}>
-                <Button type="primary" onClick={newIncidentButton}>
-                  + New Incident
+                <Row>
+                  <Col span={17}>
+                    <IncidentFilter />
+                  </Col>
+                  <Col span={6} offset={1}>
+                    <Button type="primary" onClick={newIncidentButton}>
+                      + New Incident
+                    </Button>
+                  </Col>
+                </Row>
+              ) : (
+                <Button type="primary" onClick={goBack}>
+                  <Icon type="left" />
+                  Back Home
                 </Button>
-                </Col>
-              </Row>
-              ) :( <Button type="primary" onClick={goBack}>
-                    <Icon  type='left' />Back Home
-                  </Button>
-              
-              )
-              }
+              )}
             </div>
             {!hideButton ? (
-            <Layout className="MapNav">
-              <Header className="MapNavHeader">
-                <h3> List of Recorded Incidents</h3>
-              </Header>
-              <Content>
-                <Search
-                  placeholder="Search incident"
-                  onSearch={value => this.onSearchIncident(value)}
-                  enterButton
-                  className="MapNavSearch"
-                />
-                <List
-                  className="IncidentList"
-                  itemLayout="horizontal"
-                  dataSource={incidents}
-                  renderItem={incident => (
-                    <IncidentsList
-                      clickedIncidentList={clickedIncident}
-                      incidentsList={incident}
-                    />
-                  )}
-                />
-              </Content>
-            </Layout>
-            ): null}
+              <Layout className="MapNav">
+                <Header className="MapNavHeader">
+                  <h3> List of Recorded Incidents</h3>
+                </Header>
+                <Content>
+                  <Search
+                    placeholder="Search incident"
+                    onSearch={value => this.onSearchIncident(value)}
+                    enterButton
+                    className="MapNavSearch"
+                  />
+                  <List
+                    className="IncidentList"
+                    itemLayout="horizontal"
+                    dataSource={incidents}
+                    renderItem={incident => (
+                      <IncidentsList
+                        clickedIncidentList={clickedIncident}
+                        incidentsList={incident}
+                      />
+                    )}
+                  />
+                </Content>
+              </Layout>
+            ) : null}
           </div>
         ) : (
           <IncidentDetails />

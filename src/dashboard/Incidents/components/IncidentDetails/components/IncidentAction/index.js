@@ -2,7 +2,11 @@ import { Table, Button, Modal, Spin } from 'antd';
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchIncidentTasks, getIncidentTaskById, activeIncidentAction } from '../../../../actions';
+import {
+  fetchIncidentTasks,
+  getIncidentTaskById,
+  activeIncidentAction,
+} from '../../../../actions';
 
 import './styles.css';
 import IncidentTasks from './components/IncidentTasks';
@@ -67,13 +71,14 @@ class IncidentActionTaken extends React.Component {
     ).isRequired,
     getIncidentTask: PropTypes.func,
     getIncidentTasks: PropTypes.func,
-    activeIncidentAction: PropTypes.func
+    setIncidentAction: PropTypes.func,
+    loadingAction: PropTypes.bool.isRequired,
   };
 
   static defaultProps = {
     getIncidentTask: () => {},
     getIncidentTasks: () => {},
-    activeIncidentAction: ()=> {}
+    setIncidentAction: () => {},
   };
 
   state = {
@@ -82,7 +87,7 @@ class IncidentActionTaken extends React.Component {
   };
 
   componentDidMount() {
-    const { getIncidentTasks,setIncidentAction,incidentAction } = this.props;
+    const { getIncidentTasks, setIncidentAction, incidentAction } = this.props;
     const { _id: id } = incidentAction;
     getIncidentTasks();
     setIncidentAction(id);
@@ -204,7 +209,7 @@ class IncidentActionTaken extends React.Component {
           dataSource={[incidentAction]}
           onChange={this.handleChange}
           className="p-20"
-          size='middle'
+          size="middle"
           loading={loadingAction}
         />
         <Modal
@@ -213,12 +218,13 @@ class IncidentActionTaken extends React.Component {
           onOk={this.handleOk}
           onCancel={this.handleCancel}
         >
-         {loadingAction ? (
-           <div className='loadingAction'>
-             <Spin />
-           </div>
-         ) : <IncidentTasks />
-         }
+          {loadingAction ? (
+            <div className="loadingAction">
+              <Spin />
+            </div>
+          ) : (
+            <IncidentTasks />
+          )}
         </Modal>
       </div>
     );
@@ -232,14 +238,13 @@ const mapStateToProps = state => ({
   incidentsTasks: state.selectedIncident.incidentTasks
     ? state.selectedIncident.incidentTasks
     : {},
-  loadingAction: state.selectedIncident.isLoadingData
+  loadingAction: state.selectedIncident.isLoadingData,
 });
 
 const mapDispatchToProps = {
   getIncidentTasks: fetchIncidentTasks,
   getIncidentTask: getIncidentTaskById,
   setIncidentAction: activeIncidentAction,
-
 };
 
 export default connect(

@@ -5,7 +5,7 @@ import './styles.css';
 import { connect } from 'react-redux';
 import { Button, Row, Col } from 'antd';
 import { convertIsoDate } from '../../../../common/lib/mapUtil';
-import { getIncidentsSuccess } from '../../actions';
+import { getIncidentsSuccess, getIncidentActions } from '../../actions';
 /**
  * Incident details Layout component
  * this component contain detailed
@@ -18,7 +18,12 @@ import { getIncidentsSuccess } from '../../actions';
  * @since 0.1.0
  */
 
-function IncidentDetails({ selected, incidentAction,getAllIncidents }) {
+function IncidentDetails({
+  selected,
+  incidentAction,
+  getAllIncidents,
+  getAllActions,
+}) {
   const {
     event,
     number,
@@ -33,59 +38,67 @@ function IncidentDetails({ selected, incidentAction,getAllIncidents }) {
 
   const onCloseDetails = () => {
     getAllIncidents();
-  }
+    getAllActions();
+  };
 
   const { name } = type;
   return (
     <div className="IncidentDetails">
       <div className="IncidentName">
-        <h3 >{event}</h3>
+        <h3>{event}</h3>
       </div>
       <div className="IncidentDetail">
-        <h4 className='IncidentDetailHeader'>Incident number:</h4>
-        <span className='incidentDetailContent'>{number}</span>
+        <h4 className="IncidentDetailHeader">Incident number:</h4>
+        <span className="incidentDetailContent">{number}</span>
         <br />
-        <h4 className='IncidentDetailHeader'> Incident Type:</h4>
-        <span className='incidentDetailContent'>{name}</span> <br />
-        <h4 className='IncidentDetailHeader'>Reported date:</h4>
-        <span className='incidentDetailContent'>{convertIsoDate(startedAt)}</span> <br />
+        <h4 className="IncidentDetailHeader"> Incident Type:</h4>
+        <span className="incidentDetailContent">{name}</span> <br />
+        <h4 className="IncidentDetailHeader">Reported date:</h4>
+        <span className="incidentDetailContent">
+          {convertIsoDate(startedAt)}
+        </span>{' '}
+        <br />
         {endedAt ? (
           <div>
-            <h4 className='IncidentDetailHeader'>End date:</h4>
-            <span className='incidentDetailContent'> {convertIsoDate(endedAt)} </span>
+            <h4 className="IncidentDetailHeader">End date:</h4>
+            <span className="incidentDetailContent">
+              {' '}
+              {convertIsoDate(endedAt)}{' '}
+            </span>
           </div>
         ) : null}
-        <h4 className='IncidentDetailHeader'>Source:</h4>
-        <span className='incidentDetailContent'>{causes.map(cause => cause)}</span>
+        <h4 className="IncidentDetailHeader">Source:</h4>
+        <span className="incidentDetailContent">
+          {causes.map(cause => cause)}
+        </span>
         <br />
-        <h4 className='IncidentDetailHeader'>Location:</h4>
-        <span className='incidentDetailContent'> {areas.map(area => area)} </span>
+        <h4 className="IncidentDetailHeader">Location:</h4>
+        <span className="incidentDetailContent">
+          {' '}
+          {areas.map(area => area)}{' '}
+        </span>
         <br />
         {actionName ? (
           <div>
-        <h4 className='IncidentDetailHeader'>Action to be taken:</h4>
-        <span className='incidentDetailContent'>{actionName}</span>
-        <br />
-        </div> 
-        ) 
-        : null
-        }
-        <h4 className='IncidentDetailHeader'>Impact:</h4>
+            <h4 className="IncidentDetailHeader">Action to be taken:</h4>
+            <span className="incidentDetailContent">{actionName}</span>
+            <br />
+          </div>
+        ) : null}
+        <h4 className="IncidentDetailHeader">Impact:</h4>
         <div className="IncidentImpacIncidentDetailsDrawert p-l-10">
           <span>Death(s):</span>
           3 <br />
-          <span>People affected:
-          </span>
+          <span>People affected:</span>
           4 <br />
-          <span>Building destroyed:
-          </span>
+          <span>Building destroyed:</span>
           5 <br />
           <span>Building Damaged: </span>
           12 <br />
         </div>
         <Row>
           <Col span={12}>
-            <Button type="danger" className="ReadMore" >
+            <Button type="danger" className="ReadMore" onClick={onCloseDetails}>
               Cancel
             </Button>
           </Col>
@@ -108,8 +121,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  getAllIncidents : getIncidentsSuccess,
-}
+  getAllIncidents: getIncidentsSuccess,
+  getAllActions: getIncidentActions,
+};
 
 export default connect(
   mapStateToProps,
@@ -150,4 +164,11 @@ IncidentDetails.propTypes = {
     }),
     _id: PropTypes.string,
   }).isRequired,
+  getAllIncidents: PropTypes.func,
+  getAllActions: PropTypes.func,
+};
+
+IncidentDetails.defaultProps = {
+  getAllIncidents: () => {},
+  getAllActions: () => {},
 };

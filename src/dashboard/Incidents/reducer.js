@@ -39,7 +39,6 @@ import {
 const initialState = {
   data: [],
   error: null,
-  page: 1,
   total: 0,
   incidentActionsData: [],
   incident: null,
@@ -104,14 +103,13 @@ export function incidents(state = initialState, action) {
     case SELECT_INCIDENT_START:
       return {
         state,
-        isLoading: true
-      }
+        isLoading: true,
+      };
     case SELECT_INCIDENT_SUCCESS:
       return {
         ...state,
         incident: action.payload.data,
         isLoading: false,
-
       };
     case SEARCH_INCIDENT_START:
       return {
@@ -127,21 +125,21 @@ export function incidents(state = initialState, action) {
 export function selectedIncident(state = initialselectedState, action) {
   switch (action.type) {
     case GET_INCIDENT_ACTION_START:
-    return {
-      ...state,
-      isLoadingData: true
-    };
+      return {
+        ...state,
+        isLoadingData: true,
+      };
     case GET_INCIDENT_ACTION_SUCCESS:
       return {
         ...state,
         incidentAction: action.payload.data,
-        isLoadingData: false
+        isLoadingData: false,
       };
     case GET_INCIDENT_ACTION_ERROR:
       return {
         ...state,
         error: action.payload,
-        isLoadingData: false
+        isLoadingData: false,
       };
     case GET_TASKS_START:
       return {

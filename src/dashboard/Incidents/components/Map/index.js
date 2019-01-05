@@ -4,6 +4,7 @@ import L from 'leaflet';
 import * as ReactLeaflet from 'react-leaflet';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Spin } from 'antd';
 
 import 'leaflet-draw';
 import IncidentForm from '../IncidentForm';
@@ -18,7 +19,6 @@ import { showMarkers, baseMaps } from '../../../../common/lib/mapUtil';
 
 import './styles.css';
 import 'leaflet-draw/dist/leaflet.draw.css';
-import { Spin } from 'antd';
 
 const { Map: LeafletMap, TileLayer, Popup } = ReactLeaflet;
 
@@ -89,6 +89,7 @@ class IncidentMap extends React.Component {
     handleIncidents: PropTypes.func,
     getIncident: PropTypes.func,
     setIncidentAction: PropTypes.func,
+    loading: PropTypes.bool.isRequired,
   };
 
   static defaultProps = {
@@ -115,43 +116,24 @@ class IncidentMap extends React.Component {
   }
 
   componentDidMount() {
-    this.map = this.mapRef.current.leafletElement;
-    this.mapLayers();
     this.DisplayMarkers();
-    const { handleIncidents, handleIncidentActions } = this.props;
-    handleIncidents();
-    handleIncidentActions();
   }
 
   componentDidUpdate(prevProps) {
-    const { incidents, selected,  } = this.props;
+    const { incidents, selected } = this.props;
     if (incidents !== prevProps.incidents) {
-      this.incidentLayer.clearLayers();
       this.showAllIncidents(incidents);
     }
+
     if (selected && selected !== prevProps.selected) {
       this.showSelectedIncident(selected);
     } else if (selected !== prevProps.selected) {
-      this.map.removeLayer(this.incidentLayer);
+      this.map.removeLayer(this.selectedIncidentLayer);
     }
-
   }
 
   mapLayers = () => {
     L.control.layers(baseMaps, {}, { position: 'bottomleft' }).addTo(this.map);
-  };
-
-  DisplayMarkers = () => {
-    this.incidentLayer = L.geoJSON([], {
-      pointToLayer: showMarkers,
-      onEachFeature: this.onEachFeature,
-    }).addTo(this.map);
-  };
-
-  showAllIncidents = incidents => {
-    incidents.map(({ epicentre }) => this.incidentLayer.addData(epicentre));
-    this.map.setView([-6.179, 35.754], 7);
-    this.incidentLayer.addTo(this.map);
   };
 
   onEachFeature = (feature, layer) => {
@@ -163,20 +145,38 @@ class IncidentMap extends React.Component {
       .openTooltip();
   };
 
-  onEachFeaturePoint = () => {
+  DisplayMarkers = () => {
+    this.map = this.mapRef.current.leafletElement;
+    this.mapLayers();
+    const { handleIncidents, handleIncidentActions } = this.props;
+    handleIncidents();
+    handleIncidentActions();
+    this.incidentLayer = L.geoJSON([], {
+      pointToLayer: showMarkers,
+      onEachFeature: this.onEachFeature,
+    }).addTo(this.map);
+  };
+
+  showAllIncidents = incidents => {
+    const checkForSelectedLayer = this.map.hasLayer(this.selectedIncidentLayer);
+    if (checkForSelectedLayer) {
+      this.map.removeLayer(this.selectedIncidentLayer);
+    }
     this.incidentLayer.clearLayers();
+    incidents.map(({ epicentre }) => this.incidentLayer.addData(epicentre));
+    this.incidentLayer.addTo(this.map);
+    this.map.setView([-6.179, 35.754], 7);
   };
 
   showPoint = areaSelected => {
-    L.geoJSON(areaSelected, {
+    this.selectedIncidentLayer = L.geoJSON(areaSelected, {
       pointToLayer: showMarkers,
-      onEachFeature: this.onEachFeaturePoint,
     }).addTo(this.map);
   };
 
   showSelectedIncident = incidentSelected => {
     const { areaSelected } = incidentSelected;
-    this.selectedLayer = this.showPoint(areaSelected);
+    this.showPoint(areaSelected);
   };
 
   initDrawControls = () => {
@@ -233,7 +233,6 @@ class IncidentMap extends React.Component {
     this.initDrawControls();
     this.map.on('draw:created', e => this.showDrawnItems(e));
     this.map.removeLayer(this.incidentLayer);
-
   };
 
   onCancel = () => {
@@ -242,7 +241,6 @@ class IncidentMap extends React.Component {
     this.setState({ hideButton: false });
     this.map.closePopup();
     this.map.addLayer(this.incidentLayer);
-
   };
 
   getSpinValue = () => {
@@ -250,7 +248,7 @@ class IncidentMap extends React.Component {
     let spin = false;
     if (loading) {
       spin = loading;
-    } 
+    }
     return spin;
   };
 
@@ -261,6 +259,7 @@ class IncidentMap extends React.Component {
       const { incident } = incidentAction;
       const { _id: incidentId } = incident;
       if (incidentId === id) {
+        this.map.removeLayer(this.selectedIncidentLayer);
         const { _id: actionId } = incidentAction;
         return setIncidentAction(actionId);
       }
@@ -274,34 +273,37 @@ class IncidentMap extends React.Component {
   render() {
     const { position, zoom, showPopup, hideButton, area } = this.state;
     const { incidents } = this.props;
-    let spin = this.getSpinValue();
+    const spin = this.getSpinValue();
     return (
       <div>
-        <Spin spinning={spin} tip="Loading..."
-        size="large"
-        style={{ position: 'absolute', top: '25%', right: '5%' }}>
+        <Spin
+          spinning={spin}
+          tip="Loading..."
+          size="large"
+          style={{ position: 'absolute', top: '25%', right: '5%' }}
+        >
           <MapNav
             hideButton={hideButton}
             newIncidentButton={this.onclickNewIncidentButton}
             clickedIncident={this.onSelectIncident}
-            goBack = {this.onCancelButton}
+            goBack={this.onCancelButton}
           />
-        <LeafletMap center={position} zoom={zoom} ref={this.mapRef}>
-          <TileLayer
-            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-            id="mapbox.light"
-            url="https://api.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoid29ybGRiYW5rLWVkdWNhdGlvbiIsImEiOiJIZ2VvODFjIn0.TDw5VdwGavwEsch53sAVxA#1.6/23.725906/-39.714135/0"
-          />
-          {showPopup ? (
-            <Popup position={position} minWidth={450}>
-              <IncidentForm
-                onCancelButton={this.onCancel}
-                location={area}
-                incidentsTypeData={incidents}
-              />
-            </Popup>
-          ) : null}
-        </LeafletMap>
+          <LeafletMap center={position} zoom={zoom} ref={this.mapRef}>
+            <TileLayer
+              attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+              id="mapbox.light"
+              url="https://api.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoid29ybGRiYW5rLWVkdWNhdGlvbiIsImEiOiJIZ2VvODFjIn0.TDw5VdwGavwEsch53sAVxA#1.6/23.725906/-39.714135/0"
+            />
+            {showPopup ? (
+              <Popup position={position} minWidth={450}>
+                <IncidentForm
+                  onCancelButton={this.onCancel}
+                  location={area}
+                  incidentsTypeData={incidents}
+                />
+              </Popup>
+            ) : null}
+          </LeafletMap>
         </Spin>
       </div>
     );
@@ -315,14 +317,14 @@ const mapStateToProps = state => ({
   incidentsAction: state.incidents.incidentActionsData
     ? state.incidents.incidentActionsData
     : [],
-  loading : state.incidents.isLoading,
+  loading: state.incidents.isLoading,
 });
 
-const mapDispatchToProps ={
+const mapDispatchToProps = {
   handleIncidents: getIncidentsSuccess,
   getIncident: getSelectedIncident,
   handleIncidentActions: getIncidentActions,
-  setIncidentAction:activeIncidentAction, 
+  setIncidentAction: activeIncidentAction,
 };
 export default connect(
   mapStateToProps,
