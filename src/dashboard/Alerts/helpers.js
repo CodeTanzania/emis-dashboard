@@ -24,6 +24,19 @@ export function isoDateToHumanReadableDate(isoFormattDate) {
 }
 
 /**
+ * converts today's date to human readable
+ * date
+ *
+ * @function
+ * @name humanTimeToday
+ *
+ * @returns {string} human readable date
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export const humanTimeToday = () => moment().format(' MMMM Do ');
+
+/**
  * combines geomentry and properties objects
  * to generate a GeoJSON Point feature
  *

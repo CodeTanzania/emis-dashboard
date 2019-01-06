@@ -10,6 +10,19 @@ const middlewares = [thunk.withExtraArgument({ API })];
 const mockStore = configureMockStore(middlewares);
 
 describe('Alerts: Module', () => {
+  describe('Alert Filter action creators', () => {
+    it(`should crete an action of type ${
+      Actions.SET_EXPECTED_AT_FILTER
+    }`, () => {
+      const dateRange = [];
+      expect(Actions.setExpectedAtFilter(dateRange)).toEqual({
+        type: Actions.SET_EXPECTED_AT_FILTER,
+        payload: {
+          data: dateRange,
+        },
+      });
+    });
+  });
   describe('Alerts: Actions Creators', () => {
     it(`should create an action of type ${Actions.POST_ALERT_START}`, () => {
       expect(Actions.postAlertStart()).toEqual({

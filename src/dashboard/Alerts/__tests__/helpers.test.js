@@ -1,3 +1,4 @@
+import moment from 'moment';
 import * as Helpers from '../helpers';
 
 describe(`Helpers`, () => {
@@ -5,6 +6,11 @@ describe(`Helpers`, () => {
     const isoDate = '2018-07-18T15:00:00.000Z';
     const expected = 'Wednesday, July 18th 2018, 3:00:00 pm';
     expect(Helpers.isoDateToHumanReadableDate(isoDate)).toBe(expected);
+  });
+
+  it(' tests humanTimeToday', () => {
+    const today = moment().format(' MMMM Do ');
+    expect(Helpers.humanTimeToday()).toBe(today);
   });
 
   it(`tests formatAlertFieldType`, () => {
