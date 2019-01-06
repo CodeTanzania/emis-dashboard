@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import {Link} from 'react-router-dom'
 import { Spin } from 'antd';
 import { convertIsoDate } from '../../../../../../common/lib/mapUtil';
 
@@ -20,7 +21,7 @@ function IncidentDetailsContent({ incidentSelected, loading }) {
 
   const { name } = type;
 
-  return (
+  return incidentSelected ?(
     <div className="IncidentDetailContents">
       <h3 style={{ borderBottom: '1px solid #e8e8e8', padding: '9px' }}>
         Situation Analysis
@@ -94,7 +95,9 @@ function IncidentDetailsContent({ incidentSelected, loading }) {
         </div>
       )}
     </div>
-  );
+  ): (
+    <Link to="/incidents/map"></Link>
+  )
 }
 
 const mapStateToProps = state => ({

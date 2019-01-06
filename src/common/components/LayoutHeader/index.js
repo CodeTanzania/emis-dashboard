@@ -18,7 +18,7 @@ const { Header } = Layout;
  * @version 0.1.0
  * @since 0.1.0
  */
-export default function LayoutHeader({ title, breadcrumbs }) {
+export default function LayoutHeader({ title, breadcrumbs, style }) {
   return (
     <Header className="LayoutHeader">
       <h3>{title}</h3>

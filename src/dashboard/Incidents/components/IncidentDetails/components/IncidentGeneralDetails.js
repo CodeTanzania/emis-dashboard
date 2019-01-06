@@ -11,6 +11,8 @@ import IncidentDetailsContent from './IncidentDetailContents';
 import IncidentAssessiment from './IncidentAssessiment';
 import IncidentActionTaken from './IncidentAction';
 import IncidentAgencies from './IncidentAgencies';
+import LayoutHeader from '../../../../../common/components/LayoutHeader';
+import { convertIsoDateOnly } from '../../../../../common/lib/mapUtil';
 
 const { Content } = Layout;
 
@@ -30,7 +32,9 @@ class IncidentGeneralDetails extends React.Component {
   };
 
   render() {
-    const { currentMenu } = this.props;
+    const { currentMenu, selected } = this.props;
+    const { event,number,startedAt} = selected;
+
     const showNavContent = currentNav => {
       switch (currentNav) {
         case 'list': {
@@ -56,58 +60,76 @@ class IncidentGeneralDetails extends React.Component {
       }
     };
     return (
-      <Layout className="IncidentGeneralDetails">
-        <Sider
-          className="IncidentDetailSider"
-          style={{ flex: '0 0 250px', width: '250px', maxWidth: '250px' }}
-        >
-          <Menu
-            onClick={this.handleClick}
-            mode="inline"
-            selectedKeys={[currentMenu]}
-            className="siderDetails"
-          >
-            <Menu.Item key="list">Situation Analysis</Menu.Item>
-            <Menu.Item key="actions">Action Taken</Menu.Item>
-            <Menu.Item key="agencies">Responding agencies</Menu.Item>
-            <Menu.Item key="resource">Resource needed</Menu.Item>
-            <Menu.Item key="assessment">Assessment</Menu.Item>
-            <Menu.Item key="recomandation">Recomendation</Menu.Item>
-          </Menu>
-        </Sider>
-        <Layout
-          style={{
+      <Layout >
+        <LayoutHeader  style={{
+            background: '#fafafa',
+            height: '60px',
             display: 'flex',
-            flexDirection: 'column',
-            overflow: 'hidden',
-            background: '#fff',
-            borderTop: '1px solid #e6e6e6',
+            alignItems: 'flex-end',
+            paddingLeft: '10px',
           }}
-        >
-          {' '}
-          <Content>
-            <span
-              style={{
-                float: 'right',
-                position: 'relative',
-                right: '20px',
-                top: '10px',
-              }}
+         title={ selected ? (
+          <div>
+            {selected ? event : null}{' '}
+            <span className="Details">{` ${number} Created on ${convertIsoDateOnly(startedAt)}`}</span>
+          </div>
+        ) : (
+          'Incidents'
+        )
+         }
+         breadcrumbs={[{name:'Incidents', link: '/incidents/map'},{ name:'Details'}]} />
+        <Content>
+          <Layout className="IncidentGeneralDetails">
+            <Sider
+              className="IncidentDetailSider"
+              style={{ flex: '0 0 250px', width: '250px', maxWidth: '250px' }}
             >
-              <Link to="/incidents/map">
-                <Icon
-                  type="close"
+              <Menu
+                onClick={this.handleClick}
+                mode="inline"
+                selectedKeys={[currentMenu]}
+                className="siderDetails"
+              >
+                <Menu.Item key="list">Situation Analysis</Menu.Item>
+                <Menu.Item key="actions">Action Taken</Menu.Item>
+                <Menu.Item key="agencies">Responding agencies</Menu.Item>
+                <Menu.Item key="resource">Resource needed</Menu.Item>
+                <Menu.Item key="assessment">Assessment</Menu.Item>
+                <Menu.Item key="recomandation">Recomendation</Menu.Item>
+              </Menu>
+            </Sider>
+            {' '}
+            <Layout style={{
+              display: 'flex',
+              flexDirection: 'column',
+              overflow: 'hidden',
+              background: '#fff',
+            }}>
+              <Content>
+                <span
                   style={{
-                    fontSize: '20px',
-                    cursor: 'pointer',
-                    color: '#333',
+                    float: 'right',
+                    position: 'relative',
+                    right: '20px',
+                    top: '10px',
                   }}
-                />
-              </Link>
-            </span>
-            {showNavContent(currentMenu)}
-          </Content>
-        </Layout>
+                >
+                  <Link to="/incidents/map">
+                    <Icon
+                      type="close"
+                      style={{
+                        fontSize: '20px',
+                        cursor: 'pointer',
+                        color: '#333',
+                      }}
+                    />
+                  </Link>
+                </span>
+                {showNavContent(currentMenu)}
+              </Content>
+            </Layout>
+          </Layout>
+        </Content>
       </Layout>
     );
   }
@@ -115,6 +137,7 @@ class IncidentGeneralDetails extends React.Component {
 
 const mapStateToProps = state => ({
   currentMenu: state.activeNav && state.activeNav.activeItem,
+  selected: state.incidents.incident ? state.incidents.incident : [],
 });
 
 const mapDispachToProps = dispatch => ({

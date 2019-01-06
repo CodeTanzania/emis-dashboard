@@ -64,4 +64,8 @@
 
 .IncidentGeneralDetails {
     height: 100vh;
+    background: #fff;
+}
+.Details{
+    font-size: 14px;
 }

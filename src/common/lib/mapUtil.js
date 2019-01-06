@@ -131,3 +131,5 @@ export function showMarkers(geoJSON) {
 
 export const convertIsoDate = date =>
   moment(date).format(' MMMM Do YYYY, h:mm:ss a');
+
+  export const convertIsoDateOnly = date => moment(date).format('MMMM Do YYYY')
