@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { getNavActive } from '../../../actions';
 
-import IncidentDetailsContent from './IncidentDetailContents';
+import IncidentAnalysis from './IncidentAnalysis';
 import IncidentAssessiment from './IncidentAssessiment';
 import IncidentActionTaken from './IncidentAction';
 import IncidentAgencies from './IncidentAgencies';
@@ -38,7 +38,7 @@ class IncidentGeneralDetails extends React.Component {
     const showNavContent = currentNav => {
       switch (currentNav) {
         case 'list': {
-          return <IncidentDetailsContent />;
+          return <IncidentAnalysis />;
         }
         case 'assessment': {
           return <IncidentAssessiment />;

@@ -1,0 +1,30 @@
+.IncidentAnalysisDetails span {
+    padding-right: 15px;
+}
+
+.IncidentAnalysisDetails {
+    line-height: 2;
+    padding-left: 30px;
+    border-bottom: 1px solid #e8e8e8;
+    flex: auto;
+    display: list-item;
+    flex-direction: column;
+
+}
+
+.IncidentAnalysisLocation.p-l-10, {
+    padding: 5px 0 0 20px;
+}
+
+.IncidentAnalysisLocation.p-l-10 span, {
+    line-height: 1.4;
+    padding-right: 25px;
+}
+.IncidentAnalysisHeader{
+    margin-bottom: 2px;
+    font-weight: 600;
+    padding-top: 10px;
+}
+.incidentAnalysisContent{
+    padding-left: 10px
+}
