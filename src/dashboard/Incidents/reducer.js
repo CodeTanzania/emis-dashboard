@@ -11,6 +11,7 @@ import {
   GET_INCIDENT_ACTION_ERROR,
   POST_INCIDENT_SUCCESS,
   FILTER_INCIDENT_BY_DATE,
+  SHOW_MAP_POINTS,
 } from './actions';
 
 /**
@@ -88,6 +89,11 @@ export function incidents(state = initialState, action) {
       return {
         ...state,
         data: [action.payload.incident, ...state.data],
+      };
+    case SHOW_MAP_POINTS:
+      return {
+        ...state,
+        showPoints: action.payload.showPoints,
       };
     default:
       return state;

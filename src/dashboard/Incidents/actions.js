@@ -21,6 +21,7 @@ export const POST_INCIDENT_ERROR = 'POST_INCIDENT_ERROR';
 export const FILTER_INCIDENT_BY_DATE = 'FILTER_INCIDENT_BY_DATE';
 export const SEARCH_INCIDENT_START = 'SEARCH_INCIDENT_START';
 export const SEARCH_INCIDENT_ERROR = 'SEARCH_INCIDENT_ERROR';
+export const SHOW_MAP_POINTS = 'SHOW_MAP_POINTS';
 
 /* Actions creater */
 
@@ -107,6 +108,11 @@ export const searchIncidentStart = () => ({
 export const searchIncidentError = message => ({
   type: SEARCH_INCIDENT_ERROR,
   payload: { message },
+});
+
+export const showMapPoints = showPoint => ({
+  type: SHOW_MAP_POINTS,
+  payload: { showPoint },
 });
 
 export const getIncidentsSuccess = () => (dispatch, getState, { API }) => {
