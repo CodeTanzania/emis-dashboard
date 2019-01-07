@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import MapPointsDrawSupport from '../../../../common/components/MapPointsDrawSupport';
-import MapPolygonsDrawSupport from '../../../../common/components/MapPolygonsDrawSupport';
 import {
   getSelectedAlertFromState,
   showSeleteAlertShape,
@@ -26,16 +26,37 @@ import {
  * @since 0.1.0
  */
 class AlertsDrawSupport extends React.Component {
+  static propTypes = {
+    history: PropTypes.shape({
+      push: PropTypes.string,
+    }).isRequired,
+    showPoints: PropTypes.bool.isRequired,
+    points: PropTypes.arrayOf(
+      PropTypes.shape({
+        type: PropTypes.string,
+        properties: PropTypes.shape({
+          id: PropTypes.string,
+        }),
+        geometry: PropTypes.shape({
+          type: PropTypes.string,
+          coordinates: PropTypes.arrayOf(PropTypes.number),
+        }),
+      })
+    ),
+  };
+
+  static defaultProps = {
+    points: [],
+  };
+
   constructor(props) {
     super(props);
     this.onEachFeature = this.onEachFeature.bind(this);
   }
 
   onMarkerClicked = id => {
-    const { selectAlert, onClickShowPoints, onClickShowShapes } = this.props;
-    selectAlert(id);
-    onClickShowPoints(false);
-    onClickShowShapes(true);
+    const { history } = this.props;
+    history.push(`/alerts/${id}`);
   };
 
   onEachFeature = (feature, layer) => {
@@ -57,7 +78,7 @@ class AlertsDrawSupport extends React.Component {
   };
 
   render() {
-    const { points, shapes, showPoints, showShapes } = this.props;
+    const { points, showPoints } = this.props;
     return (
       <React.Fragment>
         <MapPointsDrawSupport
@@ -65,7 +86,6 @@ class AlertsDrawSupport extends React.Component {
           points={points}
           onEachFeature={this.onEachFeature}
         />
-        <MapPolygonsDrawSupport isShowPolygons={showShapes} polygons={shapes} />
       </React.Fragment>
     );
   }
@@ -87,40 +107,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(AlertsDrawSupport);
-
-AlertsDrawSupport.propTypes = {
-  showPoints: PropTypes.bool.isRequired,
-  showShapes: PropTypes.bool.isRequired,
-  onClickShowPoints: PropTypes.func.isRequired,
-  onClickShowShapes: PropTypes.func.isRequired,
-  shapes: PropTypes.arrayOf(
-    PropTypes.shape({
-      type: PropTypes.string,
-      properties: PropTypes.object,
-      geometry: PropTypes.shape({
-        type: PropTypes.string,
-        coordinates: PropTypes.array,
-      }),
-    })
-  ),
-  selectAlert: PropTypes.func,
-  points: PropTypes.arrayOf(
-    PropTypes.shape({
-      type: PropTypes.string,
-      properties: PropTypes.shape({
-        id: PropTypes.string,
-      }),
-      geometry: PropTypes.shape({
-        type: PropTypes.string,
-        coordinates: PropTypes.arrayOf(PropTypes.number),
-      }),
-    })
-  ),
-};
-
-AlertsDrawSupport.defaultProps = {
-  points: [],
-  shapes: [],
-  selectAlert: () => {},
-};
+)(withRouter(AlertsDrawSupport));

@@ -20,7 +20,11 @@ import L from 'leaflet';
 class MapPointsDrawSupport extends React.Component {
   componentDidMount() {
     this.map = this.props.leaflet.map;
+    const { isShowPoints, points } = this.props;
     this.initializePointsLayer();
+    if (isShowPoints) {
+      this.addDataToPointsLayer(points);
+    }
   }
 
   componentDidUpdate(prevProps) {

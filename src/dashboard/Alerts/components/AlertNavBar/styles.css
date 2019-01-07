@@ -1,0 +1,6 @@
+.AlertNavBar {
+position: absolute;
+left: 0px;
+z-index: 1000;
+margin: 10px 0 0 90px;
+}
