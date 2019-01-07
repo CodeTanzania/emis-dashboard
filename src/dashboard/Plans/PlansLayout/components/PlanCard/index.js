@@ -181,6 +181,7 @@ export default class PlanCard extends Component {
         className="PlanCard"
         style={{
           borderLeft: `3px solid ${color}`,
+          padding: 0,
         }}
       >
         <Link

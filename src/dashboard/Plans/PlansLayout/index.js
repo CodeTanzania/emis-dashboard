@@ -1,14 +1,4 @@
-import {
-  Button,
-  Col,
-  Icon,
-  Layout,
-  List,
-  Modal,
-  Pagination,
-  Row,
-  Spin,
-} from 'antd';
+import { Button, Col, Layout, List, Modal, Pagination, Row, Spin } from 'antd';
 import upperFirst from 'lodash/upperFirst';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
@@ -23,7 +13,6 @@ import SelectSearchBox from '../../../common/components/SelectSearchBox';
 import Toolbar from '../../../common/components/Toolbar';
 import {
   closePlanForm,
-  getPlanActivities,
   getPlans,
   openPlanForm,
   resetPlanFilters,
@@ -37,7 +26,7 @@ import './styles.css';
 /* local constants */
 const { Content } = Layout;
 const { Filters, Actions, Pagination: ToolbarPagination } = Toolbar;
-const spinIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
+// const ButtonGroup = Button.Group;
 
 /**
  * Render Initial List of plans based on selected filters
@@ -69,7 +58,7 @@ class PlansLayout extends Component {
     showPlanForm: PropTypes.bool.isRequired,
     onOpenPlanForm: PropTypes.func.isRequired,
     onClosePlanForm: PropTypes.func.isRequired,
-    onGetPlanActivities: PropTypes.func.isRequired,
+    onSelectPlan: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -110,7 +99,7 @@ class PlansLayout extends Component {
    * Handle Close Activity details drawer event
    *
    * @function
-   * @name handleCloseActivityDetails
+   * @name handleAfterCloseModal
    *
    * @version 0.1.0
    * @since 0.1.0
@@ -125,20 +114,19 @@ class PlansLayout extends Component {
       plans,
       total,
       loading,
-      onGetPlanActivities,
       onPaginate,
       onFilterByIncidentType,
       onFilterByOwner,
       onFilterByBoundary,
       showPlanForm,
       onOpenPlanForm,
+      onSelectPlan,
     } = this.props;
 
     const { isEditForm } = this.state;
 
     return (
       <Spin
-        indicator={spinIcon}
         size="large"
         tip="Loading Plans ..."
         spinning={loading}
@@ -153,9 +141,9 @@ class PlansLayout extends Component {
           {/* end primary header */}
           {/* Toolbar */}
           <Toolbar>
-            <Filters span={17}>
+            <Filters span={16}>
               <Row>
-                <Col md={7} xl={7} xxl={5}>
+                <Col md={8} xl={8} xxl={6}>
                   <SelectSearchBox
                     isFilter
                     onChange={onFilterByIncidentType}
@@ -166,7 +154,7 @@ class PlansLayout extends Component {
                     optionValue="_id"
                   />
                 </Col>
-                <Col md={7} xl={7} xxl={5}>
+                <Col md={8} xl={8} xxl={6}>
                   <SelectSearchBox
                     isFilter
                     onChange={onFilterByBoundary}
@@ -179,7 +167,7 @@ class PlansLayout extends Component {
                     optionValue="_id"
                   />
                 </Col>
-                <Col md={7} xl={7} xxl={5}>
+                <Col md={8} xl={8} xxl={6}>
                   <SelectSearchBox
                     isFilter
                     onChange={onFilterByOwner}
@@ -192,15 +180,28 @@ class PlansLayout extends Component {
                 </Col>
               </Row>
             </Filters>
-            <ToolbarPagination span={4}>
-              <Pagination
-                current={page}
-                simple
-                defaultCurrent={1}
-                total={total}
-                className="pagination"
-                onChange={onPaginate}
-              />
+            <ToolbarPagination span={5}>
+              <Row>
+                <Col span={18}>
+                  <Pagination
+                    current={page}
+                    simple
+                    defaultCurrent={1}
+                    total={total}
+                    className="pagination"
+                    onChange={onPaginate}
+                  />
+                </Col>
+                {/* <Col span={6}>
+                  <ButtonGroup>
+                    <Button
+                      icon="filter"
+                      title="Open Advance filters for Plans"
+                    />
+                    <Button icon="reload" title="Refresh Plans" />
+                  </ButtonGroup>
+                </Col> */}
+              </Row>
             </ToolbarPagination>
             <Actions span={3}>
               <Row type="flex" justify="center">
@@ -240,7 +241,7 @@ class PlansLayout extends Component {
                       color={plan.incidentType.color}
                       activityCount={20}
                       onClickPlan={() => {
-                        onGetPlanActivities(plan);
+                        onSelectPlan(plan);
                       }}
                       onEditPlan={() => {
                         this.handleOpenPlanEditForm(plan);
@@ -287,9 +288,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onGetPlanActivities(plan) {
+  onSelectPlan(plan) {
     dispatch(selectPlan(plan));
-    dispatch(getPlanActivities());
   },
   onEditPlan(plan) {
     dispatch(selectPlan(plan));

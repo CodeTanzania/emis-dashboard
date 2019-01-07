@@ -9,7 +9,6 @@ import {
   Menu,
   Modal,
   Row,
-  Spin,
 } from 'antd';
 import PropTypes from 'prop-types';
 import React, { Component, Fragment } from 'react';
@@ -32,7 +31,6 @@ import './styles.css';
 const { Content } = Layout;
 const { Filters, Actions } = Toolbar;
 const { Search } = Input;
-const spinIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
 
 const menu = (
   <Menu>
@@ -69,53 +67,17 @@ class PlanActivitiesLayout extends Component {
   };
 
   static propTypes = {
-    mitigationActivities: PropTypes.arrayOf(
-      PropTypes.shape({
-        plan: PropTypes.shape({ description: PropTypes.string }),
-        incidentType: PropTypes.shape({ name: PropTypes.string }),
-        name: PropTypes.string,
-        description: PropTypes.string,
-        taskCount: PropTypes.number,
-      })
-    ).isRequired,
-    preparednessActivities: PropTypes.arrayOf(
-      PropTypes.shape({
-        plan: PropTypes.shape({ description: PropTypes.string }),
-        incidentType: PropTypes.shape({ name: PropTypes.string }),
-        name: PropTypes.string,
-        description: PropTypes.string,
-        taskCount: PropTypes.number,
-      })
-    ).isRequired,
-    responseActivities: PropTypes.arrayOf(
-      PropTypes.shape({
-        plan: PropTypes.shape({ description: PropTypes.string }),
-        incidentType: PropTypes.shape({ name: PropTypes.string }),
-        name: PropTypes.string,
-        description: PropTypes.string,
-        taskCount: PropTypes.number,
-      })
-    ).isRequired,
-    recoveryActivities: PropTypes.arrayOf(
-      PropTypes.shape({
-        plan: PropTypes.shape({ description: PropTypes.string }),
-        incidentType: PropTypes.shape({ name: PropTypes.string }),
-        name: PropTypes.string,
-        description: PropTypes.string,
-        taskCount: PropTypes.number,
-      })
-    ).isRequired,
     plan: PropTypes.shape({
       incidentType: PropTypes.shape({
         name: PropTypes.string,
       }),
     }).isRequired,
-    loading: PropTypes.bool.isRequired,
     showActivityForm: PropTypes.bool.isRequired,
     onOpenActivityForm: PropTypes.func.isRequired,
     onCloseActivityForm: PropTypes.func.isRequired,
     onSelectActivity: PropTypes.func.isRequired,
     getActivityProcedures: PropTypes.func.isRequired,
+    phases: PropTypes.arrayOf(PropTypes.string).isRequired,
   };
 
   /**
@@ -220,15 +182,7 @@ class PlanActivitiesLayout extends Component {
       isEditForm,
     } = this.state;
 
-    const {
-      plan,
-      mitigationActivities,
-      preparednessActivities,
-      responseActivities,
-      recoveryActivities,
-      showActivityForm,
-      loading,
-    } = this.props;
+    const { plan, showActivityForm, phases } = this.props;
 
     let modalTitle = initialSelectedPhase
       ? `Add New Activity in ${initialSelectedPhase} phase`
@@ -239,151 +193,116 @@ class PlanActivitiesLayout extends Component {
     }
 
     return (
-      <Spin
-        indicator={spinIcon}
-        size="large"
-        tip="Loading Activities ..."
-        spinning={loading}
-        style={{ top: '30%' }}
-      >
-        <Layout className="PlanActivitiesLayout">
-          {/* start primary header */}
-          <LayoutHeader
-            title={
-              plan ? (
-                <Fragment>
-                  {plan ? plan.incidentType.name : 'N/A'}{' '}
-                  <span className="muted">{` Plan for ${plan.boundary.name} (${
-                    plan.boundary.level
-                  })  by ${plan.owner.name}`}</span>
-                </Fragment>
-              ) : (
-                'Plan'
-              )
-            }
-            breadcrumbs={[
-              { name: 'EMIS' },
-              { name: 'Emergency Plans', link: '/plans/index' },
-              { name: plan ? `${plan.incidentType.name} Plan` : 'N/A' },
-            ]}
-          />
-          {/* end primary header */}
-          {/* Toolbar */}
-          <Toolbar>
-            <Filters span={18}>
-              <Search
-                placeholder="Search for Activity here"
-                onSearch={value => console.log(value)}
-                style={{ width: 400 }}
-              />
-            </Filters>
-            <Actions span={6}>
-              <Row type="flex" justify="end">
-                <Col span={10}>
+      <Layout className="PlanActivitiesLayout">
+        {/* start primary header */}
+        <LayoutHeader
+          title={
+            plan ? (
+              <Fragment>
+                {plan ? plan.incidentType.name : 'N/A'}{' '}
+                <span className="muted">{` Plan for ${plan.boundary.name} (${
+                  plan.boundary.level
+                })  by ${plan.owner.name}`}</span>
+              </Fragment>
+            ) : (
+              'Plan'
+            )
+          }
+          breadcrumbs={[
+            { name: 'EMIS' },
+            { name: 'Emergency Plans', link: '/plans/index' },
+            { name: plan ? `${plan.incidentType.name} Plan` : 'N/A' },
+          ]}
+        />
+        {/* end primary header */}
+        {/* Toolbar */}
+        <Toolbar>
+          <Filters span={18}>
+            <Search
+              placeholder="Search for Activity here"
+              onSearch={value => console.log(value)}
+              style={{ width: 400 }}
+            />
+          </Filters>
+          <Actions span={6}>
+            <Row type="flex" justify="end">
+              <Col span={10}>
+                <Button
+                  title="Create New Activity"
+                  icon="plus"
+                  type="primary"
+                  onClick={() => {
+                    this.handleOpenActivityForm();
+                  }}
+                >
+                  New Activity
+                </Button>
+              </Col>
+              <Col span={10}>
+                <Dropdown overlay={menu}>
                   <Button
-                    title="Create New Activity"
-                    icon="plus"
+                    title="Export Selected Plan"
+                    className="exportButton"
                     type="primary"
-                    onClick={() => {
-                      this.handleOpenActivityForm();
-                    }}
                   >
-                    New Activity
+                    <Icon type="export" />
+                    Export
+                    <Icon type="down" />
                   </Button>
-                </Col>
-                <Col span={10}>
-                  <Dropdown overlay={menu}>
-                    <Button
-                      title="Export Selected Plan"
-                      className="exportButton"
-                      type="primary"
-                    >
-                      <Icon type="export" />
-                      Export
-                      <Icon type="down" />
-                    </Button>
-                  </Dropdown>
-                </Col>
-              </Row>
-            </Actions>
-          </Toolbar>
-          {/* end Toolbar */}
-          {/* start plan actions */}
-          <Content className="content">
-            <Row className="sectionLayout">
-              <Col span={6} className="section section-b-r">
-                <Phase
-                  title="Mitigation"
-                  count={20}
-                  activities={mitigationActivities}
-                  onClickCard={this.handleOpenActivityDetails}
-                  onClickAddActivity={this.handleOpenActivityForm}
-                  onClickEditActivity={this.handleOpenActivityEditForm}
-                />
-              </Col>
-              <Col span={6} className="section section-b-r">
-                <Phase
-                  title="Preparedness"
-                  count={5}
-                  activities={preparednessActivities}
-                  onClickCard={this.handleOpenActivityDetails}
-                  onClickAddActivity={this.handleOpenActivityForm}
-                  onClickEditActivity={this.handleOpenActivityEditForm}
-                />
-              </Col>
-              <Col span={6} className="section section-b-r">
-                <Phase
-                  title="Response"
-                  count={30}
-                  activities={responseActivities}
-                  onClickCard={this.handleOpenActivityDetails}
-                  onClickAddActivity={this.handleOpenActivityForm}
-                  onClickEditActivity={this.handleOpenActivityEditForm}
-                />
-              </Col>
-              <Col span={6} className="section">
-                <Phase
-                  title="Recovery"
-                  count={40}
-                  activities={recoveryActivities}
-                  onClickCard={this.handleOpenActivityDetails}
-                  onClickAddActivity={this.handleOpenActivityForm}
-                  onClickEditActivity={this.handleOpenActivityEditForm}
-                />
+                </Dropdown>
               </Col>
             </Row>
-          </Content>
-          {/* end plan actions */}
-          {/* Drawer for plan form */}
-          <Drawer
-            title={<ActivityDetailsHeader />}
-            placement="right"
-            width="100%"
-            onClose={this.handleCloseActivityDetails}
-            visible={showActivityDetails}
-          >
-            <ActivityDetailsBody />
-          </Drawer>
-          {/* end Drawer for plan form */}
-          {/* Activity form modal */}
-          <Modal
-            visible={showActivityForm}
-            title={modalTitle}
-            maskClosable={false}
+          </Actions>
+        </Toolbar>
+        {/* end Toolbar */}
+        {/* start plan actions */}
+        <Content className="content">
+          <Row className="sectionLayout">
+            {phases
+              ? phases.map(phase => (
+                  <Col key={phase} span={6} className="section section-b-r">
+                    <Phase
+                      phase={phase}
+                      count={20}
+                      onClickCard={this.handleOpenActivityDetails}
+                      onClickAddActivity={this.handleOpenActivityForm}
+                      onClickEditActivity={this.handleOpenActivityEditForm}
+                    />
+                  </Col>
+                ))
+              : null}
+          </Row>
+        </Content>
+        {/* end plan actions */}
+        {/* Drawer for plan form */}
+        <Drawer
+          title={<ActivityDetailsHeader />}
+          placement="right"
+          width="100%"
+          onClose={this.handleCloseActivityDetails}
+          visible={showActivityDetails}
+        >
+          <ActivityDetailsBody />
+        </Drawer>
+        {/* end Drawer for plan form */}
+        {/* Activity form modal */}
+        <Modal
+          visible={showActivityForm}
+          title={modalTitle}
+          maskClosable={false}
+          onCancel={this.handleCloseActivityForm}
+          footer={null}
+          destroyOnClose
+          afterClose={this.handleAfterCloseModal}
+        >
+          <ActivityForm
+            isEditForm={isEditForm}
             onCancel={this.handleCloseActivityForm}
-            footer={null}
-            destroyOnClose
-            afterClose={this.handleAfterCloseModal}
-          >
-            <ActivityForm
-              isEditForm={isEditForm}
-              onCancel={this.handleCloseActivityForm}
-              initialSelectedPhase={initialSelectedPhase}
-            />
-          </Modal>
-          {/* End Activity form modal */}
-        </Layout>
-      </Spin>
+            initialSelectedPhase={initialSelectedPhase}
+          />
+        </Modal>
+        {/* End Activity form modal */}
+      </Layout>
     );
   }
 }
@@ -396,6 +315,9 @@ const mapStateToProps = state => ({
   recoveryActivities: state.planActivities.Recovery,
   showActivityForm: state.planActivities.showActivityForm,
   loading: state.planActivities.loading,
+  phases: state.planActivitySchema
+    ? state.planActivitySchema.properties.phase.enum
+    : [],
 });
 
 const mapDispatchToProps = dispatch => ({

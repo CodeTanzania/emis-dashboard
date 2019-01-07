@@ -746,7 +746,7 @@ describe('Plans:Module', () => {
         {
           type: ActionTypes.GET_PLAN_ACTIVITIES_SUCCESS,
           payload: {
-            data: {},
+            data: [],
           },
           meta: {
             page: 1,
@@ -818,8 +818,10 @@ describe('Plans:Module', () => {
       ActionTypes.POST_PLAN_ACTIVITY_SUCCESS
     } when updating activity is successfully`, () => {
       // mock API call
-      API.postPlanActivity.mockResolvedValueOnce({});
-      API.getPlanActivities.mockResolvedValueOnce({
+      API.postPlanActivity.mockResolvedValueOnce({
+        data: { phase: 'Mitigation' },
+      });
+      API.getPlanPhaseActivities.mockResolvedValueOnce({
         data: {
           data: [],
           pages: 2,
@@ -830,7 +832,6 @@ describe('Plans:Module', () => {
       const store = mockStore({
         plans: {
           data: [],
-
           filters: {
             incidentTypes: null,
           },
@@ -841,22 +842,25 @@ describe('Plans:Module', () => {
       const expectedActions = [
         { type: ActionTypes.POST_PLAN_ACTIVITY_START },
         { type: ActionTypes.POST_PLAN_ACTIVITY_SUCCESS },
-        { type: ActionTypes.GET_PLAN_ACTIVITIES_START },
         {
-          type: ActionTypes.GET_PLAN_ACTIVITIES_SUCCESS,
+          type: ActionTypes.GET_PLAN_PHASE_ACTIVITIES_START,
+          payload: { data: { phase: 'Mitigation' } },
+        },
+        {
+          type: ActionTypes.GET_PLAN_PHASE_ACTIVITIES_SUCCESS,
           payload: {
-            data: {},
-          },
-          meta: {
-            page: 1,
-            total: 200,
+            data: {
+              Mitigation: { list: [], page: 1, total: 200, loading: false },
+            },
           },
         },
       ];
 
-      return store.dispatch(Actions.postPlanActivity({})).then(() => {
-        expect(store.getActions()).toEqual(expectedActions);
-      });
+      return store
+        .dispatch(Actions.postPlanActivity({ phase: 'Mitigation' }))
+        .then(() => {
+          expect(store.getActions()).toEqual(expectedActions);
+        });
     });
 
     it(`should dispatch an action of type ${
@@ -920,17 +924,24 @@ describe('Plans:Module', () => {
       const expectedActions = [
         { type: ActionTypes.PUT_PLAN_ACTIVITY_START },
         { type: ActionTypes.PUT_PLAN_ACTIVITY_SUCCESS },
-        { type: ActionTypes.GET_PLAN_ACTIVITIES_START },
         {
-          type: ActionTypes.GET_PLAN_ACTIVITIES_SUCCESS,
-          payload: { data: {} },
-          meta: { page: 1, total: 200 },
+          type: ActionTypes.GET_PLAN_PHASE_ACTIVITIES_START,
+          payload: { data: { phase: 'Mitigation' } },
+        },
+        {
+          type: ActionTypes.GET_PLAN_PHASE_ACTIVITIES_SUCCESS,
+          payload: {
+            data: {
+              Mitigation: { list: [], page: 1, total: 200, loading: false },
+            },
+          },
         },
       ];
-
       // mock API call
-      API.putPlanActivity.mockResolvedValueOnce({});
-      API.getPlanActivities.mockResolvedValueOnce({
+      API.putPlanActivity.mockResolvedValueOnce({
+        data: { phase: 'Mitigation' },
+      });
+      API.getPlanPhaseActivities.mockResolvedValueOnce({
         data: {
           data: [],
           page: 1,
@@ -938,9 +949,16 @@ describe('Plans:Module', () => {
         },
       });
 
-      return store.dispatch(Actions.putPlanActivity({})).then(() => {
-        expect(store.getActions()).toEqual(expectedActions);
-      });
+      return store
+        .dispatch(
+          Actions.putPlanActivity(
+            { phase: 'Mitigation' },
+            { phase: 'Mitigation' }
+          )
+        )
+        .then(() => {
+          expect(store.getActions()).toEqual(expectedActions);
+        });
     });
 
     it(`should dispatch an action of type ${

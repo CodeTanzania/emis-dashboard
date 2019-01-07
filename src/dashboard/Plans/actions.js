@@ -1,4 +1,3 @@
-import groupBy from 'lodash/groupBy';
 import isEmpty from 'lodash/isEmpty';
 import merge from 'lodash/merge';
 import {
@@ -14,6 +13,9 @@ import {
   GET_PLAN_ACTIVITY_PROCEDURES_ERROR,
   GET_PLAN_ACTIVITY_PROCEDURES_START,
   GET_PLAN_ACTIVITY_PROCEDURES_SUCCESS,
+  GET_PLAN_PHASE_ACTIVITIES_ERROR,
+  GET_PLAN_PHASE_ACTIVITIES_START,
+  GET_PLAN_PHASE_ACTIVITIES_SUCCESS,
   OPEN_PLAN_ACTIVITY_FORM,
   OPEN_PLAN_ACTIVITY_PROCEDURE_FORM,
   OPEN_PLAN_FORM,
@@ -485,6 +487,74 @@ export function getPlanActivitiesError(error) {
 }
 
 /**
+ * Action dispatched when fetching plan activities per phase starts
+ *
+ * @function
+ * @name getPlanPhaseActivitiesStart
+ *
+ * @param {string} phase - phase which an activity belongs to
+ * @returns {Object} - Redux action
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function getPlanPhaseActivitiesStart(phase) {
+  return {
+    type: GET_PLAN_PHASE_ACTIVITIES_START,
+    payload: { data: { phase } },
+  };
+}
+
+/**
+ * Action dispatched when fetching plan activities per phase is successfully
+ *
+ * @function
+ * @name getPlanPhaseActivitiesSuccess
+ *
+ * @param {string} phase
+ * @param {Object[]} activities
+ * @param {number} page
+ * @param {number} total
+ * @returns {Object} - Redux action
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function getPlanPhaseActivitiesSuccess(phase, activities, page, total) {
+  return {
+    type: GET_PLAN_PHASE_ACTIVITIES_SUCCESS,
+    payload: {
+      data: {
+        [phase]: { list: activities, page, total, loading: false },
+      },
+    },
+  };
+}
+
+/**
+ * Action dispatched when fetching plan activities per phase fails
+ *
+ * @function
+ * @name getPlanPhaseActivitiesError
+ *
+ * @param {string} phase
+ * @param {Object} error - Error instance
+ * @returns {Object} - Redux action
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function getPlanPhaseActivitiesError(phase, error) {
+  return {
+    type: GET_PLAN_PHASE_ACTIVITIES_ERROR,
+    payload: {
+      data: { [phase]: { error, loading: false } },
+    },
+    error: true,
+  };
+}
+
+/**
  * Action dispatched when posting plan activity to the API
  *
  * @function
@@ -597,7 +667,8 @@ export function putPlanActivityError(error) {
 }
 
 /**
- * Action dispatched when setting the plan activity procedure schema to the store
+ * Action dispatched when setting the plan activity procedure schema to
+ * the store
  *
  * @function
  * @name setPlanActivityProcedureSchema
@@ -690,7 +761,8 @@ export function getPlanActivityProceduresStart() {
 }
 
 /**
- * Action dispatched when fetching plan activity Procedures from API is successful
+ * Action dispatched when fetching plan activity Procedures from API
+ * is successful
  *
  * @function
  * @name getPlanActivityProceduresSuccess
@@ -756,7 +828,8 @@ export function postPlanActivityProcedureStart() {
 }
 
 /**
- * Action dispatched when posting plan activity procedure to the API is successfully
+ * Action dispatched when posting plan activity procedure to the API
+ * is successfully
  *
  * @function
  * @name postPlanActivityProcedureSuccess
@@ -812,7 +885,8 @@ export function putPlanActivityProcedureStart() {
 }
 
 /**
- * Action dispatched when updating plan activity procedure in the API is successfully
+ * Action dispatched when updating plan activity procedure in the API
+ * is successfully
  *
  * @function
  * @name putPlanActivityProcedureSuccess
@@ -966,7 +1040,8 @@ export function putPlan(plan) {
 }
 
 /**
- * A thunk function which perform asynchronous fetching of plan activities from API
+ * A thunk function which perform asynchronous fetching of plan activities
+ * from API
  *
  * @function
  * @name getPlanActivities
@@ -982,10 +1057,9 @@ export function getPlanActivities() {
 
     return API.getPlanActivities(planId)
       .then(response => {
-        const data = groupBy(response.data.data, 'phase');
         dispatch(
           getPlanActivitiesSuccess(
-            data,
+            response.data.data,
             response.data.page,
             response.data.total
           )
@@ -999,7 +1073,42 @@ export function getPlanActivities() {
 }
 
 /**
- * A thunk function which perform asynchronous posting of plan activities to the API
+ * A thunk dispatched when fetching activities based on phase
+ *
+ * @function
+ * @name getPlanPhaseActivities
+ *
+ * @param {string} phase
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function getPlanPhaseActivities(phase) {
+  return (dispatch, getState, { API }) => {
+    if (!getState().selectedPlan) {
+      return null;
+    }
+
+    dispatch(getPlanPhaseActivitiesStart(phase));
+
+    const planId = getState().selectedPlan._id; //eslint-disable-line
+
+    return API.getPlanPhaseActivities(planId, phase).then(response => {
+      dispatch(
+        getPlanPhaseActivitiesSuccess(
+          phase,
+          response.data.data,
+          response.data.page,
+          response.data.total
+        )
+      );
+    });
+  };
+}
+
+/**
+ * A thunk function which perform asynchronous posting of plan activities to
+ * the API
  *
  * @function
  * @name postPlanActivity
@@ -1019,9 +1128,10 @@ export function postPlanActivity(activity) {
     const data = Object.assign({}, activity, { plan, incidentType });
 
     return API.postPlanActivity(data)
-      .then(() => {
+      .then(response => {
+        const postedActivity = response.data;
         dispatch(postPlanActivitySuccess());
-        dispatch(getPlanActivities());
+        dispatch(getPlanPhaseActivities(postedActivity.phase));
         notifySuccess('Activity created successfully');
       })
       .catch(error => {
@@ -1039,18 +1149,27 @@ export function postPlanActivity(activity) {
  * @name putPlanActivity
  *
  * @param {Object} activity - Updated activity object
+ * @param {Object} oldActivity - Old previous activity object
  *
  * @version 0.1.0
  * @since 0.1.0
  */
-export function putPlanActivity(activity) {
+export function putPlanActivity(activity, oldActivity = null) {
   return (dispatch, getState, { API }) => {
     dispatch(putPlanActivityStart());
 
     return API.putPlanActivity(activity)
-      .then(() => {
+      .then(response => {
+        const updatedActivity = response.data;
+
+        // this will be executed if the update change activity phase
+        // that previous phase and current phase of the activity should be reloaded
+        if (oldActivity && updatedActivity.phase !== oldActivity.phase) {
+          dispatch(getPlanPhaseActivities(oldActivity.phase));
+        }
+
         dispatch(putPlanActivitySuccess());
-        dispatch(getPlanActivities());
+        dispatch(getPlanPhaseActivities(updatedActivity.phase));
         notifySuccess('Activity updated successfully');
       })
       .catch(error => {

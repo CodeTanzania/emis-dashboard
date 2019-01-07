@@ -52,7 +52,7 @@ class ActivityForm extends Component {
       if (!error) {
         if (isEditForm) {
           const updatedActivity = Object.assign({}, activity, values);
-          updateActivity(updatedActivity);
+          updateActivity(updatedActivity, activity);
         } else {
           let newActivity = values;
           if (initialSelectedPhase) {
@@ -75,6 +75,7 @@ class ActivityForm extends Component {
       isEditForm,
       activity,
       form: { getFieldDecorator },
+      phases,
     } = this.props;
 
     const formItemLayout = {
@@ -135,10 +136,9 @@ class ActivityForm extends Component {
               initialValue: isEditForm ? activity.phase : initialSelectedPhase,
             })(
               <RadioGroup>
-                <Radio value="Mitigation">Mitigation</Radio>
-                <Radio value="Preparedness">Preparedness</Radio>
-                <Radio value="Response">Response</Radio>
-                <Radio value="Recovery">Recovery</Radio>
+                {phases.map(phase => (
+                  <Radio value={phase}>{phase}</Radio>
+                ))}
               </RadioGroup>
             )}
           </FormItem>
@@ -247,14 +247,15 @@ class ActivityForm extends Component {
 const mapStateToProps = state => ({
   activity: state.selectedPlanActivity,
   posting: state.planActivities.posting,
+  phases: state.planActivitySchema.properties.phase.enum,
 });
 
 const mapDispatchToProps = dispatch => ({
   postActivity(activity) {
     dispatch(postPlanActivity(activity));
   },
-  updateActivity(activity) {
-    dispatch(putPlanActivity(activity));
+  updateActivity(activity, oldActivity) {
+    dispatch(putPlanActivity(activity, oldActivity));
   },
 });
 

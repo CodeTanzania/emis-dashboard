@@ -480,10 +480,11 @@ describe('Plan:Reducers', () => {
 
     beforeEach(() => {
       previousState = {
-        Mitigation: [],
-        Preparedness: [],
-        Response: [],
-        Recovery: [],
+        Mitigation: { list: [] },
+        Preparedness: { list: [] },
+        Response: { list: [] },
+        Recovery: { list: [] },
+        list: [],
         page: 1,
         total: 0,
         showActivityForm: false,
@@ -513,12 +514,7 @@ describe('Plan:Reducers', () => {
       const action = {
         type: ActionTypes.GET_PLAN_ACTIVITIES_SUCCESS,
         payload: {
-          data: {
-            Mitigation: [{ name: 'Mitigation' }],
-            Preparedness: [{ name: 'Preparedness' }],
-            Response: [{ name: 'Response' }],
-            Recovery: [{ name: 'Recovery' }],
-          },
+          data: [{ name: 'Test Name' }],
         },
         meta: {
           page: 1,
@@ -528,14 +524,29 @@ describe('Plan:Reducers', () => {
 
       const expectedState = {
         ...previousState,
-        Mitigation: action.payload.data.Mitigation,
-        Preparedness: action.payload.data.Preparedness,
-        Recovery: action.payload.data.Recovery,
-        Response: action.payload.data.Response,
+        list: action.payload.data,
         loading: false,
       };
 
       expect(planActivities(previousState, action)).toEqual(expectedState);
+    });
+
+    it(`should handle ${ActionTypes.GET_PLAN_PHASE_ACTIVITIES_START}`, () => {
+      const action = {
+        type: ActionTypes.GET_PLAN_PHASE_ACTIVITIES_START,
+        payload: {
+          data: { phase: 'Mitigation' },
+        },
+      };
+
+      const expectedMitigationState = {
+        ...previousState,
+        Mitigation: { loading: true },
+      };
+
+      expect(planActivities(previousState, action)).toEqual(
+        expectedMitigationState
+      );
     });
 
     it(`should handle ${ActionTypes.GET_PLAN_ACTIVITIES_ERROR}`, () => {

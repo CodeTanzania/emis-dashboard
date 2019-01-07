@@ -2,7 +2,11 @@ import { Badge, Button, Col, Layout, List, Popover, Row } from 'antd';
 import PropTypes from 'prop-types';
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { openPlanActivityForm, selectPlanActivity } from '../../../actions';
+import {
+  getPlanPhaseActivities,
+  openPlanActivityForm,
+  selectPlanActivity,
+} from '../../../actions';
 import ActivityCard from '../ActivityCard';
 import './style.css';
 
@@ -58,8 +62,7 @@ class PhaseActivities extends Component {
 
   /* props validation */
   static propTypes = {
-    title: PropTypes.string.isRequired,
-    count: PropTypes.number,
+    phase: PropTypes.string.isRequired,
     activities: PropTypes.arrayOf(
       PropTypes.shape({
         plan: PropTypes.shape({ description: PropTypes.string }),
@@ -72,7 +75,13 @@ class PhaseActivities extends Component {
     onClickCard: PropTypes.func.isRequired,
     onClickAddActivity: PropTypes.func.isRequired,
     onClickEditActivity: PropTypes.func.isRequired,
+    onLoadActivities: PropTypes.func.isRequired,
   };
+
+  componentDidMount() {
+    const { onLoadActivities, phase } = this.props;
+    onLoadActivities(phase);
+  }
 
   /**
    * Handle popover visible prop
@@ -112,30 +121,27 @@ class PhaseActivities extends Component {
    * @since 0.1.0
    */
   handleAddNewActivity = () => {
-    const { onClickAddActivity, title } = this.props;
-    onClickAddActivity(title);
+    const { onClickAddActivity, phase } = this.props;
+    onClickAddActivity(phase);
     this.hidePopover();
   };
 
   render() {
-    const {
-      title,
-      count,
-      activities,
-      onClickCard,
-      onClickEditActivity,
-    } = this.props;
+    const { phase, activities, onClickCard, onClickEditActivity } = this.props;
 
+    const phaseActivities = activities[phase].list;
+    const { loading, total } = activities[phase];
     const { showPopover } = this.state;
+
     return (
       <Layout className="PhaseActivities">
         {/* start phase header */}
         <Header className="header">
           <Row justify="space-between">
             <Col span={22}>
-              {title}
+              {phase}
               <Badge
-                count={count}
+                count={total}
                 style={{
                   display: 'block-inline',
                   marginLeft: '10px',
@@ -158,7 +164,7 @@ class PhaseActivities extends Component {
                 onVisibleChange={this.handlePopoverVisibleChange}
               >
                 <Button
-                  title={`${title} Phase Actions`}
+                  phase={`${phase} Phase Actions`}
                   icon="ellipsis"
                   className="ActionButton"
                 />
@@ -172,8 +178,9 @@ class PhaseActivities extends Component {
           {/* Activity list */}
           <List
             grid={{ xs: 1, sm: 1, md: 1, lg: 1, xl: 1, xxl: 1 }}
-            dataSource={activities}
+            dataSource={phaseActivities}
             bordered={false}
+            loading={loading}
             renderItem={activity => (
               <List.Item>
                 <ActivityCard
@@ -202,14 +209,21 @@ PhaseOptions.propTypes = {
   onClickAddActivity: PropTypes.func.isRequired,
 };
 
+const mapStateToProps = state => ({
+  activities: state.planActivities,
+});
+
 const mapDispatchToProps = dispatch => ({
   onSelectActivity(activity) {
     dispatch(selectPlanActivity(activity));
     dispatch(openPlanActivityForm());
   },
+  onLoadActivities(phase) {
+    dispatch(getPlanPhaseActivities(phase));
+  },
 });
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(PhaseActivities);

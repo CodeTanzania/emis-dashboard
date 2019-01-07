@@ -289,9 +289,9 @@ export function getPlanPhaseActivities(planId, phase, page = 1) {
   return Axios.get(`/activities`, {
     params: {
       page,
-      phase,
       filter: {
         plan: planId,
+        phase,
       },
     },
   });
@@ -501,7 +501,7 @@ export function getQuestionnaires(params = {}) {
 }
 
 /**
- * Get in parallel the setup configs for plan from the API
+ * Get  parallel the setup configs for plan from the API
  * This function will be called during application initialization only
  *
  * @function setup

@@ -12,6 +12,9 @@ import {
   GET_PLAN_ACTIVITY_PROCEDURES_ERROR,
   GET_PLAN_ACTIVITY_PROCEDURES_START,
   GET_PLAN_ACTIVITY_PROCEDURES_SUCCESS,
+  GET_PLAN_PHASE_ACTIVITIES_ERROR,
+  GET_PLAN_PHASE_ACTIVITIES_START,
+  GET_PLAN_PHASE_ACTIVITIES_SUCCESS,
   OPEN_PLAN_ACTIVITY_FORM,
   OPEN_PLAN_ACTIVITY_PROCEDURE_FORM,
   OPEN_PLAN_FORM,
@@ -59,10 +62,11 @@ import {
 
 /* initial state */
 const defaultPlanActivitiesState = {
-  Mitigation: [],
-  Preparedness: [],
-  Response: [],
-  Recovery: [],
+  Mitigation: { list: [] },
+  Preparedness: { list: [] },
+  Response: { list: [] },
+  Recovery: { list: [] },
+  list: [],
   page: 1,
   total: 0,
   showActivityForm: false,
@@ -246,20 +250,10 @@ export function planActivities(state = defaultPlanActivitiesState, action) {
         loading: true,
       });
     case GET_PLAN_ACTIVITIES_SUCCESS:
-      return Object.assign(
-        {},
-        state,
-        {
-          Mitigation: [],
-          Preparedness: [],
-          Response: [],
-          Recovery: [],
-        },
-        action.payload.data,
-        {
-          loading: false,
-        }
-      );
+      return Object.assign({}, state, {
+        list: [...action.payload.data],
+        loading: false,
+      });
     case GET_PLAN_ACTIVITIES_ERROR:
       return Object.assign({}, state, {
         error: action.payload.data,
@@ -301,6 +295,16 @@ export function planActivities(state = defaultPlanActivitiesState, action) {
       return Object.assign({}, state, {
         showActivityForm: false,
       });
+    case GET_PLAN_PHASE_ACTIVITIES_START:
+      return Object.assign({}, state, {
+        [action.payload.data.phase]: {
+          loading: true,
+        },
+      });
+    case GET_PLAN_PHASE_ACTIVITIES_SUCCESS:
+      return merge({}, state, action.payload.data);
+    case GET_PLAN_PHASE_ACTIVITIES_ERROR:
+      return Object.assign({}, state, action.payload.data);
     default:
       return state;
   }
