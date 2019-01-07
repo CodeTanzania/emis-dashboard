@@ -66,10 +66,12 @@ function IncidentDetails({
               {convertIsoDate(endedAt)}{' '}
             </span>
           </div>
-        ) : null}
+        ) : (
+          'N/A'
+        )}
         <h4 className="IncidentDetailHeader">Source:</h4>
         <span className="incidentDetailContent">
-          {causes.map(cause => cause)}
+          {causes.length > 0 ? causes.map(cause => cause) : 'N/A'}
         </span>
         <br />
         <h4 className="IncidentDetailHeader">Location:</h4>

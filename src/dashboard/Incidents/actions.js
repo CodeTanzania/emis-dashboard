@@ -27,6 +27,11 @@ export const POST_INCIDENT_START = 'POST_INCIDENT_START';
 export const POST_INCIDENT_SUCCESS = 'POST_INCIDENT_SUCCESS';
 export const POST_INCIDENT_ERROR = 'POST_INCIDENT_ERROR';
 
+/* post incident action types */
+export const CREATE_INCIDENT_ACTION_START = 'CREATE_INCIDENT_ACTION_START';
+export const CREATE_INCIDENT_ACTION_SUCCESS = 'CREATE_INCIDENT_ACION_SUCCESS';
+export const CREATE_INCIDENT_ACTION_ERROR = 'CREATE_INCIDENT_ACTION_ERROR';
+
 /* filter incident types */
 export const FILTER_INCIDENT_BY_DATE = 'FILTER_INCIDENT_BY_DATE';
 export const SELECT_ACTIVE_INCIDENT = 'SELECT_ACTIVE_INCIDENT';
@@ -112,6 +117,17 @@ export const createIncidentStart = () => ({
 
 export const createIncidentFail = message => ({
   type: POST_INCIDENT_ERROR,
+  payload: {
+    message,
+  },
+});
+
+export const createIncidentActionStart = () => ({
+  type: CREATE_INCIDENT_ACTION_START,
+});
+
+export const createIncidentActionFail = message => ({
+  type: CREATE_INCIDENT_ACTION_ERROR,
   payload: {
     message,
   },
@@ -214,6 +230,13 @@ export const getIncidentActions = () => (dispatch, getState, { API }) => {
       dispatch(getActionsSuccess(actions));
     })
     .catch(error => dispatch(getActionsError(error)));
+};
+
+export const createIncidentAction = action => (dispatch, getState, { API }) => {
+  dispatch(createIncidentAction());
+  API.CreateIncidentAction(action)
+    .then(() => dispatch(getIncidentActions()))
+    .catch(error => dispatch(createIncidentActionFail(error)));
 };
 
 export const activeIncidentAction = (incidentId = null) => (

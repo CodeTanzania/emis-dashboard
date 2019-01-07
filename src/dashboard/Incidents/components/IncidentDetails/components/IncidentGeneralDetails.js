@@ -20,6 +20,19 @@ class IncidentGeneralDetails extends React.Component {
   static propTypes = {
     activatedNav: PropTypes.func,
     currentMenu: PropTypes.string.isRequired,
+    selected: PropTypes.shape({
+      event: PropTypes.string,
+      incidentsTypeData: PropTypes.shape({
+        name: PropTypes.string,
+        nature: PropTypes.string.isRequired,
+        family: PropTypes.string.isRequired,
+        color: PropTypes.string,
+        _id: PropTypes.string,
+      }),
+      description: PropTypes.string.isRequired,
+      startedAt: PropTypes.string,
+      endedAt: PropTypes.string,
+    }).isRequired,
   };
 
   static defaultProps = {
@@ -33,7 +46,7 @@ class IncidentGeneralDetails extends React.Component {
 
   render() {
     const { currentMenu, selected } = this.props;
-    const { event,number,startedAt} = selected;
+    const { event, number, startedAt } = selected;
 
     const showNavContent = currentNav => {
       switch (currentNav) {
@@ -60,24 +73,32 @@ class IncidentGeneralDetails extends React.Component {
       }
     };
     return (
-      <Layout >
-        <LayoutHeader  style={{
+      <Layout>
+        <LayoutHeader
+          style={{
             background: '#fafafa',
             height: '60px',
             display: 'flex',
             alignItems: 'flex-end',
             paddingLeft: '10px',
           }}
-         title={ selected ? (
-          <div>
-            {selected ? event : null}{' '}
-            <span className="Details">{` ${number} Created on ${convertIsoDateOnly(startedAt)}`}</span>
-          </div>
-        ) : (
-          'Incidents'
-        )
-         }
-         breadcrumbs={[{name:'Incidents', link: '/incidents/map'},{ name:'Details'}]} />
+          title={
+            selected ? (
+              <div>
+                {selected ? event : null}{' '}
+                <span className="Details">{` ${number} Created on ${convertIsoDateOnly(
+                  startedAt
+                )}`}</span>
+              </div>
+            ) : (
+              'Incidents'
+            )
+          }
+          breadcrumbs={[
+            { name: 'Incidents', link: '/incidents/map' },
+            { name: 'Details' },
+          ]}
+        />
         <Content>
           <Layout className="IncidentGeneralDetails">
             <Sider
@@ -97,14 +118,15 @@ class IncidentGeneralDetails extends React.Component {
                 <Menu.Item key="assessment">Assessment</Menu.Item>
                 <Menu.Item key="recomandation">Recomendation</Menu.Item>
               </Menu>
-            </Sider>
-            {' '}
-            <Layout style={{
-              display: 'flex',
-              flexDirection: 'column',
-              overflow: 'hidden',
-              background: '#fff',
-            }}>
+            </Sider>{' '}
+            <Layout
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                overflow: 'hidden',
+                background: '#fff',
+              }}
+            >
               <Content>
                 <span
                   style={{

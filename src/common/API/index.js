@@ -406,6 +406,29 @@ export function getIncidentActionById(incidentId) {
  * Get searching incidents from the API
  *
  * @function
+ * @name CreateIncidentAction
+ *
+ * @param {Object} params - params object
+ * @returns {Promise}
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */ export function CreateIncidentAction(data) {
+  const url = `${INCIDENTS_API}/actions`;
+  const config = {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: {
+      'content-type': 'application/json',
+    },
+  };
+  return fetch(url, config).then(res => res.json());
+}
+
+/**
+ * Get searching incidents from the API
+ *
+ * @function
  * @name searchIncidents
  *
  * @param {Object} params - params object

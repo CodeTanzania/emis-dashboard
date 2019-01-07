@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import { Spin } from 'antd';
 import { convertIsoDate } from '../../../../../../common/lib/mapUtil';
 
@@ -31,53 +31,59 @@ function IncidentAnalysis({ incidentSelected, loading }) {
           <Spin />
         </div>
       ) : (
-          <div className="IncidentAnalysisDetails">
-            <h4 className='IncidentAnalysisHeader'>Incident Name</h4>
-            <span className="incidentAnalysisContent">{event}</span>
-            <br />
-            <h4 className="IncidentAnalysisHeader">Incident number:</h4>
-            <span className="incidentDetailContent">{number}</span>
-            <br />
-            <h4 className="IncidentAnalysisHeader"> Incident Type:</h4>
-            <span className="incidentAnalysisContent">{name}</span> <br />
-            <h4 className="IncidentAnalysisHeader">Reported & Ended date:</h4>
+        <div className="IncidentAnalysisDetails">
+          <h4 className="IncidentAnalysisHeader">Incident Name</h4>
+          <span className="incidentAnalysisContent">{event}</span>
+          <br />
+          <h4 className="IncidentAnalysisHeader">Incident number:</h4>
+          <span className="incidentDetailContent">{number}</span>
+          <br />
+          <h4 className="IncidentAnalysisHeader"> Incident Type:</h4>
+          <span className="incidentAnalysisContent">{name}</span> <br />
+          <h4 className="IncidentAnalysisHeader">Reported & Ended date:</h4>
+          <span className="incidentAnalysisContent">
+            {convertIsoDate(startedAt)}{' '}
+          </span>
+          To
+          {endedAt ? (
             <span className="incidentAnalysisContent">
-              {convertIsoDate(startedAt)} </span>To{endedAt ? (
-                <span className="incidentAnalysisContent">
-                  {' '}
-                  {convertIsoDate(endedAt)}{' '}
-                </span>
-            ) : 'N/A'}
-            <br />
-          
-            <h4 className="IncidentAnalysisHeader">Source:</h4>
+              {' '}
+              {convertIsoDate(endedAt)}{' '}
+            </span>
+          ) : (
+            'N/A'
+          )}
+          <br />
+          <h4 className="IncidentDetailHeader">Source:</h4>
+          <span className="incidentDetailContent">
+            {causes.length > 0 ? causes.map(cause => cause) : 'N/A'}
+          </span>
+          <br />
+          <h4 className="IncidentAnalysisHeader">Description:</h4>
+          <span className="incidentDetailContent">{description}</span>
+          <br />
+          <h4 className="IncidentAnalysisHeader">Location:</h4>
+          <div className="IncidentAnalysisLocation p-l-10">
+            <span>Region:</span>
             <span className="incidentAnalysisContent">
-              {causes.map(cause => cause)}
+              {' '}
+              {areas.map(area => area)}{' '}
             </span>
             <br />
-            <h4 className="IncidentAnalysisHeader">Description:</h4>
-            <span className="incidentDetailContent">{description}</span>
-            <br />
-            <h4 className="IncidentAnalysisHeader">Location:</h4>
-            <div className="IncidentAnalysisLocation p-l-10">
-              <span>Region:</span>
-              <span className="incidentAnalysisContent">
-                {' '}
-                {areas.map(area => area)}{' '}
-              </span>
-              <br />
-              <span>District:</span> Kinondoni District <br />
-              <span>Ward:</span>Hananasif <br />
-              <span> Street: </span>Mkunguni A <br />
-            </div>
-            <h4 className='IncidentAnalysisHeader'>Reported Amount of rainful:</h4>
-            <br />
+            <span>District:</span> Kinondoni District <br />
+            <span>Ward:</span>Hananasif <br />
+            <span> Street: </span>Mkunguni A <br />
           </div>
-        )}
+          <h4 className="IncidentAnalysisHeader">
+            Reported Amount of rainful:
+          </h4>
+          <br />
+        </div>
+      )}
     </div>
   ) : (
-      <Link to="/incidents/map"></Link>
-    )
+    <Link to="/incidents/map" />
+  );
 }
 
 const mapStateToProps = state => ({
