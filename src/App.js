@@ -1,3 +1,4 @@
+import { Icon, Spin } from 'antd';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
@@ -11,6 +12,9 @@ import './utils.css';
 const store = configureStore();
 // store.dispatch(getPlans());
 store.dispatch(setupPlan());
+
+/* configure global spin indicator */
+Spin.setDefaultIndicator(<Icon type="loading" style={{ fontSize: 24 }} spin />);
 
 /**
  * Render the React application
