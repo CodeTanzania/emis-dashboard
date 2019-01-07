@@ -12,7 +12,7 @@ const { Option } = Select;
 function Display({ getTodayAlerts, setCurrentDate }) {
   const handleChange = ({ key }) => {
     if (key === 'all') {
-      setCurrentDate([]);
+      setCurrentDate(null);
     }
 
     if (key === 'current') {

@@ -1,4 +1,6 @@
 import moment from 'moment';
+import isEmpty from 'lodash/isEmpty';
+import merge from 'lodash/merge';
 
 /**
  * Helper functions
@@ -21,6 +23,38 @@ export function isoDateToHumanReadableDate(isoFormattDate) {
   return moment(isoFormattDate)
     .utc()
     .format('dddd, MMMM Do YYYY, h:mm:ss a');
+}
+
+/**
+ *Receives filter data and format it to an object that can be used as params in
+filtering alerts from API
+ *
+ * @function
+ * @name generateFilterparams
+ *
+ * @param {Object} filters
+ *
+ * @returns {Object} filter params
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function generateFilterParams(filters) {
+  let allParams = {};
+  if (!isEmpty(filters.expectedAt)) {
+    allParams = merge({}, allParams, {
+      filter: {
+        expectedAt: { $gte: filters.expectedAt[0], $lt: filters.expectedAt[1] },
+      },
+    });
+  }
+
+  if (!isEmpty(filters.severity)) {
+    allParams = merge({}, allParams, {
+      filter: { severity: { $in: filters.severity } },
+    });
+  }
+
+  return allParams;
 }
 
 /**

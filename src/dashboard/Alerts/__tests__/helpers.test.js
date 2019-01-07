@@ -2,6 +2,21 @@ import moment from 'moment';
 import * as Helpers from '../helpers';
 
 describe(`Helpers`, () => {
+  it('tests generateFilterParams when expected At Filter is active', () => {
+    const filters = {
+      expectedAt: ['2019-01-07T06:11:51.661Z', '2020-01-07T06:11:51.661Z'],
+    };
+    const expected = {
+      filter: {
+        expectedAt: {
+          $gte: '2019-01-07T06:11:51.661Z',
+          $lt: '2020-01-07T06:11:51.661Z',
+        },
+      },
+    };
+    expect(Helpers.generateFilterParams(filters)).toEqual(expected);
+  });
+
   it(`tests isoDateToHumanReadableDate`, () => {
     const isoDate = '2018-07-18T15:00:00.000Z';
     const expected = 'Wednesday, July 18th 2018, 3:00:00 pm';
