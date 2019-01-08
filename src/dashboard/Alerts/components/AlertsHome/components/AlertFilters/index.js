@@ -1,11 +1,18 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { Checkbox, Collapse, DatePicker } from 'antd';
 import './styles.css';
+import { setSeverityFilter, getAlerts } from '../../../../actions';
 
 const { RangePicker } = DatePicker;
 const { Panel } = Collapse;
 
-function AlertFilters() {
+function AlertFilters({ setFilter, refreshMap }) {
+  const onChangeSeverity = severity => {
+    setFilter(severity);
+    refreshMap();
+  };
   return (
     <div className="AlertFilters">
       <div className="AlertFiltersDates">
@@ -27,7 +34,7 @@ function AlertFilters() {
           }}
         >
           <Panel header="SEVERITY" key="1">
-            <Checkbox.Group onChange={() => {}}>
+            <Checkbox.Group onChange={onChangeSeverity}>
               <Checkbox className="Extreme" value="Extreme">
                 Extreme
               </Checkbox>
@@ -51,4 +58,26 @@ function AlertFilters() {
   );
 }
 
-export default AlertFilters;
+const mapDispatchToProps = dispatch => ({
+  setFilter(severity) {
+    dispatch(setSeverityFilter(severity));
+  },
+  refreshMap() {
+    dispatch(getAlerts());
+  },
+});
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(AlertFilters);
+
+AlertFilters.propTypes = {
+  setFilter: PropTypes.func,
+  refreshMap: PropTypes.func,
+};
+
+AlertFilters.defaultProps = {
+  setFilter: () => {},
+  refreshMap: () => {},
+};

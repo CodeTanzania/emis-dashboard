@@ -12,7 +12,7 @@ const mockStore = configureMockStore(middlewares);
 describe('Alerts: Module', () => {
   describe('Alert Filter action creators', () => {
     it(`should crete an action of type ${Actions.SET_SEVERITY_FILTER}`, () => {
-      const severity = 'Extreme';
+      const severity = ['Extreme'];
       expect(Actions.setSeverityFilter(severity)).toEqual({
         type: Actions.SET_SEVERITY_FILTER,
         payload: {

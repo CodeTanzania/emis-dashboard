@@ -52,7 +52,7 @@ export const SAVE_DRAWN_GEOMETRY = 'SAVE_DRAWN_GEOMETRY';
  * @function
  * @name setSeverityFilter
  *
- * @param {String} severity - range of the dates
+ * @param {Array} severity - severity level values
  *
  * @returns {Object} - Redux action for fetching alerts
  *
