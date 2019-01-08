@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import * as ReactLeaflet from 'react-leaflet';
+import LayerSwitchControl from '../../../../common/components/LayerSwitchControls';
 // constants
 const { Map: LeafletMap, TileLayer } = ReactLeaflet;
 
@@ -24,9 +25,11 @@ function AlertBaseMap({ center, zoom, children, zoomControl }) {
       closePopupOnClick={false}
     >
       {children}
+      <LayerSwitchControl />
       <TileLayer
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-        url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
+        id="mapbox.light"
+        url="https://api.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoid29ybGRiYW5rLWVkdWNhdGlvbiIsImEiOiJIZ2VvODFjIn0.TDw5VdwGavwEsch53sAVxA#1.6/23.725906/-39.714135/0"
       />
     </LeafletMap>
   );

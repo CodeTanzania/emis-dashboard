@@ -16,6 +16,19 @@ import { withLeaflet } from 'react-leaflet';
  * @since 0.1.0
  */
 class DrawControls extends React.Component {
+  static propTypes = {
+    leaflet: PropTypes.shape({
+      map: PropTypes.object.isRequired,
+    }).isRequired,
+    isHideControls: PropTypes.bool,
+    onDrawCreated: PropTypes.func,
+  };
+
+  static defaultProps = {
+    isHideControls: false,
+    onDrawCreated: () => {},
+  };
+
   componentDidMount() {
     this.map = this.props.leaflet.map;
     const { isHideControls } = this.props;
@@ -70,16 +83,3 @@ class DrawControls extends React.Component {
 }
 
 export default withLeaflet(DrawControls);
-
-DrawControls.propTypes = {
-  leaflet: PropTypes.shape({
-    map: PropTypes.object.isRequired,
-  }).isRequired,
-  isHideControls: PropTypes.bool,
-  onDrawCreated: PropTypes.func,
-};
-
-DrawControls.defaultProps = {
-  isHideControls: false,
-  onDrawCreated: () => {},
-};
