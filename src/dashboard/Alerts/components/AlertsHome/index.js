@@ -7,7 +7,7 @@ import NewAlertButton from './components/NewAlertButton';
 import AlertSideBar from '../AlertSideBar';
 import AlertBaseMap from '../AlertsBaseMap';
 import AlertFilters from './components/AlertFilters';
-import AlertsDrawSupport from '../AlertsDrawSupport';
+import AlertsPointDrawSupport from '../AlertsPointsDrawSupport';
 import AlertLegend from './components/AlertLegend';
 import Display from './components/Display';
 
@@ -39,7 +39,7 @@ function AlertsHome({ center, zoom, loading }) {
         <AlertFilters />
       </AlertSideBar>
       <AlertBaseMap center={center} zoom={zoom} zoomControl={false}>
-        <AlertsDrawSupport />
+        <AlertsPointDrawSupport />
       </AlertBaseMap>
     </Spin>
   );
