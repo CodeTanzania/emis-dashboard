@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import MapPointsDrawSupport from '../../../../../../common/components/MapPointsDrawSupport';
 import { getSelectedIncident, activeIncidentAction } from '../../../../actions';
-import { showMarkers } from '../../../../helpers';
+// import { showMarkers } from '../../../../helpers';
 
 /**
  * Wraper component drawing Incidents markers and shapes (Eg. Polygons, Cirles and Points)
@@ -13,12 +13,12 @@ import { showMarkers } from '../../../../helpers';
  * to access map context
  *
  * @class
- * @name IncidentsDraw
+ * @name RenderAllIncidents
  *
  * @version 0.1.0
  * @since 0.1.0
  */
-class IncidentsDraw extends React.Component {
+class RenderAllIncidents extends React.Component {
   static propTypes = {
     incidents: PropTypes.arrayOf(
       PropTypes.shape({
@@ -36,19 +36,6 @@ class IncidentsDraw extends React.Component {
         _id: PropTypes.string,
       }).isRequired
     ),
-    selected: PropTypes.shape({
-      event: PropTypes.string,
-      incidentsTypeData: PropTypes.shape({
-        name: PropTypes.string,
-        nature: PropTypes.string.isRequired,
-        family: PropTypes.string.isRequired,
-        color: PropTypes.string,
-        _id: PropTypes.string,
-      }),
-      description: PropTypes.string.isRequired,
-      startedAt: PropTypes.string,
-      endedAt: PropTypes.string,
-    }).isRequired,
     incidentsAction: PropTypes.arrayOf(
       PropTypes.shape({
         name: PropTypes.string,
@@ -72,6 +59,7 @@ class IncidentsDraw extends React.Component {
     ).isRequired,
     setIncidentAction: PropTypes.func,
     getIncident: PropTypes.func,
+    showPoints: PropTypes.bool.isRequired,
   };
 
   static defaultProps = {
@@ -111,12 +99,13 @@ class IncidentsDraw extends React.Component {
   };
 
   render() {
-    const { incidents } = this.props;
+    const { incidents, showPoints } = this.props;
     const pointMarkers = incidents.map(({ epicentre }) => epicentre);
     return (
       <MapPointsDrawSupport
         points={pointMarkers}
-        pointToLayer={showMarkers}
+        // pointToLayer={showMarkers}
+        isShowPoints={showPoints}
         onEachFeature={this.onEachFeature}
       />
     );
@@ -126,12 +115,10 @@ class IncidentsDraw extends React.Component {
 const mapStateToProps = state => ({
   incidents:
     state.incidents.data && state.incidents.data ? state.incidents.data : [],
-  selected: state.selectedIncident.incident
-    ? state.selectedIncident.incident
-    : [],
   incidentsAction: state.incidents.incidentActionsData
     ? state.incidents.incidentActionsData
     : [],
+  showPoints: state.renderMapMarkers.showPoints,
 });
 
 const mapDispatchToProps = {
@@ -142,4 +129,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(IncidentsDraw);
+)(RenderAllIncidents);

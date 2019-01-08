@@ -14,8 +14,8 @@ import { getIncidentsSuccess } from '../../actions';
 
 import './styles.css';
 import 'leaflet-draw/dist/leaflet.draw.css';
-import IncidentsDraw from './components/IncidentsDraw/index';
-
+import RenderAllIncidents from './components/AllIncidents/index';
+import RenderSingleIncident from './components/SingleIncident/index';
 const { Map: LeafletMap, TileLayer, Popup } = ReactLeaflet;
 
 /**
@@ -178,7 +178,7 @@ class IncidentMap extends React.Component {
 
   render() {
     const { position, zoom, showPopup, hideButton, area } = this.state;
-    const { incidents } = this.props;
+    const { incidents, } = this.props;
     const spin = this.getSpinValue();
     return (
       <div>
@@ -195,7 +195,8 @@ class IncidentMap extends React.Component {
               clickedIncident={this.onSelectIncident}
               goBack={this.onCancelButton}
             />
-            <IncidentsDraw />
+            <RenderAllIncidents /> 
+            <RenderSingleIncident />
             <TileLayer
               attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
               id="mapbox.light"

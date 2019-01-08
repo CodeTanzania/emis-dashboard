@@ -40,6 +40,7 @@ export const SELECT_ACTIVE_INCIDENT = 'SELECT_ACTIVE_INCIDENT';
 export const SEARCH_INCIDENT_START = 'SEARCH_INCIDENT_START';
 export const SEARCH_INCIDENT_ERROR = 'SEARCH_INCIDENT_ERROR';
 export const SHOW_MAP_POINTS = 'SHOW_MAP_POINTS';
+export const  SHOW_MAP_POINT = 'SHOW_MAP_POINT';
 
 /* fetch incidents tasks  */
 export const GET_TASKS_START = 'GET_TASKS_START';
@@ -148,10 +149,15 @@ export const searchIncidentError = message => ({
   payload: { message },
 });
 
-export const showMapPoints = showPoint => ({
+export const showMapPoints = showPoints => ({
   type: SHOW_MAP_POINTS,
-  payload: { showPoint },
+  payload: { data: showPoints },
 });
+
+export const showMapPoint = showPoint => ({
+  type: SHOW_MAP_POINT,
+  payload:{data:showPoint}
+})
 
 export const getTasksStart = () => ({
   type: GET_TASKS_START,
@@ -190,7 +196,6 @@ export const getIncidentsSuccess = () => (dispatch, getState, { API }) => {
       const { data: receivedIncidents } = results;
       const data = receivedIncidents.map(result => {
         const epicentre = incidentToGeojson(result);
-
         return { ...result, epicentre };
       });
 
@@ -198,6 +203,7 @@ export const getIncidentsSuccess = () => (dispatch, getState, { API }) => {
         type: GET_INCIDENTS_SUCCESS,
         payload: { data: { ...results, data } },
       });
+      dispatch(showMapPoints(true));
     })
     .catch(error => dispatch(getIncidentsError(error)));
 };
@@ -225,6 +231,8 @@ export const getSelectedIncident = (incidentId = null) => (
     .then(incident => {
       const areaSelected = incidentToGeojson(incident);
       dispatch(selectIncidentSuccess({ ...incident, areaSelected }));
+      dispatch(showMapPoints(false));
+      dispatch(showMapPoint(true));
     })
     .catch(error => dispatch(selectIncidentError(error)));
 };

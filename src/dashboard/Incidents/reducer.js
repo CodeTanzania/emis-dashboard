@@ -21,6 +21,7 @@ import {
   SEARCH_INCIDENT_START,
   SELECT_INCIDENT_START,
   GET_INCIDENT_ACTION_START,
+  SHOW_MAP_POINT,
 } from './actions';
 
 /**
@@ -44,6 +45,7 @@ const initialState = {
   incidentActionsData: [],
   incident: null,
   isLoading: false,
+  isSelected: false,
 };
 
 const initialselectedState = {
@@ -56,30 +58,36 @@ const initialselectedState = {
 const initialFilters = {
   incidentDateFilter: [],
 };
+const initialMapState = {
+  showPoints: false,
+  showPoint: false
+};
 
 export function incidents(state = initialState, action) {
   switch (action.type) {
     case GET_INCIDENTS_START:
       return {
-        state,
+        ...state,
         isLoading: true,
-        error: null,
       };
     case GET_INCIDENTS_SUCCESS:
       return {
+        ...state,
         data: action.payload.data.data,
         total: action.payload.data.total,
-        error: null,
+        isLoading: false,
+        isSelected:false,
       };
     case GET_INCIDENT_FAILURE:
       return {
+        ...state,
         data: [],
         isLoading: false,
         error: null,
       };
     case GET_ACTIONS_START:
       return {
-        state,
+        ...state,
         isLoading: true,
         error: null,
       };
@@ -92,6 +100,7 @@ export function incidents(state = initialState, action) {
       };
     case GET_ACTIONS_ERROR:
       return {
+        ...state,
         incidentActionData: [],
         isLoading: false,
         error: null,
@@ -101,14 +110,9 @@ export function incidents(state = initialState, action) {
         ...state,
         data: [action.payload.incident, ...state.data],
       };
-    case SHOW_MAP_POINTS:
-      return {
-        ...state,
-        showPoints: action.payload.showPoints,
-      };
     case SELECT_INCIDENT_START:
       return {
-        state,
+        ...state,
         isLoading: true,
       };
     case SELECT_INCIDENT_SUCCESS:
@@ -116,10 +120,12 @@ export function incidents(state = initialState, action) {
         ...state,
         incident: action.payload.data,
         isLoading: false,
+        isSelected:true,
+
       };
     case SEARCH_INCIDENT_START:
       return {
-        state,
+        ...state,
         isLoading: true,
         error: null,
       };
@@ -202,6 +208,23 @@ export function filter(state = initialFilters, action) {
         ...state,
         incidentDateFilter: action.payload.selectedDate,
       };
+    default:
+      return state;
+  }
+}
+
+export function renderMapMarkers(state = initialMapState, action) {
+  switch (action.type) {
+    case SHOW_MAP_POINTS:
+      return {
+        ...state,
+        showPoints: action.payload.data,
+      };
+    case SHOW_MAP_POINT:
+      return {
+        ...state,
+        showPoint: action.payload.data,
+      }
     default:
       return state;
   }

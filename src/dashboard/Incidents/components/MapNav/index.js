@@ -83,17 +83,17 @@ class MapNav extends React.Component {
   render() {
     const {
       newIncidentButton,
-      IncidentSelected,
       incidents,
       goBack,
       hideButton,
     } = this.props;
 
     const { hideNav } = this.state;
+    const {isSelected} = this.props;
 
     return !hideNav ? (
       <Fragment>
-        {!IncidentSelected ? (
+        {!isSelected ? (
           <div>
             <div className="topNav">
               {!hideButton ? (
@@ -145,8 +145,10 @@ class MapNav extends React.Component {
 }
 const mapStateToProps = state => ({
   incidents:
-    state.incidents.data && state.incidents.data ? state.incidents.data : [],
+    state.incidents.data && state.incidents.data ? state.incidents.data : {},
   IncidentSelected: state.incidents.incident ? state.incidents.incident : null,
+  showPoints: state.renderMapMarkers.showPoint,
+  isSelected: state.incidents.isSelected,
 });
 
 const mapDispatchToProps = {
