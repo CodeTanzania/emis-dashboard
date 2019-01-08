@@ -7,6 +7,37 @@ import merge from 'lodash/merge';
  */
 
 /**
+ * generates costom svg  Icon url based  on the color
+ * supplied
+ *
+ * @function
+ * @name generateSvgIconUrl
+ *
+ * @param {Object} svgIconUrl
+ *
+ * @returns {string} human readable date
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function generateSvgIconUrl(fillColor = '#93c47d') {
+  const svg = `<svg id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 453.54 566.93">
+    <defs>
+      <style>
+        .cls-1 {
+          fill: ${fillColor};
+        }
+      </style>
+    </defs>
+    <title>Severity-Minor</title>
+    <path class="cls-1" d="M198.43,17.57A160.05,160.05,0,0,0,54.1,246.69c.56,1.19,144.33,282.88,144.33,282.88L341,250.19A160,160,0,0,0,198.43,17.57Zm0,256a96,96,0,1,1,96-96A96,96,0,0,1,198.43,273.57Z"/>
+    </svg>
+    `;
+
+  const svgIconUrl = encodeURI(`data:image/svg+xml,${svg}`).replace('#', '%23');
+  return svgIconUrl;
+}
+
+/**
  * converts ISO date string to human readable
  * date and time
  *
@@ -123,9 +154,9 @@ export const generateGeoJsonPolygon = (geometry, properties = {}) => ({
  * @since 0.1.0
  */
 export function alertToGeoJson(alert, type) {
-  const { centroid, _id: id, event, expectedAt, geometry } = alert;
+  const { centroid, _id: id, event, expectedAt, geometry, color } = alert;
   if (type === 'Point') {
-    const properties = { id, event, expectedAt };
+    const properties = { id, event, expectedAt, color };
     const point = generateGeoJsonPoint(centroid, properties);
     return point;
   }

@@ -18,6 +18,34 @@ import L from 'leaflet';
  * @since 0.1.0
  */
 class MapPointsDrawSupport extends React.Component {
+  static propTypes = {
+    pointToLayer: PropTypes.func,
+    onEachFeature: PropTypes.func,
+    points: PropTypes.arrayOf(
+      PropTypes.shape({
+        type: PropTypes.string,
+        properties: PropTypes.shape({
+          id: PropTypes.string,
+        }),
+        geometry: PropTypes.shape({
+          type: PropTypes.string,
+          coordinates: PropTypes.arrayOf(PropTypes.number),
+        }),
+      })
+    ),
+    leaflet: PropTypes.shape({
+      map: PropTypes.object.isRequired,
+    }).isRequired,
+    isShowPoints: PropTypes.bool,
+  };
+
+  static defaultProps = {
+    points: [],
+    isShowPoints: true,
+    onEachFeature: () => {},
+    pointToLayer: () => {},
+  };
+
   componentDidMount() {
     this.map = this.props.leaflet.map;
     const { isShowPoints, points } = this.props;
@@ -53,7 +81,7 @@ class MapPointsDrawSupport extends React.Component {
   };
 
   initializePointsLayer = () => {
-    const { onEachFeature } = this.props;
+    const { onEachFeature, pointToLayer } = this.props;
     const DefaultIcon = L.icon({
       iconUrl: icon,
       shadowUrl: iconShadow,
@@ -61,6 +89,7 @@ class MapPointsDrawSupport extends React.Component {
     L.Marker.prototype.options.icon = DefaultIcon;
     this.pointsLayer = L.geoJSON([], {
       onEachFeature,
+      pointToLayer,
     }).addTo(this.map);
   };
 
@@ -75,29 +104,3 @@ class MapPointsDrawSupport extends React.Component {
 }
 
 export default withLeaflet(MapPointsDrawSupport);
-
-MapPointsDrawSupport.propTypes = {
-  onEachFeature: PropTypes.func,
-  points: PropTypes.arrayOf(
-    PropTypes.shape({
-      type: PropTypes.string,
-      properties: PropTypes.shape({
-        id: PropTypes.string,
-      }),
-      geometry: PropTypes.shape({
-        type: PropTypes.string,
-        coordinates: PropTypes.arrayOf(PropTypes.number),
-      }),
-    })
-  ),
-  leaflet: PropTypes.shape({
-    map: PropTypes.object.isRequired,
-  }).isRequired,
-  isShowPoints: PropTypes.bool,
-};
-
-MapPointsDrawSupport.defaultProps = {
-  points: [],
-  isShowPoints: true,
-  onEachFeature: () => {},
-};
