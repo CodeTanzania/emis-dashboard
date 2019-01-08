@@ -3,16 +3,31 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Checkbox, Collapse, DatePicker } from 'antd';
 import './styles.css';
-import { setSeverityFilter, getAlerts } from '../../../../actions';
+import {
+  setSeverityFilter,
+  setExpectedAtFilter,
+  getAlerts,
+} from '../../../../actions';
 
 const { RangePicker } = DatePicker;
 const { Panel } = Collapse;
 
-function AlertFilters({ setFilter, refreshMap }) {
+function AlertFilters({
+  updateSeverityFilter,
+  updateExpectedAtFilter,
+  refreshMap,
+}) {
   const onChangeSeverity = severity => {
-    setFilter(severity);
+    updateSeverityFilter(severity);
     refreshMap();
   };
+
+  const onChangeDateFilter = dates => {
+    const transFormedToISODates = dates.map(date => date.toISOString());
+    updateExpectedAtFilter(transFormedToISODates);
+    refreshMap();
+  };
+
   return (
     <div className="AlertFilters">
       <div className="AlertFiltersDates">
@@ -21,7 +36,7 @@ function AlertFilters({ setFilter, refreshMap }) {
           showTime={{ format: 'HH:mm' }}
           format="YYYY-MM-DD HH:mm"
           placeholder={['From', 'To']}
-          onChange={() => {}}
+          onChange={onChangeDateFilter}
         />
       </div>
       <div className="AlertFilterSeverity">
@@ -59,8 +74,11 @@ function AlertFilters({ setFilter, refreshMap }) {
 }
 
 const mapDispatchToProps = dispatch => ({
-  setFilter(severity) {
+  updateSeverityFilter(severity) {
     dispatch(setSeverityFilter(severity));
+  },
+  updateExpectedAtFilter(dates) {
+    dispatch(setExpectedAtFilter(dates));
   },
   refreshMap() {
     dispatch(getAlerts());
@@ -73,11 +91,13 @@ export default connect(
 )(AlertFilters);
 
 AlertFilters.propTypes = {
-  setFilter: PropTypes.func,
+  updateSeverityFilter: PropTypes.func,
+  updateExpectedAtFilter: PropTypes.func,
   refreshMap: PropTypes.func,
 };
 
 AlertFilters.defaultProps = {
-  setFilter: () => {},
+  updateSeverityFilter: () => {},
+  updateExpectedAtFilter: () => {},
   refreshMap: () => {},
 };

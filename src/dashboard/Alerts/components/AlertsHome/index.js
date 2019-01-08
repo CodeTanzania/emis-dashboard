@@ -30,8 +30,10 @@ function AlertsHome({ center, zoom, loading }) {
     >
       <AlertLegend />
       <AlertNavBar>
-        <NewAlertButton />
-        <Display />
+        <React.Fragment>
+          <NewAlertButton />
+          <Display />
+        </React.Fragment>
       </AlertNavBar>
       <AlertSideBar title="Filter">
         <AlertFilters />

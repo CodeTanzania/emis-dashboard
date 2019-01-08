@@ -6,7 +6,7 @@ import './styles.css';
 export default function AlertLegend() {
   const renderLegendItems = data =>
     data.map(({ property, value }) => (
-      <LegendItem property={property} value={value} />
+      <LegendItem key={value} property={property} value={value} />
     ));
   return (
     <div className="AlertLegend">

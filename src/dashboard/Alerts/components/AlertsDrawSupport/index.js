@@ -28,7 +28,7 @@ import {
 class AlertsDrawSupport extends React.Component {
   static propTypes = {
     history: PropTypes.shape({
-      push: PropTypes.string,
+      push: PropTypes.func,
     }).isRequired,
     showPoints: PropTypes.bool.isRequired,
     points: PropTypes.arrayOf(
