@@ -40,7 +40,9 @@ export const SELECT_ACTIVE_INCIDENT = 'SELECT_ACTIVE_INCIDENT';
 export const SEARCH_INCIDENT_START = 'SEARCH_INCIDENT_START';
 export const SEARCH_INCIDENT_ERROR = 'SEARCH_INCIDENT_ERROR';
 export const SHOW_MAP_POINTS = 'SHOW_MAP_POINTS';
-export const  SHOW_MAP_POINT = 'SHOW_MAP_POINT';
+export const SHOW_MAP_POINT = 'SHOW_MAP_POINT';
+export const SHOW_POLYGONS = 'SHOW_POLYGONS';
+
 
 /* fetch incidents tasks  */
 export const GET_TASKS_START = 'GET_TASKS_START';
@@ -157,6 +159,11 @@ export const showMapPoints = showPoints => ({
 export const showMapPoint = showPoint => ({
   type: SHOW_MAP_POINT,
   payload:{data:showPoint}
+});
+
+export const showMapPolygons = showPolygons => ({
+  type: SHOW_POLYGONS,
+  payload: {data: showMapPolygons}
 })
 
 export const getTasksStart = () => ({

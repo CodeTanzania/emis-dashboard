@@ -45,7 +45,9 @@ class MapPointsDrawSupport extends React.Component {
   showPointsLayer = () => this.pointsLayer.addTo(this.map);
 
   updatePointsLayer = isShowPoints => {
+    const  position = [-6.7161, 37.0804];
     if (isShowPoints && !this.map.hasLayer(this.pointsLayer)) {
+      this.map.setView(position, 7);
       this.showPointsLayer();
     } else if (!isShowPoints && this.map.hasLayer(this.pointsLayer)) {
       this.hidePointsLayer();

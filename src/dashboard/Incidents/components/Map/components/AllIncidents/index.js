@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import MapPointsDrawSupport from '../../../../../../common/components/MapPointsDrawSupport';
 import { getSelectedIncident, activeIncidentAction } from '../../../../actions';
+import {incidents}  from '../../../../helpers'
 // import { showMarkers } from '../../../../helpers';
 
 /**
@@ -18,6 +19,8 @@ import { getSelectedIncident, activeIncidentAction } from '../../../../actions';
  * @version 0.1.0
  * @since 0.1.0
  */
+
+ 
 class RenderAllIncidents extends React.Component {
   static propTypes = {
     incidents: PropTypes.arrayOf(
@@ -99,7 +102,7 @@ class RenderAllIncidents extends React.Component {
   };
 
   render() {
-    const { incidents, showPoints } = this.props;
+    const {  showPoints } = this.props;
     const pointMarkers = incidents.map(({ epicentre }) => epicentre);
     return (
       <MapPointsDrawSupport

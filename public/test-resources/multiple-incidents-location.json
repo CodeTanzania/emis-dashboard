@@ -1,0 +1,116 @@
+{
+  "type": {
+    "nature": "Natural",
+    "family": "Geophysical",
+    "name": "Volcanic Activity",
+    "color": "#EFA28F",
+    "_id": "5bf96bf6785c090004a02add"
+  },
+  "number": "B0BDA1C7-862E-4934-963A-A50EB17043BF",
+  "event": "Quia voluptatum quam exercitationem totam distinctio enim.",
+  "causes": [
+    "Magni placeat asperiores culpa consequatur maxime odit est voluptatibus."
+  ],
+  "description": "Autem libero et unde ut aut voluptates molestiae.",
+  "startedAt": "2018-12-24T10:08:38.143Z",
+  "areas": ["Bedfordshire"],
+  "affected": [
+    {
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [34.2169189453125, -4.713302984798316],
+            [34.5025634765625, -5.249597728843329],
+            [35.013427734375, -5.118301062622335],
+            [35.0299072265625, -4.603802664823001],
+            [34.2169189453125, -4.713302984798316]
+          ]
+        ]
+      }
+    },
+    {
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [35.2276611328125, -5.659718554577273],
+            [35.27984619140625, -5.804559475246757],
+            [35.42266845703125, -5.561315286651835],
+            [35.5078125, -5.71711274591103],
+            [35.52703857421875, -5.632385980975881],
+            [35.62042236328125, -5.725311447610142],
+            [35.55725097656249, -5.49843789742656],
+            [35.364990234375, -5.369928743247035],
+            [35.2276611328125, -5.659718554577273]
+          ]
+        ]
+      }
+    },
+    {
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [36.96624755859375, -10.919617760254685],
+            [37.06512451171875, -10.765857581097043],
+            [36.9305419921875, -10.730778438271521],
+            [36.6119384765625, -11.108337084308143],
+            [37.2491455078125, -11.057125245224855],
+            [37.02667236328124, -11.154150587863198],
+            [37.4249267578125, -11.197262582874892],
+            [37.4249267578125, -10.919617760254685],
+            [36.96624755859375, -10.919617760254685]
+          ]
+        ]
+      }
+    },
+    {
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [35.43365478515625, -10.074332931500068],
+            [36.0186767578125, -10.306812602471453],
+            [36.24114990234375, -9.925565912405494],
+            [35.63140869140625, -9.912038270107574],
+            [35.44464111328125, -9.79838411067951],
+            [35.43365478515625, -10.074332931500068]
+          ]
+        ]
+      }
+    }
+  ],
+  "epicentre": {
+    "type": "Feature",
+    "properties": {
+      "number": "B0BDA1C7-862E-4934-963A-A50EB17043BF",
+      "event": "Quia voluptatum quam exercitationem totam distinctio enim.",
+      "causes": [
+        "Magni placeat asperiores culpa consequatur maxime odit est voluptatibus."
+      ],
+      "areas": ["Bedfordshire"],
+      "remarks": ["Recusandae odio ut dolore possimus in ut tempore."],
+      "description": "Autem libero et unde ut aut voluptates molestiae.",
+      "startedAt": "2018-12-24T10:08:38.143Z",
+      "endedAt": "2018-10-26T03:13:12.515Z",
+      "incidenttype": {
+        "nature": "Natural",
+        "family": "Geophysical",
+        "name": "Volcanic Activity",
+        "color": "#EFA28F",
+        "_id": "5bf96bf6785c090004a02add"
+      },
+      "_id": "5c345fc85a7a800004c28992"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [39.06558075493506, -2.8934711655595677]
+    }
+  },
+  "remarks": ["Recusandae odio ut dolore possimus in ut tempore."],
+  "endedAt": "2018-10-26T03:13:12.515Z",
+  "_id": "5c345fc85a7a800004c28992",
+  "updatedAt": "2019-01-08T08:31:04.706Z",
+  "createdAt": "2019-01-08T08:31:04.706Z"
+}

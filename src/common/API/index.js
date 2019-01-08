@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const INCIDENTS_API = 'https://emis-incident.herokuapp.com/v1/';
+const INCIDENTS_TEST_API = 'http://localhost:3001/test-resources/multiple-incidents-location.json'
 const API_BASE_URL =
   process.env.REACT_APP_API_BASE_URL || 'https://emis-plan.herokuapp.com';
 
@@ -382,7 +383,8 @@ export function createIncident(data) {
 
 /* Api for displaying incident by Id */
 export function getIncidentById(incidentId) {
-  const url = Axios.get(`${INCIDENTS_API}/incidents/${incidentId}`).then(
+  console.log(incidentId)
+  const url = Axios.get(`${INCIDENTS_TEST_API}`).then(
     res => res.data
   );
   return url;
