@@ -2,7 +2,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import * as API from '../../../common/API';
 import * as Actions from '../actions';
-import { alert, polygons } from '../../../common/data/alertTestData';
+import { alert, polygons, polygon } from '../../../common/data/alertTestData';
 
 jest.mock('../../../common/API');
 
@@ -11,9 +11,24 @@ const mockStore = configureMockStore(middlewares);
 
 describe('Alerts: Module', () => {
   describe('Alerts: Actions Creators', () => {
-    it(`should create an action of type ${Actions.GET_ALERTS_START}`, () => {
-      expect(Actions.getAlertsStart()).toEqual({
-        type: Actions.GET_ALERTS_START,
+    it(`should create an action of type ${Actions.POST_ALERT_START}`, () => {
+      expect(Actions.postAlertStart()).toEqual({
+        type: Actions.POST_ALERT_START,
+      });
+    });
+
+    it(`should create an action of type ${Actions.POST_ALERT_SUCCESS}`, () => {
+      expect(Actions.postAlertSuccess()).toEqual({
+        type: Actions.POST_ALERT_SUCCESS,
+      });
+    });
+
+    it(`should create an action of type ${Actions.POST_ALERT_ERROR}`, () => {
+      const error = new Error();
+      expect(Actions.postAlertError(error)).toEqual({
+        type: Actions.POST_ALERT_ERROR,
+        payload: { data: error },
+        error: true,
       });
     });
 
@@ -26,19 +41,41 @@ describe('Alerts: Module', () => {
       });
     });
 
-    it(`should create an action of type ${Actions.GET_ALERTS_SUCCESS}`, () => {
-      const alerts = [];
+    it(`should create an action of type ${Actions.GET_ALERT_START}`, () => {
+      expect(Actions.getAlertStart()).toEqual({
+        type: Actions.GET_ALERT_START,
+      });
+    });
 
-      expect(Actions.getAlertsSuccess(alerts)).toEqual({
-        type: Actions.GET_ALERTS_SUCCESS,
+    it(`should create an action of type ${Actions.GET_ALERT_SUCCESS}`, () => {
+      expect(Actions.getAlertSuccess({})).toEqual({
+        type: Actions.GET_ALERT_SUCCESS,
         payload: {
-          data: alerts,
-        },
-        meta: {
-          page: 1,
-          total: 0,
+          data: {},
         },
       });
+    });
+
+    it(`should create an action of type ${Actions.GET_ALERT_ERROR}`, () => {
+      const error = new Error();
+
+      expect(Actions.getAlertError(error)).toEqual({
+        type: Actions.GET_ALERT_ERROR,
+        payload: {
+          data: error,
+        },
+        error: true,
+      });
+    });
+
+    it(`should create an action of type ${Actions.GET_ALERTS_START}`, () => {
+      expect(Actions.getAlertsStart()).toEqual({
+        type: Actions.GET_ALERTS_START,
+      });
+    });
+
+    it(`should create an action of type ${Actions.GET_ALERTS_SUCCESS}`, () => {
+      const alerts = [];
 
       expect(Actions.getAlertsSuccess(alerts, 2, 40)).toEqual({
         type: Actions.GET_ALERTS_SUCCESS,
@@ -66,6 +103,15 @@ describe('Alerts: Module', () => {
   });
 
   describe('AlertsMap: Action Creators', () => {
+    it(`should create an action of type ${Actions.SAVE_DRAWN_GEOMETRY}`, () => {
+      const { geometry } = polygon;
+      expect(Actions.saveDrawnGeometry(geometry)).toEqual({
+        type: Actions.SAVE_DRAWN_GEOMETRY,
+        payload: {
+          data: geometry,
+        },
+      });
+    });
     it(`should create an action of type ${
       Actions.SET_SHOW_SELECTED_GEOJSON
     }`, () => {
@@ -110,6 +156,95 @@ describe('Alerts: Module', () => {
   });
 
   describe(`Thunks`, () => {
+    it(`should dispatch an action of type ${
+      Actions.POST_ALERT_SUCCESS
+    } when create alert is successful`, () => {
+      // mock API call
+      API.postAlert.mockResolvedValueOnce({});
+      API.getAlerts.mockResolvedValueOnce({
+        data: {
+          data: [],
+          pages: 2,
+          total: 200,
+          page: 1,
+        },
+      });
+      const store = mockStore({
+        Alerts: {
+          data: [],
+        },
+      });
+
+      const expectedActions = [
+        { type: Actions.POST_ALERT_START },
+        { type: Actions.POST_ALERT_SUCCESS },
+        { type: Actions.GET_ALERTS_START },
+        {
+          type: Actions.GET_ALERTS_SUCCESS,
+          payload: {
+            data: [],
+          },
+          meta: {
+            page: 1,
+            total: 200,
+          },
+        },
+        {
+          type: Actions.STORE_MAP_POINTS,
+          payload: {
+            data: [],
+          },
+        },
+        {
+          type: Actions.SET_SHOWPOINTS_VALUE,
+          payload: {
+            data: true,
+          },
+        },
+      ];
+
+      return store.dispatch(Actions.postAlert({})).then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+    });
+
+    it(`should dispatch an action of type ${
+      Actions.POST_ALERT_ERROR
+    } when creating alert fails`, () => {
+      const error = {
+        status: 404,
+        code: 404,
+        name: 'Error',
+        message: 'Not Found',
+        developerMessage: 'Not Found',
+        userMessage: 'Not Found',
+        error: 'Error',
+        error_description: 'Not Found',
+      };
+
+      const store = mockStore({
+        ALERTs: {
+          data: [],
+        },
+      });
+
+      const expectedActions = [
+        { type: Actions.POST_ALERT_START },
+        {
+          type: Actions.POST_ALERT_ERROR,
+          payload: { data: error },
+          error: true,
+        },
+      ];
+
+      // mock API calls
+      API.postAlert.mockRejectedValueOnce(error);
+
+      return store.dispatch(Actions.postAlert({})).then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+    });
+
     it(`should dispatch  actions of type ${Actions.SET_SELECTED_ALERT} and ${
       Actions.SET_SELECTED_GEOJSON
     } `, () => {
@@ -222,11 +357,44 @@ describe('Alerts: Module', () => {
       expect(store.getActions()).toEqual(expectedActions);
     });
 
-    it(`should dispatch  actions of type ${Actions.STORE_MAP_POINTS}, ${
-      Actions.GET_ALERTS_SUCCESS
-    } and  ${
-      Actions.SET_SHOWPOINTS_VALUE
-    } when fetching alerts is successfully`, () => {
+    it(`should dispatch  actions of type ${
+      Actions.GET_ALERT_SUCCESS
+    } when fetch alert is successful`, () => {
+      const store = mockStore({
+        alerts: {
+          selected: null,
+          loading: false,
+        },
+        alertsMap: {
+          shapes: [],
+        },
+      });
+
+      // mock API calls
+      API.getAlert.mockResolvedValueOnce({ data: alert });
+
+      const expectedActions = [
+        { type: Actions.GET_ALERT_START },
+        {
+          type: Actions.GET_ALERT_SUCCESS,
+          payload: {
+            data: alert,
+          },
+        },
+        {
+          type: Actions.SET_SELECTED_GEOJSON,
+          payload: {
+            data: polygons,
+          },
+        },
+      ];
+
+      return store.dispatch(Actions.getAlertOperation('jkjlkkj')).then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+    });
+
+    it(`should dispatch  actions of type ${Actions.GET_ALERTS_SUCCESS}`, () => {
       const store = mockStore({
         alerts: {
           data: [],

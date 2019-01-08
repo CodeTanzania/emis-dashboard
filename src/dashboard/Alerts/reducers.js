@@ -2,11 +2,15 @@ import {
   GET_ALERTS_START,
   GET_ALERTS_SUCCESS,
   GET_ALERTS_ERROR,
+  GET_ALERT_START,
+  GET_ALERT_SUCCESS,
+  GET_ALERT_ERROR,
   STORE_MAP_POINTS,
   SET_SELECTED_ALERT,
   SET_SELECTED_GEOJSON,
   SET_SHOW_SELECTED_GEOJSON,
   SET_SHOWPOINTS_VALUE,
+  SAVE_DRAWN_GEOMETRY,
 } from './actions';
 
 /**
@@ -23,6 +27,7 @@ const defaultAlertsMapState = {
   zoom: 7,
   points: [],
   shapes: [],
+  drawnGeometry: null,
   showPoints: false,
   showShapes: false,
 };
@@ -34,6 +39,7 @@ const defaultAlertsState = {
   total: 0,
   selected: null,
   loading: false,
+  loadingSelected: false,
   filters: {},
   error: null,
 };
@@ -77,6 +83,10 @@ export function alertsMap(state = defaultAlertsMapState, action) {
       return Object.assign({}, state, {
         showPoints: action.payload.data,
       });
+    case SAVE_DRAWN_GEOMETRY:
+      return Object.assign({}, state, {
+        drawnGeometry: action.payload.data,
+      });
     default:
       return state;
   }
@@ -119,7 +129,21 @@ export function alerts(state = defaultAlertsState, action) {
     case GET_ALERTS_ERROR:
       return Object.assign({}, state, {
         error: action.payload.data,
-        loading: false,
+        loadingSelected: false,
+      });
+    case GET_ALERT_START:
+      return Object.assign({}, state, {
+        loadingSelected: true,
+      });
+    case GET_ALERT_SUCCESS:
+      return Object.assign({}, state, {
+        selected: action.payload.data,
+        loadingSelected: false,
+      });
+    case GET_ALERT_ERROR:
+      return Object.assign({}, state, {
+        error: action.payload.data,
+        loadingSelected: false,
       });
     case SET_SELECTED_ALERT:
       return Object.assign({}, state, {

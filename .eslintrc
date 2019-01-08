@@ -6,10 +6,7 @@
     "plugin:prettier/recommended",
     "plugin:jest/recommended"
   ],
-  "plugins": [
-    "prettier",
-    "jest"
-  ],
+  "plugins": ["prettier", "jest"],
   "parser": "babel-eslint",
   "rules": {
     "react/destructuring-assignment": [
@@ -23,20 +20,13 @@
     "react/jsx-filename-extension": [
       1,
       {
-        "extensions": [
-          ".js",
-          ".jsx"
-        ]
+        "extensions": [".js", ".jsx"]
       }
     ],
     "import/no-extraneous-dependencies": [
       "error",
       {
-        "devDependencies": [
-          "**/*.test.js",
-          "**/*.spec.js",
-          "**/stories/*"
-        ]
+        "devDependencies": ["**/*.test.js", "**/*.spec.js", "**/stories/*"]
       }
     ],
     "jest/no-disabled-tests": "warn",
@@ -46,6 +36,7 @@
     "jest/valid-expect": "error"
   },
   "globals": {
-    "fetch": false
+    "fetch": false,
+    "document": false
   }
 }

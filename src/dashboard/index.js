@@ -106,7 +106,7 @@ export default function Dashboard() {
               <Route path="/incidents" component={Incidents} />
               <Route path="/stakeholders" exact component={Stakeholders} />
               <Route path="/resources" exact component={Resources} />
-              <Route path="/alerts" exact component={Alerts} />
+              <Route path="/alerts" component={Alerts} />
               <Route path="/settings/incidentType" exact component={Settings} />
             </Switch>
           </Content>

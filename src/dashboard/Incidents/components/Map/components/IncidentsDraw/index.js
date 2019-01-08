@@ -2,9 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
-import { bindActionCreators } from 'redux';
 import MapPointsDrawSupport from '../../../../../../common/components/MapPointsDrawSupport';
-import { getSelectedIncident } from '../../../../actions';
+import { getSelectedIncident, activeIncidentAction } from '../../../../actions';
 import { showMarkers } from '../../../../helpers';
 
 /**
@@ -50,13 +49,35 @@ class IncidentsDraw extends React.Component {
       startedAt: PropTypes.string,
       endedAt: PropTypes.string,
     }).isRequired,
-
+    incidentsAction: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string,
+        description: PropTypes.string.isRequired,
+        phase: PropTypes.string.isRequired,
+        incident: PropTypes.shape({
+          event: PropTypes.string.isRequired,
+          startedAt: PropTypes.string,
+          endedAt: PropTypes.string,
+          _id: PropTypes.string,
+        }),
+        incidentType: PropTypes.shape({
+          name: PropTypes.string,
+          nature: PropTypes.string.isRequired,
+          family: PropTypes.string.isRequired,
+          color: PropTypes.string,
+          _id: PropTypes.string,
+        }),
+        _id: PropTypes.string,
+      })
+    ).isRequired,
+    setIncidentAction: PropTypes.func,
     getIncident: PropTypes.func,
   };
 
   static defaultProps = {
     incidents: null,
     getIncident: null,
+    setIncidentAction: () => {},
   };
 
   constructor(props) {
@@ -65,8 +86,18 @@ class IncidentsDraw extends React.Component {
   }
 
   onClickIncident = e => {
-    const { getIncident } = this.props;
+    const { getIncident, incidentsAction, setIncidentAction } = this.props;
     const id = get(e, 'target.feature.properties._id');
+    incidentsAction.filter(incidentAction => {
+      const { incident } = incidentAction;
+      const { _id: incidentId } = incident;
+      if (incidentId === id) {
+        const { _id: actionId } = incidentAction;
+        return setIncidentAction(actionId);
+      }
+      return null;
+    });
+
     getIncident(id);
   };
 
@@ -98,11 +129,15 @@ const mapStateToProps = state => ({
   selected: state.selectedIncident.incident
     ? state.selectedIncident.incident
     : [],
+  incidentsAction: state.incidents.incidentActionsData
+    ? state.incidents.incidentActionsData
+    : [],
 });
 
-const mapDispatchToProps = dispatch => ({
-  getIncident: bindActionCreators(getSelectedIncident, dispatch),
-});
+const mapDispatchToProps = {
+  getIncident: getSelectedIncident,
+  setIncidentAction: activeIncidentAction,
+};
 
 export default connect(
   mapStateToProps,

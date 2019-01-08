@@ -1,30 +1,57 @@
 import { incidentToGeojson } from './helpers'; /* const actions */
 
 /* Actions for the incident */
-export const CREATE_INCIDENT_TYPE_SUCCESS = 'INCIDENTS:CREATE_INCIDENT_TYPE';
+
+/* fetch all incidents */
 export const GET_INCIDENTS_START = 'INCIDENTS :GET_INCIDENTS_START';
 export const GET_INCIDENTS_SUCCESS = 'INCIDENTS :GET_INCIDENTS_SUCCESS';
 export const GET_INCIDENT_FAILURE = 'INCIDENTS :GET_INCIDENTS_FAILURE';
+
+/* select specific incident   */
 export const SELECT_INCIDENT_START = 'INCIDENTS :SELECT_INCIDENT_START';
 export const SELECT_INCIDENT_SUCCESS = 'INCIDENTS :SELECT_INCIDENT_SUCCESS';
 export const SELECT_INCIDENT_ERROR = 'INCIDENTS :SELECT_INCIDENT_ERROR';
-export const SELECT_ACTIVE_INCIDENT = 'SELECT_ACTIVE_INCIDENT';
+
+/* fetch incident actions  */
 export const GET_ACTIONS_START = 'GET_ACTIONS_START';
 export const GET_ACTIONS_SUCCESS = 'GET_ACTIONS_SUCCESS';
 export const GET_ACTIONS_ERROR = 'GET_ACTIONS_ERROR';
+
+/* fetch incident action by id */
 export const GET_INCIDENT_ACTION_ERROR = 'GET_INCIDENT_ACTION_ERROR';
 export const GET_INCIDENT_ACTION_START = 'GET_INCIDENT_ACTION_START';
 export const GET_INCIDENT_ACTION_SUCCESS = 'GET_INCIDENT_ACTION_SUCCESS';
+
+/* post incident types */
 export const POST_INCIDENT_START = 'POST_INCIDENT_START';
 export const POST_INCIDENT_SUCCESS = 'POST_INCIDENT_SUCCESS';
 export const POST_INCIDENT_ERROR = 'POST_INCIDENT_ERROR';
+
+/* post incident action types */
+export const CREATE_INCIDENT_ACTION_START = 'CREATE_INCIDENT_ACTION_START';
+export const CREATE_INCIDENT_ACTION_SUCCESS = 'CREATE_INCIDENT_ACION_SUCCESS';
+export const CREATE_INCIDENT_ACTION_ERROR = 'CREATE_INCIDENT_ACTION_ERROR';
+
+/* filter incident types */
 export const FILTER_INCIDENT_BY_DATE = 'FILTER_INCIDENT_BY_DATE';
+export const SELECT_ACTIVE_INCIDENT = 'SELECT_ACTIVE_INCIDENT';
+
+/* search incidents */
 export const SEARCH_INCIDENT_START = 'SEARCH_INCIDENT_START';
 export const SEARCH_INCIDENT_ERROR = 'SEARCH_INCIDENT_ERROR';
 export const SHOW_MAP_POINTS = 'SHOW_MAP_POINTS';
 
-/* Actions creater */
+/* fetch incidents tasks  */
+export const GET_TASKS_START = 'GET_TASKS_START';
+export const GET_TASKS_SUCCESS = 'GET_TASKS_SUCCESS';
+export const GET_TASKS_ERROR = 'GET_TASKS_ERROR';
 
+/* fetch incident task  */
+export const GET_TASK_START = 'GET_TASK_START';
+export const GET_TASK_SUCCESS = 'GET_TASK_SUCCESS';
+export const GET_TASK_ERROR = 'GET_TASK_ERROR';
+
+/* Actions creater */
 export const getIncidentsStart = () => ({
   type: GET_INCIDENTS_START,
 });
@@ -85,11 +112,6 @@ export const getNavActive = activeItem => ({
   payload: { activeItem },
 });
 
-export const filterIncidentByDate = selectedDate => ({
-  type: FILTER_INCIDENT_BY_DATE,
-  payload: { selectedDate },
-});
-
 export const createIncidentStart = () => ({
   type: POST_INCIDENT_START,
 });
@@ -99,6 +121,22 @@ export const createIncidentFail = message => ({
   payload: {
     message,
   },
+});
+
+export const createIncidentActionStart = () => ({
+  type: CREATE_INCIDENT_ACTION_START,
+});
+
+export const createIncidentActionFail = message => ({
+  type: CREATE_INCIDENT_ACTION_ERROR,
+  payload: {
+    message,
+  },
+});
+
+export const filterIncidentByDate = selectedDate => ({
+  type: FILTER_INCIDENT_BY_DATE,
+  payload: { selectedDate },
 });
 
 export const searchIncidentStart = () => ({
@@ -113,6 +151,34 @@ export const searchIncidentError = message => ({
 export const showMapPoints = showPoint => ({
   type: SHOW_MAP_POINTS,
   payload: { showPoint },
+});
+
+export const getTasksStart = () => ({
+  type: GET_TASKS_START,
+});
+
+export const getTasksSuccess = incidentTasks => ({
+  type: GET_TASKS_SUCCESS,
+  payload: { data: incidentTasks },
+});
+
+export const getTasksError = message => ({
+  type: GET_TASKS_ERROR,
+  payload: { message },
+});
+
+export const getIncidentTaskStart = () => ({
+  type: GET_TASK_START,
+});
+
+export const getIncidentTaskSuccess = incidentTasks => ({
+  type: GET_TASK_SUCCESS,
+  payload: { data: incidentTasks },
+});
+
+export const getIncidentTaskError = message => ({
+  type: GET_TASK_ERROR,
+  payload: { message },
 });
 
 export const getIncidentsSuccess = () => (dispatch, getState, { API }) => {
@@ -172,6 +238,13 @@ export const getIncidentActions = () => (dispatch, getState, { API }) => {
     .catch(error => dispatch(getActionsError(error)));
 };
 
+export const createIncidentAction = action => (dispatch, getState, { API }) => {
+  dispatch(createIncidentAction());
+  API.CreateIncidentAction(action)
+    .then(() => dispatch(getIncidentActions()))
+    .catch(error => dispatch(createIncidentActionFail(error)));
+};
+
 export const activeIncidentAction = (incidentId = null) => (
   dispatch,
   getState,
@@ -202,4 +275,26 @@ export const searchIncident = searchData => (dispatch, getState, { API }) => {
       });
     })
     .catch(error => dispatch(searchIncidentError(error)));
+};
+
+export const fetchIncidentTasks = () => (dispatch, getState, { API }) => {
+  dispatch(getTasksStart());
+  API.getIncidentTasks()
+    .then(tasks => {
+      dispatch(getTasksSuccess(tasks));
+    })
+    .catch(error => dispatch(getTasksError(error)));
+};
+
+export const getIncidentTaskById = incidentId => (
+  dispatch,
+  getState,
+  { API }
+) => {
+  dispatch(getIncidentTaskStart());
+  API.getIncidentTasksById(incidentId)
+    .then(tasks => {
+      dispatch(getIncidentTaskSuccess(tasks));
+    })
+    .catch(error => dispatch(getIncidentTaskError(error)));
 };

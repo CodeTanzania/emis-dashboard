@@ -12,6 +12,15 @@ import {
   POST_INCIDENT_SUCCESS,
   FILTER_INCIDENT_BY_DATE,
   SHOW_MAP_POINTS,
+  GET_TASKS_START,
+  GET_TASKS_SUCCESS,
+  GET_TASKS_ERROR,
+  GET_TASK_START,
+  GET_TASK_SUCCESS,
+  GET_TASK_ERROR,
+  SEARCH_INCIDENT_START,
+  SELECT_INCIDENT_START,
+  GET_INCIDENT_ACTION_START,
 } from './actions';
 
 /**
@@ -31,14 +40,17 @@ import {
 const initialState = {
   data: [],
   error: null,
-  page: 1,
   total: 0,
   incidentActionsData: [],
+  incident: null,
+  isLoading: false,
 };
 
 const initialselectedState = {
-  incident: null,
   incidentAction: null,
+  incidentTasks: [],
+  incidentTask: null,
+  isLoadingData: false,
 };
 
 const initialFilters = {
@@ -53,7 +65,6 @@ export function incidents(state = initialState, action) {
         isLoading: true,
         error: null,
       };
-
     case GET_INCIDENTS_SUCCESS:
       return {
         data: action.payload.data.data,
@@ -95,6 +106,23 @@ export function incidents(state = initialState, action) {
         ...state,
         showPoints: action.payload.showPoints,
       };
+    case SELECT_INCIDENT_START:
+      return {
+        state,
+        isLoading: true,
+      };
+    case SELECT_INCIDENT_SUCCESS:
+      return {
+        ...state,
+        incident: action.payload.data,
+        isLoading: false,
+      };
+    case SEARCH_INCIDENT_START:
+      return {
+        state,
+        isLoading: true,
+        error: null,
+      };
     default:
       return state;
   }
@@ -102,22 +130,54 @@ export function incidents(state = initialState, action) {
 
 export function selectedIncident(state = initialselectedState, action) {
   switch (action.type) {
-    case SELECT_INCIDENT_SUCCESS:
+    case GET_INCIDENT_ACTION_START:
       return {
         ...state,
-        incident: action.payload.data,
+        isLoadingData: true,
       };
     case GET_INCIDENT_ACTION_SUCCESS:
       return {
         ...state,
         incidentAction: action.payload.data,
+        isLoadingData: false,
       };
     case GET_INCIDENT_ACTION_ERROR:
       return {
         ...state,
         error: action.payload,
+        isLoadingData: false,
       };
-
+    case GET_TASKS_START:
+      return {
+        ...state,
+      };
+    case GET_TASKS_SUCCESS:
+      return {
+        ...state,
+        incidentTasks: action.payload.data.data,
+      };
+    case GET_TASKS_ERROR:
+      return {
+        ...state,
+        error: action.payload,
+      };
+    case GET_TASK_START:
+      return {
+        ...state,
+        isLoadingData: true,
+      };
+    case GET_TASK_SUCCESS:
+      return {
+        ...state,
+        incidentTask: action.payload.data,
+        isLoadingData: false,
+      };
+    case GET_TASK_ERROR:
+      return {
+        ...state,
+        error: action.payload,
+        isLoadingData: false,
+      };
     default:
       return state;
   }

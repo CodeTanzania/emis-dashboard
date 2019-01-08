@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { bindActionCreators } from 'redux';
-import { Button, List, Input, Row, Col, Layout } from 'antd';
+import { Button, List, Input, Row, Col, Layout, Icon } from 'antd';
 import { connect } from 'react-redux';
 import IncidentFilter from '../IncidentFilter';
 import IncidentsList from '../IncidentsList';
@@ -39,7 +38,7 @@ class MapNav extends React.Component {
       startedAt: PropTypes.string,
       endedAt: PropTypes.string,
       _id: PropTypes.string,
-    }).isRequired,
+    }),
     incidents: PropTypes.arrayOf(
       PropTypes.shape({
         name: PropTypes.string,
@@ -56,14 +55,16 @@ class MapNav extends React.Component {
         _id: PropTypes.string,
       }).isRequired
     ),
-    onCloseDetail: PropTypes.func,
     handleSearchIncident: PropTypes.func,
+    goBack: PropTypes.func,
+    hideButton: PropTypes.bool.isRequired,
   };
 
   static defaultProps = {
     newIncidentButton: null,
+    IncidentSelected: {},
+    goBack: () => {},
     incidents: [],
-    onCloseDetail: null,
     handleSearchIncident: null,
   };
 
@@ -82,9 +83,10 @@ class MapNav extends React.Component {
   render() {
     const {
       newIncidentButton,
-      onCloseDetail,
       IncidentSelected,
       incidents,
+      goBack,
+      hideButton,
     } = this.props;
 
     const { hideNav } = this.state;
@@ -94,16 +96,23 @@ class MapNav extends React.Component {
         {!IncidentSelected ? (
           <div>
             <div className="topNav">
-              <Row>
-                <Col span={17}>
-                  <IncidentFilter />
-                </Col>
-                <Col span={6} offset={1}>
-                  <Button type="primary" onClick={newIncidentButton}>
-                    + New Incident
-                  </Button>
-                </Col>
-              </Row>
+              {!hideButton ? (
+                <Row>
+                  <Col span={17}>
+                    <IncidentFilter />
+                  </Col>
+                  <Col span={6} offset={1}>
+                    <Button type="primary" onClick={newIncidentButton}>
+                      + New Incident
+                    </Button>
+                  </Col>
+                </Row>
+              ) : (
+                <Button type="primary" onClick={goBack}>
+                  <Icon type="left" />
+                  Back Home
+                </Button>
+              )}
             </div>
             <Layout className="MapNav">
               <Header className="MapNavHeader">
@@ -128,7 +137,7 @@ class MapNav extends React.Component {
             </Layout>
           </div>
         ) : (
-          <IncidentDetails handleCancel={onCloseDetail} />
+          <IncidentDetails />
         )}
       </Fragment>
     ) : null;
@@ -137,14 +146,12 @@ class MapNav extends React.Component {
 const mapStateToProps = state => ({
   incidents:
     state.incidents.data && state.incidents.data ? state.incidents.data : [],
-  IncidentSelected: state.selectedIncident.incident
-    ? state.selectedIncident.incident
-    : null,
+  IncidentSelected: state.incidents.incident ? state.incidents.incident : null,
 });
 
-const mapDispatchToProps = dispatch => ({
-  handleSearchIncident: bindActionCreators(searchIncident, dispatch),
-});
+const mapDispatchToProps = {
+  handleSearchIncident: searchIncident,
+};
 export default connect(
   mapStateToProps,
   mapDispatchToProps

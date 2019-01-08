@@ -1,12 +1,10 @@
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Col, List, Row } from 'antd';
 import classNames from 'classnames/bind';
-
-import React from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import styles from './styles.css';
-import { getSelectedIncident } from '../../actions';
+import { getSelectedIncident, activeIncidentAction } from '../../actions';
 import { convertIsoDate } from '../../helpers';
 /**
  * Render a single contact item component for contacts list
@@ -36,16 +34,53 @@ class IncidentsList extends React.Component {
       endedAt: PropTypes.string,
       _id: PropTypes.string,
     }),
+    incidentsAction: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string,
+        description: PropTypes.string.isRequired,
+        phase: PropTypes.string.isRequired,
+        incident: PropTypes.shape({
+          event: PropTypes.string.isRequired,
+          startedAt: PropTypes.string,
+          endedAt: PropTypes.string,
+          _id: PropTypes.string,
+        }),
+        incidentType: PropTypes.shape({
+          name: PropTypes.string,
+          nature: PropTypes.string.isRequired,
+          family: PropTypes.string.isRequired,
+          color: PropTypes.string,
+          _id: PropTypes.string,
+        }),
+        _id: PropTypes.string,
+      })
+    ).isRequired,
+    setIncidentAction: PropTypes.func,
   };
 
   static defaultProps = {
-    getIncident: null,
+    setIncidentAction: () => {},
+    getIncident: () => {},
     incidentsList: [],
   };
 
   onClickIncident = () => {
-    const { getIncident, incidentsList } = this.props;
+    const {
+      getIncident,
+      incidentsList,
+      setIncidentAction,
+      incidentsAction,
+    } = this.props;
     const { _id: selectedId } = incidentsList;
+    incidentsAction.filter(incidentAction => {
+      const { incident } = incidentAction;
+      const { _id: incidentId } = incident;
+      if (incidentId === selectedId) {
+        const { _id: actionId } = incidentAction;
+        return setIncidentAction(actionId);
+      }
+      return null;
+    });
     getIncident(selectedId);
   };
 
@@ -85,13 +120,16 @@ class IncidentsList extends React.Component {
   }
 }
 const mapStateToProps = state => ({
-  selected: state.selectedIncident.incident
-    ? state.selectedIncident.incident
+  selected: state.incidents.incident ? state.incidents.incident : [],
+  incidentsAction: state.incidents.incidentActionsData
+    ? state.incidents.incidentActionsData
     : [],
 });
-const mapDispatchToProps = dispatch => ({
-  getIncident: bindActionCreators(getSelectedIncident, dispatch),
-});
+
+const mapDispatchToProps = {
+  getIncident: getSelectedIncident,
+  setIncidentAction: activeIncidentAction,
+};
 
 export default connect(
   mapStateToProps,

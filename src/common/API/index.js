@@ -390,22 +390,93 @@ export function getIncidentById(incidentId) {
 
 export function getIncidentsActions() {
   const params = { limit: 100 };
-  const url = Axios.get(`/actions`, {
+  const url = Axios.get(`${INCIDENTS_API}/actions`, {
     params,
   }).then(response => response.data);
   return url;
 }
 
 export function getIncidentActionById(incidentId) {
-  Axios.get(`/actions/${incidentId}`).then(res => res.data);
+  return Axios.get(`${INCIDENTS_API}/actions/${incidentId}`).then(
+    res => res.data
+  );
 }
 
+/**
+ * Get searching incidents from the API
+ *
+ * @function
+ * @name CreateIncidentAction
+ *
+ * @param {Object} params - params object
+ * @returns {Promise}
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */ export function CreateIncidentAction(data) {
+  const url = `${INCIDENTS_API}/actions`;
+  const config = {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: {
+      'content-type': 'application/json',
+    },
+  };
+  return fetch(url, config).then(res => res.json());
+}
+
+/**
+ * Get searching incidents from the API
+ *
+ * @function
+ * @name searchIncidents
+ *
+ * @param {Object} params - params object
+ * @returns {Promise}
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
 export function searchIncidents(searchValue) {
   return Axios.get(`${INCIDENTS_API}/incidents?q=${searchValue}`).then(
     res => res.data
   );
 }
 
+/**
+ * Get incident tasks from the API
+ *
+ * @function
+ * @name getIncidentTasksById
+ *
+ * @param {Object} params - params object
+ * @returns {Promise}
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+
+export function getIncidentTasksById(tasksId) {
+  return Axios.get(`${INCIDENTS_API}/tasks/${tasksId}`).then(res => res.data);
+}
+
+/**
+ * Get incident task by id from the API
+ *
+ * @function
+ * @name getIncidentTasks
+ *
+ * @param {Object} params - params object
+ * @returns {Promise}
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+
+export function getIncidentTasks() {
+  const params = { limit: 100 };
+  return Axios.get(`${INCIDENTS_API}/tasks`, { params }).then(res => res.data);
+}
 /**
  * Post Standard Operating procedure(SOP) to the API
  *
@@ -558,8 +629,40 @@ export function getQuestionnaires(params = {}) {
  * @version 0.1.0
  * @since 0.1.0
  */
-export function getAlerts(params = {}) {
+export function getAlerts(params = { limit: 100 }) {
   return Axios.get('/alerts', {
     params,
   });
+}
+
+/**
+ * Get an Alert from the API
+ *
+ * @function
+ * @name getAlert
+ *
+ * @param {Object} id - Id of an Alert
+ * @returns {Promise}
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function getAlert(id) {
+  return Axios.get(`/alerts/${id}`);
+}
+
+/**
+ * Create a new alert to the API
+ *
+ * @function
+ * @name postAlert
+ *
+ * @param {Object} plan - Alert object to be persisted
+ * @returns {Promise}
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function postAlert(alert) {
+  return Axios.post('/alerts', alert);
 }

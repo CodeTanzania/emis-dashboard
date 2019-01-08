@@ -52,11 +52,12 @@ class IncidentForm extends React.Component {
   };
 
   renderIncidentTypes = incidents =>
-    incidents.map(({ type }) => {
-      const { _id: id } = type;
+    incidents.map(incidentActions => {
+      const { incidentType } = incidentActions;
+      const { _id: id } = incidentType;
       return (
         <Option key={id} value={id}>
-          {type.name}
+          {incidentType.name}
         </Option>
       );
     });
@@ -84,6 +85,8 @@ class IncidentForm extends React.Component {
             ? fieldsValue.endedAt.toISOString()
             : null,
         };
+        console.log('print values');
+        console.log(values);
         newIncidentAdded(values);
       }
       onCancelButton();
@@ -92,7 +95,7 @@ class IncidentForm extends React.Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { onCancelButton, incidentsTypeData } = this.props;
+    const { onCancelButton, incidentsTypeData, incidentsAction } = this.props;
 
     const formItemLayout = {
       labelCol: {
@@ -149,7 +152,7 @@ class IncidentForm extends React.Component {
             ],
           })(
             <Select placeholder="Select incidentType">
-              {this.renderIncidentTypes(incidentsTypeData)}
+              {this.renderIncidentTypes(incidentsAction)}
             </Select>
           )}
         </FormItem>
@@ -185,6 +188,16 @@ class IncidentForm extends React.Component {
             />
           )}
         </FormItem>
+        <FormItem {...formItemLayout} label="Source:">
+          {getFieldDecorator('causes', {
+            rules: [
+              {
+                required: true,
+                message: 'Please input source!',
+              },
+            ],
+          })(<Input />)}
+        </FormItem>
         <FormItem {...formItemLayout} label="Incident Summary">
           {getFieldDecorator('description', {
             rules: [
@@ -211,7 +224,11 @@ class IncidentForm extends React.Component {
   }
 }
 
-const mapStateToProps = () => ({});
+const mapStateToProps = state => ({
+  incidentsAction: state.incidents.incidentActionsData
+    ? state.incidents.incidentActionsData
+    : [],
+});
 
 const mapDispatchToProps = dispatch => ({
   newIncidentAdded: bindActionCreators(createIncidentSuccess, dispatch),

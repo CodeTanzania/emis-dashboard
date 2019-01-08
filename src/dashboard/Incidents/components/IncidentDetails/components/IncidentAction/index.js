@@ -1,73 +1,101 @@
-import { Table, Button } from 'antd';
+import { Table, Button, Modal, Spin } from 'antd';
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import {
+  fetchIncidentTasks,
+  getIncidentTaskById,
+  activeIncidentAction,
+} from '../../../../actions';
+
 import './styles.css';
+import IncidentTasks from './components/IncidentTasks';
 
-const data = [
-  {
-    key: '1',
-    eventId: 'Ev001',
-    category: 'Responce',
-    date: '17/12/2018',
-    description: 'New York No. 1 Lake Park',
-  },
-  {
-    key: '2',
-    eventId: 'Ev0012',
-    category: 'Responce',
-    date: '13/12/2018',
-    description: 'New York No. 1 Lake Park',
-  },
-  {
-    key: '3',
-    eventId: 'Ev003',
-    category: 'Category',
-    date: '12/11/2018',
-    description: 'New York No. 1 Lake Park',
-  },
-  {
-    key: '4',
-    eventId: 'Ev004',
-    category: 'Recovery',
-    date: '',
-    description: 'New York No. 1 Lake Park',
-  },
-  {
-    key: '5',
-    eventId: 'Ev005',
-    category: 'Update',
-    date: '',
-    description: 'New York No. 1 Lake Park',
-  },
-  {
-    key: '6',
-    eventId: 'Ev006',
-    category: 'Response',
-    date: '',
-    description: 'New York No. 1 Lake Park',
-  },
-];
+/**
+ * IncidentActionTaken perform
+ * specific action per incident
+ *
+ *
+ * @class
+ * @name IncidentActionTaken
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
 
-export default class IncidentActionTaken extends React.Component {
+class IncidentActionTaken extends React.Component {
+  static propTypes = {
+    incidentAction: PropTypes.shape({
+      name: PropTypes.string,
+      description: PropTypes.string.isRequired,
+      phase: PropTypes.string.isRequired,
+      incident: PropTypes.shape({
+        event: PropTypes.string.isRequired,
+        startedAt: PropTypes.string,
+        endedAt: PropTypes.string,
+        _id: PropTypes.string,
+      }),
+      incidentType: PropTypes.shape({
+        name: PropTypes.string,
+        nature: PropTypes.string.isRequired,
+        family: PropTypes.string.isRequired,
+        color: PropTypes.string,
+        _id: PropTypes.string,
+      }),
+      _id: PropTypes.string,
+    }).isRequired,
+    incidentsTasks: PropTypes.arrayOf(
+      PropTypes.shape({
+        incidentType: PropTypes.shape({
+          name: PropTypes.string,
+          nature: PropTypes.string.isRequired,
+          family: PropTypes.string.isRequired,
+          color: PropTypes.string,
+          _id: PropTypes.string,
+        }),
+        incident: PropTypes.shape({
+          event: PropTypes.string,
+          _id: PropTypes.string,
+        }),
+        action: PropTypes.shape({
+          name: PropTypes.string,
+          _id: PropTypes.string,
+        }),
+        name: PropTypes.string,
+        description: PropTypes.string,
+        phase: PropTypes.string,
+        number: PropTypes.number,
+        tags: PropTypes.array,
+        _id: PropTypes.string,
+      })
+    ).isRequired,
+    getIncidentTask: PropTypes.func,
+    getIncidentTasks: PropTypes.func,
+    setIncidentAction: PropTypes.func,
+    loadingAction: PropTypes.bool.isRequired,
+  };
+
+  static defaultProps = {
+    getIncidentTask: () => {},
+    getIncidentTasks: () => {},
+    setIncidentAction: () => {},
+  };
+
   state = {
-    filteredInfo: null,
     sortedInfo: null,
+    visible: false,
   };
 
-  handleChange = (pagination, filters, sorter) => {
+  componentDidMount() {
+    const { getIncidentTasks, setIncidentAction, incidentAction } = this.props;
+    const { _id: id } = incidentAction;
+    getIncidentTasks();
+    setIncidentAction(id);
+  }
+
+  handleChange = (pagination, sorter) => {
     this.setState({
-      filteredInfo: filters,
       sortedInfo: sorter,
-    });
-  };
-
-  clearFilters = () => {
-    this.setState({ filteredInfo: null });
-  };
-
-  clearAll = () => {
-    this.setState({
-      filteredInfo: null,
-      sortedInfo: null,
     });
   };
 
@@ -75,68 +103,151 @@ export default class IncidentActionTaken extends React.Component {
     this.setState({
       sortedInfo: {
         order: 'descend',
-        columnKey: 'date',
+        columnKey: 'phase',
       },
     });
   };
 
-  render() {
-    let { sortedInfo, filteredInfo } = this.state;
-    sortedInfo = sortedInfo || {};
-    filteredInfo = filteredInfo || {};
-    const columns = [
-      {
-        title: 'EventId',
-        dataIndex: 'eventId',
-        key: 'eventId',
-        filteredValue: filteredInfo.eventId || null,
-        onFilter: (value, record) => record.eventId.includes(value),
-        sorter: (a, b) => a.eventId.length - b.eventId.length,
-        sortOrder: sortedInfo.columnKey === 'eventId' && sortedInfo.order,
-      },
-      {
-        title: 'Category',
-        dataIndex: 'category',
-        key: 'category',
-        sorter: (a, b) => a.category - b.category,
-        sortOrder: sortedInfo.columnKey === 'category' && sortedInfo.order,
-      },
-      {
-        title: 'Date',
-        dataIndex: 'date',
-        key: 'date',
+  handleIncidentTask = () => {
+    const { incidentAction, incidentsTasks, getIncidentTask } = this.props;
+    const { _id: id } = incidentAction;
+    incidentsTasks.filter(tasks => {
+      const { action } = tasks;
+      const { _id: actionId } = action;
+      if (actionId === id) {
+        const { _id: taskId } = tasks;
+        return getIncidentTask(taskId);
+      }
+      return null;
+    });
+  };
 
-        filteredValue: filteredInfo.date || null,
-        onFilter: (value, record) => record.date.includes(value),
-        sorter: (a, b) => a.date.length - b.date.length,
-        sortOrder: sortedInfo.columnKey === 'date' && sortedInfo.order,
+  showModal = () => {
+    this.setState({
+      visible: true,
+    });
+    this.handleIncidentTask();
+  };
+
+  handleOk = () => {
+    this.setState({
+      visible: false,
+    });
+  };
+
+  handleCancel = () => {
+    this.setState({
+      visible: false,
+    });
+  };
+
+  handleClickedAction = () => {
+    this.showModal();
+  };
+
+  render() {
+    let { sortedInfo } = this.state;
+    const { incidentAction, loadingAction } = this.props;
+    sortedInfo = sortedInfo || {};
+
+    const getActions = handleClickedAction => [
+      {
+        title: 'ActionName',
+        dataIndex: 'name',
+
+        sorter: (a, b) => a.name.length - b.name.length,
+        sortOrder: sortedInfo.columnKey === 'name' && sortedInfo.order,
+      },
+      {
+        title: 'Phases',
+        dataIndex: 'phase',
+        sorter: (a, b) => a.phase - b.phase,
+        sortOrder: sortedInfo.columnKey === 'phase' && sortedInfo.order,
       },
       {
         title: 'Description',
         dataIndex: 'description',
-        key: 'description',
 
-        filteredValue: filteredInfo.description || null,
-        onFilter: (value, record) => record.description.includes(value),
         sorter: (a, b) => a.description.length - b.description.length,
         sortOrder: sortedInfo.columnKey === 'description' && sortedInfo.order,
       },
+      {
+        title: 'Status',
+        dataIndex: 'status',
+        render: () => <span>Done</span>,
+
+        sorter: (a, b) => a.status.length - b.status.length,
+        sortOrder: sortedInfo.columnKey === 'status' && sortedInfo.order,
+      },
+      {
+        title: 'Tasks',
+        dataIndex: 'tasks',
+        render: () => (
+          <span>
+            <button
+              type="button"
+              className="link"
+              onClick={() => handleClickedAction()}
+            >
+              view tasks
+            </button>
+          </span>
+        ),
+      },
     ];
+
     return (
-      <div className="p-20">
+      <div>
         <h3 style={{ borderBottom: '1px solid #e8e8e8', padding: '9px' }}>
-          EIncident log
+          Incident Action log
         </h3>
         <div className="table-operations">
-          <Button onClick={this.setAgeSort}>Sort Date</Button>
-          <Button onClick={this.clearAll}>Clear filters and sorters</Button>
+          <Button onClick={this.setAgeSort}>Sort phase</Button>
         </div>
         <Table
-          columns={columns}
-          dataSource={data}
+          columns={getActions(this.handleClickedAction)}
+          dataSource={[incidentAction]}
           onChange={this.handleChange}
+          className="p-20"
+          size="middle"
+          loading={loadingAction}
         />
+        <Modal
+          title="INCIDENT TASKS "
+          visible={this.state.visible}
+          onOk={this.handleOk}
+          onCancel={this.handleCancel}
+        >
+          {loadingAction ? (
+            <div className="loadingAction">
+              <Spin />
+            </div>
+          ) : (
+            <IncidentTasks />
+          )}
+        </Modal>
       </div>
     );
   }
 }
+
+const mapStateToProps = state => ({
+  incidentAction: state.selectedIncident.incidentAction
+    ? state.selectedIncident.incidentAction
+    : {},
+  incidentsTasks: state.selectedIncident.incidentTasks
+    ? state.selectedIncident.incidentTasks
+    : {},
+  loadingAction: state.selectedIncident.isLoadingData,
+});
+
+const mapDispatchToProps = {
+  getIncidentTasks: fetchIncidentTasks,
+  getIncidentTask: getIncidentTaskById,
+  setIncidentAction: activeIncidentAction,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(IncidentActionTaken);

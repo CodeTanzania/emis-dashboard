@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { get } from 'lodash';
 import { Icon, Tooltip } from 'antd';
-import { getSelectedAlertFromState, showAlertPoints } from '../../actions';
+import { getSelectedAlertFromState } from '../../../../actions';
 import AlertFieldItem from './components/AlertFieldItem';
 import './styles.css';
 
@@ -16,10 +17,10 @@ const detailsKeys = [
   'source',
 ];
 
-function AlertDetailsSummary({ selectedAlert, close, onClickShowPoints }) {
+function AlertDetailsSummary({ selectedAlert, close, history }) {
   const onClickClose = () => {
-    onClickShowPoints(true);
     close();
+    history.push('/alerts');
   };
   const renderAlertField = keys =>
     keys.map(key => (
@@ -43,16 +44,17 @@ function AlertDetailsSummary({ selectedAlert, close, onClickShowPoints }) {
 
 const mapDispatchToProps = {
   close: getSelectedAlertFromState,
-  onClickShowPoints: showAlertPoints,
 };
 
 export default connect(
   null,
   mapDispatchToProps
-)(AlertDetailsSummary);
+)(withRouter(AlertDetailsSummary));
 
 AlertDetailsSummary.propTypes = {
-  onClickShowPoints: PropTypes.func,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
   selectedAlert: PropTypes.shape({
     headline: PropTypes.string,
     reportedAt: PropTypes.string,
@@ -67,5 +69,4 @@ AlertDetailsSummary.propTypes = {
 AlertDetailsSummary.defaultProps = {
   selectedAlert: null,
   close: () => {},
-  onClickShowPoints: () => {},
 };

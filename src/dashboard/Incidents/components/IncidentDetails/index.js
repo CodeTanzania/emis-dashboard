@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import './styles.css';
 import { connect } from 'react-redux';
-import { Button } from 'antd';
+import { Button, Row, Col } from 'antd';
 import { convertIsoDate } from '../../helpers';
+import { getIncidentsSuccess, getIncidentActions } from '../../actions';
 /**
  * Incident details Layout component
  * this component contain detailed
@@ -17,7 +18,12 @@ import { convertIsoDate } from '../../helpers';
  * @since 0.1.0
  */
 
-function IncidentDetails({ selected }) {
+function IncidentDetails({
+  selected,
+  incidentAction,
+  getAllIncidents,
+  getAllActions,
+}) {
   const {
     event,
     number,
@@ -28,87 +34,102 @@ function IncidentDetails({ selected }) {
     areas,
   } = selected;
 
+  const { name: actionName } = incidentAction;
+
+  const onCloseDetails = () => {
+    getAllIncidents();
+    getAllActions();
+  };
+
   const { name } = type;
   return (
     <div className="IncidentDetails">
       <div className="IncidentName">
-        <h3 className="p-l-10">{event}</h3>
+        <h3>{event}</h3>
       </div>
-      <div className="IncidentDetail p-20">
-        <span>
-          <strong>Incident number:</strong>
+      <div className="IncidentDetail">
+        <h4 className="IncidentDetailHeader">Incident number:</h4>
+        <span className="incidentDetailContent">{number}</span>
+        <br />
+        <h4 className="IncidentDetailHeader"> Incident Type:</h4>
+        <span className="incidentDetailContent">{name}</span> <br />
+        <h4 className="IncidentDetailHeader">Reported date:</h4>
+        <span className="incidentDetailContent">
+          {convertIsoDate(startedAt)}
         </span>{' '}
-        {number} <br />
-        <span>
-          <strong>Type:</strong>
-        </span>{' '}
-        {name} <br />
-        <span>
-          <strong>Reported date:</strong>
-        </span>
-        {convertIsoDate(startedAt)} <br />
+        <br />
         {endedAt ? (
           <div>
-            <span>
-              <strong>End date:</strong>
-            </span>{' '}
-            {convertIsoDate(endedAt)}
+            <h4 className="IncidentDetailHeader">End date:</h4>
+            <span className="incidentDetailContent">
+              {' '}
+              {convertIsoDate(endedAt)}{' '}
+            </span>
+          </div>
+        ) : (
+          'N/A'
+        )}
+        <h4 className="IncidentDetailHeader">Source:</h4>
+        <span className="incidentDetailContent">
+          {causes.length > 0 ? causes.map(cause => cause) : 'N/A'}
+        </span>
+        <br />
+        <h4 className="IncidentDetailHeader">Location:</h4>
+        <span className="incidentDetailContent">
+          {' '}
+          {areas.map(area => area)}{' '}
+        </span>
+        <br />
+        {actionName ? (
+          <div>
+            <h4 className="IncidentDetailHeader">Action to be taken:</h4>
+            <span className="incidentDetailContent">{actionName}</span>
+            <br />
           </div>
         ) : null}
-        <span>
-          <strong>Source:</strong>
-        </span>{' '}
-        {causes.map(cause => cause)} <br />
-        <span>
-          <strong>Location:</strong>
-        </span>
-        <br />
-        <div className="IncidentLocation p-l-10">
-          <span>
-            <strong>Region:</strong>
-          </span>{' '}
-          {areas.map(area => area)} <br />
-          <br />
-        </div>
-        <span>
-          <strong>Impact:</strong>
-        </span>
-        <br />
+        <h4 className="IncidentDetailHeader">Impact:</h4>
         <div className="IncidentImpacIncidentDetailsDrawert p-l-10">
-          <span>
-            <strong>Death(s):</strong>
-          </span>
+          <span>Death(s):</span>
           3 <br />
-          <span>
-            <strong>People affected:</strong>
-          </span>
+          <span>People affected:</span>
           4 <br />
-          <span>
-            <strong>Building destroyed:</strong>
-          </span>
+          <span>Building destroyed:</span>
           5 <br />
-          <span>
-            <strong>Building Damaged:</strong>
-          </span>
+          <span>Building Damaged: </span>
           12 <br />
         </div>
-        <Button type="primary" className="ReadMore">
-          <Link to="/incidents/details">Read more</Link>
-        </Button>
+        <Row>
+          <Col span={12}>
+            <Button type="danger" className="ReadMore" onClick={onCloseDetails}>
+              Cancel
+            </Button>
+          </Col>
+          <Col span={12}>
+            <Button type="primary" className="ReadMore">
+              <Link to="/incidents/details">Read more</Link>
+            </Button>
+          </Col>
+        </Row>
       </div>
     </div>
   );
 }
 
 const mapStateToProps = state => ({
-  selected: state.selectedIncident.incident
-    ? state.selectedIncident.incident
+  selected: state.incidents.incident ? state.incidents.incident : {},
+  incidentAction: state.selectedIncident.incidentAction
+    ? state.selectedIncident.incidentAction
     : {},
 });
 
+const mapDispatchToProps = {
+  getAllIncidents: getIncidentsSuccess,
+  getAllActions: getIncidentActions,
+};
+
 export default connect(
   mapStateToProps,
-  ''
+  mapDispatchToProps
 )(IncidentDetails);
 
 IncidentDetails.propTypes = {
@@ -126,4 +147,30 @@ IncidentDetails.propTypes = {
     endedAt: PropTypes.string.isRequired,
     number: PropTypes.string,
   }).isRequired,
+  incidentAction: PropTypes.shape({
+    name: PropTypes.string,
+    description: PropTypes.string.isRequired,
+    phase: PropTypes.string.isRequired,
+    incident: PropTypes.shape({
+      event: PropTypes.string.isRequired,
+      startedAt: PropTypes.string,
+      endedAt: PropTypes.string,
+      _id: PropTypes.string,
+    }),
+    incidentType: PropTypes.shape({
+      name: PropTypes.string,
+      nature: PropTypes.string.isRequired,
+      family: PropTypes.string.isRequired,
+      color: PropTypes.string,
+      _id: PropTypes.string,
+    }),
+    _id: PropTypes.string,
+  }).isRequired,
+  getAllIncidents: PropTypes.func,
+  getAllActions: PropTypes.func,
+};
+
+IncidentDetails.defaultProps = {
+  getAllIncidents: () => {},
+  getAllActions: () => {},
 };
