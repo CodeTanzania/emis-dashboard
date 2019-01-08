@@ -24,7 +24,7 @@ export function generateSvgIconUrl(fillColor = '#93c47d') {
     <defs>
       <style>
         .cls-1 {
-          fill: #93c47d;
+          fill: ${fillColor};
         }
       </style>
     </defs>
@@ -34,7 +34,6 @@ export function generateSvgIconUrl(fillColor = '#93c47d') {
     `;
 
   const svgIconUrl = encodeURI(`data:image/svg+xml,${svg}`).replace('#', '%23');
-  console.log(svgIconUrl);
   return svgIconUrl;
 }
 
