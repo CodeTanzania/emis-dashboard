@@ -26,6 +26,7 @@ export const POST_ALERT_ERROR = 'POST_ALERT_ERROR';
 
 /* alert filter actions */
 export const SET_EXPECTED_AT_FILTER = 'SET_EXPECTED_AT_FILTER';
+export const SET_SEVERITY_FILTER = 'SET_SEVERITY_FILTER';
 
 /*
  *------------------------------------------------------------------------------
@@ -44,6 +45,26 @@ export const SAVE_DRAWN_GEOMETRY = 'SAVE_DRAWN_GEOMETRY';
  * Alert Filters action creators
  *------------------------------------------------------------------------------
  */
+
+/**
+ * Action dispatched to set range value of the expected at filter
+ *
+ * @function
+ * @name setSeverityFilter
+ *
+ * @param {String} severity - range of the dates
+ *
+ * @returns {Object} - Redux action for fetching alerts
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export const setSeverityFilter = severity => ({
+  type: SET_SEVERITY_FILTER,
+  payload: {
+    data: severity,
+  },
+});
 
 /**
  * Action dispatched to set range value of the expected at filter

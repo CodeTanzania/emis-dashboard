@@ -13,6 +13,7 @@ describe(`Helpers`, () => {
           $lt: '2020-01-07T06:11:51.661Z',
         },
       },
+      limit: 100,
     };
     expect(Helpers.generateFilterParams(filters)).toEqual(expected);
   });

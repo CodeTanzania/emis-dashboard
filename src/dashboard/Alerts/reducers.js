@@ -12,6 +12,7 @@ import {
   SET_SHOWPOINTS_VALUE,
   SAVE_DRAWN_GEOMETRY,
   SET_EXPECTED_AT_FILTER,
+  SET_SEVERITY_FILTER,
 } from './actions';
 
 /**
@@ -36,6 +37,7 @@ const defaultAlertsMapState = {
 /* initial alerts filter state */
 const defaultAlertsFilterState = {
   expectedAt: null,
+  severity: null,
 };
 
 /* initial Alerts state */
@@ -76,6 +78,10 @@ export function alertsFilter(state = defaultAlertsFilterState, action) {
     case SET_EXPECTED_AT_FILTER:
       return Object.assign({}, state, {
         expectedAt: action.payload.data,
+      });
+    case SET_SEVERITY_FILTER:
+      return Object.assign({}, state, {
+        severity: action.payload.data,
       });
     default:
       return state;

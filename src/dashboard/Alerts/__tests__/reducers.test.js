@@ -9,6 +9,7 @@ describe('Alerts:reducers', () => {
       /* create initial state for Alerts Filter */
       previousState = {
         expectedAt: null,
+        severity: null,
       };
     });
 
