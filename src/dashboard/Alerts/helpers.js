@@ -39,7 +39,7 @@ filtering alerts from API
  * @since 0.1.0
  */
 export function generateFilterParams(filters) {
-  let allParams = {};
+  let allParams = { limit: 100 };
   if (!isEmpty(filters.expectedAt)) {
     allParams = merge({}, allParams, {
       filter: {

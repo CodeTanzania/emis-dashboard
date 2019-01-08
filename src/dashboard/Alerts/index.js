@@ -1,9 +1,10 @@
 import { connect } from 'react-redux';
 import React from 'react';
+import moment from 'moment';
 import { Route, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import AlertDetails from './components/AlertDetails';
-import { getAlerts } from './actions';
+import { getAlerts, setExpectedAtFilter } from './actions';
 import 'leaflet/dist/leaflet.css';
 import './styles.css';
 import AlertsHome from './components/AlertsHome';
@@ -22,20 +23,32 @@ import NewAlert from './components/NewAlert';
  */
 class Alerts extends React.Component {
   static propTypes = {
-    getAllAlerts: PropTypes.func,
+    getNonExpiredAlerts: PropTypes.func,
+    setCurrentDate: PropTypes.func,
     match: PropTypes.shape({
       url: PropTypes.string,
     }).isRequired,
   };
 
   static defaultProps = {
-    getAllAlerts: () => {},
+    getNonExpiredAlerts: () => {},
+    setCurrentDate: () => {},
   };
 
   componentDidMount() {
-    const { getAllAlerts } = this.props;
-    getAllAlerts();
+    this.fetchCurrentAlerts();
   }
+
+  fetchCurrentAlerts = () => {
+    const { getNonExpiredAlerts, setCurrentDate } = this.props;
+    const today = moment().toISOString();
+    const future = moment()
+      .add(1, 'year')
+      .toISOString();
+    const dateRange = [today, future];
+    setCurrentDate(dateRange);
+    getNonExpiredAlerts();
+  };
 
   render() {
     const { match } = this.props;
@@ -52,9 +65,14 @@ class Alerts extends React.Component {
   }
 }
 
-const mapDispatchToProps = {
-  getAllAlerts: getAlerts,
-};
+const mapDispatchToProps = dispatch => ({
+  getNonExpiredAlerts() {
+    dispatch(getAlerts());
+  },
+  setCurrentDate(date) {
+    dispatch(setExpectedAtFilter(date));
+  },
+});
 export default connect(
   null,
   mapDispatchToProps

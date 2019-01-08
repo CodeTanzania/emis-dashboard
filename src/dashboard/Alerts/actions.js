@@ -1,4 +1,8 @@
-import { alertsToGeoJson, alertToGeoJson } from './helpers';
+import {
+  alertsToGeoJson,
+  alertToGeoJson,
+  generateFilterParams,
+} from './helpers';
 
 /*
  *------------------------------------------------------------------------------
@@ -410,9 +414,11 @@ export function setSelectedGeoJson(geoJson = []) {
  */
 export function getAlerts() {
   return (dispatch, getState, { API }) => {
+    const { alertsFilter } = getState();
+    const params = generateFilterParams(alertsFilter);
     dispatch(getAlertsStart());
 
-    return API.getAlerts()
+    return API.getAlerts(params)
       .then(({ data: res }) => {
         const alertsPoints = alertsToGeoJson(res.data);
         dispatch(getAlertsSuccess(res.data, res.page, res.total));

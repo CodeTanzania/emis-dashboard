@@ -497,7 +497,7 @@ export function getQuestionnaires(params = {}) {
  * @version 0.1.0
  * @since 0.1.0
  */
-export function getAlerts(params = { limit: 100 }) {
+export function getAlerts(params) {
   return Axios.get('/alerts', {
     params,
   });
