@@ -1,4 +1,6 @@
 import moment from 'moment';
+import isEmpty from 'lodash/isEmpty';
+import merge from 'lodash/merge';
 
 /**
  * Helper functions
@@ -22,6 +24,51 @@ export function isoDateToHumanReadableDate(isoFormattDate) {
     .utc()
     .format('dddd, MMMM Do YYYY, h:mm:ss a');
 }
+
+/**
+ *Receives filter data and format it to an object that can be used as params in
+filtering alerts from API
+ *
+ * @function
+ * @name generateFilterparams
+ *
+ * @param {Object} filters
+ *
+ * @returns {Object} filter params
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function generateFilterParams(filters) {
+  let allParams = { limit: 100 };
+  if (!isEmpty(filters.expectedAt)) {
+    allParams = merge({}, allParams, {
+      filter: {
+        expectedAt: { $gte: filters.expectedAt[0], $lt: filters.expectedAt[1] },
+      },
+    });
+  }
+
+  if (!isEmpty(filters.severity)) {
+    allParams = merge({}, allParams, {
+      filter: { severity: { $in: filters.severity } },
+    });
+  }
+
+  return allParams;
+}
+
+/**
+ * converts today's date to human readable
+ * date
+ *
+ * @function
+ * @name humanTimeToday
+ *
+ * @returns {string} human readable date
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export const humanTimeToday = () => moment().format(' MMMM Do ');
 
 /**
  * combines geomentry and properties objects
@@ -193,3 +240,12 @@ export function formatAlertFieldTypeValue(fieldType, fieldValue) {
       return fieldValue;
   }
 }
+
+// data about severity colors
+export const severityColors = [
+  { property: 'Extreme', value: '#d72e29' },
+  { property: 'Severe', value: '#fe9901' },
+  { property: 'Moderate', value: '#ffff00' },
+  { property: 'Minor', value: '#88e729' },
+  { property: 'Unknown', value: '#3366ff' },
+];

@@ -65,6 +65,7 @@ class MapPointsDrawSupport extends React.Component {
   };
 
   addDataToPointsLayer = points => {
+    this.pointsLayer.clearLayers();
     this.pointsLayer.addData(points);
   };
 

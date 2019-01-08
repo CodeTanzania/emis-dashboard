@@ -1,6 +1,7 @@
 .AlertDetailsSummary {
   display: flex;
-  padding: 0 0 0 34px;
+  padding: 25px;
+  width: 23vw;
 }
 
 .AlertDetailsSummary .Contents {
