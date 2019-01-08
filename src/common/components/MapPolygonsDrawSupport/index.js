@@ -50,9 +50,10 @@ class MapPolygonsDrawSupport extends React.Component {
   };
 
   initializePolygonsLayer = () => {
-    const { onEachFeature } = this.props;
+    const { onEachFeature, style } = this.props;
     this.polygonsLayer = L.geoJSON([], {
       onEachFeature,
+      style,
     }).addTo(this.map);
   };
 
@@ -70,6 +71,7 @@ class MapPolygonsDrawSupport extends React.Component {
 export default withLeaflet(MapPolygonsDrawSupport);
 
 MapPolygonsDrawSupport.propTypes = {
+  style: PropTypes.func,
   onEachFeature: PropTypes.func,
   polygons: PropTypes.arrayOf(
     PropTypes.shape({
@@ -91,4 +93,5 @@ MapPolygonsDrawSupport.defaultProps = {
   polygons: [],
   isShowPolygons: true,
   onEachFeature: () => {},
+  style: () => {},
 };

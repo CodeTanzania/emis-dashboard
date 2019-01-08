@@ -81,6 +81,18 @@ class AlertDetails extends React.Component {
     return polygon.length === 0;
   };
 
+  styleFeatures = feature => {
+    const { geometry, properties } = feature;
+    const { color } = properties;
+    const { type } = geometry;
+    console.log(color);
+    if (type === 'Polygon' || 'MultiPolygon') {
+      return { color };
+    }
+
+    return {};
+  };
+
   render() {
     const { center, zoom, shapes, selectedAlert, loading } = this.props;
     return (
@@ -97,7 +109,10 @@ class AlertDetails extends React.Component {
         ) : null}
         <AlertsBaseMap center={center} zoom={zoom} zoomControl={false}>
           {this.arePolygons(shapes) ? (
-            <MapPolygonsDrawSupport polygons={shapes} />
+            <MapPolygonsDrawSupport
+              style={this.styleFeatures}
+              polygons={shapes}
+            />
           ) : (
             <MapPointsDrawSupport points={shapes} />
           )}

@@ -155,13 +155,13 @@ export const generateGeoJsonPolygon = (geometry, properties = {}) => ({
  */
 export function alertToGeoJson(alert, type) {
   const { centroid, _id: id, event, expectedAt, geometry, color } = alert;
+  const properties = { id, event, expectedAt, color };
   if (type === 'Point') {
-    const properties = { id, event, expectedAt, color };
     const point = generateGeoJsonPoint(centroid, properties);
     return point;
   }
   if (type === 'Polygon') {
-    const polygon = generateGeoJsonPolygon(geometry);
+    const polygon = generateGeoJsonPolygon(geometry, properties);
     return polygon;
   }
 
