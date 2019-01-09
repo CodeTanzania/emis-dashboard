@@ -81,6 +81,18 @@ class AlertDetails extends React.Component {
     return polygon.length === 0;
   };
 
+  styleFeatures = feature => {
+    const { geometry, properties } = feature;
+    const { color } = properties;
+    const { type } = geometry;
+    console.log(color);
+    if (type === 'Polygon' || 'MultiPolygon') {
+      return { color };
+    }
+
+    return {};
+  };
+
   render() {
     const { center, zoom, shapes, selectedAlert, loading } = this.props;
     return (
@@ -90,12 +102,17 @@ class AlertDetails extends React.Component {
         size="large"
         style={{ position: 'absolute', top: '25%', right: '5%' }}
       >
-        <AlertSideBar title="Details">
-          <AlertDetailsSummary selectedAlert={selectedAlert} />
-        </AlertSideBar>
+        {selectedAlert ? (
+          <AlertSideBar title="Details">
+            <AlertDetailsSummary selectedAlert={selectedAlert} />
+          </AlertSideBar>
+        ) : null}
         <AlertsBaseMap center={center} zoom={zoom} zoomControl={false}>
           {this.arePolygons(shapes) ? (
-            <MapPolygonsDrawSupport polygons={shapes} />
+            <MapPolygonsDrawSupport
+              style={this.styleFeatures}
+              polygons={shapes}
+            />
           ) : (
             <MapPointsDrawSupport points={shapes} />
           )}

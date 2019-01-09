@@ -1,8 +1,47 @@
 import * as Actions from '../actions';
-import { alertsMap, alerts } from '../reducers';
+import { alertsMap, alerts, alertsFilter } from '../reducers';
 import { polygons, polygon } from '../../../common/data/alertTestData';
 
 describe('Alerts:reducers', () => {
+  describe('alertsFilter', () => {
+    let previousState = null;
+    beforeEach(() => {
+      /* create initial state for Alerts Filter */
+      previousState = {
+        expectedAt: null,
+        severity: null,
+      };
+    });
+
+    it('should return default state when no initial alertsFilter state is provided', () => {
+      expect(alertsFilter(undefined, {})).toEqual(previousState);
+    });
+
+    it('should return previous state when given invalid action type', () => {
+      expect(
+        alertsFilter(previousState, {
+          type: null,
+        })
+      ).toEqual(previousState);
+    });
+
+    it(`should handle ${Actions.SET_EXPECTED_AT_FILTER}`, () => {
+      const expectedAt = [];
+      const action = {
+        type: Actions.SET_EXPECTED_AT_FILTER,
+        payload: {
+          data: expectedAt,
+        },
+      };
+
+      const expectedState = {
+        ...previousState,
+        expectedAt,
+      };
+
+      expect(alertsFilter(previousState, action)).toEqual(expectedState);
+    });
+  });
   describe('alertsMap', () => {
     let previousState = null;
 

@@ -1,0 +1,24 @@
+
+
+.AlertNav .ant-menu {
+    display: flex;
+    justify-content: center;
+}
+
+.AlertNav .MenuContents {
+    display: flex;
+    justify-content: center;
+    background: #f7f7f7;
+    padding: 15px 0 0 15px;
+    min-height: 54vh;
+}
+
+.AlertNav {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.AlertNav .Container {
+    flex: 0.7;
+}

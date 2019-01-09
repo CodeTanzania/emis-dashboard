@@ -1,4 +1,8 @@
-import { alertsToGeoJson, alertToGeoJson } from './helpers';
+import {
+  alertsToGeoJson,
+  alertToGeoJson,
+  generateFilterParams,
+} from './helpers';
 
 /*
  *------------------------------------------------------------------------------
@@ -20,6 +24,10 @@ export const POST_ALERT_START = 'POST_ALERT_START';
 export const POST_ALERT_SUCCESS = 'POST_ALERT_SUCCESS';
 export const POST_ALERT_ERROR = 'POST_ALERT_ERROR';
 
+/* alert filter actions */
+export const SET_EXPECTED_AT_FILTER = 'SET_EXPECTED_AT_FILTER';
+export const SET_SEVERITY_FILTER = 'SET_SEVERITY_FILTER';
+
 /*
  *------------------------------------------------------------------------------
  * Map action types
@@ -31,6 +39,52 @@ export const SET_SHOWPOINTS_VALUE = 'SET_SHOWPOINTS_VALUE';
 export const SET_SELECTED_GEOJSON = 'SET_SELECTED_GEOJSON';
 export const SET_SHOW_SELECTED_GEOJSON = 'SET_SHOW_SELECTED_GEOJSON';
 export const SAVE_DRAWN_GEOMETRY = 'SAVE_DRAWN_GEOMETRY';
+
+/*
+ *------------------------------------------------------------------------------
+ * Alert Filters action creators
+ *------------------------------------------------------------------------------
+ */
+
+/**
+ * Action dispatched to set range value of the expected at filter
+ *
+ * @function
+ * @name setSeverityFilter
+ *
+ * @param {Array} severity - severity level values
+ *
+ * @returns {Object} - Redux action for fetching alerts
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export const setSeverityFilter = severity => ({
+  type: SET_SEVERITY_FILTER,
+  payload: {
+    data: severity,
+  },
+});
+
+/**
+ * Action dispatched to set range value of the expected at filter
+ *
+ * @function
+ * @name setExpectedAtFilter
+ *
+ * @param {array} dateRange - range of the dates
+ *
+ * @returns {Object} - Redux action for fetching alerts
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export const setExpectedAtFilter = dates => ({
+  type: SET_EXPECTED_AT_FILTER,
+  payload: {
+    data: dates,
+  },
+});
 
 /*
  *------------------------------------------------------------------------------
@@ -381,9 +435,11 @@ export function setSelectedGeoJson(geoJson = []) {
  */
 export function getAlerts() {
   return (dispatch, getState, { API }) => {
+    const { alertsFilter } = getState();
+    const params = generateFilterParams(alertsFilter);
     dispatch(getAlertsStart());
 
-    return API.getAlerts()
+    return API.getAlerts(params)
       .then(({ data: res }) => {
         const alertsPoints = alertsToGeoJson(res.data);
         dispatch(getAlertsSuccess(res.data, res.page, res.total));

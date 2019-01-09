@@ -10,6 +10,29 @@ const middlewares = [thunk.withExtraArgument({ API })];
 const mockStore = configureMockStore(middlewares);
 
 describe('Alerts: Module', () => {
+  describe('Alert Filter action creators', () => {
+    it(`should crete an action of type ${Actions.SET_SEVERITY_FILTER}`, () => {
+      const severity = ['Extreme'];
+      expect(Actions.setSeverityFilter(severity)).toEqual({
+        type: Actions.SET_SEVERITY_FILTER,
+        payload: {
+          data: severity,
+        },
+      });
+    });
+
+    it(`should crete an action of type ${
+      Actions.SET_EXPECTED_AT_FILTER
+    }`, () => {
+      const dateRange = [];
+      expect(Actions.setExpectedAtFilter(dateRange)).toEqual({
+        type: Actions.SET_EXPECTED_AT_FILTER,
+        payload: {
+          data: dateRange,
+        },
+      });
+    });
+  });
   describe('Alerts: Actions Creators', () => {
     it(`should create an action of type ${Actions.POST_ALERT_START}`, () => {
       expect(Actions.postAlertStart()).toEqual({
@@ -170,8 +193,12 @@ describe('Alerts: Module', () => {
         },
       });
       const store = mockStore({
-        Alerts: {
+        alerts: {
           data: [],
+        },
+        alertsFilter: {
+          expectedAt: null,
+          severity: null,
         },
       });
 
@@ -389,7 +416,7 @@ describe('Alerts: Module', () => {
         },
       ];
 
-      return store.dispatch(Actions.getAlertOperation('jkjlkkj')).then(() => {
+      return store.dispatch(Actions.getAlertOperation('wefdgg')).then(() => {
         expect(store.getActions()).toEqual(expectedActions);
       });
     });
@@ -398,6 +425,10 @@ describe('Alerts: Module', () => {
       const store = mockStore({
         alerts: {
           data: [],
+        },
+        alertsFilter: {
+          expectedAt: null,
+          severity: null,
         },
         alertsMap: {
           points: [],

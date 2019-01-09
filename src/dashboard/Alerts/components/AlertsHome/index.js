@@ -6,7 +6,10 @@ import AlertNavBar from '../AlertNavBar';
 import NewAlertButton from './components/NewAlertButton';
 import AlertSideBar from '../AlertSideBar';
 import AlertBaseMap from '../AlertsBaseMap';
-import AlertsDrawSupport from '../AlertsDrawSupport';
+import AlertFilters from './components/AlertFilters';
+import AlertsPointDrawSupport from '../AlertsPointsDrawSupport';
+import AlertLegend from './components/AlertLegend';
+import Display from './components/Display';
 
 /**
  * Component that layouts the Alert home page
@@ -25,14 +28,18 @@ function AlertsHome({ center, zoom, loading }) {
       size="large"
       style={{ position: 'absolute', top: '25%', right: '5%' }}
     >
+      <AlertLegend />
       <AlertNavBar>
-        <NewAlertButton />
+        <React.Fragment>
+          <NewAlertButton />
+          <Display />
+        </React.Fragment>
       </AlertNavBar>
       <AlertSideBar title="Filter">
-        <div>This is filter contents</div>
+        <AlertFilters />
       </AlertSideBar>
       <AlertBaseMap center={center} zoom={zoom} zoomControl={false}>
-        <AlertsDrawSupport />
+        <AlertsPointDrawSupport />
       </AlertBaseMap>
     </Spin>
   );
