@@ -11,6 +11,8 @@ import {
   SET_SHOW_SELECTED_GEOJSON,
   SET_SHOWPOINTS_VALUE,
   SAVE_DRAWN_GEOMETRY,
+  SET_EXPECTED_AT_FILTER,
+  SET_SEVERITY_FILTER,
 } from './actions';
 
 /**
@@ -32,6 +34,12 @@ const defaultAlertsMapState = {
   showShapes: false,
 };
 
+/* initial alerts filter state */
+const defaultAlertsFilterState = {
+  expectedAt: null,
+  severity: null,
+};
+
 /* initial Alerts state */
 const defaultAlertsState = {
   data: [],
@@ -43,6 +51,42 @@ const defaultAlertsState = {
   filters: {},
   error: null,
 };
+
+/*
+ *------------------------------------------------------------------------------
+ * AlertsFilter  Reducers
+ *------------------------------------------------------------------------------
+ */
+
+/**
+ * AlertsFilter reducer
+ * Is the field in the store which holds data for the Alerts Filters.
+ *
+ * @function
+ * @name alertsFilter
+ *
+ * @param {Object} state={} - Initial state
+ * @param {Object} action - Redux action object
+ * @param {string} action.type - Action type
+ * @param {Object} action.payload - Action payload
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+export function alertsFilter(state = defaultAlertsFilterState, action) {
+  switch (action.type) {
+    case SET_EXPECTED_AT_FILTER:
+      return Object.assign({}, state, {
+        expectedAt: action.payload.data,
+      });
+    case SET_SEVERITY_FILTER:
+      return Object.assign({}, state, {
+        severity: action.payload.data,
+      });
+    default:
+      return state;
+  }
+}
 
 /*
  *------------------------------------------------------------------------------

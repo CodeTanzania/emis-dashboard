@@ -3,7 +3,6 @@ border: 2px solid rgba(0,0,0,0.2);
 border-radius: 4px;
 margin: 10px 10px 0 0;
 z-index: 1000;
-width: 30vw;
 position: absolute;
 right: 0;
 background-color: white;
@@ -17,7 +16,6 @@ font-size: 24px;
 }
 
 .AlertSideBar .Contents {
-  padding: 34px 54px 0 0;
   max-height: 90vh;
   overflow: auto;
 }

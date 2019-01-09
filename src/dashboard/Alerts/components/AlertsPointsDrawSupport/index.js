@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import L from 'leaflet';
 import PropTypes from 'prop-types';
 import MapPointsDrawSupport from '../../../../common/components/MapPointsDrawSupport';
 import {
@@ -10,6 +11,7 @@ import {
 } from '../../actions';
 import {
   isoDateToHumanReadableDate,
+  generateSvgIconUrl,
   formatAlertFieldType,
 } from '../../helpers';
 
@@ -25,10 +27,10 @@ import {
  * @version 0.1.0
  * @since 0.1.0
  */
-class AlertsDrawSupport extends React.Component {
+class AlertsPointsDrawSupport extends React.Component {
   static propTypes = {
     history: PropTypes.shape({
-      push: PropTypes.string,
+      push: PropTypes.func,
     }).isRequired,
     showPoints: PropTypes.bool.isRequired,
     points: PropTypes.arrayOf(
@@ -59,6 +61,24 @@ class AlertsDrawSupport extends React.Component {
     history.push(`/alerts/${id}`);
   };
 
+  showMarkers = (feature, latlng) => {
+    const { properties } = feature;
+    const { color } = properties;
+    const iconUrl = generateSvgIconUrl(color);
+    const CustomIcon = L.Icon.extend({
+      options: {
+        iconSize: [40, 40],
+        iconAnchor: [15, 30],
+        shadowAnchor: [4, 62],
+        popupAnchor: [0, -25],
+      },
+    });
+
+    const icon = new CustomIcon({ iconUrl });
+
+    return L.marker(latlng, { icon });
+  };
+
   onEachFeature = (feature, layer) => {
     const {
       properties: { event, expectedAt, id },
@@ -84,6 +104,7 @@ class AlertsDrawSupport extends React.Component {
         <MapPointsDrawSupport
           isShowPoints={showPoints}
           points={points}
+          pointToLayer={this.showMarkers}
           onEachFeature={this.onEachFeature}
         />
       </React.Fragment>
@@ -107,4 +128,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withRouter(AlertsDrawSupport));
+)(withRouter(AlertsPointsDrawSupport));

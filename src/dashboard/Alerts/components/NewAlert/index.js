@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Spin } from 'antd';
 import AlertNavBar from '../AlertNavBar';
 import AlertSideBar from '../AlertSideBar';
 import BackButton from './components/BackButton';
@@ -19,7 +20,12 @@ import WrappedNewAlertForm from './components/NewAlertForm';
  */
 function NewAlert({ center, zoom }) {
   return (
-    <React.Fragment>
+    <Spin
+      spinning={false}
+      tip="Loading..."
+      size="large"
+      style={{ position: 'absolute', top: '25%', right: '5%' }}
+    >
       <AlertNavBar>
         <BackButton />
       </AlertNavBar>
@@ -29,7 +35,7 @@ function NewAlert({ center, zoom }) {
       <AlertBaseMap center={center} zoom={zoom} zoomControl={false}>
         <AlertMapDrawControls />
       </AlertBaseMap>
-    </React.Fragment>
+    </Spin>
   );
 }
 
