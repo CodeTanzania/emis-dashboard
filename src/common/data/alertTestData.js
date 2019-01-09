@@ -41,7 +41,12 @@ export const alert = {
 
 export const polygon = {
   type: 'Feature',
-  properties: {},
+  properties: {
+    color: '#FE9901',
+    event: 'Strong winds and Large waves along the coast',
+    expectedAt: '2018-07-18T15:00:00.000Z',
+    id: '5c188aecb470d100048dd5fe',
+  },
   geometry: {
     type: 'Polygon',
     coordinates: [[[39.9, -4.6], [39.5, -4.5]]],
