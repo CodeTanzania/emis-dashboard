@@ -32,14 +32,14 @@ const popupContent = `<div>
  */
 class IncidentMapDraw extends React.Component {
   static propTypes = {
-    saveGeometry: PropTypes.func,
+    storeCollectiveFeature: PropTypes.func,
     leaflet: PropTypes.shape({
       map: PropTypes.object.isRequired,
     }).isRequired,
   };
 
   static defaultProps = {
-    saveGeometry: () => {},
+    storeCollectiveFeature: () => {},
   };
 
   constructor(props) {
@@ -51,10 +51,10 @@ class IncidentMapDraw extends React.Component {
     this.map = this.props.leaflet.map;
     const {getIncidents} = this.props;
     getIncidents();
-    this.showTutorial();
+    this.showPopup();
   }
 
-  showTutorial = () => {
+  showPopup = () => {
     L.popup({ minWidth: 400 })
       .setLatLng([-6.179, 35.754])
       .setContent(popupContent)
@@ -87,7 +87,11 @@ class IncidentMapDraw extends React.Component {
           </Link>
         </Button>
         </div>
-        <DrawControls onDrawCreated={this.onDrawCreated} />
+        <DrawControls onDrawCreated={this.onDrawCreated} style={{
+           position: 'absolute',
+           top: '10px',
+           right:'55px',
+        }}/>
       </React.Fragment>
     );
   }

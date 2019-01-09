@@ -11,10 +11,10 @@ import {
 } from 'antd';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { createIncidentSuccess } from '../../actions';
-
+import {causes} from '../../helpers';
 
 import './styles.css';
 
@@ -52,11 +52,13 @@ class IncidentForm extends React.Component {
         _id: PropTypes.string,
       }).isRequired
     ),
-    polygonFeatures:PropTypes.array.isRequired
+    polygonFeatures: PropTypes.array.isRequired,
+    children: PropTypes.func,
   };
 
   static defaultProps = {
-    incidents: [],  
+    incidents: [],
+    children:() => {}
   };
 
   renderIncidentTypes = incidents =>
@@ -79,9 +81,14 @@ class IncidentForm extends React.Component {
       ))
     );
 
+    renderCauses = causes => 
+        causes.map(cause =>
+          <Option key={cause} value={cause}>{cause}</Option>
+        )
+
   handleSubmit = e => {
     e.preventDefault();
-    const { location, newIncidentAdded,polygonFeatures } = this.props;
+    const { location, newIncidentAdded, polygonFeatures } = this.props;
     this.props.form.validateFieldsAndScroll((err, fieldsValue) => {
       if (!err) {
         // const { geometry } = location;
@@ -103,7 +110,10 @@ class IncidentForm extends React.Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { incidents, } = this.props;
+    const { incidents } = this.props;
+    let children , incidentCauses = [];
+    children = this.renderAreas(incidents)
+    incidentCauses = this.renderCauses(causes);
 
     const formItemLayout = {
       labelCol: {
@@ -140,109 +150,117 @@ class IncidentForm extends React.Component {
           <h3>Record new incident</h3>
         </div>
         <Divider />
-        <div className='IncidentFormContent'>
-        <FormItem {...formItemLayout} label="Incident name">
-          {getFieldDecorator('event', {
-            rules: [
-              {
-                required: true,
-                message: 'Please input incident name!',
-              },
-            ],
-          })(<Input />)}
-        </FormItem>
-        <FormItem label="Incident type" {...formItemLayout}>
-          {getFieldDecorator('type', {
-            rules: [
-              {
-                required: true,
-                message: 'Please select incident-type',
-              },
-            ],
-          })(
-            <Select placeholder="Select incidentType">
-              {this.renderIncidentTypes(incidents)}
-            </Select>
-          )}
-        </FormItem>
-        <FormItem {...formItemLayout} label="Location">
-          {getFieldDecorator('areas', {
-            rules: [
-              {
-                required: true,
-                message: 'Please input location!',
-              },
-            ],
-          })(
-            <Select placeholder="Select incidentType">
-              {this.renderAreas(incidents)}
-            </Select>
-          )}
-        </FormItem>
-        <FormItem {...formItemLayout} label="Date/Time initiated:">
-          {getFieldDecorator('startedAt', config)(
-            <DatePicker
-              showTime
-              format="YYYY-MM-DD HH:mm:ss"
-              style={{ width: '100%' }}
-            />
-          )}
-        </FormItem>
-        <FormItem {...formItemLayout} label="End date:">
-          {getFieldDecorator('endedAt')(
-            <DatePicker
-              showTime
-              format="YYYY-MM-DD HH:mm:ss"
-              style={{ width: '100%' }}
-            />
-          )}
-        </FormItem>
-        <FormItem {...formItemLayout} label="Source:">
-          {getFieldDecorator('causes', {
-            rules: [
-              {
-                required: true,
-                message: 'Please input source!',
-              },
-            ],
-          })(<Input />)}
-        </FormItem>
-        <FormItem {...formItemLayout} label="Incident Summary">
-          {getFieldDecorator('description', {
-            rules: [
-              { required: true, message: 'Please input the summary you got!' },
-            ],
-          })(<TextArea rows={4} />)}
-        </FormItem>
-        <FormItem {...tailFormItemLayout}>
-          <Row>
-            <Col span={12}>
-              <Button type="danger">
-                <Link to='/incidents/map'>Cancel</Link>
-              </Button>
-            </Col>
-            <Col span={12}>
-              <Button type="primary" htmlType="submit">
-                Create
-              </Button>
-            </Col>
-          </Row>
-        </FormItem>
+        <div className="IncidentFormContent">
+          <FormItem {...formItemLayout} label="Incident name">
+            {getFieldDecorator('event', {
+              rules: [
+                {
+                  required: true,
+                  message: 'Please input incident name!',
+                },
+              ],
+            })(<Input />)}
+          </FormItem>
+          <FormItem label="Incident type" {...formItemLayout}>
+            {getFieldDecorator('type', {
+              rules: [
+                {
+                  required: true,
+                  message: 'Please select incident-type',
+                },
+              ],
+            })(
+              <Select placeholder="Select incidentType">
+                {this.renderIncidentTypes(incidents)}
+              </Select>
+            )}
+          </FormItem>
+          <FormItem {...formItemLayout} label="Location">
+            {getFieldDecorator('areas', {
+              rules: [
+                {
+                  required: true,
+                  message: 'Please input location!',
+                },
+              ],
+            })(
+              <Select placeholder="Select area" mode="multiple">
+                {children}
+              </Select>
+            )}
+          </FormItem>
+          <FormItem {...formItemLayout} label="Date/Time initiated:">
+            {getFieldDecorator('startedAt', config)(
+              <DatePicker
+                showTime
+                format="YYYY-MM-DD HH:mm:ss"
+                style={{ width: '100%' }}
+              />
+            )}
+          </FormItem>
+          <FormItem {...formItemLayout} label="End date:">
+            {getFieldDecorator('endedAt')(
+              <DatePicker
+                showTime
+                format="YYYY-MM-DD HH:mm:ss"
+                style={{ width: '100%' }}
+              />
+            )}
+          </FormItem>
+          <FormItem {...formItemLayout} label="Source">
+            {getFieldDecorator('causes', {
+              rules: [
+                {
+                  required: true,
+                  message: 'Please input causes!',
+                },
+              ],
+            })(
+              <Select placeholder="Select causes" mode="multiple">
+                {incidentCauses}
+              </Select>
+            )}
+          </FormItem>
+          <FormItem {...formItemLayout} label="Incident Summary">
+            {getFieldDecorator('description', {
+              rules: [
+                {
+                  required: true,
+                  message: 'Please input the summary you got!',
+                },
+              ],
+            })(<TextArea rows={4} />)}
+          </FormItem>
+          <FormItem {...tailFormItemLayout}>
+            <Row>
+              <Col span={12}>
+                <Button type="danger">
+                  <Link to="/incidents/map">Cancel</Link>
+                </Button>
+              </Col>
+              <Col span={12}>
+                <Button type="primary" htmlType="submit">
+                  Create
+                </Button>
+              </Col>
+            </Row>
+          </FormItem>
         </div>
       </Form>
     );
   }
 }
 
-const mapStateToProps = state =>{
-return{
-  incidents:
-  state.incidents.data && state.incidents.data ? state.incidents.data : [],
-  polygonFeatures: state.featureCollection,
-  incidentsAction: state.incidents.incidentActionsData
-    ? state.incidents.incidentActionsData
-    : [],
-}};
+const mapStateToProps = state => {
+  return {
+    incidents:
+      state.incidents.data && state.incidents.data ? state.incidents.data : [],
+    polygonFeatures: state.featureCollection,
+    incidentsAction: state.incidents.incidentActionsData
+      ? state.incidents.incidentActionsData
+      : [],
+  };
+};
 
 const mapDispatchToProps = dispatch => ({
   newIncidentAdded: bindActionCreators(createIncidentSuccess, dispatch),
