@@ -4,9 +4,7 @@ import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import MapPointsDrawSupport from '../../../../../../common/components/MapPointsDrawSupport';
 import { getSelectedIncident, activeIncidentAction } from '../../../../actions';
-import { incidents } from '../../../../helpers';
-// import MapControls from '../../../../../../common/components/MapControls';
-// import { showMarkers } from '../../../../helpers';
+import { incidents, showMarkers } from '../../../../helpers';
 
 /**
  * Wraper component drawing Incidents markers and shapes (Eg. Polygons, Cirles and Points)
@@ -102,14 +100,14 @@ class RenderAllIncidents extends React.Component {
   };
 
   render() {
-    const { showPoints } = this.props;
+    const { showPoints, } = this.props;
     const pointMarkers = incidents.map(({ epicentre }) => epicentre);
     return (
       <Fragment>
         <MapPointsDrawSupport
           points={pointMarkers}
-          // pointToLayer={showMarkers}
-          isShowPoints={showPoints}
+          pointToLayer={showMarkers}
+          // isShowPoints={showPoints}
           onEachFeature={this.onEachFeature}
         />
       </Fragment>

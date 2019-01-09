@@ -1,5 +1,5 @@
 .MapNav {
-    width: 380px;
+    width: 400px;
     display: flex;
     flex-direction: column;
     position: absolute;
@@ -7,7 +7,6 @@
     top: 0;
     z-index: 1000;
     background-color: white;
-    width: 380px;
     overflow-x: hidden
 }
 

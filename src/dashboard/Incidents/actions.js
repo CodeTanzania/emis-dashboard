@@ -52,6 +52,9 @@ export const GET_TASK_START = 'GET_TASK_START';
 export const GET_TASK_SUCCESS = 'GET_TASK_SUCCESS';
 export const GET_TASK_ERROR = 'GET_TASK_ERROR';
 
+/* save multiple draw feature */
+export const STORE_FEATUREPOLYGON_SUCCESS = 'STORE_FEATUREPOLYGON_SUCCESS';
+
 /* Actions creater */
 export const getIncidentsStart = () => ({
   type: GET_INCIDENTS_START,
@@ -186,6 +189,11 @@ export const getIncidentTaskError = message => ({
   type: GET_TASK_ERROR,
   payload: { message },
 });
+
+export const storePolygons = collectiveGeometry => ({
+type:STORE_FEATUREPOLYGON_SUCCESS,
+payload: {data: collectiveGeometry}
+})
 
 export const getIncidentsSuccess = () => (dispatch, getState, { API }) => {
   dispatch(getIncidentsStart());

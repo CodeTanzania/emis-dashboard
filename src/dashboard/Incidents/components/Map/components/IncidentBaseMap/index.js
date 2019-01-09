@@ -1,0 +1,63 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import * as ReactLeaflet from 'react-leaflet';
+import LayerSwitchControl from '../../../../../../common/components/LayerSwitchControls';
+import IncidentMapDraw from '../IncidentMapDraw';
+import IncidentForm from '../../../IncidentForm';
+import './styles.css';
+// constants
+const { Map: LeafletMap, TileLayer } = ReactLeaflet;
+
+/**
+ * Base map for Alerts that can be reused accross
+ * components
+ * Renders openstreetmap
+ *
+ * @class
+ * @name IncidentBaseMap
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+class IncidentBaseMap extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      position: [-6.7161, 37.0804],
+      zoom: 7,
+      area: {},
+    };
+  }
+  render() {
+    const { position, zoom,  } = this.state;
+
+    return (
+      <LeafletMap center={position} zoom={zoom} zoomControl={false}>
+        <LayerSwitchControl />
+        <IncidentMapDraw/>
+        <div className="NewIncidentSider">
+        <IncidentForm />
+        </div>
+        <TileLayer
+          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          id="mapbox.light"
+          url="https://api.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoid29ybGRiYW5rLWVkdWNhdGlvbiIsImEiOiJIZ2VvODFjIn0.TDw5VdwGavwEsch53sAVxA#1.6/23.725906/-39.714135/0"
+        />
+      </LeafletMap>
+    );
+  }
+}
+
+export default IncidentBaseMap;
+
+IncidentBaseMap.propTypes = {
+  center: PropTypes.arrayOf(PropTypes.number),
+  zoom: PropTypes.number,
+  zoomControl: PropTypes.bool,
+};
+
+IncidentBaseMap.defaultProps = {
+  zoomControl: true,
+  zoom: null,
+  center:null,
+};

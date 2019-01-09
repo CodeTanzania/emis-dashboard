@@ -22,6 +22,7 @@ import {
   SELECT_INCIDENT_START,
   GET_INCIDENT_ACTION_START,
   SHOW_MAP_POINT,
+  STORE_FEATUREPOLYGON_SUCCESS,
 } from './actions';
 
 /**
@@ -226,5 +227,17 @@ export function renderMapMarkers(state = initialMapState, action) {
       };
     default:
       return state;
+  }
+}
+
+export function featureCollection(state= [], action){
+  switch(action.type){
+    case STORE_FEATUREPOLYGON_SUCCESS:
+    return [
+      ...state,
+      {geometry: action.payload.data,}
+    ]
+    default:
+    return state
   }
 }

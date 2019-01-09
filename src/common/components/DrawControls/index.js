@@ -56,7 +56,7 @@ class DrawControls extends React.Component {
     this.drawnItems = new L.FeatureGroup();
     this.map.addLayer(this.drawnItems);
     this.drawControl = new L.Control.Draw({
-      position: 'topright',
+      position: 'topleft',
       draw: {
         polyline: false,
         circlemarker: false,

@@ -11,8 +11,10 @@ import {
 } from 'antd';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { createIncidentSuccess } from '../../actions';
+
 
 import './styles.css';
 
@@ -34,30 +36,36 @@ const { Option } = Select;
 
 class IncidentForm extends React.Component {
   static propTypes = {
-    incidentsTypeData: PropTypes.arrayOf(
+    incidents: PropTypes.arrayOf(
       PropTypes.shape({
-        name: PropTypes.string,
-        nature: PropTypes.string.isRequired,
-        family: PropTypes.string.isRequired,
-        code: PropTypes.string.isRequired,
-        cap: PropTypes.string.isRequired,
-        color: PropTypes.string,
+        event: PropTypes.string,
+        incidentsTypeData: PropTypes.shape({
+          name: PropTypes.string,
+          nature: PropTypes.string.isRequired,
+          family: PropTypes.string.isRequired,
+          color: PropTypes.string,
+          _id: PropTypes.string,
+        }),
+        description: PropTypes.string.isRequired,
+        startedAt: PropTypes.string,
+        endedAt: PropTypes.string,
         _id: PropTypes.string,
       }).isRequired
     ),
+    polygonFeatures:PropTypes.array.isRequired
   };
 
   static defaultProps = {
-    incidentsTypeData: null,
+    incidents: [],  
   };
 
   renderIncidentTypes = incidents =>
-    incidents.map(incidentActions => {
-      const { incidentType } = incidentActions;
-      const { _id: id } = incidentType;
+    incidents.map(incidentType => {
+      const { type } = incidentType;
+      const { _id: id } = type;
       return (
         <Option key={id} value={id}>
-          {incidentType.name}
+          {type.name}
         </Option>
       );
     });
@@ -73,13 +81,14 @@ class IncidentForm extends React.Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    const { location, newIncidentAdded, onCancelButton } = this.props;
+    const { location, newIncidentAdded,polygonFeatures } = this.props;
     this.props.form.validateFieldsAndScroll((err, fieldsValue) => {
       if (!err) {
-        const { geometry } = location;
+        // const { geometry } = location;
         const values = {
           ...fieldsValue,
-          epicentre: geometry,
+          // epicentre: geometry,
+          affected: polygonFeatures,
           startedAt: fieldsValue.startedAt.toISOString(),
           endedAt: fieldsValue.endedAt.toISOString()
             ? fieldsValue.endedAt.toISOString()
@@ -87,15 +96,14 @@ class IncidentForm extends React.Component {
         };
         console.log('print values');
         console.log(values);
-        newIncidentAdded(values);
+        // newIncidentAdded(values);
       }
-      onCancelButton();
     });
   };
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { onCancelButton, incidentsTypeData, incidentsAction } = this.props;
+    const { incidents, } = this.props;
 
     const formItemLayout = {
       labelCol: {
@@ -128,10 +136,11 @@ class IncidentForm extends React.Component {
 
     return (
       <Form onSubmit={this.handleSubmit} className="IncidentForm">
-        <div className="FormHeader">
+        <div className="IncidentFormHeader">
           <h3>Record new incident</h3>
         </div>
         <Divider />
+        <div className='IncidentFormContent'>
         <FormItem {...formItemLayout} label="Incident name">
           {getFieldDecorator('event', {
             rules: [
@@ -152,7 +161,7 @@ class IncidentForm extends React.Component {
             ],
           })(
             <Select placeholder="Select incidentType">
-              {this.renderIncidentTypes(incidentsAction)}
+              {this.renderIncidentTypes(incidents)}
             </Select>
           )}
         </FormItem>
@@ -166,7 +175,7 @@ class IncidentForm extends React.Component {
             ],
           })(
             <Select placeholder="Select incidentType">
-              {this.renderAreas(incidentsTypeData)}
+              {this.renderAreas(incidents)}
             </Select>
           )}
         </FormItem>
@@ -208,8 +217,8 @@ class IncidentForm extends React.Component {
         <FormItem {...tailFormItemLayout}>
           <Row>
             <Col span={12}>
-              <Button type="danger" onClick={onCancelButton}>
-                Cancel
+              <Button type="danger">
+                <Link to='/incidents/map'>Cancel</Link>
               </Button>
             </Col>
             <Col span={12}>
@@ -219,16 +228,21 @@ class IncidentForm extends React.Component {
             </Col>
           </Row>
         </FormItem>
+        </div>
       </Form>
     );
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = state =>{
+return{
+  incidents:
+  state.incidents.data && state.incidents.data ? state.incidents.data : [],
+  polygonFeatures: state.featureCollection,
   incidentsAction: state.incidents.incidentActionsData
     ? state.incidents.incidentActionsData
     : [],
-});
+}};
 
 const mapDispatchToProps = dispatch => ({
   newIncidentAdded: bindActionCreators(createIncidentSuccess, dispatch),

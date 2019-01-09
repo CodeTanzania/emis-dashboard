@@ -3,8 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import MapPointsDrawSupport from '../../../../../../common/components/MapPointsDrawSupport';
 import MapPolygonsDrawSupport from '../../../../../../common/components/MapPolygonsDrawSupport';
-// import MapControls from '../../../../../../common/components/MapControls';
-
+import { showMarkers } from '../../../../helpers';
 /**
  * Wraper component drawing Incidents markers and shapes (Eg. Polygons, Cirles and Points)
  * on map
@@ -72,7 +71,7 @@ class RenderSingleIncident extends React.Component {
         ) : (
           <MapPointsDrawSupport
             points={pointMarkerSelected}
-            // pointToLayer={showMarkers}
+            pointToLayer={showMarkers}
             isShowPoints={showPoint}
           />
         )}
