@@ -60,7 +60,7 @@ const initialFilters = {
 };
 const initialMapState = {
   showPoints: false,
-  showPoint: false
+  showPoint: false,
 };
 
 export function incidents(state = initialState, action) {
@@ -76,7 +76,7 @@ export function incidents(state = initialState, action) {
         data: action.payload.data.data,
         total: action.payload.data.total,
         isLoading: false,
-        isSelected:false,
+        isSelected: false,
       };
     case GET_INCIDENT_FAILURE:
       return {
@@ -120,8 +120,7 @@ export function incidents(state = initialState, action) {
         ...state,
         incident: action.payload.data,
         isLoading: false,
-        isSelected:true,
-
+        isSelected: true,
       };
     case SEARCH_INCIDENT_START:
       return {
@@ -224,7 +223,7 @@ export function renderMapMarkers(state = initialMapState, action) {
       return {
         ...state,
         showPoint: action.payload.data,
-      }
+      };
     default:
       return state;
   }

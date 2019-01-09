@@ -45,7 +45,7 @@ class MapPointsDrawSupport extends React.Component {
   showPointsLayer = () => this.pointsLayer.addTo(this.map);
 
   updatePointsLayer = isShowPoints => {
-    const  position = [-6.7161, 37.0804];
+    const position = [-6.7161, 37.0804];
     if (isShowPoints && !this.map.hasLayer(this.pointsLayer)) {
       this.map.setView(position, 7);
       this.showPointsLayer();
@@ -63,7 +63,6 @@ class MapPointsDrawSupport extends React.Component {
     L.Marker.prototype.options.icon = DefaultIcon;
     this.pointsLayer = L.geoJSON([], {
       onEachFeature,
-      // pointToLayer,
     }).addTo(this.map);
   };
 
@@ -97,12 +96,10 @@ MapPointsDrawSupport.propTypes = {
     map: PropTypes.object.isRequired,
   }).isRequired,
   isShowPoints: PropTypes.bool,
-  pointToLayer: PropTypes.func,
 };
 
 MapPointsDrawSupport.defaultProps = {
   points: [],
   isShowPoints: true,
   onEachFeature: () => {},
-  pointToLayer: () => {},
 };

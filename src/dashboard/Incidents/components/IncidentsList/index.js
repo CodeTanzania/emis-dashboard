@@ -5,7 +5,7 @@ import classNames from 'classnames/bind';
 import { connect } from 'react-redux';
 import styles from './styles.css';
 import { getSelectedIncident, activeIncidentAction } from '../../actions';
-import { convertIsoDate, } from '../../helpers';
+import { convertIsoDate } from '../../helpers';
 /**
  * Render a single contact item component for contacts list
  *

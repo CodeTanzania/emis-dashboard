@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import MapPointsDrawSupport from '../../../../../../common/components/MapPointsDrawSupport';
 import { getSelectedIncident, activeIncidentAction } from '../../../../actions';
-import {incidents}  from '../../../../helpers'
+import { incidents } from '../../../../helpers';
+// import MapControls from '../../../../../../common/components/MapControls';
 // import { showMarkers } from '../../../../helpers';
 
 /**
@@ -20,25 +21,24 @@ import {incidents}  from '../../../../helpers'
  * @since 0.1.0
  */
 
- 
 class RenderAllIncidents extends React.Component {
   static propTypes = {
-    incidents: PropTypes.arrayOf(
-      PropTypes.shape({
-        event: PropTypes.string,
-        incidentsTypeData: PropTypes.shape({
-          name: PropTypes.string,
-          nature: PropTypes.string.isRequired,
-          family: PropTypes.string.isRequired,
-          color: PropTypes.string,
-          _id: PropTypes.string,
-        }),
-        description: PropTypes.string.isRequired,
-        startedAt: PropTypes.string,
-        endedAt: PropTypes.string,
-        _id: PropTypes.string,
-      }).isRequired
-    ),
+    // incidents: PropTypes.arrayOf(
+    //   PropTypes.shape({
+    //     event: PropTypes.string,
+    //     incidentsTypeData: PropTypes.shape({
+    //       name: PropTypes.string,
+    //       nature: PropTypes.string.isRequired,
+    //       family: PropTypes.string.isRequired,
+    //       color: PropTypes.string,
+    //       _id: PropTypes.string,
+    //     }),
+    //     description: PropTypes.string.isRequired,
+    //     startedAt: PropTypes.string,
+    //     endedAt: PropTypes.string,
+    //     _id: PropTypes.string,
+    //   }).isRequired
+    // ),
     incidentsAction: PropTypes.arrayOf(
       PropTypes.shape({
         name: PropTypes.string,
@@ -66,7 +66,7 @@ class RenderAllIncidents extends React.Component {
   };
 
   static defaultProps = {
-    incidents: null,
+    // incidents: null,
     getIncident: null,
     setIncidentAction: () => {},
   };
@@ -102,15 +102,17 @@ class RenderAllIncidents extends React.Component {
   };
 
   render() {
-    const {  showPoints } = this.props;
+    const { showPoints } = this.props;
     const pointMarkers = incidents.map(({ epicentre }) => epicentre);
     return (
-      <MapPointsDrawSupport
-        points={pointMarkers}
-        // pointToLayer={showMarkers}
-        isShowPoints={showPoints}
-        onEachFeature={this.onEachFeature}
-      />
+      <Fragment>
+        <MapPointsDrawSupport
+          points={pointMarkers}
+          // pointToLayer={showMarkers}
+          isShowPoints={showPoints}
+          onEachFeature={this.onEachFeature}
+        />
+      </Fragment>
     );
   }
 }

@@ -13,7 +13,7 @@
 
 .topNav {
     position: absolute;
-    left: 120px;
+    left: 10px;
     top: 10px;
     z-index: 1000;
     height: auto;

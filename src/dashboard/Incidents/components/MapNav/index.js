@@ -8,7 +8,7 @@ import IncidentDetails from '../IncidentDetails';
 
 import './styles.css';
 import { searchIncident } from '../../actions';
-import { incidents } from '../../helpers'
+import { incidents } from '../../helpers';
 
 const { Header, Content } = Layout;
 const { Search } = Input;
@@ -26,22 +26,22 @@ const { Search } = Input;
 class MapNav extends React.Component {
   static propTypes = {
     newIncidentButton: PropTypes.func,
-    incidents: PropTypes.arrayOf(
-      PropTypes.shape({
-        name: PropTypes.string,
-        incidentsTypeData: PropTypes.shape({
-          name: PropTypes.string,
-          nature: PropTypes.string.isRequired,
-          family: PropTypes.string.isRequired,
-          color: PropTypes.string,
-          _id: PropTypes.string,
-        }),
-        description: PropTypes.string.isRequired,
-        startedAt: PropTypes.string,
-        endedAt: PropTypes.string,
-        _id: PropTypes.string,
-      }).isRequired
-    ),
+    // incidents: PropTypes.arrayOf(
+    //   PropTypes.shape({
+    //     name: PropTypes.string,
+    //     incidentsTypeData: PropTypes.shape({
+    //       name: PropTypes.string,
+    //       nature: PropTypes.string.isRequired,
+    //       family: PropTypes.string.isRequired,
+    //       color: PropTypes.string,
+    //       _id: PropTypes.string,
+    //     }),
+    //     description: PropTypes.string.isRequired,
+    //     startedAt: PropTypes.string,
+    //     endedAt: PropTypes.string,
+    //     _id: PropTypes.string,
+    //   }).isRequired
+    // ),
     handleSearchIncident: PropTypes.func,
     goBack: PropTypes.func,
     hideButton: PropTypes.bool.isRequired,
@@ -50,8 +50,8 @@ class MapNav extends React.Component {
 
   static defaultProps = {
     newIncidentButton: null,
-    goBack: () => { },
-    incidents: [],
+    goBack: () => {},
+    // incidents: [],
     handleSearchIncident: null,
   };
 
@@ -95,11 +95,11 @@ class MapNav extends React.Component {
                   </Col>
                 </Row>
               ) : (
-                  <Button type="primary" onClick={goBack}>
-                    <Icon type="left" />
-                    Back Home
+                <Button type="primary" onClick={goBack}>
+                  <Icon type="left" />
+                  Back Home
                 </Button>
-                )}
+              )}
             </div>
             <Layout className="MapNav">
               <Header className="MapNavHeader">
@@ -124,8 +124,8 @@ class MapNav extends React.Component {
             </Layout>
           </div>
         ) : (
-            <IncidentDetails />
-          )}
+          <IncidentDetails />
+        )}
       </Fragment>
     ) : null;
   }

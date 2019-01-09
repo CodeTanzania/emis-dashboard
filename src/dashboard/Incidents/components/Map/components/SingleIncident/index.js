@@ -3,8 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import MapPointsDrawSupport from '../../../../../../common/components/MapPointsDrawSupport';
 import MapPolygonsDrawSupport from '../../../../../../common/components/MapPolygonsDrawSupport';
-import { getSelectedIncident } from '../../../../actions';
-// import { showMarkers } from '../../../../helpers';
+// import MapControls from '../../../../../../common/components/MapControls';
 
 /**
  * Wraper component drawing Incidents markers and shapes (Eg. Polygons, Cirles and Points)
@@ -34,12 +33,7 @@ class RenderSingleIncident extends React.Component {
       startedAt: PropTypes.string,
       endedAt: PropTypes.string,
     }).isRequired,
-    getIncident: PropTypes.func,
-    showPoints: PropTypes.bool.isRequired,
-  };
-
-  static defaultProps = {
-    getIncident: null,
+    showPoint: PropTypes.bool.isRequired,
   };
 
   generateFeatures = affected =>
@@ -65,12 +59,9 @@ class RenderSingleIncident extends React.Component {
 
   render() {
     const { selected, showPoint, showPolygon } = this.props;
-    const { areaSelected } = selected ? selected : null;
-    const { geometry: pointMarkerSelected } = areaSelected
-      ? areaSelected
-      : { geometry: [] };
+    const { areaSelected } = selected || null;
+    const { geometry: pointMarkerSelected } = areaSelected || { geometry: [] };
     const polygon = selected ? this.checkForPolygon(selected) : [];
-    console.log(polygon);
     return (
       <React.Fragment>
         {polygon.length > 0 ? (
@@ -90,19 +81,10 @@ class RenderSingleIncident extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    selected: state.incidents.incident ? state.incidents.incident : [],
-    showPoint: state.renderMapMarkers.showPoint,
-    showPolygon: state.incidents.isSelected,
-  };
-};
+const mapStateToProps = state => ({
+  selected: state.incidents.incident ? state.incidents.incident : [],
+  showPoint: state.renderMapMarkers.showPoint,
+  showPolygon: state.incidents.isSelected,
+});
 
-const mapDispatchToProps = {
-  getIncident: getSelectedIncident,
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(RenderSingleIncident);
+export default connect(mapStateToProps)(RenderSingleIncident);
