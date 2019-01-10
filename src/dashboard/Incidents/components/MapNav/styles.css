@@ -42,8 +42,8 @@
 
 .MapNavSearch {
     border-bottom: 1px solid #e8e8e8;
-    margin: 15px 0 15px 20px;
-    width: 90%;
+    margin: 15px 0 10px 30px;
+    width: 85%;
 }
 
 .MapNavHeader {
@@ -52,4 +52,5 @@
     border-bottom: 1px solid #e8e8e8;
     background-color: #ffffff;
     text-transform: uppercase;
+    text-align: center;
 }

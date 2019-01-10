@@ -23,9 +23,9 @@ const popupContent = `<div>
 </div>`;
 
 /**
- *  Draw Control for Drawing Alert shapes
+ * Incident Draw Control
  * @class
- * @name AlertMapControls
+ * @name IncidentMapDraw
  *
  * @version 0.1.0
  * @since 0.1.0
@@ -36,10 +36,12 @@ class IncidentMapDraw extends React.Component {
     leaflet: PropTypes.shape({
       map: PropTypes.object.isRequired,
     }).isRequired,
+    getIncidents: PropTypes.func,
   };
 
   static defaultProps = {
     storeCollectiveFeature: () => {},
+    getIncidents: () => {},
   };
 
   constructor(props) {
@@ -49,7 +51,7 @@ class IncidentMapDraw extends React.Component {
 
   componentDidMount() {
     this.map = this.props.leaflet.map;
-    const {getIncidents} = this.props;
+    const { getIncidents } = this.props;
     getIncidents();
     this.showPopup();
   }
@@ -73,33 +75,37 @@ class IncidentMapDraw extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <div style={{
+        <div
+          style={{
             position: 'absolute',
             top: '10px',
-            left:'55px',
+            left: '55px',
             zIndex: '1000',
-          }}>
-        <Button
-          type="primary"  >
-          <Link to="/incidents/map" style={{ color: '#fff' }}>
-            <Icon type="left" />
-            Back Home
-          </Link>
-        </Button>
+          }}
+        >
+          <Button type="primary">
+            <Link to="/incidents/map" style={{ color: '#fff' }}>
+              <Icon type="left" />
+              Back Home
+            </Link>
+          </Button>
         </div>
-        <DrawControls onDrawCreated={this.onDrawCreated} style={{
-           position: 'absolute',
-           top: '10px',
-           right:'55px',
-        }}/>
+        <DrawControls
+          onDrawCreated={this.onDrawCreated}
+          style={{
+            position: 'absolute',
+            top: '10px',
+            right: '55px',
+          }}
+        />
       </React.Fragment>
     );
   }
 }
 
 const mapDispatchToProps = {
-  storeCollectiveFeature:storePolygons,
-  getIncidents:getIncidentsSuccess,
+  storeCollectiveFeature: storePolygons,
+  getIncidents: getIncidentsSuccess,
 };
 
 export default connect(

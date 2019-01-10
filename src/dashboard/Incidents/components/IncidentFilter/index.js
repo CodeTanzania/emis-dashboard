@@ -2,12 +2,21 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Form, DatePicker } from 'antd';
-import { bindActionCreators } from 'redux';
 import { filterIncidentByDate, getIncidentsSuccess } from '../../actions';
 import './styles.css';
 
 // constants
 const { RangePicker } = DatePicker;
+
+/**
+ * IncidentFilter component
+ *
+ * @class
+ * @name IncidentFilter
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
 
 class IncidentFilter extends React.Component {
   static propTypes = {
@@ -51,10 +60,10 @@ const mapStateToProps = state => ({
   incidents: state.incidents.data ? state.incidents.data : [],
 });
 
-const mapDispatchToProp = dispatch => ({
-  handleDateFilter: bindActionCreators(filterIncidentByDate, dispatch),
-  handleIncidents: bindActionCreators(getIncidentsSuccess, dispatch),
-});
+const mapDispatchToProp = {
+  handleDateFilter: filterIncidentByDate,
+  handleIncidents: getIncidentsSuccess,
+};
 
 export default connect(
   mapStateToProps,

@@ -230,14 +230,11 @@ export function renderMapMarkers(state = initialMapState, action) {
   }
 }
 
-export function featureCollection(state= [], action){
-  switch(action.type){
+export function featureCollection(state = [], action) {
+  switch (action.type) {
     case STORE_FEATUREPOLYGON_SUCCESS:
-    return [
-      ...state,
-      {geometry: action.payload.data,}
-    ]
+      return [...state, { geometry: action.payload.data }];
     default:
-    return state
+      return state;
   }
 }

@@ -35,20 +35,21 @@ class RenderSingleIncident extends React.Component {
     showPoint: PropTypes.bool.isRequired,
   };
 
-  generateFeatures = affected =>
+  generateFeatures = (affected, properties) =>
     affected.map(({ geometry }) => ({
       type: 'Feature',
-      properties: {},
+      properties,
       geometry,
     }));
 
-  checkForPolygon = ({ affected }) => {
+  checkForPolygon = ({ affected, areaSelected }) => {
     const featureCollection = {
       type: 'FeatureCollection',
       features: [],
     };
     if (affected) {
-      const features = this.generateFeatures(affected);
+      const { properties } = areaSelected;
+      const features = this.generateFeatures(affected, properties);
       const data = { ...featureCollection, features };
       return [data];
     }
@@ -56,10 +57,20 @@ class RenderSingleIncident extends React.Component {
     return [];
   };
 
+  polygonStyle = feature => {
+    const { geometry, properties } = feature;
+    const { incidenttype } = properties;
+    const { color } = incidenttype;
+    const { type } = geometry;
+    if (type === 'Polygon' || 'MultiPolygon') {
+      return { color };
+    }
+    return null;
+  };
+
   render() {
     const { selected, showPoint, showPolygon } = this.props;
     const { areaSelected } = selected || null;
-    const { geometry: pointMarkerSelected } = areaSelected || { geometry: [] };
     const polygon = selected ? this.checkForPolygon(selected) : [];
     return (
       <React.Fragment>
@@ -67,10 +78,11 @@ class RenderSingleIncident extends React.Component {
           <MapPolygonsDrawSupport
             isShowPolygons={showPolygon}
             polygons={polygon}
+            style={this.polygonStyle}
           />
         ) : (
           <MapPointsDrawSupport
-            points={pointMarkerSelected}
+            points={areaSelected}
             pointToLayer={showMarkers}
             isShowPoints={showPoint}
           />

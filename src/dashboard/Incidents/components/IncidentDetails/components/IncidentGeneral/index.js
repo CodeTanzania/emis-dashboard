@@ -5,18 +5,18 @@ import Sider from 'antd/lib/layout/Sider';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
-import { getNavActive } from '../../../actions';
+import { getNavActive } from '../../../../actions';
 
-import IncidentAnalysis from './IncidentAnalysis';
-import IncidentAssessiment from './IncidentAssessiment';
-import IncidentActionTaken from './IncidentAction';
-import IncidentAgencies from './IncidentAgencies';
-import LayoutHeader from '../../../../../common/components/LayoutHeader';
-import { convertIsoDateOnly } from '../../../helpers';
+import IncidentAnalysis from '../IncidentAnalysis';
+import IncidentAssessiment from '../IncidentAssessiment';
+import IncidentActionTaken from '../IncidentAction';
+import IncidentAgencies from '../IncidentAgencies';
+import LayoutHeader from '../../../../../../common/components/LayoutHeader';
+import { convertIsoDateOnly } from '../../../../helpers';
 
 const { Content } = Layout;
 
-class IncidentGeneralDetails extends React.Component {
+class IncidentGeneral extends React.Component {
   static propTypes = {
     activatedNav: PropTypes.func,
     currentMenu: PropTypes.string.isRequired,
@@ -169,4 +169,4 @@ const mapDispachToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispachToProps
-)(IncidentGeneralDetails);
+)(IncidentGeneral);

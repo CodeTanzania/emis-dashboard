@@ -191,9 +191,9 @@ export const getIncidentTaskError = message => ({
 });
 
 export const storePolygons = collectiveGeometry => ({
-type:STORE_FEATUREPOLYGON_SUCCESS,
-payload: {data: collectiveGeometry}
-})
+  type: STORE_FEATUREPOLYGON_SUCCESS,
+  payload: { data: collectiveGeometry },
+});
 
 export const getIncidentsSuccess = () => (dispatch, getState, { API }) => {
   dispatch(getIncidentsStart());

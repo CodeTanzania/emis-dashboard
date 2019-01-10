@@ -9,7 +9,6 @@
     flex: auto;
     display: list-item;
     flex-direction: column;
-
 }
 
 .IncidentAnalysisLocation.p-l-10, {
@@ -20,11 +19,13 @@
     line-height: 1.4;
     padding-right: 25px;
 }
-.IncidentAnalysisHeader{
+
+.IncidentAnalysisHeader {
     margin-bottom: 2px;
     font-weight: 600;
     padding-top: 10px;
 }
-.incidentAnalysisContent{
+
+.incidentAnalysisContent {
     padding-left: 10px
 }

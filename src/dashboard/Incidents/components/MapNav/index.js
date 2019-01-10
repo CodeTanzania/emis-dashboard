@@ -1,22 +1,26 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import {  List, Input, Row, Col, Layout,  } from 'antd';
+import { List, Input, Row, Col, Layout } from 'antd';
 import { connect } from 'react-redux';
 import IncidentFilter from '../IncidentFilter';
 import IncidentsList from '../IncidentsList';
 import IncidentDetails from '../IncidentDetails';
 
 import './styles.css';
-import { searchIncident } from '../../actions';
+import {
+  searchIncident,
+  getIncidentActions,
+  getIncidentsSuccess,
+} from '../../actions';
 import { incidents } from '../../helpers';
-import { CreateIncidentButton } from '../Map/components/CreateIncidentButton';
+import CreateIncidentButton from '../Map/components/CreateIncidentButton';
 
 const { Header, Content } = Layout;
 const { Search } = Input;
 /**
- * Map Navigation  Layout component
- * this navigations layout will show
- * different Map actions
+ * Map Navigation Layout component
+ * this navigations layout shows
+ * different Maps actions
  *
  * @class
  * @name MapNav
@@ -44,11 +48,15 @@ class MapNav extends React.Component {
     // ),
     handleSearchIncident: PropTypes.func,
     isSelected: PropTypes.bool.isRequired,
+    handleIncidentActions: PropTypes.func,
+    handleIncidents: PropTypes.func,
   };
 
   static defaultProps = {
     // incidents: [],
-    handleSearchIncident: null,
+    handleSearchIncident: () => {},
+    handleIncidentActions: () => {},
+    handleIncidents: () => {},
   };
 
   constructor() {
@@ -58,32 +66,37 @@ class MapNav extends React.Component {
     };
   }
 
+  componentDidMount() {
+    const { handleIncidents, handleIncidentActions } = this.props;
+    handleIncidents();
+    handleIncidentActions();
+  }
+
   onSearchIncident = searchData => {
     const { handleSearchIncident } = this.props;
     handleSearchIncident(searchData);
   };
 
   render() {
-    // const {
-    //   // incidents,
-    // } = this.props;
-
-    const { hideNav, } = this.state;
-    const { isSelected } = this.props;
+    const { hideNav } = this.state;
+    const {
+      isSelected,
+      //   incidents,
+    } = this.props;
 
     return !hideNav ? (
       <Fragment>
         {!isSelected ? (
           <div>
             <div className="topNav">
-                <Row>
-                  <Col span={16}>
-                    <IncidentFilter />
-                  </Col>
-                  <Col span={7} offset={1}>
-                    <CreateIncidentButton />
-                  </Col>
-                </Row>
+              <Row>
+                <Col span={16}>
+                  <IncidentFilter />
+                </Col>
+                <Col span={7} offset={1}>
+                  <CreateIncidentButton />
+                </Col>
+              </Row>
             </div>
             <Layout className="MapNav">
               <Header className="MapNavHeader">
@@ -118,12 +131,13 @@ class MapNav extends React.Component {
 const mapStateToProps = state => ({
   incidents:
     state.incidents.data && state.incidents.data ? state.incidents.data : {},
-  showPoints: state.renderMapMarkers.showPoint,
   isSelected: state.incidents.isSelected,
 });
 
 const mapDispatchToProps = {
   handleSearchIncident: searchIncident,
+  handleIncidents: getIncidentsSuccess,
+  handleIncidentActions: getIncidentActions,
 };
 export default connect(
   mapStateToProps,

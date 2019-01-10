@@ -7,6 +7,17 @@ import { convertIsoDate } from '../../../../helpers';
 
 import './styles.css';
 
+/**
+ * IncidentAnalysis Ddetail
+ *
+ *
+ * @function
+ * @name IncidentAnalysis
+ *
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+
 function IncidentAnalysis({ incidentSelected, loading }) {
   const {
     event,

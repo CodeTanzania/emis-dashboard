@@ -11,7 +11,7 @@ import { getIncidentsSuccess, getIncidentActions } from '../../actions';
  * this component contain detailed
  * information of incident
  *
- * @class
+ * @function
  * @name IncidentDetails
  *
  * @version 0.1.0
@@ -142,15 +142,15 @@ IncidentDetails.propTypes = {
       color: PropTypes.string,
       _id: PropTypes.string,
     }),
-    description: PropTypes.string.isRequired,
+    description: PropTypes.string,
     startedAt: PropTypes.string.isRequired,
     endedAt: PropTypes.string.isRequired,
     number: PropTypes.string,
   }).isRequired,
   incidentAction: PropTypes.shape({
     name: PropTypes.string,
-    description: PropTypes.string.isRequired,
-    phase: PropTypes.string.isRequired,
+    description: PropTypes.string,
+    phase: PropTypes.string,
     incident: PropTypes.shape({
       event: PropTypes.string.isRequired,
       startedAt: PropTypes.string,

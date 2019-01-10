@@ -7,10 +7,11 @@ import styles from './styles.css';
 import { getSelectedIncident, activeIncidentAction } from '../../actions';
 import { convertIsoDate } from '../../helpers';
 /**
- * Render a single contact item component for contacts list
+ * IncidentsList component
+ * Render a list of incident item
  *
- * @function
- * @name Contact
+ * @class
+ * @name IncidentsList
  * @version 0.1.0
  * @since 0.1.0
  */
@@ -88,12 +89,12 @@ class IncidentsList extends React.Component {
     const { incidentsList } = this.props;
     const { event, startedAt, endedAt, areas } = incidentsList;
     return (
-      <List.Item className={cx('p-l-20')}>
+      <List.Item className={cx('IncidentListItem p-l-20')}>
         <List.Item.Meta
           className="IncidentItemMeta"
           title={
             <Row type="flex">
-              <Col xs={20}>
+              <Col xs={24}>
                 <span
                   role="link"
                   className={cx('name')}

@@ -86,7 +86,6 @@ class RenderAllIncidents extends React.Component {
       }
       return null;
     });
-
     getIncident(id);
   };
 
@@ -100,14 +99,17 @@ class RenderAllIncidents extends React.Component {
   };
 
   render() {
-    const { showPoints, } = this.props;
+    const {
+      showPoints,
+      // incidents
+    } = this.props;
     const pointMarkers = incidents.map(({ epicentre }) => epicentre);
     return (
       <Fragment>
         <MapPointsDrawSupport
           points={pointMarkers}
           pointToLayer={showMarkers}
-          // isShowPoints={showPoints}
+          isShowPoints={showPoints}
           onEachFeature={this.onEachFeature}
         />
       </Fragment>

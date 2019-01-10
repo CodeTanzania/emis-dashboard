@@ -5,8 +5,9 @@
 .table-operations button {
     margin-left: 15px;
 }
-.loadingAction{
+
+.loadingAction {
     position: absolute;
-     top: 45%;
-     left: 230px
+    top: 45%;
+    left: 230px
 }

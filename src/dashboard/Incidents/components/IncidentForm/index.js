@@ -14,7 +14,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { createIncidentSuccess } from '../../actions';
-import {causes} from '../../helpers';
+import { causes } from '../../helpers';
 
 import './styles.css';
 
@@ -52,13 +52,11 @@ class IncidentForm extends React.Component {
         _id: PropTypes.string,
       }).isRequired
     ),
-    polygonFeatures: PropTypes.array.isRequired,
-    children: PropTypes.func,
+    polygonFeatures: PropTypes.arrayOf.isRequired,
   };
 
   static defaultProps = {
     incidents: [],
-    children:() => {}
   };
 
   renderIncidentTypes = incidents =>
@@ -81,29 +79,27 @@ class IncidentForm extends React.Component {
       ))
     );
 
-    renderCauses = causes => 
-        causes.map(cause =>
-          <Option key={cause} value={cause}>{cause}</Option>
-        )
+  renderCauses = incidentCauses =>
+    incidentCauses.map(cause => (
+      <Option key={cause} value={cause}>
+        {cause}
+      </Option>
+    ));
 
   handleSubmit = e => {
     e.preventDefault();
-    const { location, newIncidentAdded, polygonFeatures } = this.props;
+    const { newIncidentAdded, polygonFeatures } = this.props;
     this.props.form.validateFieldsAndScroll((err, fieldsValue) => {
       if (!err) {
-        // const { geometry } = location;
         const values = {
           ...fieldsValue,
-          // epicentre: geometry,
           affected: polygonFeatures,
           startedAt: fieldsValue.startedAt.toISOString(),
           endedAt: fieldsValue.endedAt.toISOString()
             ? fieldsValue.endedAt.toISOString()
             : null,
         };
-        console.log('print values');
-        console.log(values);
-        // newIncidentAdded(values);
+        newIncidentAdded(values);
       }
     });
   };
@@ -111,8 +107,9 @@ class IncidentForm extends React.Component {
   render() {
     const { getFieldDecorator } = this.props.form;
     const { incidents } = this.props;
-    let children , incidentCauses = [];
-    children = this.renderAreas(incidents)
+    let children = [];
+    let incidentCauses = [];
+    children = this.renderAreas(incidents);
     incidentCauses = this.renderCauses(causes);
 
     const formItemLayout = {
@@ -251,16 +248,14 @@ class IncidentForm extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    incidents:
-      state.incidents.data && state.incidents.data ? state.incidents.data : [],
-    polygonFeatures: state.featureCollection,
-    incidentsAction: state.incidents.incidentActionsData
-      ? state.incidents.incidentActionsData
-      : [],
-  };
-};
+const mapStateToProps = state => ({
+  incidents:
+    state.incidents.data && state.incidents.data ? state.incidents.data : [],
+  polygonFeatures: state.featureCollection,
+  incidentsAction: state.incidents.incidentActionsData
+    ? state.incidents.incidentActionsData
+    : [],
+});
 
 const mapDispatchToProps = dispatch => ({
   newIncidentAdded: bindActionCreators(createIncidentSuccess, dispatch),
