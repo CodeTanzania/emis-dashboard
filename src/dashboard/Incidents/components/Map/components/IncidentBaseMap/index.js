@@ -19,7 +19,7 @@ const { Map: LeafletMap, TileLayer } = ReactLeaflet;
  */
 class IncidentBaseMap extends React.Component {
   static propTypes = {
-    children: PropTypes.element.isRequired,
+    children: PropTypes.arrayOf(PropTypes.element).isRequired,
   };
 
   constructor() {
@@ -34,15 +34,17 @@ class IncidentBaseMap extends React.Component {
     const { position, zoom } = this.state;
     const { children } = this.props;
     return (
-      <LeafletMap center={position} zoom={zoom} zoomControl={false}>
-        <LayerSwitchControl />
-        {children}
-        <TileLayer
-          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-          id="mapbox.light"
-          url="https://api.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoid29ybGRiYW5rLWVkdWNhdGlvbiIsImEiOiJIZ2VvODFjIn0.TDw5VdwGavwEsch53sAVxA#1.6/23.725906/-39.714135/0"
-        />
-      </LeafletMap>
+      <div id="incidentMap">
+        <LeafletMap center={position} zoom={zoom} zoomControl={false}>
+          <LayerSwitchControl />
+          {children}
+          <TileLayer
+            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+            id="mapbox.light"
+            url="https://api.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoid29ybGRiYW5rLWVkdWNhdGlvbiIsImEiOiJIZ2VvODFjIn0.TDw5VdwGavwEsch53sAVxA#1.6/23.725906/-39.714135/0"
+          />
+        </LeafletMap>
+      </div>
     );
   }
 }

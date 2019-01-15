@@ -385,7 +385,7 @@ export function createIncident(data) {
 /* Api for displaying incident by Id */
 export function getIncidentById(incidentId) {
   console.log(incidentId);
-  const url = Axios.get(`${INCIDENTS_TEST_API}`).then(res => res.data);
+  const url = Axios.get(`${INCIDENTS_API}/incidents/${incidentId}`).then(res => res.data);
   return url;
 }
 

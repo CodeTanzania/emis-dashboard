@@ -238,6 +238,9 @@ const mapStateToProps = state => ({
   incidentsTasks: state.selectedIncident.incidentTasks
     ? state.selectedIncident.incidentTasks
     : {},
+  incidentsAction: state.incidents.incidentActionsData
+    ? state.incidents.incidentActionsData
+    : [],
   loadingAction: state.selectedIncident.isLoadingData,
 });
 

@@ -81,7 +81,7 @@ class MapNav extends React.Component {
     const { hideNav } = this.state;
     const {
       isSelected,
-      //   incidents,
+        incidents,
     } = this.props;
 
     return !hideNav ? (

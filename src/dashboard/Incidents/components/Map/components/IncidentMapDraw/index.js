@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Button, Icon } from 'antd';
 
-import DrawControls from '../../../../../../common/components/DrawControls';
+import IncidentDrawControl from '../IncidentDrawControl'
 import { storePolygons, getIncidentsSuccess } from '../../../../actions';
 
 // this constant contains the contents that will be
@@ -79,7 +79,7 @@ class IncidentMapDraw extends React.Component {
           style={{
             position: 'absolute',
             top: '10px',
-            left: '55px',
+            left: '0.5vw',
             zIndex: '1000',
           }}
         >
@@ -90,13 +90,8 @@ class IncidentMapDraw extends React.Component {
             </Link>
           </Button>
         </div>
-        <DrawControls
+        <IncidentDrawControl
           onDrawCreated={this.onDrawCreated}
-          style={{
-            position: 'absolute',
-            top: '10px',
-            right: '55px',
-          }}
         />
       </React.Fragment>
     );

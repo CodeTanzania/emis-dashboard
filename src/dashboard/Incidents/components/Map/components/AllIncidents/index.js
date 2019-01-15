@@ -101,7 +101,7 @@ class RenderAllIncidents extends React.Component {
   render() {
     const {
       showPoints,
-      // incidents
+      incidents
     } = this.props;
     const pointMarkers = incidents.map(({ epicentre }) => epicentre);
     return (

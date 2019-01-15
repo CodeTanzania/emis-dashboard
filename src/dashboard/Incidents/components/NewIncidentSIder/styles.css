@@ -1,6 +1,5 @@
 .NewIncidentSider {
-    width: 480px;
-    /* width: 28%; */
+    width: 28.5vw;
     display: flex;
     flex-direction: column;
     position: absolute;

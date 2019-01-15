@@ -14,7 +14,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { createIncidentSuccess } from '../../actions';
-import { causes } from '../../helpers';
+import { causes, location } from '../../helpers';
 
 import './styles.css';
 
@@ -52,11 +52,12 @@ class IncidentForm extends React.Component {
         _id: PropTypes.string,
       }).isRequired
     ),
-    polygonFeatures: PropTypes.arrayOf.isRequired,
+    polygonFeatures: PropTypes.arrayOf(PropTypes.string),
   };
 
   static defaultProps = {
     incidents: [],
+    polygonFeatures: null,
   };
 
   renderIncidentTypes = incidents =>
@@ -70,14 +71,12 @@ class IncidentForm extends React.Component {
       );
     });
 
-  renderAreas = incidents =>
-    incidents.map(({ areas }) =>
-      areas.map(area => (
-        <Option key={area} value={area}>
-          {area}
-        </Option>
-      ))
-    );
+  renderAreas = areas =>
+    areas.map(area => (
+      <Option key={area} value={area}>
+        {area}
+      </Option>
+    ));
 
   renderCauses = incidentCauses =>
     incidentCauses.map(cause => (
@@ -109,7 +108,7 @@ class IncidentForm extends React.Component {
     const { incidents } = this.props;
     let children = [];
     let incidentCauses = [];
-    children = this.renderAreas(incidents);
+    children = this.renderAreas(location);
     incidentCauses = this.renderCauses(causes);
 
     const formItemLayout = {
