@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import {
   Form,
   Input,
@@ -52,7 +53,10 @@ class IncidentForm extends React.Component {
         _id: PropTypes.string,
       }).isRequired
     ),
-    polygonFeatures: PropTypes.arrayOf(PropTypes.string),
+    polygonFeatures: PropTypes.arrayOf(PropTypes.shape({
+      type: PropTypes.string,
+      coordinates: PropTypes.array
+    })),
   };
 
   static defaultProps = {
@@ -87,7 +91,7 @@ class IncidentForm extends React.Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    const { newIncidentAdded, polygonFeatures } = this.props;
+    const { newIncidentAdded, polygonFeatures, history } = this.props;
     this.props.form.validateFieldsAndScroll((err, fieldsValue) => {
       if (!err) {
         const values = {
@@ -99,6 +103,7 @@ class IncidentForm extends React.Component {
             : null,
         };
         newIncidentAdded(values);
+        history.push('/incidents/map');
       }
     });
   };
@@ -263,4 +268,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Form.create()(IncidentForm));
+)(Form.create()(withRouter(IncidentForm)));
