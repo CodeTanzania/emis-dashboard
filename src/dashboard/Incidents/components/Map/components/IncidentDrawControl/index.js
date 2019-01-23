@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import DrawControls from '../../../../../../common/components/DrawControls';
 import './styles.css';
 
@@ -11,3 +12,11 @@ function IncidentDrawControl({ onDrawCreated }) {
 }
 
 export default IncidentDrawControl;
+
+IncidentDrawControl.propTypes = {
+  onDrawCreated: PropTypes.func,
+};
+
+IncidentDrawControl.defaultProps = {
+  onDrawCreated: null,
+};

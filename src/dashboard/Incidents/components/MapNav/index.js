@@ -12,7 +12,7 @@ import {
   getIncidentActions,
   getIncidentsSuccess,
 } from '../../actions';
-import { incidents } from '../../helpers';
+// import { incidents } from '../../helpers';
 import CreateIncidentButton from '../Map/components/CreateIncidentButton';
 
 const { Header, Content } = Layout;
@@ -30,22 +30,22 @@ const { Search } = Input;
  */
 class MapNav extends React.Component {
   static propTypes = {
-    // incidents: PropTypes.arrayOf(
-    //   PropTypes.shape({
-    //     name: PropTypes.string,
-    //     incidentsTypeData: PropTypes.shape({
-    //       name: PropTypes.string,
-    //       nature: PropTypes.string.isRequired,
-    //       family: PropTypes.string.isRequired,
-    //       color: PropTypes.string,
-    //       _id: PropTypes.string,
-    //     }),
-    //     description: PropTypes.string.isRequired,
-    //     startedAt: PropTypes.string,
-    //     endedAt: PropTypes.string,
-    //     _id: PropTypes.string,
-    //   }).isRequired
-    // ),
+    incidents: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string,
+        incidentsTypeData: PropTypes.shape({
+          name: PropTypes.string,
+          nature: PropTypes.string.isRequired,
+          family: PropTypes.string.isRequired,
+          color: PropTypes.string,
+          _id: PropTypes.string,
+        }),
+        description: PropTypes.string.isRequired,
+        startedAt: PropTypes.string,
+        endedAt: PropTypes.string,
+        _id: PropTypes.string,
+      }).isRequired
+    ),
     handleSearchIncident: PropTypes.func,
     isSelected: PropTypes.bool.isRequired,
     handleIncidentActions: PropTypes.func,
@@ -53,7 +53,7 @@ class MapNav extends React.Component {
   };
 
   static defaultProps = {
-    // incidents: [],
+    incidents: [],
     handleSearchIncident: () => {},
     handleIncidentActions: () => {},
     handleIncidents: () => {},
@@ -79,10 +79,7 @@ class MapNav extends React.Component {
 
   render() {
     const { hideNav } = this.state;
-    const {
-      isSelected,
-        incidents,
-    } = this.props;
+    const { isSelected, incidents } = this.props;
 
     return !hideNav ? (
       <Fragment>

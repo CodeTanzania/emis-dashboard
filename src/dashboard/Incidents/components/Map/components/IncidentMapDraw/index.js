@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Button, Icon } from 'antd';
 
-import IncidentDrawControl from '../IncidentDrawControl'
+import IncidentDrawControl from '../IncidentDrawControl';
 import { storePolygons, getIncidentsSuccess } from '../../../../actions';
 
 // this constant contains the contents that will be
@@ -90,9 +90,7 @@ class IncidentMapDraw extends React.Component {
             </Link>
           </Button>
         </div>
-        <IncidentDrawControl
-          onDrawCreated={this.onDrawCreated}
-        />
+        <IncidentDrawControl onDrawCreated={this.onDrawCreated} />
       </React.Fragment>
     );
   }

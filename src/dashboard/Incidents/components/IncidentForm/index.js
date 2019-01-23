@@ -1,5 +1,5 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import {
   Form,
   Input,
@@ -12,7 +12,6 @@ import {
 } from 'antd';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { createIncidentSuccess } from '../../actions';
 import { causes, location } from '../../helpers';
@@ -53,10 +52,12 @@ class IncidentForm extends React.Component {
         _id: PropTypes.string,
       }).isRequired
     ),
-    polygonFeatures: PropTypes.arrayOf(PropTypes.shape({
-      type: PropTypes.string,
-      coordinates: PropTypes.array
-    })),
+    polygonFeatures: PropTypes.arrayOf(
+      PropTypes.shape({
+        type: PropTypes.string,
+        coordinates: PropTypes.array,
+      })
+    ),
   };
 
   static defaultProps = {

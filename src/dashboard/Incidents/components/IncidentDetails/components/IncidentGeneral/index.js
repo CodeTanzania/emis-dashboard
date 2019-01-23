@@ -13,6 +13,7 @@ import IncidentActionTaken from '../IncidentAction';
 import IncidentAgencies from '../IncidentAgencies';
 import LayoutHeader from '../../../../../../common/components/LayoutHeader';
 import { convertIsoDateOnly } from '../../../../helpers';
+import IncidentResources from '../IncidentResources';
 
 const { Content } = Layout;
 
@@ -63,10 +64,7 @@ class IncidentGeneral extends React.Component {
           return <IncidentAgencies />;
         }
         case 'resource': {
-          return <h3>resource</h3>;
-        }
-        case 'recomandation': {
-          return <h3>recomandation</h3>;
+          return <IncidentResources />;
         }
         default:
           return false;
@@ -116,7 +114,6 @@ class IncidentGeneral extends React.Component {
                 <Menu.Item key="agencies">Responding agencies</Menu.Item>
                 <Menu.Item key="resource">Resource needed</Menu.Item>
                 <Menu.Item key="assessment">Assessment</Menu.Item>
-                <Menu.Item key="recomandation">Recomendation</Menu.Item>
               </Menu>
             </Sider>{' '}
             <Layout

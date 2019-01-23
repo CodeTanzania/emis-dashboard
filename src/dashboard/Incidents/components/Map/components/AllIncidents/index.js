@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { get } from 'lodash';
 import MapPointsDrawSupport from '../../../../../../common/components/MapPointsDrawSupport';
 import { getSelectedIncident, activeIncidentAction } from '../../../../actions';
-import { incidents, showMarkers } from '../../../../helpers';
+import { showMarkers } from '../../../../helpers';
 
 /**
  * Wraper component drawing Incidents markers and shapes (Eg. Polygons, Cirles and Points)
@@ -21,22 +21,22 @@ import { incidents, showMarkers } from '../../../../helpers';
 
 class RenderAllIncidents extends React.Component {
   static propTypes = {
-    // incidents: PropTypes.arrayOf(
-    //   PropTypes.shape({
-    //     event: PropTypes.string,
-    //     incidentsTypeData: PropTypes.shape({
-    //       name: PropTypes.string,
-    //       nature: PropTypes.string.isRequired,
-    //       family: PropTypes.string.isRequired,
-    //       color: PropTypes.string,
-    //       _id: PropTypes.string,
-    //     }),
-    //     description: PropTypes.string.isRequired,
-    //     startedAt: PropTypes.string,
-    //     endedAt: PropTypes.string,
-    //     _id: PropTypes.string,
-    //   }).isRequired
-    // ),
+    incidents: PropTypes.arrayOf(
+      PropTypes.shape({
+        event: PropTypes.string,
+        incidentsTypeData: PropTypes.shape({
+          name: PropTypes.string,
+          nature: PropTypes.string.isRequired,
+          family: PropTypes.string.isRequired,
+          color: PropTypes.string,
+          _id: PropTypes.string,
+        }),
+        description: PropTypes.string.isRequired,
+        startedAt: PropTypes.string,
+        endedAt: PropTypes.string,
+        _id: PropTypes.string,
+      }).isRequired
+    ),
     incidentsAction: PropTypes.arrayOf(
       PropTypes.shape({
         name: PropTypes.string,
@@ -64,7 +64,7 @@ class RenderAllIncidents extends React.Component {
   };
 
   static defaultProps = {
-    // incidents: null,
+    incidents: null,
     getIncident: null,
     setIncidentAction: () => {},
   };
@@ -99,11 +99,8 @@ class RenderAllIncidents extends React.Component {
   };
 
   render() {
-    const {
-      showPoints,
-      incidents
-    } = this.props;
-    const pointMarkers = incidents.map(({ epicentre }) => epicentre);
+    const { showPoints, incidents: incidentEpicenters } = this.props;
+    const pointMarkers = incidentEpicenters.map(({ epicentre }) => epicentre);
     return (
       <Fragment>
         <MapPointsDrawSupport

@@ -152,9 +152,9 @@ export default class IncidentAgencies extends React.Component {
       },
     ];
     return (
-      <div className="p-20">
+      <div className="">
         <h3 style={{ borderBottom: '1px solid #e8e8e8', padding: '9px' }}>
-          EIncident log
+          Responsible Agencies
         </h3>
         <div className="table-operations">
           <Button onClick={this.setAgeSort}>Sort by Name</Button>
@@ -163,6 +163,7 @@ export default class IncidentAgencies extends React.Component {
         <Table
           columns={columns}
           dataSource={data}
+          className="p-20"
           onChange={this.handleChange}
         />
       </div>
